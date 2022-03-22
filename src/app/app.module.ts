@@ -15,6 +15,9 @@ import { EventService } from './services/event.service';
 import { ToastService } from './services/toast.service';
 import { EnterDataComponent } from './enter-data/enter-data.component';
 import { ExportReportsComponent } from './export-reports/export-reports.component';
+import { SidebarModule } from './shared/components/sidebar/sidebar.module';
+import { ToggleButtonModule } from './shared/components/toggle-button/toggle-button.module';
+import { BreadcrumbsModule } from './shared/components/breadcrumbs/breadcrumbs.module';
 
 export function initConfig(configService: ConfigService) {
   return async () => {
@@ -31,7 +34,15 @@ export function initConfig(configService: ConfigService) {
     EnterDataComponent,
     ExportReportsComponent,
   ],
-  imports: [BrowserModule, CommonModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    AppRoutingModule,
+    HttpClientModule,
+    SidebarModule,
+    ToggleButtonModule,
+    BreadcrumbsModule
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,

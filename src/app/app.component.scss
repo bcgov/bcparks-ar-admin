@@ -1,1 +1,16 @@
-@import "src/assets/styles/base/base.scss";
+.wrapper {
+  display: flex;
+}
+
+#content {
+  transition: all 0.3s;
+}
+
+.content-wrapper {
+  padding: 15px;
+}
+
+app-toggle-button {
+  position: fixed;
+  margin-top: 0.5rem;
+}
