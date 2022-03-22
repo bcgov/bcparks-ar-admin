@@ -1,0 +1,26 @@
+@import "/src/assets/themes/variables";
+
+#footer {
+  background-color: $primary-nav;
+  height: 4.1rem;
+  position: relative;
+}
+
+.row {
+  max-width: 29rem;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $bcgold;
+}

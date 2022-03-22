@@ -1,0 +1,35 @@
+<header id="header">
+  <nav class="navbar navbar-expand-lg navbar-dark p-0">
+    <div class="container-sm">
+      <a
+        class="navbar-brand d-none d-md-inline"
+        title="BC Parks - Camping Reservations"
+        href="https://bcparks.ca/reserve"
+      >
+        <img
+          src="/assets/images/bcparks_primary_reversed.svg"
+          height="100"
+          alt="BC Government Logo"
+        />
+      </a>
+      <a
+        class="navbar-brand d-inline d-md-none"
+        title="BC Parks - Camping Reservations"
+        href="https://bcparks.ca/reserve"
+      >
+        <img
+          src="/assets/images/bcparks_wordmark_white.svg"
+          height="60"
+          alt="BC Parks Logo"
+        />
+      </a>
+    </div>
+  </nav>
+  <div
+    *ngIf="showBanner"
+    class="env-banner text-center bg-danger text-white py-2"
+  >
+    This is the <strong>{{ envName }}</strong> environment. The content you are
+    viewing is not final and subject to change.
+  </div>
+</header>
