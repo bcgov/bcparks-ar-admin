@@ -1,1 +1,17 @@
-This is the home component
+<div class="container pt-lg-5">
+  <div class="home-title-container text-center">
+    <h1>
+      <span>BC Parks - Attendance and Revenue</span>
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-12" *ngFor="let card of cardConfig">
+      <app-nav-card
+        [cardHeader]="card.cardHeader"
+        [cardTitle]="card.cardTitle"
+        [cardText]="card.cardText"
+        [navigation]="card.navigation"
+      ></app-nav-card>
+    </div>
+  </div>
+</div>
