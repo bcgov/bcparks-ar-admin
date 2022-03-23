@@ -32,17 +32,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
       return obj.path !== '**';
     });
 
-    router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEvent) => {
-        this.currentRoute = event;
-      });
+    this.subscriptions.push(
+      router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe((event: NavigationEvent) => {
+          this.currentRoute = event;
+        })
+    );
 
-    sideBarService.toggleChange
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((hide) => {
-        this.hide = hide;
-      });
+    this.subscriptions.push(
+      sideBarService.toggleChange
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((hide) => {
+          this.hide = hide;
+        })
+    );
   }
 
   ngOnInit(): void {}
