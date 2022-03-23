@@ -3,9 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { ConfigService } from './services/config.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,8 +10,6 @@ import { LoggerService } from './services/logger.service';
 import { DataService } from './services/data.service';
 import { EventService } from './services/event.service';
 import { ToastService } from './services/toast.service';
-import { EnterDataComponent } from './enter-data/enter-data.component';
-import { ExportReportsComponent } from './export-reports/export-reports.component';
 import { SidebarModule } from './shared/components/sidebar/sidebar.module';
 import { ToggleButtonModule } from './shared/components/toggle-button/toggle-button.module';
 import { BreadcrumbsModule } from './shared/components/breadcrumbs/breadcrumbs.module';

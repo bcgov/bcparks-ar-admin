@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
-import { ApiService } from './api.service';
 import { DataService } from './data.service';
 import { EventKeywords, EventObject, EventService } from './event.service';
 import { ToastService, ToastTypes } from './toast.service';
@@ -11,7 +9,6 @@ import { ToastService, ToastTypes } from './toast.service';
 export class ParkService {
   constructor(
     private dataService: DataService,
-    private apiService: ApiService,
     private eventService: EventService,
     private toastService: ToastService
   ) {}

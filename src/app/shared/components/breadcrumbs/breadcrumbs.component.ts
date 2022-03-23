@@ -6,7 +6,6 @@ import {
   ActivatedRoute,
 } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
-import { map } from 'rxjs/internal/operators/map';
 
 @Component({
   selector: 'app-breadcrumbs',

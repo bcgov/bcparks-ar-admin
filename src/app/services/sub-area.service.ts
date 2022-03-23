@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
 import { DataService } from './data.service';
 import { EventService, EventObject, EventKeywords } from './event.service';
 import { ToastService, ToastTypes } from './toast.service';
@@ -10,7 +9,6 @@ import { ToastService, ToastTypes } from './toast.service';
 export class SubAreaService {
   constructor(
     private dataService: DataService,
-    private apiService: ApiService,
     private eventService: EventService,
     private toastService: ToastService
   ) {}
