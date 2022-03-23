@@ -1,1 +1,54 @@
-<p>enter-data works!</p>
+<div class="container-fluid">
+  <h1>Enter Data</h1>
+  <p>
+    Select the date and location below for the Attendance and Revenue data you
+    want to enter. If you want to view past enteries, you can do that by
+    selecting the date and location you want to view.
+  </p>
+  <h2>Date</h2>
+  <div class="row">
+    <div class="col-6">I'm too lazy to do a date picker right now.</div>
+    <div class="col-6">
+      <app-info-text
+        [text]="'Choose the date for which you want to add data.'"
+      ></app-info-text>
+    </div>
+  </div>
+  <h2>Location</h2>
+  <div class="row">
+    <label></label>
+    <div class="col-6">
+      <app-typeahead
+        [id]="'park-typeahead'"
+        [data]="parks"
+        [label]="'Park'"
+        (output)="parkTypeaheadOutput($event)"
+      ></app-typeahead>
+    </div>
+    <div class="col-6">
+      <label></label>
+      <app-info-text
+        [text]="
+          'Type the first few letters of the park name and then select from the list.'
+        "
+      ></app-info-text>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <app-select
+        [id]="'sub-area-select'"
+        [data]="subAreas"
+        [label]="'Sub-areas'"
+        (output)="subAreaOutput($event)"
+      ></app-select>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-6">
+      <div class="d-grid">
+        <button class="btn btn-primary" type="button">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>

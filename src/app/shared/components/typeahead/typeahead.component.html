@@ -1,0 +1,12 @@
+<label for="{{ id }}" class="fw-bold">{{ label }}</label>
+<input
+  id="{{ id }}"
+  type="text"
+  class="form-control"
+  [(ngModel)]="model"
+  [ngbTypeahead]="search"
+  (focus)="focus$.next($any($event).target.value)"
+  (click)="click$.next($any($event).target.value)"
+  (ngModelChange)="emit()"
+  #instance="ngbTypeahead"
+/>

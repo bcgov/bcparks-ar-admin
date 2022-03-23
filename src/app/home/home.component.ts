@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   // This can be pulled in via the config.
   public cardConfig = [
     {
@@ -23,8 +23,4 @@ export class HomeComponent implements OnInit {
     },
   ];
   constructor() {}
-
-  ngOnInit() {}
-
-  ngOnDestroy() {}
 }

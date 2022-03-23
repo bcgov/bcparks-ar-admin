@@ -1,5 +1,6 @@
 export class Constants {
   public static readonly dataIds = {
-    MAIN_OUTAGE: 'mainOutage',
+    ENTER_DATA_PARK: 'enterDataPark',
+    ENTER_DATA_SUB_AREA: 'enterDataSubArea'
   };
 }

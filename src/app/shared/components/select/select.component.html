@@ -1,0 +1,11 @@
+<label for="{{ id }}" class="fw-bold">{{ label }}</label>
+<select
+  id="{{ id }}"
+  class="form-select"
+  aria-label="Default select example"
+  [ngModel]="selected"
+  (ngModelChange)="emit($event)"
+>
+  <option selected>- Select an option -</option>
+  <option *ngFor="let item of data" [value]="item.id">{{ item.label }}</option>
+</select>
