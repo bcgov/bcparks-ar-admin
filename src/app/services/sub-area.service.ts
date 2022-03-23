@@ -20,10 +20,10 @@ export class SubAreaService {
     let errorSubject = '';
     try {
       // we're getting a single item
-      errorSubject = 'report';
+      errorSubject = 'sub-area';
 
       // TODO: Enable this when our endpoint is ready
-      // res = await firstValueFrom(this.apiService.get('park'));
+      // res = await firstValueFrom(this.apiService.get('sub-area'));
 
       // For now we are mocking data
       res = [
@@ -40,7 +40,7 @@ export class SubAreaService {
         ToastTypes.ERROR
       );
       this.eventService.setError(
-        new EventObject(EventKeywords.ERROR, String(e), 'Report Service')
+        new EventObject(EventKeywords.ERROR, String(e), 'Sub-area Service')
       );
       // TODO: We may want to change this.
       this.dataService.setItemValue(id, 'error');

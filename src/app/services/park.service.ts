@@ -21,7 +21,7 @@ export class ParkService {
     let errorSubject = '';
     try {
       // we're getting a single item
-      errorSubject = 'report';
+      errorSubject = 'park';
 
       // TODO: Enable this when our endpoint is ready
       // res = await firstValueFrom(this.apiService.get('park'));
@@ -55,7 +55,7 @@ export class ParkService {
         ToastTypes.ERROR
       );
       this.eventService.setError(
-        new EventObject(EventKeywords.ERROR, String(e), 'Report Service')
+        new EventObject(EventKeywords.ERROR, String(e), 'Park Service')
       );
       // TODO: We may want to change this.
       this.dataService.setItemValue(id, 'error');
