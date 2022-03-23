@@ -22,6 +22,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   public alive = true;
 
+  private subscriptions: any[] = [];
+
   constructor(
     protected sideBarService: SideBarService,
     protected router: Router
@@ -47,5 +49,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }

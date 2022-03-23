@@ -8,41 +8,50 @@ import { Constants } from '../shared/constants';
   templateUrl: './enter-data.component.html',
   styleUrls: ['./enter-data.component.scss'],
 })
-export class EnterDataComponent implements OnInit, OnDestroy {
+export class EnterDataComponent implements OnDestroy {
   private alive = true;
 
   public parks: any[] = [];
   public subAreas: any[] = [];
 
+  private subscriptions: any[] = [];
+
   constructor(protected dataService: DataService) {
-    dataService
-      .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((res) => {
-        if (res) {
-          this.parks = res;
-        }
-      });
-    dataService
-      .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((res) => {
-        if (res) {
-          this.subAreas = res;
-        }
-      });
+    this.subscriptions.push(
+      dataService
+        .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          if (res) {
+            this.parks = res;
+          }
+        })
+    );
+
+    this.subscriptions.push(
+      dataService
+        .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          if (res) {
+            this.subAreas = res;
+          }
+        })
+    );
   }
 
   parkTypeaheadOutput(event) {
     console.log(event);
   }
+
   subAreaOutput(event) {
     console.log(event);
   }
 
-  ngOnInit() {}
-
   ngOnDestroy() {
     this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }
