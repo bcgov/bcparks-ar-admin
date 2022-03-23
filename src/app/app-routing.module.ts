@@ -8,14 +8,23 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    data: {
+      label: 'Home',
+    },
   },
   {
     path: 'enter-data',
     component: EnterDataComponent,
+    data: {
+      label: 'Enter Data',
+    },
   },
   {
     path: 'export-reports',
     component: ExportReportsComponent,
+    data: {
+      label: 'Export Reports',
+    },
   },
   {
     // wildcard route

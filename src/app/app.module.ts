@@ -18,6 +18,11 @@ import { ExportReportsComponent } from './export-reports/export-reports.componen
 import { SidebarModule } from './shared/components/sidebar/sidebar.module';
 import { ToggleButtonModule } from './shared/components/toggle-button/toggle-button.module';
 import { BreadcrumbsModule } from './shared/components/breadcrumbs/breadcrumbs.module';
+import { ExportReportsModule } from './export-reports/export-reports.module';
+import { EnterDataModule } from './enter-data/enter-data.module';
+import { HeaderModule } from './header/header.module';
+import { FooterModule } from './footer/footer.module';
+import { HomeModule } from './home/home.module';
 
 export function initConfig(configService: ConfigService) {
   return async () => {
@@ -26,14 +31,7 @@ export function initConfig(configService: ConfigService) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    HeaderComponent,
-    FooterComponent,
-    EnterDataComponent,
-    ExportReportsComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -41,7 +39,12 @@ export function initConfig(configService: ConfigService) {
     HttpClientModule,
     SidebarModule,
     ToggleButtonModule,
-    BreadcrumbsModule
+    BreadcrumbsModule,
+    ExportReportsModule,
+    EnterDataModule,
+    HeaderModule,
+    FooterModule,
+    HomeModule,
   ],
   providers: [
     {

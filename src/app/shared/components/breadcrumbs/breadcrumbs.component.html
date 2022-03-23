@@ -1,7 +1,10 @@
-<nav aria-label="breadcrumb" [ngClass]="toggleButtonExists ? 'toggle-button-offset' : ''">
+<nav
+  aria-label="breadcrumb"
+  [ngClass]="toggleButtonExists ? 'toggle-button-offset' : ''"
+>
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
+    <li class="breadcrumb-item" *ngFor="let route of currentNavigation">
+      <a [routerLink]="[route.path]">{{route.label}}</a>
+    </li>
   </ol>
 </nav>
