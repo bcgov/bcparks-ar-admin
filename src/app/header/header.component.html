@@ -23,6 +23,12 @@
           alt="BC Parks Logo"
         />
       </a>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="me-auto"></ul>
+        <div *ngIf="isAuthenticated" class="navbar-text me-3">{{
+          welcomeMsg
+        }}</div>
+      </div>
     </div>
   </nav>
   <div
