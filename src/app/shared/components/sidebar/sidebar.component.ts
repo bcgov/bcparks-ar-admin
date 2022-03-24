@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     protected router: Router
   ) {
     this.routes = router.config.filter(function (obj) {
-      return obj.path !== '**';
+      return obj.path !== '**' && obj.path !== 'unauthorized';
     });
 
     this.subscriptions.push(

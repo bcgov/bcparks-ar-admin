@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +12,15 @@ export class ApiService {
   apiPath: string;
   env: 'local' | 'dev' | 'test' | 'prod';
 
-  constructor(
-    private http: HttpClient,
-    private configService: ConfigService,
-    private logger: LoggerService
-  ) {
+  constructor(private http: HttpClient, private configService: ConfigService) {
     this.apiPath =
       this.configService.config['API_LOCATION'] +
       this.configService.config['API_PUBLIC_PATH'];
     this.env = this.configService.config['ENVIRONMENT'];
+  }
+
+  public getEnvironment(): string {
+    return this.env;
   }
 
   // post(pk, obj, queryParamsObject = null): Promise<any> {

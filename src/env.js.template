@@ -17,8 +17,8 @@
     window.__env.API_PUBLIC_PATH = '/api';
 
     // Keycloak
-    window.__env.KEYCLOAK_CLIENT_ID = '-';
+    window.__env.KEYCLOAK_CLIENT_ID = 'parking-pass';
     window.__env.KEYCLOAK_URL = 'https://oidc.gov.bc.ca/auth';
-    window.__env.KEYCLOAK_REALM = '-';
+    window.__env.KEYCLOAK_REALM = 'g7v0xlf4';
     window.__env.KEYCLOAK_ENABLED = true;
 }(this));

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { SubAreaService } from '../services/sub-area.service';
-import { Constants } from '../shared/constants';
+import { Constants } from '../shared/utils/constants';
 
 @Injectable({
   providedIn: 'root',

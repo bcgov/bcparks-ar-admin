@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 
 @Component({
@@ -6,13 +6,11 @@ import { ConfigService } from '../services/config.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   public envName: string;
   public showBanner = true;
 
-  constructor(private configService: ConfigService) {}
-
-  ngOnInit(): void {
+  constructor(protected configService: ConfigService) {
     this.envName = this.configService.config['ENVIRONMENT'];
     if (this.envName === 'prod') {
       this.showBanner = false;

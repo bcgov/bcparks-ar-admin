@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/internal/operators/takeWhile';
 import { DataService } from '../services/data.service';
-import { Constants } from '../shared/constants';
+import { Constants } from '../shared/utils/constants';
 
 @Component({
   selector: 'app-enter-data',
