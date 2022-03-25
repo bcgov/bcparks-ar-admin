@@ -1,6 +1,9 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ConfigService } from '../services/config.service';
+import { KeycloakService } from '../services/keycloak.service';
 
 import { HeaderComponent } from './header.component';
 
@@ -10,8 +13,9 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [HeaderComponent],
-      providers: [ConfigService, HttpClient, HttpHandler],
+      providers: [ConfigService, KeycloakService, HttpClient, HttpHandler],
     }).compileComponents();
   });
 

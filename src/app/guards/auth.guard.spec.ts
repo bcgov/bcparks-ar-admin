@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { KeycloakService } from 'keycloak-angular/lib/core/services/keycloak.service';
+import { KeycloakService } from '../services/keycloak.service';
 
 import { AuthGuard } from './auth.guard';
 
