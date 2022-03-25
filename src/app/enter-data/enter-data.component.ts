@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/internal/operators/takeWhile';
 import { DataService } from '../services/data.service';
 import { Constants } from '../shared/utils/constants';
+import { Utils } from '../shared/utils/utils';
 
 @Component({
   selector: 'app-enter-data',
@@ -10,11 +11,17 @@ import { Constants } from '../shared/utils/constants';
 })
 export class EnterDataComponent implements OnDestroy {
   private alive = true;
-
-  public parks: any[] = [];
-  public subAreas: any[] = [];
-
   private subscriptions: any[] = [];
+  private utils = new Utils();
+
+  public parks = { typeAheadData: [] as any[] };
+  public subAreas = { selectData: [] as any[] };
+
+  public typeAheadDisabled = true;
+  public subAreaDisabled = true;
+
+  public selectedPark;
+  public selectedSubArea;
 
   constructor(protected dataService: DataService) {
     this.subscriptions.push(
@@ -22,30 +29,29 @@ export class EnterDataComponent implements OnDestroy {
         .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
-          if (res) {
+          if (res && res.typeAheadData.length > 0) {
             this.parks = res;
-          }
-        })
-    );
-
-    this.subscriptions.push(
-      dataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
-        .pipe(takeWhile(() => this.alive))
-        .subscribe((res) => {
-          if (res) {
-            this.subAreas = res;
+            this.typeAheadDisabled = false;
           }
         })
     );
   }
 
   parkTypeaheadOutput(event) {
-    console.log(event);
+    this.selectedPark = this.parks[event];
+    this.subAreas = this.utils.convertArrayIntoObjForSelect(
+      this.selectedPark.subareas,
+      'type',
+      'type',
+      'name'
+    );
+    this.subAreaDisabled = false;
+    console.log('This is the selected park:', this.selectedPark);
   }
 
   subAreaOutput(event) {
-    console.log(event);
+    this.selectedSubArea = this.subAreas[event];
+    console.log('This is the selected sub-area:', this.selectedSubArea);
   }
 
   ngOnDestroy() {

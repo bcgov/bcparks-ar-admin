@@ -12,7 +12,7 @@
     window.__env.ENVIRONMENT = 'local';
 
     // API
-    window.__env.API_LOCATION = 'http://localhost:3000';
+    window.__env.API_LOCATION = 'https://l267fuit1b.execute-api.ca-central-1.amazonaws.com';
     window.__env.API_PATH = '/api';
     window.__env.API_PUBLIC_PATH = '/api';
 

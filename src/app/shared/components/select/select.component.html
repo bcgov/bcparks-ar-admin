@@ -5,6 +5,7 @@
   aria-label="Default select example"
   [ngModel]="selected"
   (ngModelChange)="emit($event)"
+  [disabled]="disabled ? true : false"
 >
   <option selected>- Select an option -</option>
   <option *ngFor="let item of data" [value]="item.id">{{ item.label }}</option>

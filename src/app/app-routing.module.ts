@@ -6,7 +6,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { ParkResolver } from './reslovers/park.resolver';
-import { SubAreaResolver } from './reslovers/sub-area.resolver';
 
 const routes: Routes = [
   {
@@ -29,7 +28,7 @@ const routes: Routes = [
     data: {
       label: 'Enter Data',
     },
-    resolve: [ParkResolver, SubAreaResolver],
+    resolve: [ParkResolver],
   },
   {
     path: 'export-reports',

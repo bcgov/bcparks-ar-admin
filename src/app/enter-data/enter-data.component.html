@@ -20,8 +20,9 @@
     <div class="col-6">
       <app-typeahead
         [id]="'park-typeahead'"
-        [data]="parks"
+        [data]="parks['typeAheadData']"
         [label]="'Park'"
+        [disabled]="typeAheadDisabled"
         (output)="parkTypeaheadOutput($event)"
       ></app-typeahead>
     </div>
@@ -38,8 +39,9 @@
     <div class="col-6">
       <app-select
         [id]="'sub-area-select'"
-        [data]="subAreas"
+        [data]="subAreas.selectData"
         [label]="'Sub-areas'"
+        [disabled]="subAreaDisabled"
         (output)="subAreaOutput($event)"
       ></app-select>
     </div>

@@ -9,6 +9,7 @@ export class SelectComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() label: String = '';
   @Input() id: String = 'select';
+  @Input() disabled: boolean = false;
 
   public selected;
 

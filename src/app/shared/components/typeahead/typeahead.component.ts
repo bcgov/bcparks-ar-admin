@@ -24,6 +24,7 @@ export class TypeaheadComponent {
   @Input() data: any[] = [];
   @Input() label: String = '';
   @Input() id: String = 'typeahead-focus';
+  @Input() disabled: boolean = false;
 
   @Output() output: EventEmitter<any> = new EventEmitter();
 
@@ -57,7 +58,7 @@ export class TypeaheadComponent {
     );
   };
 
-  emit() {
-    this.output.emit(this.model);
+  emit(event) {
+    this.output.emit(event.item);
   }
 }
