@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { takeWhile } from 'rxjs/internal/operators/takeWhile';
 import { DataService } from '../services/data.service';
 import { Constants } from '../shared/utils/constants';
@@ -14,11 +15,14 @@ export class EnterDataComponent implements OnDestroy {
   private subscriptions: any[] = [];
   private utils = new Utils();
 
+  public dateFormControl = new FormControl();
+
   public parks = { typeAheadData: [] as any[] };
   public subAreas = { selectData: [] as any[] };
 
   public typeAheadDisabled = true;
   public subAreaDisabled = true;
+  public continueDisabled = true;
 
   public selectedPark;
   public selectedSubArea;
@@ -51,6 +55,7 @@ export class EnterDataComponent implements OnDestroy {
 
   subAreaOutput(event) {
     this.selectedSubArea = this.subAreas[event];
+    this.continueDisabled = false;
     console.log('This is the selected sub-area:', this.selectedSubArea);
   }
 

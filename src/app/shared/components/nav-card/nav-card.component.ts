@@ -17,6 +17,6 @@ export class NavCardComponent implements OnInit {
   ngOnInit(): void {}
 
   navigate(nav) {
-    this.router.navigate([nav], { relativeTo: this.route });
+    this.router.navigate(['/' + nav]);
   }
 }

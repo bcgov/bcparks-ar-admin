@@ -30,4 +30,16 @@ export class Utils {
     }
     return obj;
   }
+
+  public convertJSDateToNGBDate(jSDate: Date) {
+    if (!jSDate) {
+      return null;
+    }
+
+    return {
+      year: jSDate.getFullYear(),
+      month: jSDate.getMonth() + 1,
+      day: jSDate.getDate(),
+    };
+  }
 }

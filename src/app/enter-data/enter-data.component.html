@@ -6,12 +6,9 @@
     selecting the date and location you want to view.
   </p>
   <h2>Date</h2>
-  <div class="row">
-    <div class="col-6">I'm too lazy to do a date picker right now.</div>
+  <div class="row mb-4">
     <div class="col-6">
-      <app-info-text
-        [text]="'Choose the date for which you want to add data.'"
-      ></app-info-text>
+      <lib-date-picker [control]="dateFormControl"></lib-date-picker>
     </div>
   </div>
   <h2>Location</h2>
@@ -30,7 +27,7 @@
       <label></label>
       <app-info-text
         [text]="
-          'Type the first few letters of the park name and then select from the list.'
+          'Type the first few letters of the park name and then select a park from the list shown.'
         "
       ></app-info-text>
     </div>
@@ -45,11 +42,23 @@
         (output)="subAreaOutput($event)"
       ></app-select>
     </div>
+    <div class="col-6">
+      <label></label>
+      <app-info-text
+        [text]="'Select park before selecting sub-area.'"
+      ></app-info-text>
+    </div>
   </div>
   <div class="row mt-4">
     <div class="col-6">
       <div class="d-grid">
-        <button class="btn btn-primary" type="button">Continue</button>
+        <button
+          class="btn btn-primary"
+          type="button"
+          [disabled]="continueDisabled ? true : false"
+        >
+          Continue
+        </button>
       </div>
     </div>
   </div>
