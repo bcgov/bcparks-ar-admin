@@ -1,11 +1,18 @@
 @import "src/assets/themes/variables";
 
-nav {
-  padding-top: 1.25rem;
-  height: 4.0rem;
-  background: $light;
-}
 
 .toggle-button-offset {
-  padding-left: 3rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 992px) {
+  .toggle-button-offset {
+    padding-left: 3rem;
+  }
+}
+
+nav {
+  padding-top: 1.25rem;
+  height: 4rem;
+  background: $light;
 }

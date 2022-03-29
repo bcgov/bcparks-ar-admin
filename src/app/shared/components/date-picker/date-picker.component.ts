@@ -14,7 +14,7 @@ import { Utils } from '../../utils/utils';
 import { takeWhile } from 'rxjs/operators';
 
 @Component({
-  selector: 'lib-date-picker',
+  selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
 })

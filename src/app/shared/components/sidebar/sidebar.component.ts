@@ -1,11 +1,7 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs/internal/operators/takeWhile';
 import { SideBarService } from 'src/app/services/sidebar.service';
-import {
-  Router,
-  Event as NavigationEvent,
-  NavigationEnd,
-} from '@angular/router';
+import { Router, Event, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
 
 @Component({
@@ -13,14 +9,14 @@ import { filter } from 'rxjs/internal/operators/filter';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent implements OnDestroy {
   @HostBinding('class.is-toggled')
   public hide = false;
 
   public routes: any[] = [];
   public currentRoute: any;
 
-  public alive = true;
+  private alive = true;
 
   private subscriptions: any[] = [];
 
@@ -35,7 +31,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
-        .subscribe((event: NavigationEvent) => {
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((event: Event) => {
           this.currentRoute = event;
         })
     );
@@ -48,8 +45,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
         })
     );
   }
-
-  ngOnInit(): void {}
 
   ngOnDestroy() {
     this.alive = false;

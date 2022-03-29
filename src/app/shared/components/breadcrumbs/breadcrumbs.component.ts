@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   Router,
   Event as NavigationEvent,
   NavigationEnd,
   ActivatedRoute,
 } from '@angular/router';
+import { takeWhile } from 'rxjs';
 import { filter } from 'rxjs/internal/operators/filter';
 
 @Component({
@@ -12,10 +13,13 @@ import { filter } from 'rxjs/internal/operators/filter';
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
 })
-export class BreadcrumbsComponent implements OnInit {
+export class BreadcrumbsComponent implements OnDestroy{
   private routes: any[] = [];
+  private alive = true;
+  private subscriptions: any[] = [];
+
   // TODO: Have this be set by a service
-  public toggleButtonExists = true;
+  // public toggleButtonExists = true;
 
   public currentNavigation: any;
 
@@ -29,6 +33,7 @@ export class BreadcrumbsComponent implements OnInit {
 
     router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(takeWhile(() => this.alive))
       .subscribe((event: NavigationEvent) => {
         let navArray = (event as NavigationEnd).url.split('/');
         navArray.shift();
@@ -52,5 +57,10 @@ export class BreadcrumbsComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {}
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
+  }
 }
