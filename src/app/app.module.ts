@@ -46,7 +46,7 @@ export function initConfig(
     EnterDataModule,
     HeaderModule,
     FooterModule,
-    HomeModule,
+    HomeModule
   ],
   providers: [
     {

@@ -1,2 +1,22 @@
+@import "src/assets/themes/variables";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import "/src/assets/styles/base/base.scss";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+/* Override ngx-boostrap colours */
+.bs-datepicker-body table td.week span {
+  color: $secondary-nav !important;
+}
+
+.bs-datepicker-body table td span.selected,
+.bs-datepicker-head,
+.bs-datepicker-head,
+.bs-datepicker button:active,
+.bs-datepicker-body table td.selected span,
+.bs-datepicker-body table td span[class*="select-"]:after,
+.bs-datepicker-body table td[class*="select-"] span:after,
+.bs-datepicker-body table td.active-week span:hover {
+  background-color: $secondary-nav !important;
+}

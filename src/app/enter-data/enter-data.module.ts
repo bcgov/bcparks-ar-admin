@@ -5,6 +5,9 @@ import { TypeaheadModule } from '../shared/components/typeahead/typeahead.module
 import { InfoTextModule } from '../shared/components/info-text/info-text.module';
 import { SelectModule } from '../shared/components/select/select.module';
 import { DatePickerModule } from '../shared/components/date-picker/date-picker.module';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [EnterDataComponent],
@@ -14,6 +17,9 @@ import { DatePickerModule } from '../shared/components/date-picker/date-picker.m
     InfoTextModule,
     SelectModule,
     DatePickerModule,
+    FormsModule,
+    BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   exports: [EnterDataComponent],
 })
