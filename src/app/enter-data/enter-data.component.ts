@@ -27,6 +27,8 @@ export class EnterDataComponent implements OnDestroy {
   public selectedPark;
   public selectedSubArea;
 
+  public modelDate = '';
+
   constructor(protected dataService: DataService) {
     this.subscriptions.push(
       dataService
@@ -57,6 +59,13 @@ export class EnterDataComponent implements OnDestroy {
     this.selectedSubArea = this.subAreas[event];
     this.continueDisabled = false;
     console.log('This is the selected sub-area:', this.selectedSubArea);
+  }
+
+  onOpenCalendar(container) {
+    container.monthSelectHandler = (event: any): void => {
+      container._store.dispatch(container._actions.select(event.date));
+    };
+    container.setViewMode('month');
   }
 
   ngOnDestroy() {

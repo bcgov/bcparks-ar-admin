@@ -7,14 +7,22 @@
   </p>
   <h2>Date</h2>
   <div class="row mb-4">
-    <div class="col-6">
-      <app-date-picker [control]="dateFormControl"></app-date-picker>
+    <div class="col-12 col-md-6">
+      <input
+        [(ngModel)]="modelDate"
+        autocomplete="off"
+        class="form-control"
+        name="date"
+        bsDatepicker
+        [bsConfig]="{ dateInputFormat: 'MM/YYYY' }"
+        (onShown)="onOpenCalendar($event)"
+      />
     </div>
   </div>
   <h2>Location</h2>
   <div class="row">
     <label></label>
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       <app-typeahead
         [id]="'park-typeahead'"
         [data]="parks['typeAheadData']"
@@ -23,7 +31,7 @@
         (output)="parkTypeaheadOutput($event)"
       ></app-typeahead>
     </div>
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       <label></label>
       <app-info-text
         [text]="
@@ -33,7 +41,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       <app-select
         [id]="'sub-area-select'"
         [data]="subAreas.selectData"
@@ -42,7 +50,7 @@
         (output)="subAreaOutput($event)"
       ></app-select>
     </div>
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       <label></label>
       <app-info-text
         [text]="'Select park before selecting sub-area.'"
@@ -50,7 +58,7 @@
     </div>
   </div>
   <div class="row mt-4">
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       <div class="d-grid">
         <button
           class="btn btn-primary"
