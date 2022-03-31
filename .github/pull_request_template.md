@@ -1,8 +1,8 @@
 ### Jira Ticket:
-BRS-123
+BRS-
 
 ### Jira Ticket URL:
-https://bcparksdigital.atlassian.net/browse/BRS-123
+https://bcparksdigital.atlassian.net/browse/BRS-
 
 ### Description:
 This is a description.
