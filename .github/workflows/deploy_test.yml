@@ -142,12 +142,12 @@ jobs:
           origin_id_assets: ${{ env.ORIGIN_ID_ASSETS }}
         run: terragrunt apply-all --terragrunt-non-interactive
 
- # alert-if-failure:
-  #  if: ${{ always() && ((needs.s3.result=='failure') || (needs.terragrunt.result=='failure'))}}
-   # runs-on: ubuntu-latest
-    #needs: [terragrunt, s3]
-    #steps:
-     # - name: Send alert if building admin-test fails. 
-      #  id: failure_alert
-       # run: |
-        #  curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/${{ secrets.ROCKETCHAT_TOKEN }}
+  alert-if-failure:
+    if: ${{ always() && ((needs.s3.result=='failure') || (needs.terragrunt.result=='failure'))}}
+    runs-on: ubuntu-latest
+    needs: [terragrunt, s3]
+    steps:
+      - name: Send alert if building admin-test fails. 
+        id: failure_alert
+        run: |
+          curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/${{ secrets.ROCKETCHAT_TOKEN }}
