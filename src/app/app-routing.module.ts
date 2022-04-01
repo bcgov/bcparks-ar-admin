@@ -9,16 +9,12 @@ import { ParkResolver } from './reslovers/park.resolver';
 
 const routes: Routes = [
   {
-    path: 'unauthorized',
-    pathMatch: 'full',
-    component: NotAuthorizedComponent,
-  },
-  {
     path: '',
     component: HomeComponent,
     canActivate: [AuthGuard],
     data: {
       label: 'Home',
+      breadcrumb: 'Home',
     },
   },
   {
@@ -27,6 +23,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       label: 'Enter Data',
+      breadcrumb: 'Enter Data',
     },
     resolve: [ParkResolver],
   },
@@ -36,7 +33,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       label: 'Export Reports',
+      breadcrumb: 'Export Reports',
     },
+  },
+  {
+    path: 'unauthorized',
+    pathMatch: 'full',
+    component: NotAuthorizedComponent,
   },
   {
     // wildcard route
