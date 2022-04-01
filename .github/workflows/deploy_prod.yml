@@ -44,7 +44,7 @@ jobs:
           s3_bucket: '${{ env.S3_BUCKET_ARTIFACTS }}'
           dir_name: ${{ github.sha }}
         run: |
-        # aws s3 sync s3://$s3_bucket/$dir_name/ dist/bcparks-ar-admin
+          aws s3 sync s3://$s3_bucket/$dir_name/ dist/bcparks-ar-admin
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -67,7 +67,7 @@ jobs:
           s3_bucket: '${{ env.S3_BUCKET }}-${{ env.TARGET_ENV }}'
           dir_name: ${{ github.event.inputs.releaseTag }}
         run: |
-       # aws s3 sync dist/bcparks-ar-admin s3://$s3_bucket/$dir_name/
+          aws s3 sync dist/bcparks-ar-admin s3://$s3_bucket/$dir_name/
   terragrunt:
     name: Run Terragrunt
     needs: ['s3']
