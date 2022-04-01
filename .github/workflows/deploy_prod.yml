@@ -142,12 +142,12 @@ jobs:
           ssl_cert_arn: ${{ secrets.PARKS_SSL_CERT_ARN }}
         run: terragrunt apply-all --terragrunt-non-interactive
         
-  alert-if-failure:
-    if: ${{ always() && ((needs.s3.result=='failure') || (needs.terragrunt.result=='failure'))}}
-    runs-on: ubuntu-latest
-    needs: [terragrunt, s3]
-    steps:
-      - name: Send alert if building admin-prod fails.
-        id: failure_alert
-        run: |
-          curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/${{ secrets.ROCKETCHAT_TOKEN }}
+ # alert-if-failure:
+  #  if: ${{ always() && ((needs.s3.result=='failure') || (needs.terragrunt.result=='failure'))}}
+   # runs-on: ubuntu-latest
+    #needs: [terragrunt, s3]
+    #steps:
+     # - name: Send alert if building admin-prod fails.
+      #  id: failure_alert
+       # run: |
+        #  curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/${{ secrets.ROCKETCHAT_TOKEN }}
