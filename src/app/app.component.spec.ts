@@ -12,7 +12,7 @@ import { DataService } from './services/data.service';
 import { EventService } from './services/event.service';
 import { LoggerService } from './services/logger.service';
 import { ToastService } from './services/toast.service';
-import { BreadcrumbsModule } from './shared/components/breadcrumbs/breadcrumbs.module';
+import { BreadcrumbModule } from './shared/components/breadcrumb/breadcrumb.module';
 import { SidebarModule } from './shared/components/sidebar/sidebar.module';
 import { ToggleButtonModule } from './shared/components/toggle-button/toggle-button.module';
 
@@ -24,7 +24,7 @@ describe('AppComponent', () => {
         HttpClientModule,
         SidebarModule,
         ToggleButtonModule,
-        BreadcrumbsModule,
+        BreadcrumbModule,
         ExportReportsModule,
         EnterDataModule,
         HeaderModule,
