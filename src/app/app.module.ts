@@ -12,7 +12,7 @@ import { EventService } from './services/event.service';
 import { ToastService } from './services/toast.service';
 import { SidebarModule } from './shared/components/sidebar/sidebar.module';
 import { ToggleButtonModule } from './shared/components/toggle-button/toggle-button.module';
-import { BreadcrumbsModule } from './shared/components/breadcrumbs/breadcrumbs.module';
+import { BreadcrumbModule } from './shared/components/breadcrumb/breadcrumb.module';
 import { ExportReportsModule } from './export-reports/export-reports.module';
 import { EnterDataModule } from './enter-data/enter-data.module';
 import { HeaderModule } from './header/header.module';
@@ -41,7 +41,7 @@ export function initConfig(
     HttpClientModule,
     SidebarModule,
     ToggleButtonModule,
-    BreadcrumbsModule,
+    BreadcrumbModule,
     ExportReportsModule,
     EnterDataModule,
     HeaderModule,
