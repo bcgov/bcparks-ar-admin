@@ -6,9 +6,9 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./calculation-display.component.scss'],
 })
 export class CalculationDisplayComponent {
-  @Input() label = '1';
-  @Input() value = '2';
-  @Input() subtext = '3';
+  @Input() label;
+  @Input() value;
+  @Input() subtext;
 
   constructor() {}
 }
