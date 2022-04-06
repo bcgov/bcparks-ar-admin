@@ -12,7 +12,7 @@
     window.__env.ENVIRONMENT = 'local';
 
     // API
-    window.__env.API_LOCATION = 'https://xa6gjgmu8f.execute-api.ca-central-1.amazonaws.com/api';
+    window.__env.API_LOCATION = 'https://xa6gjgmu8f.execute-api.ca-central-1.amazonaws.com';
     window.__env.API_PATH = '/api';
     window.__env.API_PUBLIC_PATH = '/api';
 
