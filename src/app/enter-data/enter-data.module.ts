@@ -8,9 +8,11 @@ import { DatePickerModule } from '../shared/components/date-picker/date-picker.m
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { SubAreaSearchComponent } from './sub-area-search/sub-area-search.component';
+import { CenteredTextBlockModule } from '../shared/components/centered-text-block/centered-text-block.module';
 
 @NgModule({
-  declarations: [EnterDataComponent],
+  declarations: [EnterDataComponent, SubAreaSearchComponent],
   imports: [
     CommonModule,
     TypeaheadModule,
@@ -20,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
+    CenteredTextBlockModule,
   ],
   exports: [EnterDataComponent],
 })

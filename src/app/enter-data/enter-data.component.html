@@ -1,73 +1,12 @@
-<div class="container-fluid">
-  <h1>Enter Data</h1>
-  <p>
-    Select the date and location below for the Attendance and Revenue data you
-    want to enter. If you want to view past enteries, you can do that by
-    selecting the date and location you want to view.
-  </p>
-  <h2>Date</h2>
-  <div class="row mb-4">
-    <div class="col-12 col-md-6">
-      <input
-        [(ngModel)]="modelDate"
-        autocomplete="off"
-        class="form-control"
-        name="date"
-        bsDatepicker
-        [bsConfig]="{ dateInputFormat: 'MM/YYYY' }"
-        (onShown)="onOpenCalendar($event)"
-      />
-    </div>
-  </div>
-  <h2>Location</h2>
-  <div class="row">
-    <label></label>
-    <div class="col-12 col-md-6">
-      <app-typeahead
-        [id]="'park-typeahead'"
-        [data]="parks['typeAheadData']"
-        [label]="'Park'"
-        [disabled]="typeAheadDisabled"
-        (output)="parkTypeaheadOutput($event)"
-      ></app-typeahead>
-    </div>
-    <div class="col-12 col-md-6">
-      <label></label>
-      <app-info-text
-        [text]="
-          'Type the first few letters of the park name and then select a park from the list shown.'
-        "
-      ></app-info-text>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-md-6">
-      <app-select
-        [id]="'sub-area-select'"
-        [data]="subAreas.selectData"
-        [label]="'Sub-areas'"
-        [disabled]="subAreaDisabled"
-        (output)="subAreaOutput($event)"
-      ></app-select>
-    </div>
-    <div class="col-12 col-md-6">
-      <label></label>
-      <app-info-text
-        [text]="'Select park before selecting sub-area.'"
-      ></app-info-text>
-    </div>
-  </div>
-  <div class="row mt-4">
-    <div class="col-12 col-md-6">
-      <div class="d-grid">
-        <button
-          class="btn btn-primary"
-          type="button"
-          [disabled]="continueDisabled ? true : false"
-        >
-          Continue
-        </button>
-      </div>
-    </div>
-  </div>
+<app-sub-area-search></app-sub-area-search>
+
+<div class="container-fluid mt-5">
+  <app-centered-text-block
+    *ngIf="!subAreas"
+    [text]="text"
+  ></app-centered-text-block>
+  <app-centered-text-block
+    *ngIf="subAreas && subAreas.length === 0"
+    [text]="'This sub-area has no associated forms.'"
+  ></app-centered-text-block>
 </div>
