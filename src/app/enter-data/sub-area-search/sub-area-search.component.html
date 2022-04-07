@@ -1,6 +1,6 @@
 <div class="p-4 bg-info">
   <div class="row">
-    <div class="col-3">
+    <div class="col-sm-12 col-md-6 col-lg-3">
       <label class="fw-bold">Date</label>
       <input
         [(ngModel)]="modelDate"
@@ -12,7 +12,7 @@
         (onShown)="onOpenCalendar($event)"
       />
     </div>
-    <div class="col-3">
+    <div class="col-sm-12 col-md-6 col-lg-3">
       <app-typeahead
         [id]="'park-typeahead'"
         [data]="parks['typeAheadData']"
@@ -21,7 +21,7 @@
         (output)="parkTypeaheadOutput($event)"
       ></app-typeahead>
     </div>
-    <div class="col-3">
+    <div class="col-sm-12 col-md-6 col-lg-3">
       <app-select
         [id]="'sub-area-select'"
         [data]="subAreas.selectData"
@@ -30,7 +30,7 @@
         (output)="subAreaOutput($event)"
       ></app-select>
     </div>
-    <div class="col-3 align-self-end">
+    <div class="col-sm-12 col-md-6 col-lg-3 align-self-end">
       <button class="btn btn-primary w-50" type="button">Go</button>
     </div>
   </div>
