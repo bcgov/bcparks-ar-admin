@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
+import { TypeaheadComponent } from 'src/app/shared/components/typeahead/typeahead.component';
 import { Constants } from 'src/app/shared/utils/constants';
-import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-sub-area-search',
@@ -10,9 +10,10 @@ import { Utils } from 'src/app/shared/utils/utils';
   styleUrls: ['./sub-area-search.component.scss'],
 })
 export class SubAreaSearchComponent implements OnDestroy {
+  @ViewChild(TypeaheadComponent) typeAhead: TypeaheadComponent;
+
   private alive = true;
   private subscriptions: any[] = [];
-  private utils = new Utils();
 
   public parks = { typeAheadData: [] as any[] };
   public subAreas = { selectData: [] as any[] };
@@ -33,26 +34,36 @@ export class SubAreaSearchComponent implements OnDestroy {
         .subscribe((res) => {
           if (res && res.typeAheadData.length > 0) {
             this.parks = res;
-            this.typeAheadDisabled = false;
           }
         })
     );
   }
 
+  datePickerOutput(event) {
+    this.typeAheadDisabled = false;
+    this.typeAhead.reset();
+
+    this.subAreaDisabled = true;
+    this.subAreas.selectData = [];
+
+    this.continueDisabled = true;
+  }
+
   parkTypeaheadOutput(event) {
     this.selectedPark = this.parks[event];
-    this.subAreas = this.utils.convertArrayIntoObjForSelect(
-      this.selectedPark.subareas,
-      'type',
-      'type',
-      'name'
-    );
+    this.subAreas.selectData = [];
+    for (let i = 0; i < this.selectedPark.subAreas.length; i++) {
+      this.subAreas.selectData.push({
+        id: this.selectedPark.subAreas[i],
+        label: this.selectedPark.subAreas[i],
+      });
+    }
     this.subAreaDisabled = false;
-    console.log('This is the selected park:', this.selectedPark);
+    this.continueDisabled = true;
   }
 
   subAreaOutput(event) {
-    this.selectedSubArea = this.subAreas[event];
+    this.selectedSubArea = event;
     this.continueDisabled = false;
     console.log('This is the selected sub-area:', this.selectedSubArea);
   }

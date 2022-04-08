@@ -7,9 +7,11 @@
         autocomplete="off"
         class="form-control"
         name="date"
+        placeholder="Select date"
         bsDatepicker
         [bsConfig]="{ dateInputFormat: 'MM/YYYY' }"
         (onShown)="onOpenCalendar($event)"
+        (ngModelChange)="datePickerOutput($event)"
       />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-3">
@@ -17,6 +19,7 @@
         [id]="'park-typeahead'"
         [data]="parks['typeAheadData']"
         [label]="'Park'"
+        [placeholder] = "'Search by park name'"
         [disabled]="typeAheadDisabled"
         (output)="parkTypeaheadOutput($event)"
       ></app-typeahead>

@@ -21,13 +21,19 @@ import { HomeModule } from './home/home.module';
 import { KeycloakService } from './services/keycloak.service';
 import { TokenInterceptor } from './shared/utils/token-interceptor';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { ApiService } from './services/api.service';
+import { AutoFetchService } from './services/auto-fetch.service';
 
 export function initConfig(
   configService: ConfigService,
+  apiService: ApiService,
+  autoFetchService: AutoFetchService,
   keycloakService: KeycloakService
 ) {
   return async () => {
     await configService.init();
+    apiService.init();
+    autoFetchService.run();
     await keycloakService.init();
   };
 }
@@ -46,13 +52,13 @@ export function initConfig(
     EnterDataModule,
     HeaderModule,
     FooterModule,
-    HomeModule
+    HomeModule,
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: initConfig,
-      deps: [ConfigService, KeycloakService],
+      deps: [ConfigService, ApiService, AutoFetchService, KeycloakService],
       multi: true,
     },
     {
@@ -66,6 +72,7 @@ export function initConfig(
     DataService,
     EventService,
     ToastService,
+    AutoFetchService,
   ],
   bootstrap: [AppComponent],
 })

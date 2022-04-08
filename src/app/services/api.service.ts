@@ -12,7 +12,9 @@ export class ApiService {
   apiPath: string;
   env: 'local' | 'dev' | 'test' | 'prod';
 
-  constructor(private http: HttpClient, private configService: ConfigService) {
+  constructor(private http: HttpClient, private configService: ConfigService) {}
+
+  init() {
     this.apiPath =
       this.configService.config['API_LOCATION'] +
       this.configService.config['API_PUBLIC_PATH'];
