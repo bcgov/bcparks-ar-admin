@@ -5,7 +5,7 @@ import { ExportReportsComponent } from './export-reports/export-reports.componen
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
-import { ParkResolver } from './reslovers/park.resolver';
+import { ParkResolver } from './resolvers/park.resolver';
 
 const routes: Routes = [
   {
