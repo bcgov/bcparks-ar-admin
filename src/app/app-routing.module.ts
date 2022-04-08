@@ -5,7 +5,6 @@ import { ExportReportsComponent } from './export-reports/export-reports.componen
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
-import { ParkResolver } from './resolvers/park.resolver';
 
 const routes: Routes = [
   {
@@ -25,7 +24,6 @@ const routes: Routes = [
       label: 'Enter Data',
       breadcrumb: 'Enter Data',
     },
-    resolve: [ParkResolver],
   },
   {
     path: 'export-reports',

@@ -22,6 +22,7 @@ import { OperatorFunction } from 'rxjs/internal/types';
 })
 export class TypeaheadComponent {
   @Input() data: any[] = [];
+  @Input() placeholder = '';
   @Input() label: String = '';
   @Input() id: String = 'typeahead-focus';
   @Input() disabled: boolean = false;
@@ -60,5 +61,9 @@ export class TypeaheadComponent {
 
   emit(event) {
     this.output.emit(event.item);
+  }
+
+  reset() {
+    this.model = null;
   }
 }

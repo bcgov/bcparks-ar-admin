@@ -30,8 +30,8 @@ export class ParkService {
       res = await firstValueFrom(this.apiService.get('park'));
       let dataObj = this.utils.convertArrayIntoObjForTypeAhead(
         res,
-        'name',
-        'name'
+        'parkName',
+        'parkName'
       );
       this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_PARK, dataObj);
     } catch (e) {

@@ -3,6 +3,7 @@
   id="{{ id }}"
   type="text"
   class="form-control"
+  placeholder="{{ placeholder }}"
   [(ngModel)]="model"
   [ngbTypeahead]="search"
   (focus)="focus$.next($any($event).target.value)"
