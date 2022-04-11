@@ -27,3 +27,19 @@ body {
 .clickable {
   cursor: pointer;
 }
+
+.accordion {
+  border: 2px solid $primary-blue;
+  border-radius: 4px;
+
+  .accordion-button{
+    color: $primary-blue;
+    background-color: white;
+    box-shadow: none;
+  }
+
+  .accordion-item {
+    border: none;
+    color: black;
+  }
+}

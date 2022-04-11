@@ -9,7 +9,5 @@
     *ngIf="subAreaData?.activities && subAreaData?.activities.length === 0"
     [text]="'This sub-area has no associated forms.'"
   ></app-centered-text-block>
-
-  <!-- Accordion -->
-  <div *ngIf="subAreaData?.activities?.length > 0">Accordion goes here</div>
+  <app-accordion-manager></app-accordion-manager>
 </div>

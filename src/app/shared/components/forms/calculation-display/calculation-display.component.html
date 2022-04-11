@@ -1,6 +1,6 @@
-<div class="d-flex bg-info">
-  <div class="p-2 flex-grow-1">{{ label }}</div>
-  <div class="p-2">{{ value || "-" }}</div>
+<div class="d-flex {{colorClass}}">
+  <div class="p-2 flex-grow-1"><strong>{{ label }}</strong></div>
+  <div class="p-2"><strong>{{ value || "-" }}</strong></div>
 </div>
 <div *ngIf="subtext" class="ps-2">
   <small class="text-muted">{{ subtext }}</small>
