@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { ApiService } from './api.service';
 import { DataService } from './data.service';
 import { EventService, EventObject, EventKeywords } from './event.service';
 import { ToastService, ToastTypes } from './toast.service';
@@ -10,10 +12,11 @@ export class SubAreaService {
   constructor(
     private dataService: DataService,
     private eventService: EventService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private apiService: ApiService
   ) {}
 
-  async fetchData(id) {
+  async fetchSubArea(id, orcs, subAreaName) {
     let res;
     let errorSubject = '';
     try {
@@ -21,14 +24,10 @@ export class SubAreaService {
       errorSubject = 'sub-area';
 
       // TODO: Enable this when our endpoint is ready
-      // res = await firstValueFrom(this.apiService.get('sub-area'));
-
-      // For now we are mocking data
-      res = [
-        { id: 'frontcountry-camping', label: 'Frontcountry Camping' },
-        { id: 'day-use', label: 'Day Use' },
-        { id: 'group-camping', label: 'Group Camping' },
-      ];
+      res = await firstValueFrom(
+        this.apiService.get('park', { orcs: orcs, subAreaName: subAreaName })
+      );
+      res = res[0];
 
       this.dataService.setItemValue(id, res);
     } catch (e) {

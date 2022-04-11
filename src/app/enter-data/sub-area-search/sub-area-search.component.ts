@@ -1,6 +1,7 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
+import { SubAreaService } from 'src/app/services/sub-area.service';
 import { TypeaheadComponent } from 'src/app/shared/components/typeahead/typeahead.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -26,7 +27,10 @@ export class SubAreaSearchComponent implements OnDestroy {
 
   public modelDate = '';
 
-  constructor(protected dataService: DataService) {
+  constructor(
+    protected dataService: DataService,
+    protected subAreaService: SubAreaService
+  ) {
     this.subscriptions.push(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
@@ -65,7 +69,6 @@ export class SubAreaSearchComponent implements OnDestroy {
   subAreaOutput(event) {
     this.selectedSubArea = event;
     this.continueDisabled = false;
-    console.log('This is the selected sub-area:', this.selectedSubArea);
   }
 
   onOpenCalendar(container) {
@@ -73,6 +76,14 @@ export class SubAreaSearchComponent implements OnDestroy {
       container._store.dispatch(container._actions.select(event.date));
     };
     container.setViewMode('month');
+  }
+
+  search() {
+    this.subAreaService.fetchSubArea(
+      Constants.dataIds.ENTER_DATA_SUB_AREA,
+      this.selectedPark.sk,
+      this.selectedSubArea
+    );
   }
 
   ngOnDestroy() {
