@@ -2,11 +2,14 @@
 
 <div class="container-fluid mt-5">
   <app-centered-text-block
-    *ngIf="!subAreas"
+    *ngIf="!subAreaData"
     [text]="text"
   ></app-centered-text-block>
   <app-centered-text-block
-    *ngIf="subAreas && subAreas.length === 0"
+    *ngIf="subAreaData?.activities && subAreaData?.activities.length === 0"
     [text]="'This sub-area has no associated forms.'"
   ></app-centered-text-block>
+
+  <!-- Accordion -->
+  <div *ngIf="subAreaData?.activities?.length > 0">Accordion goes here</div>
 </div>

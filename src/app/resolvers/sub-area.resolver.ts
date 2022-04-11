@@ -9,6 +9,6 @@ import { Constants } from '../shared/utils/constants';
 export class SubAreaResolver implements Resolve<void> {
   constructor(private subAreaService: SubAreaService) {}
   resolve() {
-    this.subAreaService.fetchData(Constants.dataIds.ENTER_DATA_SUB_AREA);
+    // this.subAreaService.fetchData(Constants.dataIds.ENTER_DATA_SUB_AREA);
   }
 }
