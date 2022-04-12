@@ -30,7 +30,7 @@ export class SubAreaSearchComponent implements OnDestroy {
   constructor(
     protected dataService: DataService,
     protected subAreaService: SubAreaService
-  ) {
+    ) {
     this.subscriptions.push(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_PARK)

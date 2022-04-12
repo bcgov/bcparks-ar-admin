@@ -9,6 +9,7 @@ export class CalculationDisplayComponent {
   @Input() label;
   @Input() value;
   @Input() subtext;
+  @Input() colorClass = 'blue';
 
   constructor() {}
 }

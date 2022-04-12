@@ -1,0 +1,53 @@
+<div class="accordion mb-3">
+  <div class="accordion-item">
+    <div class="accordion-header" id="id">
+      <button
+        class="accordion-button d-flex justify-content-between align-content-center"
+        type="button"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#collapse' + id"
+        aria-expanded="true"
+        aria-controls="id"
+      >
+        <div class="col d-flex justify-content-start">
+          <div class="d-flex align-items-center">
+            <img
+              class="d-none d-lg-block me-3"
+              src="{{ icon }}"
+              alt="{{ title }}"
+              width="{{ iconSize }}"
+              height="{{ iconSize }}"
+            />
+            <div class="h3 mb-0 pb-0">
+              {{ title }}
+            </div>
+          </div>
+        </div>
+        <div class="col justify-content-end mx-2 d-none d-lg-flex">
+          <div class="text-muted">
+            {{ secondaryText }}
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      id="collapse{{ id }}"
+      class="accordion-collapse collapse"
+      aria-labelledby="title"
+    >
+      <div class="accordion-body">
+        <div *ngIf="summaries">
+          <div *ngFor="let item of summaries">
+            <div class="mb-5">
+              <app-summary-section [section]="item"></app-summary-section>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="notes">
+          <h3>Variance notes</h3>
+          <div>{{notes}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
