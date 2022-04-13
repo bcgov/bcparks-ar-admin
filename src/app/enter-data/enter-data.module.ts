@@ -11,9 +11,13 @@ import { FormsModule } from '@angular/forms';
 import { SubAreaSearchComponent } from './sub-area-search/sub-area-search.component';
 import { CenteredTextBlockModule } from '../shared/components/centered-text-block/centered-text-block.module';
 import { AccordionManagerModule } from './accordion-manager/accordion-manager.module';
+import { DayUseModule } from '../forms/day-use/day-use.module';
 
 @NgModule({
-  declarations: [EnterDataComponent, SubAreaSearchComponent],
+  declarations: [
+    EnterDataComponent,
+    SubAreaSearchComponent,
+  ],
   imports: [
     CommonModule,
     TypeaheadModule,
@@ -25,6 +29,7 @@ import { AccordionManagerModule } from './accordion-manager/accordion-manager.mo
     BrowserAnimationsModule,
     CenteredTextBlockModule,
     AccordionManagerModule,
+    DayUseModule,
   ],
   exports: [EnterDataComponent],
 })
