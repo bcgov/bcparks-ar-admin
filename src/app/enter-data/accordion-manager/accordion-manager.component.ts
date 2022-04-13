@@ -15,23 +15,15 @@ export class AccordionManagerComponent implements OnInit {
   private subscriptions: any[] = [];
   public subAreaData;
 
-  public frontcountryCamping: boolean = false;
-  public frontcountryCabins: boolean = false;
-  public backcountryCamping: boolean = false;
-  public backcountryCabins: boolean = false;
-  public groupCamping: boolean = false;
-  public dayUse: boolean = false;
-  public boating: boolean = false;
-
-  public accordions = [
-    this.frontcountryCamping,
-    this.frontcountryCabins,
-    this.backcountryCamping,
-    this.backcountryCabins,
-    this.groupCamping,
-    this.dayUse,
-    this.boating,
-  ];
+  public accordions = {
+    frontcountryCamping: false,
+    frontcountryCabins: false,
+    backcountryCamping: false,
+    backcountryCabins: false,
+    groupCamping: false,
+    dayUse: false,
+    boating: false,
+  };
 
   constructor(protected dataService: DataService) {
     this.subscriptions.push(
@@ -52,9 +44,15 @@ export class AccordionManagerComponent implements OnInit {
   }
 
   resetAccordions() {
-    for (let accordion of this.accordions) {
-      accordion = false;
-    }
+    this.accordions = {
+      frontcountryCamping: false,
+      frontcountryCabins: false,
+      backcountryCamping: false,
+      backcountryCabins: false,
+      groupCamping: false,
+      dayUse: false,
+      boating: false,
+    };
   }
 
   buildAccordions() {
@@ -63,25 +61,25 @@ export class AccordionManagerComponent implements OnInit {
       for (let activity of this.subAreaData.activities) {
         switch (activity) {
           case 'Frontcountry Camping':
-            this.frontcountryCamping = true;
+            this.accordions.frontcountryCamping = true;
             break;
           case 'Frontcountry Cabins':
-            this.frontcountryCabins = true;
+            this.accordions.frontcountryCabins = true;
             break;
           case 'Backcountry Camping':
-            this.backcountryCamping = true;
+            this.accordions.backcountryCamping = true;
             break;
           case 'Backcountry Cabins':
-            this.backcountryCabins = true;
+            this.accordions.backcountryCabins = true;
             break;
           case 'Group Camping':
-            this.groupCamping = true;
+            this.accordions.groupCamping = true;
             break;
           case 'Day Use':
-            this.dayUse = true;
+            this.accordions.dayUse = true;
             break;
           case 'Boating':
-            this.boating = true;
+            this.accordions.boating = true;
             break;
         }
       }

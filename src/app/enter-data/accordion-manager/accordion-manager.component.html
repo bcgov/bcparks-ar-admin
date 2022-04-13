@@ -1,23 +1,23 @@
 <div>
-  <div *ngIf="frontcountryCamping">
+  <div *ngIf="accordions?.frontcountryCamping">
     <app-frontcountry-camping-accordion></app-frontcountry-camping-accordion>
   </div>
-  <div *ngIf="frontcountryCabins">
+  <div *ngIf="accordions?.frontcountryCabins">
     <app-frontcountry-cabins-accordion></app-frontcountry-cabins-accordion>
   </div>
-  <div *ngIf="groupCamping">
+  <div *ngIf="accordions?.groupCamping">
     <app-group-camping-accordion></app-group-camping-accordion>
   </div>
-  <div *ngIf="dayUse">
+  <div *ngIf="accordions?.dayUse">
     <app-day-use-accordion></app-day-use-accordion>
   </div>
-  <div *ngIf="backcountryCamping">
+  <div *ngIf="accordions?.backcountryCamping">
     <app-backcountry-camping-accordion></app-backcountry-camping-accordion>
   </div>
-  <div *ngIf="backcountryCabins">
+  <div *ngIf="accordions?.backcountryCabins">
     <app-backcountry-cabins-accordion></app-backcountry-cabins-accordion>
   </div>
-  <div *ngIf="boating">
+  <div *ngIf="accordions?.boating">
     <app-boating-accordion></app-boating-accordion>
   </div>
 </div>
