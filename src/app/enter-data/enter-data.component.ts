@@ -24,7 +24,6 @@ export class EnterDataComponent {
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           this.subAreaData = res;
-          console.log(this.subAreaData);
         })
     );
   }

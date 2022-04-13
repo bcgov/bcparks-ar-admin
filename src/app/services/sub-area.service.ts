@@ -26,7 +26,7 @@ export class SubAreaService {
       res = await firstValueFrom(
         this.apiService.get('park', { orcs: orcs, subAreaName: subAreaName })
       );
-      res = res[0];
+      res = res.data[0];
 
       this.dataService.setItemValue(id, res);
     } catch (e) {
@@ -59,8 +59,6 @@ export class SubAreaService {
           date: date,
         })
       );
-
-      console.log(res);
       this.dataService.setItemValue(id, res);
     } catch (e) {
       this.toastService.addMessage(
