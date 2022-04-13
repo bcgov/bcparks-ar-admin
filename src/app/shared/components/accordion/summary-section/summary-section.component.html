@@ -4,8 +4,9 @@
     <div *ngFor="let attendanceItem of section.attendanceItems">
       <div class="d-flex justify-content-between p-2 border-top">
         <div>{{ attendanceItem.itemName }}</div>
-        <div *ngIf="attendanceItem?.value" className="text-align-end">{{ attendanceItem.value }}</div>
-        <div *ngIf="!attendanceItem?.value" className="text-align-end">-</div>
+        <div className="text-align-end">
+          {{ attendanceItem?.value?.toString() || "-" }}
+        </div>
       </div>
     </div>
     <app-calculation-display
@@ -18,15 +19,15 @@
     <div *ngFor="let revenueItem of section.revenueItems">
       <div class="d-flex justify-content-between p-2 border-top">
         <div>{{ revenueItem.itemName }}</div>
-        <div *ngIf="revenueItem?.value" className="text-align-end">${{revenueItem.value}}</div>
-        <div *ngIf="!revenueItem?.value" className="text-align-end">-</div>
+        <div className="text-align-end">
+          ${{ revenueItem?.value?.toString() || "-" }}
+        </div>
       </div>
     </div>
     <app-calculation-display
       [label]="section.revenueLabel?.toUpperCase()"
-      [value]="'$'+calcRevenue()"
+      [value]="'$' + calcRevenue()"
       [colorClass]="'green'"
     ></app-calculation-display>
   </div>
 </div>
-

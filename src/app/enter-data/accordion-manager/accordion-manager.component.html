@@ -1,16 +1,23 @@
 <div>
-  <app-accordion
-    [id]="'a1'"
-    [title]="'Front Country Camping'"
-    [icon]="icons.frontCountryCamping"
-    [notes]="mockVarianceNotes"
-    [summaries]="frontCountryData"
-  ></app-accordion>
-  <app-accordion
-    [id]="'a2'"
-    [title]="'Front Country Cabins'"
-    [icon]="icons.frontCountryCabins"
-    [notes]="mockVarianceNotes"
-    [summaries]="frontCountryCabinsData"
-  ></app-accordion>
+  <div *ngIf="frontcountryCamping">
+    <app-frontcountry-camping-accordion></app-frontcountry-camping-accordion>
+  </div>
+  <div *ngIf="frontcountryCabins">
+    <app-frontcountry-cabins-accordion></app-frontcountry-cabins-accordion>
+  </div>
+  <div *ngIf="groupCamping">
+    <app-group-camping-accordion></app-group-camping-accordion>
+  </div>
+  <div *ngIf="dayUse">
+    <app-day-use-accordion></app-day-use-accordion>
+  </div>
+  <div *ngIf="backcountryCamping">
+    <app-backcountry-camping-accordion></app-backcountry-camping-accordion>
+  </div>
+  <div *ngIf="backcountryCabins">
+    <app-backcountry-cabins-accordion></app-backcountry-cabins-accordion>
+  </div>
+  <div *ngIf="boating">
+    <app-boating-accordion></app-boating-accordion>
+  </div>
 </div>

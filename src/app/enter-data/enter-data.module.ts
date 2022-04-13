@@ -10,11 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { SubAreaSearchComponent } from './sub-area-search/sub-area-search.component';
 import { CenteredTextBlockModule } from '../shared/components/centered-text-block/centered-text-block.module';
-import { AccordionModule } from '../shared/components/accordion/accordion.module';
-import { AccordionManagerComponent } from './accordion-manager/accordion-manager.component';
+import { AccordionManagerModule } from './accordion-manager/accordion-manager.module';
 
 @NgModule({
-  declarations: [EnterDataComponent, SubAreaSearchComponent, AccordionManagerComponent],
+  declarations: [EnterDataComponent, SubAreaSearchComponent],
   imports: [
     CommonModule,
     TypeaheadModule,
@@ -25,7 +24,7 @@ import { AccordionManagerComponent } from './accordion-manager/accordion-manager
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
     CenteredTextBlockModule,
-    AccordionModule
+    AccordionManagerModule,
   ],
   exports: [EnterDataComponent],
 })
