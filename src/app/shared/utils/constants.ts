@@ -9,14 +9,16 @@ export class Constants {
   };
 
   public static readonly iconUrls = {
-    frontCountryCamping:
+    frontcountryCamping:
       'https://bcparks.ca/_shared/images/icons/26x26icons/facility/walk-in-camping.svg',
-    frontCountryCabins:
+    frontcountryCabins:
       'https://bcparks.ca/_shared/images/icons/26x26icons/facility/shelter.svg',
     groupCamping:
       'https://bcparks.ca/_shared/images/icons/26x26icons/facility/group-camping.svg',
-    backCountryCamping:
+    backcountryCamping:
       'https://bcparks.ca/_shared/images/icons/26x26icons/facility/walk-in-camping.svg',
+    backcountryCabins:
+      'https://bcparks.ca/_shared/images/icons/26x26icons/facility/shelter.svg',
     boating:
       'https://bcparks.ca/_shared/images/icons/26x26icons/facility/boat-launch.svg',
     dayUse:

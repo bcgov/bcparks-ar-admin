@@ -45,7 +45,16 @@
         </div>
         <div *ngIf="notes">
           <h3>Variance notes</h3>
-          <div>{{notes}}</div>
+          <div>{{ notes }}</div>
+        </div>
+        <div class="d-flex flex-row-reverse">
+          <button
+            class="btn btn-primary px-5"
+            (click)="edit()"
+            [disabled]="!editLink"
+          >
+            Edit
+          </button>
         </div>
       </div>
     </div>
