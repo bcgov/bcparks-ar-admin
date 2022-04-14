@@ -43,3 +43,11 @@ body {
     color: black;
   }
 }
+
+.form-section {
+  padding: 2 rem;
+}
+
+.form-section:nth-child(odd) {
+  background-color: $form-grey;
+}

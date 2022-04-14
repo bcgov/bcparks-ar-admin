@@ -3,12 +3,16 @@
   This section is for frontcountry cabins, including both reserved and first
   come, first served parties.
 </p>
-<app-frontcountry-cabins-section></app-frontcountry-cabins-section>
-<h2>Variance notes</h2>
-<app-text-area
-  [charCap]="100"
-  [label]="
-    'If any data entered above varies widely from the expected counts, briefly explain the variance.'
-  "
-  [id]="'variance-notes'"
-></app-text-area>
+<div class="form-section">
+  <app-frontcountry-cabins-section></app-frontcountry-cabins-section>
+</div>
+<div class="form-section">
+  <h2>Variance notes</h2>
+  <app-text-area
+    [charCap]="100"
+    [label]="
+      'If any data entered above varies widely from the expected counts, briefly explain the variance.'
+    "
+    [id]="'variance-notes'"
+  ></app-text-area>
+</div>
