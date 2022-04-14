@@ -1,1 +1,50 @@
-<p>people-and-vehicles works!</p>
+<div class="row">
+  <div class="col-6">
+    <div class="row">
+      <div class="col-6">
+        <app-text-input
+          [label]="'Trail counter'"
+          [icon]="'bi-person-fill'"
+          [placeholder]="'0'"
+          [type]="'number'"
+        ></app-text-input>
+      </div>
+      <div class="col-6">
+        <label></label>
+        <app-info-text
+          [text]="'If counter captures 2-way traffic, divide the total by 2 before entering.'"
+        ></app-info-text>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col-6">
+        <app-text-input
+          [label]="'Vehicle count'"
+          [icon]="'bi-person-fill'"
+          [placeholder]="'0'"
+          [type]="'number'"
+        ></app-text-input>
+        <app-text-input
+          [label]="'Bus count'"
+          [icon]="'bi-person-fill'"
+          [placeholder]="'0'"
+          [type]="'number'"
+        ></app-text-input>
+      </div>
+      <div class="col-6">
+        <label></label>
+        <app-info-text
+          [text]="'If counters capture day use and camping traffic, subtract camping count before entering here. If counter capture 2-way traffic, divide the total by 2 before entering.'"
+        ></app-info-text>
+      </div>
+    </div>
+    <div class="row">
+      <app-calculation-display
+        [label]="'VEHICLE ATTENDANCE'"
+        [subtext]="'Vehicle attendance = (Vehicles x 3.5) + (Bus count x 40)'"
+      ></app-calculation-display>
+    </div>
+  </div>
+</div>
