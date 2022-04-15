@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { takeWhile } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -7,34 +9,41 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './boating-accordion.component.html',
   styleUrls: ['./boating-accordion.component.scss'],
 })
-export class BoatingAccordionComponent implements OnInit {
+export class BoatingAccordionComponent implements OnDestroy {
+  private alive = true;
+  private subscriptions: any[] = [];
+
   public icons = Constants.iconUrls;
   public data;
   public summaries: summarySection[] = [];
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.buildAccordion();
+  constructor(protected dataService: DataService) {
+    dataService
+      .getItemValue(Constants.dataIds.ACCORDION_BOATING)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((res) => {
+        this.data = res;
+        console.log(this.data);
+        this.buildAccordion();
+      });
   }
 
   buildAccordion() {
-    this.data = this.getData();
     this.summaries = [
       {
         attendanceLabel: 'Boat Attendance',
         attendanceItems: [
           {
             itemName: 'Nights on dock',
-            value: undefined,
+            value: this.data?.boatAttendanceNightsOnDock,
           },
           {
             itemName: 'Nights on buoys',
-            value: undefined,
+            value: this.data?.boatAttendanceNightsOnBouys,
           },
           {
             itemName: 'Miscellaneous boats',
-            value: undefined,
+            value: this.data?.boatAttendanceMiscellaneous,
           },
         ],
         attendanceTotal: undefined,
@@ -42,7 +51,7 @@ export class BoatingAccordionComponent implements OnInit {
         revenueItems: [
           {
             itemName: 'Gross boating revenue',
-            value: undefined,
+            value: this.data?.boatRevenueGross,
           },
         ],
         revenueTotal: undefined,
@@ -50,7 +59,10 @@ export class BoatingAccordionComponent implements OnInit {
     ];
   }
 
-  getData() {
-    return;
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }

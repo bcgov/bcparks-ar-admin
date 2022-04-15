@@ -16,19 +16,35 @@ export class SubAreaService {
     private apiService: ApiService
   ) {}
 
-  async fetchSubArea(id, orcs, subAreaName) {
+  async fetchSubArea(id, orcs, subAreaName, date) {
     let res;
     let errorSubject = '';
     try {
-      // we're getting a single item
       errorSubject = 'sub-area';
 
       res = await firstValueFrom(
         this.apiService.get('park', { orcs: orcs, subAreaName: subAreaName })
       );
       res = res.data[0];
-
       this.dataService.setItemValue(id, res);
+
+      // If we are given a date, we want to get activity details
+      if (date && res.activities.length > 0) {
+        for (let i = 0; i < res.activities.length; i++) {
+          const activity = res.activities[i];
+
+          // ID = accordion-{activity}
+          // eg. 'accordion-Day use'
+          // This may change depending on how we want to handle accordion data
+          this.fetchActivityDetails(
+            `accordion-${activity}`,
+            orcs,
+            subAreaName,
+            activity,
+            date
+          );
+        }
+      }
     } catch (e) {
       this.toastService.addMessage(
         `Please refresh the page.`,
