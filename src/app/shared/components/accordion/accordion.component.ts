@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { summarySection } from './summary-section/summary-section.component';
 
 @Component({
@@ -17,11 +18,11 @@ export class AccordionComponent implements OnInit {
 
   public readonly iconSize = 50; // icon size in px
 
-  constructor() {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {}
 
   edit() {
-    // navigate to editLink;
+    this.router.navigate([this.editLink], { relativeTo: this.activatedRoute });
   }
 }

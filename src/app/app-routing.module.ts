@@ -2,6 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EnterDataComponent } from './enter-data/enter-data.component';
 import { ExportReportsComponent } from './export-reports/export-reports.component';
+import { BackcountryCabinsComponent } from './forms/backcountry-cabins/backcountry-cabins.component';
+import { BackcountryCampingComponent } from './forms/backcountry-camping/backcountry-camping.component';
+import { BoatingComponent } from './forms/boating/boating.component';
+import { DayUseComponent } from './forms/day-use/day-use.component';
+import { FrontcountryCabinsComponent } from './forms/frontcountry-cabins/frontcountry-cabins.component';
+import { GroupCampingComponent } from './forms/group-camping/group-camping.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
@@ -24,6 +30,38 @@ const routes: Routes = [
       label: 'Enter Data',
       breadcrumb: 'Enter Data',
     },
+    children: [
+      {
+        path: 'backcountry-cabins',
+        component: BackcountryCabinsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'backcountry-camping',
+        component: BackcountryCampingComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'boating',
+        component: BoatingComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'day-use',
+        component: DayUseComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'frontcountry-cabins',
+        component: FrontcountryCabinsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'group-camping',
+        component: GroupCampingComponent,
+        canActivate: [AuthGuard],
+      },
+    ],
   },
   {
     path: 'export-reports',
