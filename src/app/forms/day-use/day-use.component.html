@@ -3,14 +3,23 @@
   Not all items shown below will apply to all Day Use areas. Leave fields blank
   if they are not relevant to the sub-area.
 </p>
-<app-people-and-vehicles></app-people-and-vehicles>
-<app-picnic-shelters></app-picnic-shelters>
-<app-other-day-use></app-other-day-use>
-<h2>Variance notes</h2>
-<app-text-area
-  [charCap]="100"
-  [label]="
-    'If any data entered above varies widely from the expected counts, briefly explain the variance.'
-  "
-  [id]="'variance-notes'"
-></app-text-area>
+<div class="form-section">
+  <h2>People and vehicles</h2>
+  <app-people-and-vehicles></app-people-and-vehicles>
+</div>
+<div class="form-section">
+  <h2>Picnic Shelters</h2>
+  <app-picnic-shelters></app-picnic-shelters>
+</div>
+<div class="form-section">
+  <h2>Other day use</h2>
+  <app-other-day-use></app-other-day-use>
+</div>
+<div class="form-section">
+  <h2>Variance notes</h2>
+  <app-text-area
+    [charCap]="100"
+    [label]="'If any data entered above varies widely from the expected counts, briefly explain the variance.'"
+    [id]="'variance-notes'"
+  ></app-text-area>
+</div>
