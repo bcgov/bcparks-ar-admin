@@ -1,1 +1,54 @@
-<p>backcountry-cabins-section works!</p>
+<div class="row">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-4">
+          <app-text-input
+            [label]="'Adult (16+)'"
+            [icon]="'bi-person-fill'"
+            [placeholder]="'0'"
+            [type]="'number'"
+          ></app-text-input>
+        </div>
+        <div class="col-4">
+          <app-text-input
+            [label]="'Child (6-15)'"
+            [icon]="'bi-person-fill'"
+            [placeholder]="'0'"
+            [type]="'number'"
+          ></app-text-input>
+        </div>
+        <div class="col-4">
+          <app-text-input
+            [label]="'Family'"
+            [icon]="'bi-person-fill'"
+            [placeholder]="'0'"
+            [type]="'number'"
+          ></app-text-input>
+        </div>
+      </div>
+      <div class="row">
+        <app-calculation-display
+          [label]="'TOTAL PEOPLE'"
+          [subtext]="'Total people = Adults + Children + (Family x 3.2)'"
+        ></app-calculation-display>
+      </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-6">
+              <app-text-input
+              [label]="'Gross cabin revenue'"
+              [moneyMode]="true"
+            ></app-text-input>
+            </div>
+        </div>
+        <div class="row">
+          <app-calculation-display
+          [colorClass]="'green'"
+          [label]="'NET REVENUE'"
+          [subtext]="'Net revenue = Gross revenue - 5% GST'"
+        ></app-calculation-display>
+        </div>
+    </div>
+  </div>
+  
