@@ -3,13 +3,19 @@
   Include data from all standard group camping, include reserved and first come,
   first served.
 </p>
-<app-standard-rate-groups></app-standard-rate-groups>
-<app-youth-rate-groups></app-youth-rate-groups>
-<h2>Variance notes</h2>
-<app-text-area
-  [charCap]="100"
-  [label]="
-    'If any data entered above varies widely from the expected counts, briefly explain the variance.'
-  "
-  [id]="'variance-notes'"
-></app-text-area>
+<div class="form-section">
+  <h2>Standard rate groups</h2>
+  <app-standard-rate-groups></app-standard-rate-groups>
+</div>
+<div class="form-section">
+  <h2>Youth rate groups</h2>
+  <app-youth-rate-groups></app-youth-rate-groups>
+</div>
+<div class="form-section">
+  <h2>Variance notes</h2>
+  <app-text-area
+    [charCap]="100"
+    [label]="'If any data entered above varies widely from the expected counts, briefly explain the variance.'"
+    [id]="'variance-notes'"
+  ></app-text-area>
+</div>
