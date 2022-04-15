@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { Constants } from '../shared/utils/constants';
@@ -8,7 +8,7 @@ import { Constants } from '../shared/utils/constants';
   templateUrl: './enter-data.component.html',
   styleUrls: ['./enter-data.component.scss'],
 })
-export class EnterDataComponent {
+export class EnterDataComponent implements OnDestroy {
   private alive = true;
   private subscriptions: any[] = [];
   public subAreaData;
@@ -26,5 +26,12 @@ export class EnterDataComponent {
           this.subAreaData = res;
         })
     );
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }

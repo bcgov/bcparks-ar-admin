@@ -4,6 +4,7 @@ import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { TypeaheadComponent } from 'src/app/shared/components/typeahead/typeahead.component';
 import { Constants } from 'src/app/shared/utils/constants';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-sub-area-search',
@@ -30,7 +31,7 @@ export class SubAreaSearchComponent implements OnDestroy {
   constructor(
     protected dataService: DataService,
     protected subAreaService: SubAreaService
-    ) {
+  ) {
     this.subscriptions.push(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
@@ -82,7 +83,8 @@ export class SubAreaSearchComponent implements OnDestroy {
     this.subAreaService.fetchSubArea(
       Constants.dataIds.ENTER_DATA_SUB_AREA,
       this.selectedPark.sk,
-      this.selectedSubArea
+      this.selectedSubArea,
+      moment(this.modelDate).format('YYYYMM')
     );
   }
 

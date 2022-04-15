@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
@@ -8,7 +8,7 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './accordion-manager.component.html',
   styleUrls: ['./accordion-manager.component.scss'],
 })
-export class AccordionManagerComponent implements OnInit {
+export class AccordionManagerComponent implements OnDestroy {
   public icons = Constants.iconUrls;
 
   private alive = true;
@@ -32,15 +32,9 @@ export class AccordionManagerComponent implements OnInit {
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           this.subAreaData = res;
-          this.onChange();
+          this.buildAccordions();
         })
     );
-  }
-
-  ngOnInit(): void {}
-
-  onChange(): void {
-    this.buildAccordions();
   }
 
   resetAccordions() {
@@ -83,6 +77,13 @@ export class AccordionManagerComponent implements OnInit {
             break;
         }
       }
+    }
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
     }
   }
 }

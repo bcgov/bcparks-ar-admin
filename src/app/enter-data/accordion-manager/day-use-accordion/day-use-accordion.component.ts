@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { takeWhile } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
 import { FormulaService } from 'src/app/services/formula.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
@@ -8,20 +10,28 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './day-use-accordion.component.html',
   styleUrls: ['./day-use-accordion.component.scss'],
 })
-export class DayUseAccordionComponent implements OnInit {
+export class DayUseAccordionComponent implements OnDestroy {
+  private alive = true;
+  private subscriptions: any[] = [];
+
   public icons = Constants.iconUrls;
   public data;
   public summaries: summarySection[] = [];
 
-  constructor(private formulaService: FormulaService) {}
-
-  ngOnInit(): void {
-    this.buildAccordion();
+  constructor(
+    private formulaService: FormulaService,
+    protected dataService: DataService
+  ) {
+    dataService
+      .getItemValue(Constants.dataIds.ACCORDION_DAY_USE)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((res) => {
+        this.data = res;
+        this.buildAccordion();
+      });
   }
 
   buildAccordion() {
-    // TODO: fetch day Use Data - using dummy data for now.
-    this.data = this.getData();
     this.summaries = [
       {
         title: 'People and vehicles',
@@ -30,19 +40,19 @@ export class DayUseAccordionComponent implements OnInit {
           {
             itemName: 'Trail counter',
             value: this.formulaService.validateLineItemValue(
-              this.data.pplTrailCounter
+              this.data?.peopleAndVehiclesTrail
             ),
           },
           {
             itemName: 'Vehicle count',
             value: this.formulaService.validateLineItemValue(
-              this.data.pplVehicleCount
+              this.data?.peopleAndVehiclesVehicle
             ),
           },
           {
             itemName: 'Bus count',
             value: this.formulaService.validateLineItemValue(
-              this.data.pplBusCount
+              this.data?.peopleAndVehiclesBus
             ),
           },
         ],
@@ -55,13 +65,13 @@ export class DayUseAccordionComponent implements OnInit {
           {
             itemName: 'Picnic shelter rentals',
             value: this.formulaService.validateLineItemValue(
-              this.data.picnicRentals
+              this.data?.picnicRevenueShelter
             ),
           },
           {
             itemName: 'Gross picnic revenue',
             value: this.formulaService.validateLineItemValue(
-              this.data.picnicRevenue
+              this.data?.picnicRevenueGross
             ),
           },
         ],
@@ -74,13 +84,13 @@ export class DayUseAccordionComponent implements OnInit {
           {
             itemName: 'Gross skiing revenue',
             value: this.formulaService.validateLineItemValue(
-              this.data.otherSkiiRevenue
+              this.data?.otherDayUseRevenueSkii
             ),
           },
           {
             itemName: 'Gross hot springs revenue',
             value: this.formulaService.validateLineItemValue(
-              this.data.otherHotSpringsRevenue
+              this.data?.otherDayUseRevenueHotSprings
             ),
           },
         ],
@@ -89,26 +99,10 @@ export class DayUseAccordionComponent implements OnInit {
     ];
   }
 
-  getData() {
-    // return dummy data for now
-    return {
-      pplTrailCounter: 4,
-      picnicRevenue: 2.5,
-      notes: 'Some notes',
-      picnicRentals: 5,
-      parkName: 'Cultus Lake Park',
-      otherHotSpringsRevenue: 5.55,
-      orcs: '0041',
-      otherSkiiRevenue: 0,
-      pplBusCount: 3,
-      sk: '202204',
-      pk: '0041::Maple Bay::Day Use',
-      pplCalculations: {
-        vehicleModifier: 3.5,
-        busModifier: 40,
-      },
-      pplVehicleCount: 12,
-      subAreaName: 'Maple Bay',
-    };
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { takeWhile } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -7,19 +9,25 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './frontcountry-camping-accordion.component.html',
   styleUrls: ['./frontcountry-camping-accordion.component.scss'],
 })
-export class FrontcountryCampingAccordionComponent implements OnInit {
+export class FrontcountryCampingAccordionComponent implements OnDestroy {
+  private alive = true;
+  private subscriptions: any[] = [];
+
   public icons = Constants.iconUrls;
   public data;
   public summaries: summarySection[] = [];
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.buildAccordion();
+  constructor(protected dataService: DataService) {
+    dataService
+      .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((res) => {
+        this.data = res;
+        this.buildAccordion();
+      });
   }
 
   buildAccordion() {
-    this.data = this.getData();
     this.summaries = [
       {
         title: 'Camping Party Nights',
@@ -27,19 +35,19 @@ export class FrontcountryCampingAccordionComponent implements OnInit {
         attendanceItems: [
           {
             itemName: 'Standard',
-            value: undefined,
+            value: this.data?.campingPartyNightsAttendanceStandard,
           },
           {
             itemName: 'Senior',
-            value: undefined,
+            value: this.data?.campingPartyNightsAttendanceSenior,
           },
           {
             itemName: 'Social services fee exemption',
-            value: undefined,
+            value: this.data?.campingPartyNightsAttendanceSocial,
           },
           {
             itemName: 'Long stay',
-            value: undefined,
+            value: this.data?.campingPartyNightsAttendanceLongStay,
           },
         ],
         attendanceTotal: undefined,
@@ -47,7 +55,7 @@ export class FrontcountryCampingAccordionComponent implements OnInit {
         revenueItems: [
           {
             itemName: 'Gross camping revenue',
-            value: undefined,
+            value: this.data?.campingPartyNightsRevenueGross,
           },
         ],
         revenueTotal: undefined,
@@ -58,15 +66,15 @@ export class FrontcountryCampingAccordionComponent implements OnInit {
         attendanceItems: [
           {
             itemName: 'Standard',
-            value: undefined,
+            value: this.data?.secondCarsAttendanceStandard,
           },
           {
             itemName: 'Senior',
-            value: undefined,
+            value: this.data?.secondCarsAttendanceSenior,
           },
           {
             itemName: 'Social services fee exemption',
-            value: undefined,
+            value: this.data?.secondCarsAttendanceSocial,
           },
         ],
         attendanceTotal: undefined,
@@ -74,7 +82,7 @@ export class FrontcountryCampingAccordionComponent implements OnInit {
         revenueItems: [
           {
             itemName: 'Gross 2nd car revenue',
-            value: undefined,
+            value: this.data?.secondCarsAttendanceSocial,
           },
         ],
         revenueTotal: undefined,
@@ -85,15 +93,15 @@ export class FrontcountryCampingAccordionComponent implements OnInit {
         revenueItems: [
           {
             itemName: 'Gross sani revenue',
-            value: undefined,
+            value: this.data?.otherRevenueGrossSani,
           },
           {
             itemName: 'Gross electrical fee revenue',
-            value: undefined,
+            value: this.data?.otherRevenueElectrical,
           },
           {
             itemName: 'Gross shower revenue',
-            value: undefined,
+            value: this.data?.otherRevenueShower,
           },
         ],
         revenueTotal: undefined,
@@ -101,7 +109,10 @@ export class FrontcountryCampingAccordionComponent implements OnInit {
     ];
   }
 
-  getData() {
-    return;
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }

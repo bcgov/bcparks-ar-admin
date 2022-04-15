@@ -2,6 +2,13 @@ export class Constants {
   public static readonly dataIds = {
     ENTER_DATA_PARK: 'enterDataPark',
     ENTER_DATA_SUB_AREA: 'enterDataSubArea',
+    ACCORDION_FRONTCOUNTRY_CAMPING: 'accordion-Frontcountry Camping',
+    ACCORDION_FRONTCOUNTRY_CABINS: 'accordion-Frontcountry Cabins',
+    ACCORDION_DAY_USE: 'accordion-Day Use',
+    ACCORDION_GROUP_CAMPING: 'accordion-Group Camping',
+    ACCORDION_BOATING: 'accordion-Boating',
+    ACCORDION_BACKCOUNTRY_CAMPING: 'accordion-Backcountry Camping',
+    ACCORDION_BACKCOUNTRY_CABINS: 'accordion-Backcountry Cabins',
   };
 
   public static readonly ApplicationRoles: any = {

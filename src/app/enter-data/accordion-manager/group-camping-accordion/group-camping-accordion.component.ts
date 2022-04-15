@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ThisReceiver } from '@angular/compiler';
+import { Component, OnDestroy } from '@angular/core';
+import { takeWhile } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -7,19 +10,25 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './group-camping-accordion.component.html',
   styleUrls: ['./group-camping-accordion.component.scss'],
 })
-export class GroupCampingAccordionComponent implements OnInit {
+export class GroupCampingAccordionComponent implements OnDestroy {
+  private alive = true;
+  private subscriptions: any[] = [];
+
   public icons = Constants.iconUrls;
   public data;
   public summaries: summarySection[] = [];
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.buildAccordion();
+  constructor(protected dataService: DataService) {
+    dataService
+      .getItemValue(Constants.dataIds.ACCORDION_GROUP_CAMPING)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((res) => {
+        this.data = res;
+        this.buildAccordion();
+      });
   }
 
   buildAccordion() {
-    this.data = this.getData();
     this.summaries = [
       {
         title: 'Standard rate groups',
@@ -27,19 +36,19 @@ export class GroupCampingAccordionComponent implements OnInit {
         attendanceItems: [
           {
             itemName: 'Standard group nights',
-            value: undefined,
+            value: this.data?.standardRateGroupsTotalPeopleStandard,
           },
           {
             itemName: 'Adults (16+)',
-            value: undefined,
+            value: this.data?.standardRateGroupsTotalPeopleAdults,
           },
           {
             itemName: 'Youth (6-15)',
-            value: undefined,
+            value: this.data?.standardRateGroupsTotalPeopleYouth,
           },
           {
             itemName: 'Kids (0-5)',
-            value: undefined,
+            value: this.data?.standardRateGroupsTotalPeopleKids,
           },
         ],
         attendanceTotal: undefined,
@@ -47,7 +56,7 @@ export class GroupCampingAccordionComponent implements OnInit {
         revenueItems: [
           {
             itemName: 'Gross standard group revenue',
-            value: undefined,
+            value: this.data?.standardRateGroupsRevenueGross,
           },
         ],
         revenueTotal: undefined,
@@ -58,11 +67,11 @@ export class GroupCampingAccordionComponent implements OnInit {
         attendanceItems: [
           {
             itemName: 'Group nights',
-            value: undefined,
+            value: this.data?.youthRateGroupsAttendanceGroupNights,
           },
           {
             itemName: 'People',
-            value: undefined,
+            value: this.data?.youthRateGroupsAttendancePeople,
           },
         ],
         attendanceTotal: undefined,
@@ -70,7 +79,7 @@ export class GroupCampingAccordionComponent implements OnInit {
         revenueItems: [
           {
             itemName: 'Gross youth group revenue',
-            value: undefined,
+            value: this.data?.youthRateGroupsRevenueGross,
           },
         ],
         revenueTotal: undefined,
@@ -78,7 +87,10 @@ export class GroupCampingAccordionComponent implements OnInit {
     ];
   }
 
-  getData() {
-    return;
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }

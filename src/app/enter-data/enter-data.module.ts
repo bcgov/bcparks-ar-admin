@@ -14,10 +14,7 @@ import { AccordionManagerModule } from './accordion-manager/accordion-manager.mo
 import { DayUseModule } from '../forms/day-use/day-use.module';
 
 @NgModule({
-  declarations: [
-    EnterDataComponent,
-    SubAreaSearchComponent,
-  ],
+  declarations: [EnterDataComponent, SubAreaSearchComponent],
   imports: [
     CommonModule,
     TypeaheadModule,

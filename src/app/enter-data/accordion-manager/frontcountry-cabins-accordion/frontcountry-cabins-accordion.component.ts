@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { takeWhile } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -7,26 +9,32 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './frontcountry-cabins-accordion.component.html',
   styleUrls: ['./frontcountry-cabins-accordion.component.scss'],
 })
-export class FrontcountryCabinsAccordionComponent implements OnInit {
+export class FrontcountryCabinsAccordionComponent implements OnDestroy {
+  private alive = true;
+  private subscriptions: any[] = [];
+
   public icons = Constants.iconUrls;
   public data;
   public summaries: summarySection[] = [];
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.buildAccordion();
+  constructor(protected dataService: DataService) {
+    dataService
+      .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((res) => {
+        this.data = res;
+        this.buildAccordion();
+      });
   }
 
   buildAccordion() {
-    this.data = this.getData();
     this.summaries = [
       {
         attendanceLabel: 'Total Attendance',
         attendanceItems: [
           {
             itemName: 'Parties',
-            value: undefined,
+            value: this.data?.totalAttendanceParties,
           },
         ],
         attendanceTotal: undefined,
@@ -34,7 +42,7 @@ export class FrontcountryCabinsAccordionComponent implements OnInit {
         revenueItems: [
           {
             itemName: 'Gross camping revenue',
-            value: undefined,
+            value: this.data?.revenueGrossCamping,
           },
         ],
         revenueTotal: undefined,
@@ -42,7 +50,10 @@ export class FrontcountryCabinsAccordionComponent implements OnInit {
     ];
   }
 
-  getData() {
-    return;
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }
