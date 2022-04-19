@@ -26,10 +26,9 @@ export class TypeaheadComponent {
   @Input() label: String = '';
   @Input() id: String = 'typeahead-focus';
   @Input() disabled: boolean = false;
+  @Input() model;
 
   @Output() output: EventEmitter<any> = new EventEmitter();
-
-  model: any;
 
   @ViewChild('instance', { static: true }) instance: NgbTypeahead;
   focus$ = new Subject<string>();

@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export class Utils {
   public convertArrayIntoObjForTypeAhead(
     array,
@@ -41,5 +43,13 @@ export class Utils {
       month: jSDate.getMonth() + 1,
       day: jSDate.getDate(),
     };
+  }
+
+  public convertJSDateToYYYYMM(date: Date) {
+    return moment(date).format('YYYYMM');
+  }
+
+  public convertYYYYMMToJSDate(date) {
+    return new Date(date.substring(0, 4), date.slice(-2) - 1);
   }
 }

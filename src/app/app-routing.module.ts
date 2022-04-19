@@ -11,6 +11,7 @@ import { GroupCampingComponent } from './forms/group-camping/group-camping.compo
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { SubAreaResolver } from './resolvers/sub-area.resolver';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
       label: 'Enter Data',
       breadcrumb: 'Enter Data',
     },
+    resolve: [SubAreaResolver],
     children: [
       {
         path: 'backcountry-cabins',
