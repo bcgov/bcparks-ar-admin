@@ -19,8 +19,9 @@
         [id]="'park-typeahead'"
         [data]="parks['typeAheadData']"
         [label]="'Park'"
-        [placeholder] = "'Search by park name'"
+        [placeholder]="'Search by park name'"
         [disabled]="typeAheadDisabled"
+        [model]="modelPark"
         (output)="parkTypeaheadOutput($event)"
       ></app-typeahead>
     </div>
@@ -28,13 +29,21 @@
       <app-select
         [id]="'sub-area-select'"
         [data]="subAreas.selectData"
+        [model]="modelSubArea"
         [label]="'Sub-areas'"
         [disabled]="subAreaDisabled"
         (output)="subAreaOutput($event)"
       ></app-select>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-3 align-self-end">
-      <button class="btn btn-primary w-50" type="button" (click)="search()">Go</button>
+      <button
+        class="btn btn-primary w-50"
+        type="button"
+        [disabled]="continueDisabled"
+        (click)="search()"
+      >
+        Go
+      </button>
     </div>
   </div>
 </div>

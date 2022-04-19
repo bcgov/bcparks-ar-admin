@@ -35,7 +35,8 @@ export class EnterDataComponent implements OnDestroy {
         .pipe(filter((event) => event instanceof NavigationEnd))
         .pipe(takeWhile(() => this.alive))
         .subscribe((event: any) => {
-          this.onChildRoute = event.url !== '/enter-data' ? true : false;
+          this.onChildRoute =
+            event.url.split('?')[0] !== '/enter-data' ? true : false;
         })
     );
   }

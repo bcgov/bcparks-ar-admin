@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  Resolve,
+} from '@angular/router';
 import { SubAreaService } from '../services/sub-area.service';
 import { Constants } from '../shared/utils/constants';
 
@@ -7,8 +11,20 @@ import { Constants } from '../shared/utils/constants';
   providedIn: 'root',
 })
 export class SubAreaResolver implements Resolve<void> {
-  constructor(private subAreaService: SubAreaService) {}
-  resolve() {
-    // this.subAreaService.fetchData(Constants.dataIds.ENTER_DATA_SUB_AREA);
+  constructor(protected subAreaService: SubAreaService) {}
+  resolve(route: ActivatedRouteSnapshot) {
+    // We need date, orcs and subarea to do a fetch.
+    if (
+      route.queryParams['date'] &&
+      route.queryParams['orcs'] &&
+      route.queryParams['subArea']
+    ) {
+      this.subAreaService.fetchSubArea(
+        Constants.dataIds.ENTER_DATA_SUB_AREA,
+        route.queryParams['orcs'],
+        route.queryParams['subArea'],
+        route.queryParams['date']
+      );
+    }
   }
 }

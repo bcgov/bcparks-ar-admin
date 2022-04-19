@@ -10,8 +10,7 @@ export class SelectComponent implements OnInit {
   @Input() label: String = '';
   @Input() id: String = 'select';
   @Input() disabled: boolean = false;
-
-  public selected;
+  @Input() model;
 
   @Output() output: EventEmitter<any> = new EventEmitter();
 
