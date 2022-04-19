@@ -12,6 +12,13 @@ import { SubAreaSearchComponent } from './sub-area-search/sub-area-search.compon
 import { CenteredTextBlockModule } from '../shared/components/centered-text-block/centered-text-block.module';
 import { AccordionManagerModule } from './accordion-manager/accordion-manager.module';
 import { DayUseModule } from '../forms/day-use/day-use.module';
+import { BackcountryCabinsModule } from '../forms/backcountry-cabins/backcountry-cabins.module';
+import { RouterModule } from '@angular/router';
+import { BackcountryCampingModule } from '../forms/backcountry-camping/backcountry-camping.module';
+import { BoatingModule } from '../forms/boating/boating.module';
+import { FrontcountryCabinsModule } from '../forms/frontcountry-cabins/frontcountry-cabins.module';
+import { FrontcountryCampingModule } from '../forms/frontcountry-camping/frontcountry-camping.module';
+import { GroupCampingModule } from '../forms/group-camping/group-camping.module';
 
 @NgModule({
   declarations: [EnterDataComponent, SubAreaSearchComponent],
@@ -27,6 +34,14 @@ import { DayUseModule } from '../forms/day-use/day-use.module';
     CenteredTextBlockModule,
     AccordionManagerModule,
     DayUseModule,
+    RouterModule,
+    BackcountryCabinsModule,
+    BackcountryCampingModule,
+    BoatingModule,
+    DayUseModule,
+    FrontcountryCabinsModule,
+    FrontcountryCampingModule,
+    GroupCampingModule,
   ],
   exports: [EnterDataComponent],
 })

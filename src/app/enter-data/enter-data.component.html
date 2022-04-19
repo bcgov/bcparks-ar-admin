@@ -1,13 +1,15 @@
-<app-sub-area-search></app-sub-area-search>
-
-<div class="container-fluid mt-5">
-  <app-centered-text-block
-    *ngIf="!subAreaData"
-    [text]="text"
-  ></app-centered-text-block>
-  <app-centered-text-block
-    *ngIf="subAreaData?.activities && subAreaData?.activities.length === 0"
-    [text]="'This sub-area has no associated forms.'"
-  ></app-centered-text-block>
-  <app-accordion-manager></app-accordion-manager>
+<div *ngIf="!onChildRoute">
+  <app-sub-area-search></app-sub-area-search>
+  <div class="container-fluid mt-5">
+    <app-centered-text-block
+      *ngIf="!subAreaData"
+      [text]="text"
+    ></app-centered-text-block>
+    <app-centered-text-block
+      *ngIf="subAreaData?.activities && subAreaData?.activities.length === 0"
+      [text]="'This sub-area has no associated forms.'"
+    ></app-centered-text-block>
+    <app-accordion-manager></app-accordion-manager>
+  </div>
 </div>
+<router-outlet></router-outlet>
