@@ -45,13 +45,14 @@ export class BackcountryCabinsComponent
     (this._form = this.backcountryCabinsForm),
       (this._fields = this.backcountryCabinsFields),
       (this._formName = 'Backcountry Cabins Form');
-    // TODO: populate this with incoming data.
+    // TODO: populate this with incoming data later
     this._postObj = {
+      date: '202201',
+      parkName: 'Mt Assiniboine',
+      subAreaName: 'Naiset Cabins',
       type: 'activity',
-      orcs: 1234,
-      subAreaName: 'Golden Ears Main Road',
+      orcs: '0005',
       activity: 'Backcountry Cabins',
-      date: '202205',
     };
   }
 

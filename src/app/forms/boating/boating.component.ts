@@ -44,11 +44,12 @@ export class BoatingComponent extends BaseFormComponent implements OnInit {
     // TODO: populate this with incoming data.
     this._formName = 'Boating Form';
     this._postObj = {
+      date: '202201',
+      parkName: 'Mt Assiniboine',
+      subAreaName: 'Naiset Cabins',
       type: 'activity',
-      orcs: 1234,
-      subAreaName: 'Golden Ears Main Road',
+      orcs: '0005',
       activity: 'Boating',
-      date: '202205',
     };
   }
 
