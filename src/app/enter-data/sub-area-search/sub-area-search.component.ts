@@ -99,7 +99,6 @@ export class SubAreaSearchComponent implements OnDestroy {
         parkName: this.selectedPark.parkName,
         subArea: this.selectedSubArea,
       },
-      queryParamsHandling: 'merge',
     });
   }
 
