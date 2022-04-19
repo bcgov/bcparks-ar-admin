@@ -4,7 +4,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export interface formResult {
   form: FormGroup;
   isValid?: boolean;
-  payload?: any; // for API submission
+  error: any; // errors or error codes
+  fields?: any; // raw key:value pairs
+  payload?: any; // object for API submission
   invalidFields?: any;
 }
 
@@ -15,6 +17,8 @@ export interface formResult {
 })
 export class BaseFormComponent {
   public _form: FormGroup; // the base form.
+  public _postObj: any = {}; // post object metadata
+  public _fields: any = {}; // object linking API fields to form controls & values
   public _formName: string = 'Form'; // for debugging purposes only
 
   constructor(public _fb: FormBuilder) {
@@ -22,13 +26,21 @@ export class BaseFormComponent {
   }
 
   // gather the simplified key:value form data and format for submission
-  // null fields are not collected
   collect() {
-    let res;
-    for (const control of Object.keys(this._form.controls)) {
-      const value = this._form.get(control)?.value || null;
-      if (value) {
-        res = { ...res, [control]: value };
+    let res: any = {};
+    for (const field of Object.keys(this._fields)) {
+      const value = this._fields[field]?.value || null;
+      res = { ...res, [field]: value };
+    }
+    return res;
+  }
+
+  // delete null fields in preparation for API submission
+  trimNullFields(fields: any) {
+    let res: any = {};
+    for (const field of Object.keys(fields)) {
+      if (fields[field]) {
+        res = { ...res, [field]: fields[field] };
       }
     }
     return res;
@@ -36,7 +48,7 @@ export class BaseFormComponent {
 
   // returns form fields that are currently invalid
   getInvalidFields() {
-    let res = {};
+    let res: any = {};
     for (const control of Object.keys(this._form.controls)) {
       let c = this._form.get(control);
       if (c && !c?.valid) {
@@ -46,12 +58,22 @@ export class BaseFormComponent {
     return res;
   }
 
+  // merges form data and post object metadata
+  makePayload() {
+    const res = this.trimNullFields(this.collect() || null);
+    return { ...this._postObj, ...res };
+  }
+
   // return current state of form
   submit() {
+    let payload = this.makePayload();
+    // TODO: PUT goes here.
     let res: formResult = {
+      error: null, // return errors if unsuccessful PUT
       form: this._form,
+      fields: this.collect(),
       isValid: this.validate(),
-      payload: this.collect(),
+      payload: payload,
       invalidFields: this.getInvalidFields(),
     };
     return res;

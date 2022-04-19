@@ -3,28 +3,25 @@
     <div class="row">
       <div class="col-4">
         <app-text-input
-          *ngIf="formControls?.nightsOnDockControl"
           [label]="'Nights on dock'"
           [icon]="'bi-person-fill'"
-          [control]="formControls?.nightsOnDockControl"
+          [control]="nightsOnDock"
           [type]="'number'"
         ></app-text-input>
       </div>
       <div class="col-4">
         <app-text-input
-          *ngIf="formControls?.nightsOnBuoyControl"
           [label]="'Nights on buoys'"
           [icon]="'bi-person-fill'"
-          [control]="formControls?.nightsOnBuoyControl"
+          [control]="nightsOnBuoy"
           [type]="'number'"
         ></app-text-input>
       </div>
       <div class="col-4">
         <app-text-input
-          *ngIf="formControls?.miscellaneousBoatsControl"
           [label]="'Miscellaneous boats'"
           [icon]="'bi-person-fill'"
-          [control]="formControls?.miscellaneousBoatsControl"
+          [control]="miscellaneousBoats"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -42,9 +39,8 @@
     <div class="row">
       <div class="col-6">
         <app-text-input
-          *ngIf="formControls?.grossBoatingRevenueControl"
           [label]="'Gross boating revenue'"
-          [control]="formControls?.grossBoatingRevenueControl"
+          [control]="grossBoatingRevenue"
           [moneyMode]="true"
         ></app-text-input>
       </div>

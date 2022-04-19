@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-boating-section',
@@ -6,7 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./boating-section.component.scss'],
 })
 export class BoatingSectionComponent implements OnInit {
-  @Input() formControls: any;
+  @Input() nightsOnDock = new FormControl;
+  @Input() nightsOnBuoy = new FormControl;
+  @Input() miscellaneousBoats = new FormControl;
+  @Input() grossBoatingRevenue = new FormControl;
 
   constructor() {}
 

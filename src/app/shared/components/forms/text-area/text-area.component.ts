@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-text-area',
@@ -9,9 +10,17 @@ export class TextAreaComponent implements OnInit {
   @Input() charCap;
   @Input() label;
   @Input() id;
-  @Input() text = '';
+  @Input() control: FormControl;
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  getFieldLength() {
+    let value: string = '';
+    if (this.control) {
+      value = this.control.value;
+    }
+    return value.length;
+  }
 }
