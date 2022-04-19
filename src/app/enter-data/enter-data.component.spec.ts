@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DataService } from '../services/data.service';
 import { InfoTextModule } from '../shared/components/info-text/info-text.module';
 import { SelectModule } from '../shared/components/select/select.module';
 import { TypeaheadModule } from '../shared/components/typeahead/typeahead.module';
@@ -11,8 +13,14 @@ describe('EnterDataComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TypeaheadModule, InfoTextModule, SelectModule],
+      imports: [
+        TypeaheadModule,
+        InfoTextModule,
+        SelectModule,
+        RouterTestingModule,
+      ],
       declarations: [EnterDataComponent],
+      providers: [DataService],
     }).compileComponents();
   });
 
