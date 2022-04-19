@@ -5,7 +5,7 @@
           <app-text-input
             [label]="'Adult (16+)'"
             [icon]="'bi-person-fill'"
-            [placeholder]="'0'"
+            [control]="adultAttendance"
             [type]="'number'"
           ></app-text-input>
         </div>
@@ -13,7 +13,7 @@
           <app-text-input
             [label]="'Child (6-15)'"
             [icon]="'bi-person-fill'"
-            [placeholder]="'0'"
+            [control]="childAttendance"
             [type]="'number'"
           ></app-text-input>
         </div>
@@ -21,7 +21,7 @@
           <app-text-input
             [label]="'Family'"
             [icon]="'bi-person-fill'"
-            [placeholder]="'0'"
+            [control]="familyAttendance"
             [type]="'number'"
           ></app-text-input>
         </div>
@@ -38,6 +38,7 @@
             <div class="col-6">
               <app-text-input
               [label]="'Gross cabin revenue'"
+              [control]="grossBackcountryCabinsRevenue"
               [moneyMode]="true"
             ></app-text-input>
             </div>

@@ -5,14 +5,18 @@
   Miscellaneous boats. Do not include boat launch counts or other counts that
   would duplicate attendance captured in the day use section.
 </p>
-<form class="form-section mb-3" [formGroup]="boatingForm">
+<form class="form-section" [formGroup]="boatingForm">
   <app-boating-section
-    [formControls]="boatingForm.controls"
+    [nightsOnDock]="boatingFields?.boatAttendanceNightsOnDock"
+    [nightsOnBuoy]="boatingFields?.boatAttendanceNightsOnBouys"
+    [miscellaneousBoats]="boatingFields?.boatAttendanceMiscellaneous"
+    [grossBoatingRevenue]="boatingFields?.boatRevenueGross"
   ></app-boating-section>
 </form>
 <h2>Variance notes</h2>
 <app-text-area
   [charCap]="100"
+  [control]="boatingFields?.notes"
   [label]="
     'If any data entered above varies widely from the expected counts, briefly explain the variance.'
   "

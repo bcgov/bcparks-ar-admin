@@ -3,14 +3,25 @@
   This section is for standard backcountry cabins, including both reserved and
   first come, first served. Used for cabins or group cabins.
 </p>
-<div class="form-section">
-  <app-backcountry-cabins-section></app-backcountry-cabins-section>
-</div>
+<form class="form-section" [formGroup]="backcountryCabinsForm">
+  <app-backcountry-cabins-section
+    [adultAttendance]="backcountryCabinsFields?.peopleAdult"
+    [childAttendance]="backcountryCabinsFields?.peopleChild"
+    [familyAttendance]="backcountryCabinsFields?.peopleFamily"
+    [grossBackcountryCabinsRevenue]="backcountryCabinsFields?.revenueFamily"
+  ></app-backcountry-cabins-section>
+</form>
 <div class="form-section">
   <h2>Variance notes</h2>
   <app-text-area
     [charCap]="100"
-    [label]="'If any data entered above varies widely from the expected counts, briefly explain the variance.'"
+    [control]="backcountryCabinsFields?.notes"
+    [label]="
+      'If any data entered above varies widely from the expected counts, briefly explain the variance.'
+    "
     [id]="'variance-notes'"
   ></app-text-area>
+</div>
+<div class="d-flex flex-row-reverse">
+  <button class="btn btn-primary px-5" (click)="test()">Submit</button>
 </div>

@@ -3,9 +3,9 @@
   class="form-control"
   id="{{ id }}"
   rows="3"
-  [(ngModel)]="text"
+  [formControl]="control"
   maxlength="{{ charCap }}"
 ></textarea>
 <div class="d-flex flex-row-reverse" *ngIf="charCap">
-  <p>{{ text.length }}/{{ charCap }}</p>
+  <p>{{ getFieldLength() }}/{{ charCap }}</p>
 </div>
