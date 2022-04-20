@@ -52,4 +52,8 @@ export class Utils {
   public convertYYYYMMToJSDate(date) {
     return new Date(date.substring(0, 4), date.slice(-2) - 1);
   }
+
+  public convertYYYYMMToMMMMYYYY(date) {
+    return moment(new Date(date.substring(0, 4), date.slice(-2) - 1)).format('MMMM YYYY');
+  }
 }

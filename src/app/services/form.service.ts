@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { Constants } from '../shared/utils/constants';
 import { ApiService } from './api.service';
 import { DataService } from './data.service';
@@ -24,7 +25,11 @@ export class FormService {
       if (obj.orcs && obj.subAreaName && obj.activity && obj.date) {
         delete obj.pk;
         delete obj.sk;
-        res = await this.apiService.post('subarea', obj, { type: 'activity' });
+        res = await firstValueFrom(
+          this.apiService.post('subarea', obj, { type: 'activity' })
+        );
+        console.log('this is res for postActivity', res);
+        return res;
       }
     } catch (e) {
       // TODO: Deal with error here

@@ -19,6 +19,7 @@ import { BoatingModule } from '../forms/boating/boating.module';
 import { FrontcountryCabinsModule } from '../forms/frontcountry-cabins/frontcountry-cabins.module';
 import { FrontcountryCampingModule } from '../forms/frontcountry-camping/frontcountry-camping.module';
 import { GroupCampingModule } from '../forms/group-camping/group-camping.module';
+import { FormService } from '../services/form.service';
 
 @NgModule({
   declarations: [EnterDataComponent, SubAreaSearchComponent],
@@ -44,5 +45,6 @@ import { GroupCampingModule } from '../forms/group-camping/group-camping.module'
     GroupCampingModule,
   ],
   exports: [EnterDataComponent],
+  providers: [FormService, FormService],
 })
 export class EnterDataModule {}

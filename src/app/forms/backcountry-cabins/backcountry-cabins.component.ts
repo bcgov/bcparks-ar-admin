@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { takeWhile } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
+import { FormService } from 'src/app/services/form.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
+import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
   selector: 'app-backcountry-cabins',
@@ -14,7 +19,7 @@ import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/bas
 })
 export class BackcountryCabinsComponent
   extends BaseFormComponent
-  implements OnInit
+  implements OnDestroy
 {
   public backcountryCabinsForm = new FormGroup({
     adultAttendanceControl: new FormControl('', Validators.pattern('^[0-9]*$')),
@@ -40,25 +45,49 @@ export class BackcountryCabinsComponent
     notes: this.backcountryCabinsForm.get('varianceNotesControl'),
   };
 
-  constructor(protected fb: FormBuilder) {
+  private alive = true;
+  private subscriptions: any[] = [];
+
+  constructor(
+    protected fb: FormBuilder,
+    private formService: FormService,
+    private dataService: DataService,
+    private router: Router
+  ) {
     super(fb);
     (this._form = this.backcountryCabinsForm),
       (this._fields = this.backcountryCabinsFields),
       (this._formName = 'Backcountry Cabins Form');
-    // TODO: populate this with incoming data later
-    this._postObj = {
-      date: '202201',
-      parkName: 'Mt Assiniboine',
-      subAreaName: 'Naiset Cabins',
-      type: 'activity',
-      orcs: '0005',
-      activity: 'Backcountry Cabins',
-    };
+
+    this.subscriptions.push(
+      this.dataService
+        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          if (res) {
+            this._postObj = res;
+            this._postObj['activity'] = 'Backcountry Cabins';
+          }
+        })
+    );
   }
 
-  ngOnInit(): void {}
+  async onSubmit() {
+    await super.submit(this.formService);
+    this.router.navigate(['/enter-data'], {
+      queryParams: {
+        date: this._postObj.date,
+        orcs: this._postObj.orcs,
+        parkName: this._postObj.parkName,
+        subArea: this._postObj.subAreaName,
+      },
+    });
+  }
 
-  test() {
-    console.log(super.submit());
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }

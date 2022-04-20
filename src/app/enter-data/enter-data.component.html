@@ -1,15 +1,38 @@
 <div *ngIf="!onChildRoute">
   <app-sub-area-search></app-sub-area-search>
   <div class="container-fluid mt-5">
-    <app-centered-text-block
-      *ngIf="!subAreaData"
-      [text]="text"
-    ></app-centered-text-block>
-    <app-centered-text-block
-      *ngIf="subAreaData?.activities && subAreaData?.activities.length === 0"
-      [text]="'This sub-area has no associated forms.'"
-    ></app-centered-text-block>
-    <app-accordion-manager></app-accordion-manager>
+    <!-- Text block -->
+    <section>
+      <app-centered-text-block
+        *ngIf="!subAreaData"
+        [text]="text"
+      ></app-centered-text-block>
+      <app-centered-text-block
+        *ngIf="subAreaData?.activities && subAreaData?.activities.length === 0"
+        [text]="'This sub-area has no associated forms.'"
+      ></app-centered-text-block>
+    </section>
+
+    <!-- Accordion header -->
+    <section>
+      <div
+        class="container"
+        *ngIf="subAreaData?.activities && subAreaData?.activities.length > 0"
+      >
+        <h1 class="header-text">
+          {{ formParams.parkName }} - {{ formParams.subAreaName }}
+        </h1>
+        <h2>{{ utils.convertYYYYMMToMMMMYYYY(formParams.date) }}</h2>
+        <hr />
+      </div>
+    </section>
+
+    <!-- Accordion -->
+    <section>
+      <div class="container my-4">
+        <app-accordion-manager></app-accordion-manager>
+      </div>
+    </section>
   </div>
 </div>
 <router-outlet></router-outlet>
