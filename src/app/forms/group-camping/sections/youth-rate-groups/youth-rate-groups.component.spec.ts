@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { YouthRateGroupsComponent } from './youth-rate-groups.component';
+import { YouthRateGroupsModule } from './youth-rate-groups.module';
 
 describe('YouthRateGroupsComponent', () => {
   let component: YouthRateGroupsComponent;
@@ -8,9 +9,9 @@ describe('YouthRateGroupsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ YouthRateGroupsComponent ]
-    })
-    .compileComponents();
+      declarations: [YouthRateGroupsComponent],
+      imports: [YouthRateGroupsModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

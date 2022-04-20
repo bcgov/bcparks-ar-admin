@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StandardRateGroupsComponent } from './standard-rate-groups.component';
+import { StandardRateGroupsModule } from './standard-rate-groups.module';
 
 describe('StandardRateGroupsComponent', () => {
   let component: StandardRateGroupsComponent;
@@ -8,9 +9,9 @@ describe('StandardRateGroupsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StandardRateGroupsComponent ]
-    })
-    .compileComponents();
+      declarations: [StandardRateGroupsComponent],
+      imports: [StandardRateGroupsModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

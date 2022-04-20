@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupCampingComponent } from './group-camping.component';
+import { GroupCampingModule } from './group-camping.module';
 
 describe('GroupCampingComponent', () => {
   let component: GroupCampingComponent;
@@ -8,9 +9,9 @@ describe('GroupCampingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GroupCampingComponent ]
-    })
-    .compileComponents();
+      declarations: [GroupCampingComponent],
+      imports: [GroupCampingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
