@@ -13,6 +13,8 @@ export class FormService {
       // We require queryParam type = activity
       // In obj we need orcs, subAreaName, activity and date
       if (obj.orcs && obj.subAreaName && obj.activity && obj.date) {
+        delete obj.pk;
+        delete obj.sk;
         res = await this.apiService.post('subarea', obj, { type: 'activity' });
       }
     } catch (e) {
