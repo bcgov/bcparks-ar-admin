@@ -3,23 +3,68 @@
   This section is for standard frontcountry camping, including both reserved and
   first come, first served. Used for cabins or group camping.
 </p>
-<div class="form-section">
-  <h2>Camping party nights</h2>
-  <app-camping-party-nights></app-camping-party-nights>
-</div>
-<div class="form-section">
-  <h2>Second cars/additional vehicles</h2>
-  <app-additional-vehicles></app-additional-vehicles>
-</div>
-<div class="form-section">
-  <h2>Other frontcountry camping revenue</h2>
-  <app-other-frontcountry-camping-revenue></app-other-frontcountry-camping-revenue>
-</div>
-<div class="form-section">
-  <h2>Variance notes</h2>
-  <app-text-area
-    [charCap]="100"
-    [label]="'If any data entered above varies widely from the expected counts, briefly explain the variance.'"
-    [id]="'variance-notes'"
-  ></app-text-area>
-</div>
+<form [formGroup]="frontcountryCampingForm">
+  <div class="form-section">
+    <h2>Camping party nights</h2>
+    <app-camping-party-nights
+      [campingPartyNightsAttendanceStandardField]="
+        frontcountryCampingFields?.campingPartyNightsAttendanceStandard
+      "
+      [campingPartyNightsAttendanceSeniorField]="
+        frontcountryCampingFields?.campingPartyNightsAttendanceSenior
+      "
+      [campingPartyNightsAttendanceSocialField]="
+        frontcountryCampingFields?.campingPartyNightsAttendanceSocial
+      "
+      [campingPartyNightsAttendanceLongStayField]="
+        frontcountryCampingFields?.campingPartyNightsAttendanceLongStay
+      "
+      [campingPartyNightsRevenueGrossField]="
+        frontcountryCampingFields?.campingPartyNightsRevenueGross
+      "
+    ></app-camping-party-nights>
+  </div>
+  <div class="form-section">
+    <h2>Second cars/additional vehicles</h2>
+    <app-additional-vehicles
+      [secondCarsAttendanceStandardField]="
+        frontcountryCampingFields?.secondCarsAttendanceStandard
+      "
+      [secondCarsAttendanceSeniorField]="
+        frontcountryCampingFields?.secondCarsAttendanceSenior
+      "
+      [secondCarsAttendanceSocialField]="
+        frontcountryCampingFields?.secondCarsAttendanceSocial
+      "
+      [secondCarsRevenueGrossField]="
+        frontcountryCampingFields?.secondCarsRevenueGross
+      "
+    ></app-additional-vehicles>
+  </div>
+  <div class="form-section">
+    <h2>Other frontcountry camping revenue</h2>
+    <app-other-frontcountry-camping-revenue
+      [otherRevenueGrossSaniField]="
+        frontcountryCampingFields?.otherRevenueGrossSani
+      "
+      [otherRevenueElectricalField]="
+        frontcountryCampingFields?.otherRevenueElectrical
+      "
+      [otherRevenueShowerField]="frontcountryCampingFields?.otherRevenueShower"
+    ></app-other-frontcountry-camping-revenue>
+  </div>
+  <div class="form-section">
+    <h2>Variance notes</h2>
+    <app-text-area
+      [charCap]="100"
+      [control]="frontcountryCampingFields?.notes"
+      [label]="
+        'If any data entered above varies widely from the expected counts, briefly explain the variance.'
+      "
+      [id]="'variance-notes'"
+    ></app-text-area>
+  </div>
+  <div class="d-flex flex-row-reverse">
+    <button class="btn btn-primary px-5" (click)="test()">Submit</button>
+  </div>
+</form>

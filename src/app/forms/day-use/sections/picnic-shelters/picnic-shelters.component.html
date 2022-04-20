@@ -5,6 +5,7 @@
         [label]="'Parties'"
         [icon]="'bi-person-fill'"
         [placeholder]="'0'"
+        [control]="picnicRevenueShelterControl"
         [type]="'number'"
       ></app-text-input>
     </div>
@@ -14,6 +15,7 @@
       <div class="col-6">
         <app-text-input
           [label]="'Gross picnic revenue'"
+          [control]="picnicRevenueGrossControl"
           [moneyMode]="true"
         ></app-text-input>
       </div>

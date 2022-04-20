@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FrontcountryCabinsSectionComponent } from './frontcountry-cabins-section.component';
+import { FrontcountryCabinsSectionModule } from './frontcountry-cabins-section.module';
 
 describe('FrontcountryCabinsSectionComponent', () => {
   let component: FrontcountryCabinsSectionComponent;
@@ -8,7 +9,8 @@ describe('FrontcountryCabinsSectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FrontcountryCabinsSectionComponent ]
+      declarations: [ FrontcountryCabinsSectionComponent ],
+      imports: [FrontcountryCabinsSectionModule]
     })
     .compileComponents();
   });

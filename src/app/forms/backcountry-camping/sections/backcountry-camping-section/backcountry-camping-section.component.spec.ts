@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BackcountryCampingSectionComponent } from './backcountry-camping-section.component';
+import { BackcountryCampingSectionModule } from './backcountry-camping-section.module';
 
 describe('BackcountryCampingSectionComponent', () => {
   let component: BackcountryCampingSectionComponent;
@@ -8,7 +9,8 @@ describe('BackcountryCampingSectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BackcountryCampingSectionComponent ]
+      declarations: [ BackcountryCampingSectionComponent ],
+      imports: [BackcountryCampingSectionModule]
     })
     .compileComponents();
   });

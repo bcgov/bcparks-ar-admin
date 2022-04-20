@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-other-frontcountry-camping-revenue',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./other-frontcountry-camping-revenue.component.scss']
 })
 export class OtherFrontcountryCampingRevenueComponent implements OnInit {
+  @Input() otherRevenueGrossSaniField = new FormControl;
+  @Input() otherRevenueElectricalField = new FormControl;
+  @Input() otherRevenueShowerField = new FormControl;
 
   constructor() { }
 

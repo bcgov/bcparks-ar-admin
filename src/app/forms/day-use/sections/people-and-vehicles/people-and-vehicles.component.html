@@ -6,6 +6,7 @@
           [label]="'Trail counter'"
           [icon]="'bi-person-fill'"
           [placeholder]="'0'"
+          [control]="peopleAndVehiclesTrailField"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -23,12 +24,14 @@
         <app-text-input
           [label]="'Vehicle count'"
           [icon]="'bi-person-fill'"
+          [control]="peopleAndVehiclesVehicleField"
           [placeholder]="'0'"
           [type]="'number'"
         ></app-text-input>
         <app-text-input
           [label]="'Bus count'"
           [icon]="'bi-person-fill'"
+          [control]="peopleAndVehiclesBusField"
           [placeholder]="'0'"
           [type]="'number'"
         ></app-text-input>

@@ -5,6 +5,7 @@ import { PeopleAndVehiclesModule } from './sections/people-and-vehicles/people-a
 import { PicnicSheltersModule } from './sections/picnic-shelters/picnic-shelters.module';
 import { OtherDayUseModule } from './sections/other-day-use/other-day-use.module';
 import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-area.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [DayUseComponent],
@@ -14,6 +15,8 @@ import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-a
     PicnicSheltersModule,
     OtherDayUseModule,
     TextAreaModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [DayUseComponent],
 })
