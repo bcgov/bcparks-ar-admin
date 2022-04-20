@@ -3,19 +3,53 @@
   Include data from all standard group camping, include reserved and first come,
   first served.
 </p>
-<div class="form-section">
-  <h2>Standard rate groups</h2>
-  <app-standard-rate-groups></app-standard-rate-groups>
-</div>
-<div class="form-section">
-  <h2>Youth rate groups</h2>
-  <app-youth-rate-groups></app-youth-rate-groups>
-</div>
-<div class="form-section">
-  <h2>Variance notes</h2>
-  <app-text-area
-    [charCap]="100"
-    [label]="'If any data entered above varies widely from the expected counts, briefly explain the variance.'"
-    [id]="'variance-notes'"
-  ></app-text-area>
-</div>
+<form [formGroup]="groupCampingForm">
+  <div class="form-section">
+    <h2>Standard rate groups</h2>
+    <app-standard-rate-groups
+      [standardRateGroupsTotalPeopleStandardField]="
+        groupCampingFields?.standardRateGroupsTotalPeopleStandard
+      "
+      [standardRateGroupsTotalPeopleAdultsField]="
+        groupCampingFields?.standardRateGroupsTotalPeopleAdults
+      "
+      [standardRateGroupsTotalPeopleYouthField]="
+        groupCampingFields?.standardRateGroupsTotalPeopleYouth
+      "
+      [standardRateGroupsTotalPeopleKidsField]="
+        groupCampingFields?.standardRateGroupsTotalPeopleKids
+      "
+      [standardRateGroupsRevenueGrossField]="
+        groupCampingFields?.standardRateGroupsRevenueGross
+      "
+    ></app-standard-rate-groups>
+  </div>
+  <div class="form-section">
+    <h2>Youth rate groups</h2>
+    <app-youth-rate-groups
+      [youthRateGroupsAttendanceGroupNightsField]="
+        groupCampingFields?.youthRateGroupsAttendanceGroupNights
+      "
+      [youthRateGroupsAttendancePeopleField]="
+        groupCampingFields?.youthRateGroupsAttendancePeople
+      "
+      [youthRateGroupsRevenueGrossField]="
+        groupCampingFields?.youthRateGroupsRevenueGross
+      "
+    ></app-youth-rate-groups>
+  </div>
+  <div class="form-section">
+    <h2>Variance notes</h2>
+    <app-text-area
+      [charCap]="100"
+      [control]="groupCampingFields?.notes"
+      [label]="
+        'If any data entered above varies widely from the expected counts, briefly explain the variance.'
+      "
+      [id]="'variance-notes'"
+    ></app-text-area>
+  </div>
+  <div class="d-flex flex-row-reverse">
+    <button class="btn btn-primary px-5" (click)="test()">Submit</button>
+  </div>
+</form>

@@ -5,6 +5,7 @@
         [label]="'Standard night groups'"
         [icon]="'bi-person-fill'"
         [placeholder]="'0'"
+        [control]="standardRateGroupsTotalPeopleStandardField"
         [type]="'number'"
       ></app-text-input>
     </div>
@@ -14,6 +15,7 @@
           [label]="'Adults (16+)'"
           [icon]="'bi-person-fill'"
           [placeholder]="'0'"
+          [control]="standardRateGroupsTotalPeopleAdultsField"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -22,6 +24,7 @@
           [label]="'Youth (6-15)'"
           [icon]="'bi-person-fill'"
           [placeholder]="'0'"
+          [control]="standardRateGroupsTotalPeopleYouthField"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -30,6 +33,7 @@
           [label]="'Kids (0-5)'"
           [icon]="'bi-person-fill'"
           [placeholder]="'0'"
+          [control]="standardRateGroupsTotalPeopleKidsField"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -45,6 +49,7 @@
     <div class="row">
       <app-text-input
         [label]="'Gross standard group revenue'"
+        [control]="standardRateGroupsRevenueGrossField"
         [moneyMode]="true"
       ></app-text-input>
     </div>

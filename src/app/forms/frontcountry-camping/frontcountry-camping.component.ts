@@ -51,7 +51,7 @@ export class FrontcountryCampingComponent
     ),
     secondCarsRevenueGrossControl: new FormControl(
       '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
+      Validators.pattern('^[0-9]*$')
     ),
     otherRevenueGrossSaniControl: new FormControl(
       '',
@@ -112,7 +112,7 @@ export class FrontcountryCampingComponent
     super(fb);
     (this._form = this.frontcountryCampingForm),
       (this._fields = this.frontcountryCampingFields),
-      (this._formName = 'Frontcountry Cabins Form');
+      (this._formName = 'Frontcountry Camping Form');
     // TODO: populate this with incoming data later
     this._postObj = {
       date: '202201',
@@ -120,7 +120,7 @@ export class FrontcountryCampingComponent
       subAreaName: 'Naiset Cabins',
       type: 'activity',
       orcs: '0005',
-      activity: 'Frontcountry Cabins',
+      activity: 'Frontcountry Camping',
     };
   }
 
