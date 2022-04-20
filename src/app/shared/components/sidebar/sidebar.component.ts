@@ -33,7 +33,7 @@ export class SidebarComponent implements OnDestroy {
         .pipe(filter((event) => event instanceof NavigationEnd))
         .pipe(takeWhile(() => this.alive))
         .subscribe((event: Event) => {
-          this.currentRoute = event;
+          this.currentRoute = this.getPathFromUrl(event['url']);
         })
     );
 
@@ -51,5 +51,9 @@ export class SidebarComponent implements OnDestroy {
     for (let i = 0; i < this.subscriptions.length; i++) {
       this.subscriptions[i].unsubscribe();
     }
+  }
+
+  getPathFromUrl(url) {
+    return url.split('?')[0];
   }
 }
