@@ -25,14 +25,14 @@ export class ApiService {
     return this.env;
   }
 
-  // post(pk, obj, queryParamsObject = null): Promise<any> {
-  //   let queryString = this.generateQueryString(queryParamsObject);
-  //   return this.http.post<any>(`${this.apiPath}/${pk}?${queryString}`, obj, {}).toPromise();
-  // }
+  post(pk, obj, queryParamsObject = null as any) {
+    let queryString = this.generateQueryString(queryParamsObject);
+    return this.http.post<any>(`${this.apiPath}/${pk}?${queryString}`, obj);
+  }
 
   get(pk, queryParamsObject = null as any) {
     let queryString = this.generateQueryString(queryParamsObject);
-    return this.http.get<any>(`${this.apiPath}/${pk}?${queryString}`, {});
+    return this.http.get<any>(`${this.apiPath}/${pk}?${queryString}`);
   }
 
   // delete(pk, queryParamsObject = null): Promise<any> {
