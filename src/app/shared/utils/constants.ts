@@ -9,6 +9,7 @@ export class Constants {
     ACCORDION_BOATING: 'accordion-Boating',
     ACCORDION_BACKCOUNTRY_CAMPING: 'accordion-Backcountry Camping',
     ACCORDION_BACKCOUNTRY_CABINS: 'accordion-Backcountry Cabins',
+    FORM_PARAMS: 'form-params',
   };
 
   public static readonly ApplicationRoles: any = {

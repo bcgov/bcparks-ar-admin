@@ -6,6 +6,7 @@ import { TypeaheadComponent } from 'src/app/shared/components/typeahead/typeahea
 import { Constants } from 'src/app/shared/utils/constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from 'src/app/shared/utils/utils';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-sub-area-search',
@@ -37,7 +38,8 @@ export class SubAreaSearchComponent implements OnDestroy {
     protected dataService: DataService,
     protected subAreaService: SubAreaService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private formService: FormService
   ) {
     this.subscriptions.push(
       dataService
@@ -110,12 +112,22 @@ export class SubAreaSearchComponent implements OnDestroy {
   }
 
   search() {
+    this.setFormParams();
     this.subAreaService.fetchSubArea(
       Constants.dataIds.ENTER_DATA_SUB_AREA,
       this.selectedPark.sk,
       this.selectedSubArea,
       this.utils.convertJSDateToYYYYMM(new Date(this.modelDate))
     );
+  }
+
+  setFormParams() {
+    this.formService.setFormParams({
+      date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
+      parkName: this.selectedPark.parkName,
+      subAreaName: this.selectedSubArea,
+      orcs: this.selectedPark.sk,
+    });
   }
 
   setButtonState(state) {
@@ -175,6 +187,7 @@ export class SubAreaSearchComponent implements OnDestroy {
       state = 'subArea';
       this.modelSubArea = subArea;
       this.subAreaOutput(subArea);
+      this.setFormParams();
     }
     this.setButtonState(state);
     this.dataPreloaded = true;
