@@ -5,7 +5,7 @@
         <li
           *ngFor="let route of routes"
           [ngClass]="
-            this.currentRoute?.url === '/' + route.path ? 'active' : ''
+            this.currentRoute === '/' + route.path ? 'active' : ''
           "
         >
           <a [routerLink]="[route.path]">{{ route.data.label }}</a>
