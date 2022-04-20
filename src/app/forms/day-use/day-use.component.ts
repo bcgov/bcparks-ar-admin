@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { takeWhile } from 'rxjs';
+import { DataService } from 'src/app/services/data.service';
+import { FormService } from 'src/app/services/form.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
+import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
   selector: 'app-day-use',
   templateUrl: './day-use.component.html',
   styleUrls: ['./day-use.component.scss'],
 })
-export class DayUseComponent extends BaseFormComponent implements OnInit {
+export class DayUseComponent extends BaseFormComponent implements OnDestroy {
   public dayUseForm = new FormGroup({
     peopleAndVehiclesTrailControl: new FormControl(
       '',
@@ -64,24 +69,49 @@ export class DayUseComponent extends BaseFormComponent implements OnInit {
     notes: this.dayUseForm.get('varianceNotesControl'),
   };
 
-  constructor(protected fb: FormBuilder) {
+  private alive = true;
+  private subscriptions: any[] = [];
+
+  constructor(
+    protected fb: FormBuilder,
+    private formService: FormService,
+    private dataService: DataService,
+    private router: Router
+  ) {
     super(fb);
     (this._form = this.dayUseForm),
       (this._fields = this.dayUseFields),
       (this._formName = 'Day Use Form');
-    // TODO: populate this with incoming data later
-    this._postObj = {
-      date: '202201',
-      parkName: 'Mt Assiniboine',
-      subAreaName: 'Naiset Cabins',
-      type: 'activity',
-      orcs: '0005',
-      activity: 'Day Use',
-    };
-  }
-  ngOnInit(): void {}
 
-  test() {
-    console.log(super.submit());
+    this.subscriptions.push(
+      this.dataService
+        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          if (res) {
+            this._postObj = res;
+            this._postObj['activity'] = 'Day Use';
+          }
+        })
+    );
+  }
+
+  async onSubmit() {
+    await super.submit(this.formService);
+    this.router.navigate(['/enter-data'], {
+      queryParams: {
+        date: this._postObj.date,
+        orcs: this._postObj.orcs,
+        parkName: this._postObj.parkName,
+        subArea: this._postObj.subAreaName,
+      },
+    });
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 }

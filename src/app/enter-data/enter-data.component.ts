@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter, takeWhile } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { Constants } from '../shared/utils/constants';
+import { Utils } from '../shared/utils/utils';
 
 @Component({
   selector: 'app-enter-data',
@@ -15,6 +16,8 @@ export class EnterDataComponent implements OnDestroy {
   public subAreaData;
 
   public onChildRoute = false;
+  public formParams;
+  public utils = new Utils();
 
   public text = `Select the data and location above for the Attendance and Revenue data you
   want to enter. If you want to view past enteries, you can do that by selecting
@@ -37,6 +40,17 @@ export class EnterDataComponent implements OnDestroy {
         .subscribe((event: any) => {
           this.onChildRoute =
             event.url.split('?')[0] !== '/enter-data' ? true : false;
+        })
+    );
+
+    this.subscriptions.push(
+      dataService
+        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          if (res) {
+            this.formParams = res;
+          }
         })
     );
   }

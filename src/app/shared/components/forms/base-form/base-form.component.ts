@@ -65,10 +65,10 @@ export class BaseFormComponent {
   }
 
   // return current state of form
-  submit() {
-    let payload = this.makePayload();
+  async submit(service) {
+    const payload = this.makePayload();
     // TODO: PUT goes here.
-    let res: formResult = {
+    const form: formResult = {
       error: null, // return errors if unsuccessful PUT
       form: this._form,
       fields: this.collect(),
@@ -76,7 +76,8 @@ export class BaseFormComponent {
       payload: payload,
       invalidFields: this.getInvalidFields(),
     };
-    return res;
+
+    return await service.postActivity(form.payload);
   }
 
   // clear the form of all data.
