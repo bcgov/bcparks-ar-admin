@@ -48,11 +48,11 @@ export class FrontcountryCabinsComponent
 
   constructor(
     protected fb: FormBuilder,
-    private formService: FormService,
+    protected formService: FormService,
     private dataService: DataService,
-    private router: Router
+    protected router: Router
   ) {
-    super(fb);
+    super(fb, formService, router);
     (this._form = this.frontcountryCabinsForm),
       (this._fields = this.frontcountryCabinsFields),
       (this._formName = 'Frontcountry Cabins Form');
@@ -72,15 +72,7 @@ export class FrontcountryCabinsComponent
   }
 
   async onSubmit() {
-    await super.submit(this.formService);
-    this.router.navigate(['/enter-data'], {
-      queryParams: {
-        date: this._postObj.date,
-        orcs: this._postObj.orcs,
-        parkName: this._postObj.parkName,
-        subArea: this._postObj.subAreaName,
-      },
-    });
+    await super.submit();
   }
 
   ngOnDestroy() {

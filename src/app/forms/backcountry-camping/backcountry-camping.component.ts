@@ -43,11 +43,11 @@ export class BackcountryCampingComponent
 
   constructor(
     protected fb: FormBuilder,
-    private formService: FormService,
+    protected formService: FormService,
     private dataService: DataService,
-    private router: Router
+    protected router: Router
   ) {
-    super(fb);
+    super(fb, formService, router);
     (this._form = this.backcountryCampingForm),
       (this._fields = this.backcountryCampingFields),
       (this._formName = 'Backcountry Camping Form');
@@ -66,15 +66,7 @@ export class BackcountryCampingComponent
   }
 
   async onSubmit() {
-    await super.submit(this.formService);
-    this.router.navigate(['/enter-data'], {
-      queryParams: {
-        date: this._postObj.date,
-        orcs: this._postObj.orcs,
-        parkName: this._postObj.parkName,
-        subArea: this._postObj.subAreaName,
-      },
-    });
+    await super.submit();
   }
 
   ngOnDestroy() {
