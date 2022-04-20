@@ -6,6 +6,7 @@
           [label]="'Standard'"
           [icon]="'bi-person-fill'"
           [placeholder]="'0'"
+          [control]="campingPartyNightsAttendanceStandardField"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -14,6 +15,7 @@
           [label]="'Senior'"
           [icon]="'bi-person-fill'"
           [placeholder]="'0'"
+          [control]="campingPartyNightsAttendanceSeniorField"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -22,6 +24,7 @@
           [label]="'Social services fee exemption'"
           [icon]="'bi-person-fill'"
           [placeholder]="'0'"
+          [control]="campingPartyNightsAttendanceSocialField"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -37,6 +40,7 @@
           [label]="'Long stay'"
           [icon]="'bi-person-fill'"
           [placeholder]="'0'"
+          [control]="campingPartyNightsAttendanceLongStayField"
           [type]="'number'"
         ></app-text-input>
       </div>
@@ -58,6 +62,7 @@
           <div class="col-4">
             <app-text-input
             [label]="'Gross camping revenue'"
+            [control]="campingPartyNightsRevenueGrossField"
             [moneyMode]="true"
           ></app-text-input>
           </div>

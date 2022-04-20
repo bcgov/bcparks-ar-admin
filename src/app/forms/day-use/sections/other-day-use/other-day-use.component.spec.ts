@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OtherDayUseComponent } from './other-day-use.component';
+import { OtherDayUseModule } from './other-day-use.module';
 
 describe('OtherDayUseComponent', () => {
   let component: OtherDayUseComponent;
@@ -8,9 +9,9 @@ describe('OtherDayUseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OtherDayUseComponent ]
-    })
-    .compileComponents();
+      declarations: [OtherDayUseComponent],
+      imports: [OtherDayUseModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

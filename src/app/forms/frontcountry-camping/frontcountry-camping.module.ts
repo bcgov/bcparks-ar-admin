@@ -5,6 +5,8 @@ import { AdditionalVehiclesModule } from './sections/additional-vehicles/additio
 import { CampingPartyNightsModule } from './sections/camping-party-nights/camping-party-nights.module';
 import { OtherFrontcountryCampingRevenueModule } from './sections/other-frontcountry-camping-revenue/other-frontcountry-camping-revenue.module';
 import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-area.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BaseFormModule } from 'src/app/shared/components/forms/base-form/base-form.module';
 
 @NgModule({
   declarations: [FrontcountryCampingComponent],
@@ -14,6 +16,9 @@ import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-a
     AdditionalVehiclesModule,
     OtherFrontcountryCampingRevenueModule,
     TextAreaModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BaseFormModule
   ],
   exports: [FrontcountryCampingComponent],
 })

@@ -10,7 +10,7 @@ export class TextAreaComponent implements OnInit {
   @Input() charCap;
   @Input() label;
   @Input() id;
-  @Input() control: FormControl;
+  @Input() control = new FormControl;
 
   constructor() {}
 
@@ -19,7 +19,7 @@ export class TextAreaComponent implements OnInit {
   getFieldLength() {
     let value: string = '';
     if (this.control) {
-      value = this.control.value;
+      value = this.control?.value || '';
     }
     return value.length;
   }

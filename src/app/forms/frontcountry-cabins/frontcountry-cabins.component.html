@@ -3,16 +3,27 @@
   This section is for frontcountry cabins, including both reserved and first
   come, first served parties.
 </p>
-<div class="form-section">
-  <app-frontcountry-cabins-section></app-frontcountry-cabins-section>
-</div>
-<div class="form-section">
-  <h2>Variance notes</h2>
-  <app-text-area
-    [charCap]="100"
-    [label]="
-      'If any data entered above varies widely from the expected counts, briefly explain the variance.'
-    "
-    [id]="'variance-notes'"
-  ></app-text-area>
-</div>
+<form [formGroup]="frontcountryCabinsForm">
+  <div class="form-section">
+    <app-frontcountry-cabins-section
+      [totalAttendancePartiesField]="
+        frontcountryCabinsFields?.totalAttendanceParties
+      "
+      [revenueGrossCampingField]="frontcountryCabinsFields?.revenueGrossCamping"
+    ></app-frontcountry-cabins-section>
+  </div>
+  <div class="form-section">
+    <h2>Variance notes</h2>
+    <app-text-area
+      [charCap]="100"
+      [control]="frontcountryCabinsFields?.notes"
+      [label]="
+        'If any data entered above varies widely from the expected counts, briefly explain the variance.'
+      "
+      [id]="'variance-notes'"
+    ></app-text-area>
+  </div>
+  <div class="d-flex flex-row-reverse">
+    <button class="btn btn-primary px-5" (click)="test()">Submit</button>
+  </div>
+</form>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-people-and-vehicles',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./people-and-vehicles.component.scss']
 })
 export class PeopleAndVehiclesComponent implements OnInit {
+  @Input() peopleAndVehiclesTrailField = new FormControl;
+  @Input() peopleAndVehiclesVehicleField = new FormControl;
+  @Input() peopleAndVehiclesBusField = new FormControl;
 
   constructor() { }
 

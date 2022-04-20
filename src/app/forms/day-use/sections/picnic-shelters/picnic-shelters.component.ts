@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-picnic-shelters',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./picnic-shelters.component.scss']
 })
 export class PicnicSheltersComponent implements OnInit {
+  @Input() picnicRevenueShelterControl = new FormControl;
+  @Input() picnicRevenueGrossControl = new FormControl;
 
   constructor() { }
 

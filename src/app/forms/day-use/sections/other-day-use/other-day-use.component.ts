@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-other-day-use',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./other-day-use.component.scss']
 })
 export class OtherDayUseComponent implements OnInit {
+  @Input() otherDayUseRevenueSkiiField = new FormControl;
+  @Input() otherDayUseRevenueHotSpringsField = new FormControl;
 
   constructor() { }
 
