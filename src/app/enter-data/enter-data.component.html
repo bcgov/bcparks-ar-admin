@@ -14,11 +14,10 @@
     </section>
 
     <!-- Accordion header -->
-    <section>
-      <div
-        class="container"
-        *ngIf="subAreaData?.activities && subAreaData?.activities.length > 0"
-      >
+    <section
+      *ngIf="subAreaData?.activities && subAreaData?.activities.length > 0"
+    >
+      <div class="container-fluid">
         <h1 class="header-text">
           {{ formParams.parkName }} - {{ formParams.subAreaName }}
         </h1>
@@ -29,7 +28,7 @@
 
     <!-- Accordion -->
     <section>
-      <div class="container my-4">
+      <div class="container-fluid my-4">
         <app-accordion-manager></app-accordion-manager>
       </div>
     </section>

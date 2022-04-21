@@ -1,6 +1,5 @@
 @import "src/assets/themes/variables";
 
-
 .toggle-button-offset {
   padding-left: 1rem;
 }
@@ -15,4 +14,8 @@ nav {
   padding-top: 1.25rem;
   height: 4rem;
   background: $light;
+}
+
+a:hover {
+  cursor: pointer;
 }
