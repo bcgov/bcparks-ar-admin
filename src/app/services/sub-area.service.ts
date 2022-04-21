@@ -6,6 +6,8 @@ import { DataService } from './data.service';
 import { EventService, EventObject, EventKeywords } from './event.service';
 import { ToastService, ToastTypes } from './toast.service';
 
+import * as moment from 'moment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -76,6 +78,12 @@ export class SubAreaService {
           date: date,
         })
       );
+
+      // Date for accordion
+      res.lastUpdatedAccordion = res.lastUpdated
+        ? moment(new Date(res.lastUpdated)).format('YYYY-MM-DD')
+        : 'Never';
+
       this.dataService.setItemValue(id, res);
     } catch (e) {
       this.toastService.addMessage(
