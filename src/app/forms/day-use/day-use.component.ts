@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,93 +17,79 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './day-use.component.html',
   styleUrls: ['./day-use.component.scss'],
 })
-export class DayUseComponent extends BaseFormComponent implements OnDestroy {
-  public dayUseForm = new FormGroup({
-    peopleAndVehiclesTrailControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    peopleAndVehiclesVehicleControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    peopleAndVehiclesBusControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    picnicRevenueShelterControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    picnicRevenueGrossControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    otherDayUseRevenueSkiiControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    otherDayUseRevenueHotSpringsControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    varianceNotesControl: new FormControl(''),
-  });
-
-  public dayUseFields: any = {
-    peopleAndVehiclesTrail: this.dayUseForm.get(
-      'peopleAndVehiclesTrailControl'
-    ),
-    peopleAndVehiclesVehicle: this.dayUseForm.get(
-      'peopleAndVehiclesVehicleControl'
-    ),
-    peopleAndVehiclesBus: this.dayUseForm.get('peopleAndVehiclesBusControl'),
-    picnicRevenueShelter: this.dayUseForm.get('picnicRevenueShelterControl'),
-    picnicRevenueGross: this.dayUseForm.get('picnicRevenueGrossControl'),
-    otherDayUseRevenueSkii: this.dayUseForm.get(
-      'otherDayUseRevenueSkiiControl'
-    ),
-    otherDayUseRevenueHotSprings: this.dayUseForm.get(
-      'otherDayUseRevenueHotSpringsControl'
-    ),
-    notes: this.dayUseForm.get('varianceNotesControl'),
-  };
-
-  private alive = true;
-  private subscriptions: any[] = [];
-
+export class DayUseComponent extends BaseFormComponent {
   constructor(
-    protected fb: FormBuilder,
+    protected formBuilder: FormBuilder,
     protected formService: FormService,
-    private dataService: DataService,
+    protected dataService: DataService,
     protected router: Router
   ) {
-    super(fb, formService, router);
-    (this._form = this.dayUseForm),
-      (this._fields = this.dayUseFields),
-      (this._formName = 'Day Use Form');
+    super(formBuilder, formService, router, dataService);
 
+    // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ACCORDION_DAY_USE)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
-            this._postObj = res;
-            this._postObj['activity'] = 'Day Use';
+            this.data = res;
           }
         })
     );
+
+    // declare activity type
+    (this.postObj['activity'] = 'Day Use'),
+      // initialize the form and populate with values if they exist.
+      (this.form = new FormGroup({
+        peopleAndVehiclesTrailControl: new FormControl(
+          this.data.peopleAndVehiclesTrail || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        peopleAndVehiclesVehicleControl: new FormControl(
+          this.data.peopleAndVehiclesVehicle || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        peopleAndVehiclesBusControl: new FormControl(
+          this.data.peopleAndVehiclesBus || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        picnicRevenueShelterControl: new FormControl(
+          this.data.picnicRevenueShelter || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        picnicRevenueGrossControl: new FormControl(
+          this.data.picnicRevenueGross || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        otherDayUseRevenueSkiiControl: new FormControl(
+          this.data.otherDayUseRevenueSkii || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        otherDayUseRevenueHotSpringsControl: new FormControl(
+          this.data.otherDayUseRevenueHotSprings || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        varianceNotesControl: new FormControl(this.data.notes || null),
+      })),
+      // link form controls to the object fields they represent
+      (this.fields = {
+        peopleAndVehiclesTrail: this.form.get('peopleAndVehiclesTrailControl'),
+        peopleAndVehiclesVehicle: this.form.get(
+          'peopleAndVehiclesVehicleControl'
+        ),
+        peopleAndVehiclesBus: this.form.get('peopleAndVehiclesBusControl'),
+        picnicRevenueShelter: this.form.get('picnicRevenueShelterControl'),
+        picnicRevenueGross: this.form.get('picnicRevenueGrossControl'),
+        otherDayUseRevenueSkii: this.form.get('otherDayUseRevenueSkiiControl'),
+        otherDayUseRevenueHotSprings: this.form.get(
+          'otherDayUseRevenueHotSpringsControl'
+        ),
+        notes: this.form.get('varianceNotesControl'),
+      });
   }
 
   async onSubmit() {
     await super.submit();
-  }
-
-  ngOnDestroy() {
-    this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
   }
 }

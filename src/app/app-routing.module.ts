@@ -7,6 +7,7 @@ import { BackcountryCampingComponent } from './forms/backcountry-camping/backcou
 import { BoatingComponent } from './forms/boating/boating.component';
 import { DayUseComponent } from './forms/day-use/day-use.component';
 import { FrontcountryCabinsComponent } from './forms/frontcountry-cabins/frontcountry-cabins.component';
+import { FrontcountryCampingComponent } from './forms/frontcountry-camping/frontcountry-camping.component';
 import { GroupCampingComponent } from './forms/group-camping/group-camping.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
@@ -56,6 +57,11 @@ const routes: Routes = [
       {
         path: 'frontcountry-cabins',
         component: FrontcountryCabinsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'frontcountry-camping',
+        component: FrontcountryCampingComponent,
         canActivate: [AuthGuard],
       },
       {

@@ -3,24 +3,24 @@
   Include data from all standard group camping, include reserved and first come,
   first served.
 </p>
-<form [formGroup]="groupCampingForm">
+<form [formGroup]="form">
   <div class="form-section">
     <h2>Standard rate groups</h2>
     <app-standard-rate-groups
       [standardRateGroupsTotalPeopleStandardField]="
-        groupCampingFields?.standardRateGroupsTotalPeopleStandard
+        fields?.standardRateGroupsTotalPeopleStandard
       "
       [standardRateGroupsTotalPeopleAdultsField]="
-        groupCampingFields?.standardRateGroupsTotalPeopleAdults
+        fields?.standardRateGroupsTotalPeopleAdults
       "
       [standardRateGroupsTotalPeopleYouthField]="
-        groupCampingFields?.standardRateGroupsTotalPeopleYouth
+        fields?.standardRateGroupsTotalPeopleYouth
       "
       [standardRateGroupsTotalPeopleKidsField]="
-        groupCampingFields?.standardRateGroupsTotalPeopleKids
+        fields?.standardRateGroupsTotalPeopleKids
       "
       [standardRateGroupsRevenueGrossField]="
-        groupCampingFields?.standardRateGroupsRevenueGross
+        fields?.standardRateGroupsRevenueGross
       "
     ></app-standard-rate-groups>
   </div>
@@ -28,13 +28,13 @@
     <h2>Youth rate groups</h2>
     <app-youth-rate-groups
       [youthRateGroupsAttendanceGroupNightsField]="
-        groupCampingFields?.youthRateGroupsAttendanceGroupNights
+        fields?.youthRateGroupsAttendanceGroupNights
       "
       [youthRateGroupsAttendancePeopleField]="
-        groupCampingFields?.youthRateGroupsAttendancePeople
+        fields?.youthRateGroupsAttendancePeople
       "
       [youthRateGroupsRevenueGrossField]="
-        groupCampingFields?.youthRateGroupsRevenueGross
+        fields?.youthRateGroupsRevenueGross
       "
     ></app-youth-rate-groups>
   </div>
@@ -42,7 +42,7 @@
     <h2>Variance notes</h2>
     <app-text-area
       [charCap]="100"
-      [control]="groupCampingFields?.notes"
+      [control]="fields?.notes"
       [label]="
         'If any data entered above varies widely from the expected counts, briefly explain the variance.'
       "

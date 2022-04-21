@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,69 +17,60 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './backcountry-cabins.component.html',
   styleUrls: ['./backcountry-cabins.component.scss'],
 })
-export class BackcountryCabinsComponent
-  extends BaseFormComponent
-  implements OnDestroy
-{
-  public backcountryCabinsForm = new FormGroup({
-    adultAttendanceControl: new FormControl('', Validators.pattern('^[0-9]*$')),
-    childAttendanceControl: new FormControl('', Validators.pattern('^[0-9]*$')),
-    familyAttendanceControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    grossBackcountryCabinRevenueControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    varianceNotesControl: new FormControl(''),
-  });
-
-  public backcountryCabinsFields: any = {
-    peopleAdult: this.backcountryCabinsForm.get('adultAttendanceControl'),
-    peopleChild: this.backcountryCabinsForm.get('childAttendanceControl'),
-    peopleFamily: this.backcountryCabinsForm.get('familyAttendanceControl'),
-    revenueFamily: this.backcountryCabinsForm.get(
-      'grossBackcountryCabinRevenueControl'
-    ),
-    notes: this.backcountryCabinsForm.get('varianceNotesControl'),
-  };
-
-  private alive = true;
-  private subscriptions: any[] = [];
-
+export class BackcountryCabinsComponent extends BaseFormComponent {
   constructor(
-    protected fb: FormBuilder,
+    protected formBuilder: FormBuilder,
     protected formService: FormService,
-    private dataService: DataService,
+    protected dataService: DataService,
     protected router: Router
   ) {
-    super(fb, formService, router);
-    (this._form = this.backcountryCabinsForm),
-      (this._fields = this.backcountryCabinsFields),
-      (this._formName = 'Backcountry Cabins Form');
+    super(formBuilder, formService, router, dataService);
 
+    // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ACCORDION_BACKCOUNTRY_CABINS)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
-            this._postObj = res;
-            this._postObj['activity'] = 'Backcountry Cabins';
+            this.data = res;
           }
         })
     );
+
+    // declare activity type
+    (this.postObj['activity'] = 'Backcountry Cabins'),
+      // initialize the form and populate with values if they exist.
+      (this.form = new FormGroup({
+        peopleAdultControl: new FormControl(
+          this.data.peopleAdult || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        peopleChildControl: new FormControl(
+          this.data.peopleChild || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        peopleFamilyControl: new FormControl(
+          this.data.peopleFamily || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        revenueFamilyControl: new FormControl(
+          this.data.revenueFamily || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        varianceNotesControl: new FormControl(this.data.notes || null),
+      })),
+      // link form controls to the object fields they represent
+      (this.fields = {
+        peopleAdult: this.form.get('peopleAdultControl'),
+        peopleChild: this.form.get('peopleChildControl'),
+        peopleFamily: this.form.get('peopleFamilyControl'),
+        revenueFamily: this.form.get('revenueFamilyControl'),
+        notes: this.form.get('varianceNotesControl'),
+      });
   }
 
   async onSubmit() {
     await super.submit();
-  }
-
-  ngOnDestroy() {
-    this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
   }
 }
