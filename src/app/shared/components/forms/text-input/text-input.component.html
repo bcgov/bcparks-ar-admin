@@ -1,5 +1,7 @@
 <label *ngIf="label" for="{{ id }}" class="fw-bold">{{ label }}</label>
-<div *ngIf="!moneyMode" class="input-group mb-3">
+
+<!-- For type number -->
+<div *ngIf="!moneyMode && type === 'number'" class="input-group mb-3">
   <span
     *ngIf="icon"
     class="input-group-text"
@@ -8,7 +10,7 @@
     ><i class="bi"></i
   ></span>
   <input
-    type="{{ type }}"
+    type="number"
     name="{{ id }}"
     id="{{ id }}"
     [formControl]="control"
@@ -18,6 +20,29 @@
     attr.aria-describedby="{{ ariaDescribedBy }}"
   />
 </div>
+
+<!-- For type text -->
+<div *ngIf="!moneyMode && type === 'text'">
+  <span
+    *ngIf="icon"
+    class="input-group-text"
+    id="{{ ariaDescribedBy }}"
+    [ngClass]="icon"
+    ><i class="bi"></i
+  ></span>
+  <input
+    type="text"
+    name="{{ id }}"
+    id="{{ id }}"
+    [formControl]="control"
+    class="form-control text-end"
+    placeholder="{{ placeholder }}"
+    attr.aria-label="{{ ariaLabel }}"
+    attr.aria-describedby="{{ ariaDescribedBy }}"
+  />
+</div>
+
+<!-- For currency -->
 <div *ngIf="moneyMode" class="input-group mb-3">
   <span class="input-group-text" id="{{ ariaDescribedBy }}"
     ><i class="bi bi-currency-dollar"></i
