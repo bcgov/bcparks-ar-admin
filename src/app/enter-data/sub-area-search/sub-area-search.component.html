@@ -39,10 +39,18 @@
       <button
         class="btn btn-primary w-50"
         type="button"
-        [disabled]="continueDisabled"
+        [disabled]="continueDisabled || fetchCount > 0"
         (click)="search()"
       >
-        Go
+        <span *ngIf="fetchCount === 0">Go</span>
+        <span *ngIf="fetchCount > 0">
+          <span
+            class="spinner-border spinner-border-sm text-warning"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Loading...</span>
+        </span>
       </button>
     </div>
   </div>
