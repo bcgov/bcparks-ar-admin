@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,68 +17,49 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './frontcountry-cabins.component.html',
   styleUrls: ['./frontcountry-cabins.component.scss'],
 })
-export class FrontcountryCabinsComponent
-  extends BaseFormComponent
-  implements OnDestroy
-{
-  public frontcountryCabinsForm = new FormGroup({
-    totalAttendancePartiesControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    revenueGrossCampingControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    varianceNotesControl: new FormControl(''),
-  });
-
-  public frontcountryCabinsFields: any = {
-    totalAttendanceParties: this.frontcountryCabinsForm.get(
-      'totalAttendancePartiesControl'
-    ),
-    revenueGrossCamping: this.frontcountryCabinsForm.get(
-      'revenueGrossCampingControl'
-    ),
-    notes: this.frontcountryCabinsForm.get('varianceNotesControl'),
-  };
-
-  private alive = true;
-  private subscriptions: any[] = [];
-
+export class FrontcountryCabinsComponent extends BaseFormComponent {
   constructor(
-    protected fb: FormBuilder,
+    protected formBuilder: FormBuilder,
     protected formService: FormService,
-    private dataService: DataService,
+    protected dataService: DataService,
     protected router: Router
   ) {
-    super(fb, formService, router);
-    (this._form = this.frontcountryCabinsForm),
-      (this._fields = this.frontcountryCabinsFields),
-      (this._formName = 'Frontcountry Cabins Form');
-    // TODO: populate this with incoming data later
-
+    super(formBuilder, formService, router, dataService);
+    // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
-            this._postObj = res;
-            this._postObj['activity'] = 'Frontcountry Cabins';
+            this.data = res;
           }
         })
     );
+
+    // declare activity type
+    (this.postObj['activity'] = 'Frontcountry Cabins'),
+      // initialize the form and populate with values if they exist.
+      (this.form = new FormGroup({
+        totalAttendancePartiesControl: new FormControl(
+          this.data.totalAttendanceParties || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        revenueGrossCampingControl: new FormControl(
+          this.data.revenueGrossCamping || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        varianceNotesControl: new FormControl(this.data.notes || null),
+      })),
+      // link form controls to the object fields they represent
+      (this.fields = {
+        totalAttendanceParties: this.form.get('totalAttendancePartiesControl'),
+        revenueGrossCamping: this.form.get('revenueGrossCampingControl'),
+        notes: this.form.get('varianceNotesControl'),
+      });
   }
 
   async onSubmit() {
     await super.submit();
-  }
-
-  ngOnDestroy() {
-    this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
   }
 }

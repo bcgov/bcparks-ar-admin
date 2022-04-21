@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,137 +17,116 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './frontcountry-camping.component.html',
   styleUrls: ['./frontcountry-camping.component.scss'],
 })
-export class FrontcountryCampingComponent
-  extends BaseFormComponent
-  implements OnDestroy
-{
-  public frontcountryCampingForm = new FormGroup({
-    campingPartyNightsAttendanceStandardControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    campingPartyNightsAttendanceSeniorControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    campingPartyNightsAttendanceSocialControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    campingPartyNightsAttendanceLongStayControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    campingPartyNightsRevenueGrossControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    secondCarsAttendanceStandardControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    secondCarsAttendanceSeniorControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    secondCarsAttendanceSocialControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    secondCarsRevenueGrossControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    otherRevenueGrossSaniControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    otherRevenueElectricalControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    otherRevenueShowerControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    varianceNotesControl: new FormControl(''),
-  });
-
-  public frontcountryCampingFields: any = {
-    campingPartyNightsAttendanceStandard: this.frontcountryCampingForm.get(
-      'campingPartyNightsAttendanceStandardControl'
-    ),
-    campingPartyNightsAttendanceSenior: this.frontcountryCampingForm.get(
-      'campingPartyNightsAttendanceSeniorControl'
-    ),
-    campingPartyNightsAttendanceSocial: this.frontcountryCampingForm.get(
-      'campingPartyNightsAttendanceSocialControl'
-    ),
-    campingPartyNightsAttendanceLongStay: this.frontcountryCampingForm.get(
-      'campingPartyNightsAttendanceLongStayControl'
-    ),
-    campingPartyNightsRevenueGross: this.frontcountryCampingForm.get(
-      'campingPartyNightsRevenueGrossControl'
-    ),
-    secondCarsAttendanceStandard: this.frontcountryCampingForm.get(
-      'secondCarsAttendanceStandardControl'
-    ),
-    secondCarsAttendanceSenior: this.frontcountryCampingForm.get(
-      'secondCarsAttendanceSeniorControl'
-    ),
-    secondCarsAttendanceSocial: this.frontcountryCampingForm.get(
-      'secondCarsAttendanceSocialControl'
-    ),
-    secondCarsRevenueGross: this.frontcountryCampingForm.get(
-      'secondCarsRevenueGrossControl'
-    ),
-    otherRevenueGrossSani: this.frontcountryCampingForm.get(
-      'otherRevenueGrossSaniControl'
-    ),
-    otherRevenueElectrical: this.frontcountryCampingForm.get(
-      'otherRevenueElectricalControl'
-    ),
-    otherRevenueShower: this.frontcountryCampingForm.get(
-      'secondCarsRevenueGrossControl'
-    ),
-    notes: this.frontcountryCampingForm.get('varianceNotesControl'),
-  };
-
-  private alive = true;
-  private subscriptions: any[] = [];
-
+export class FrontcountryCampingComponent extends BaseFormComponent {
   constructor(
-    protected fb: FormBuilder,
+    protected formBuilder: FormBuilder,
     protected formService: FormService,
-    private dataService: DataService,
+    protected dataService: DataService,
     protected router: Router
   ) {
-    super(fb, formService, router);
-    (this._form = this.frontcountryCampingForm),
-      (this._fields = this.frontcountryCampingFields),
-      (this._formName = 'Frontcountry Camping Form');
+    super(formBuilder, formService, router, dataService);
 
+    // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
-            this._postObj = res;
-            this._postObj['activity'] = 'Frontcountry Camping';
+            this.data = res;
           }
         })
     );
+
+    // declare activity type
+    (this.postObj['activity'] = 'Frontcountry Camping'),
+      // initialize the form and populate with values if they exist.
+      (this.form = new FormGroup({
+        campingPartyNightsAttendanceStandardControl: new FormControl(
+          this.data.campingPartyNightsAttendanceStandard || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        campingPartyNightsAttendanceSeniorControl: new FormControl(
+          this.data.campingPartyNightsAttendanceSenior || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        campingPartyNightsAttendanceSocialControl: new FormControl(
+          this.data.campingPartyNightsAttendanceSocial || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        campingPartyNightsAttendanceLongStayControl: new FormControl(
+          this.data.campingPartyNightsAttendanceLongStay || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        campingPartyNightsRevenueGrossControl: new FormControl(
+          this.data.campingPartyNightsRevenueGross || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        secondCarsAttendanceStandardControl: new FormControl(
+          this.data.secondCarsAttendanceStandard || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        secondCarsAttendanceSeniorControl: new FormControl(
+          this.data.secondCarsAttendanceSenior || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        secondCarsAttendanceSocialControl: new FormControl(
+          this.data.secondCarsAttendanceSocial || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        secondCarsRevenueGrossControl: new FormControl(
+          this.data.secondCarsRevenueGross || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        otherRevenueGrossSaniControl: new FormControl(
+          this.data.otherRevenueGrossSani || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        otherRevenueElectricalControl: new FormControl(
+          this.data.otherRevenueElectrical || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        otherRevenueShowerControl: new FormControl(
+          this.data.otherRevenueShower || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        varianceNotesControl: new FormControl(this.data.notes || null),
+      })),
+      // link form controls to the object fields they represent
+      (this.fields = {
+        campingPartyNightsAttendanceStandard: this.form.get(
+          'campingPartyNightsAttendanceStandardControl'
+        ),
+        campingPartyNightsAttendanceSenior: this.form.get(
+          'campingPartyNightsAttendanceSeniorControl'
+        ),
+        campingPartyNightsAttendanceSocial: this.form.get(
+          'campingPartyNightsAttendanceSocialControl'
+        ),
+        campingPartyNightsAttendanceLongStay: this.form.get(
+          'campingPartyNightsAttendanceLongStayControl'
+        ),
+        campingPartyNightsRevenueGross: this.form.get(
+          'campingPartyNightsRevenueGrossControl'
+        ),
+        secondCarsAttendanceStandard: this.form.get(
+          'secondCarsAttendanceStandardControl'
+        ),
+        secondCarsAttendanceSenior: this.form.get(
+          'secondCarsAttendanceSeniorControl'
+        ),
+        secondCarsAttendanceSocial: this.form.get(
+          'secondCarsAttendanceSocialControl'
+        ),
+        secondCarsRevenueGross: this.form.get('secondCarsRevenueGrossControl'),
+        otherRevenueGrossSani: this.form.get('otherRevenueGrossSaniControl'),
+        otherRevenueElectrical: this.form.get('otherRevenueElectricalControl'),
+        otherRevenueShower: this.form.get('otherRevenueShowerControl'),
+        notes: this.form.get('varianceNotesControl')
+      });
   }
 
   async onSubmit() {
     await super.submit();
-  }
-
-  ngOnDestroy() {
-    this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
   }
 }

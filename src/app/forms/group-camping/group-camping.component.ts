@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,109 +17,96 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './group-camping.component.html',
   styleUrls: ['./group-camping.component.scss'],
 })
-export class GroupCampingComponent
-  extends BaseFormComponent
-  implements OnDestroy
-{
-  public groupCampingForm = new FormGroup({
-    standardRateGroupsTotalPeopleStandardControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    standardRateGroupsTotalPeopleAdultsControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    standardRateGroupsTotalPeopleYouthControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    standardRateGroupsTotalPeopleKidsControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    standardRateGroupsRevenueGrossControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    youthRateGroupsAttendanceGroupNightsControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    youthRateGroupsAttendancePeopleControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    youthRateGroupsRevenueGrossControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    varianceNotesControl: new FormControl(''),
-  });
-
-  public groupCampingFields: any = {
-    standardRateGroupsTotalPeopleStandard: this.groupCampingForm.get(
-      'standardRateGroupsTotalPeopleStandardControl'
-    ),
-    standardRateGroupsTotalPeopleAdults: this.groupCampingForm.get(
-      'standardRateGroupsTotalPeopleAdultsControl'
-    ),
-    standardRateGroupsTotalPeopleYouth: this.groupCampingForm.get(
-      'standardRateGroupsTotalPeopleYouthControl'
-    ),
-    standardRateGroupsTotalPeopleKids: this.groupCampingForm.get(
-      'standardRateGroupsTotalPeopleKidsControl'
-    ),
-    standardRateGroupsRevenueGross: this.groupCampingForm.get(
-      'standardRateGroupsRevenueGrossControl'
-    ),
-    youthRateGroupsAttendanceGroupNights: this.groupCampingForm.get(
-      'youthRateGroupsAttendanceGroupNightsControl'
-    ),
-    youthRateGroupsAttendancePeople: this.groupCampingForm.get(
-      'youthRateGroupsAttendancePeopleControl'
-    ),
-    youthRateGroupsRevenueGross: this.groupCampingForm.get(
-      'youthRateGroupsRevenueGrossControl'
-    ),
-    notes: this.groupCampingForm.get('varianceNotesControl'),
-  };
-
-  private alive = true;
-  private subscriptions: any[] = [];
-
+export class GroupCampingComponent extends BaseFormComponent {
   constructor(
-    protected fb: FormBuilder,
+    protected formBuilder: FormBuilder,
     protected formService: FormService,
-    private dataService: DataService,
+    protected dataService: DataService,
     protected router: Router
   ) {
-    super(fb, formService, router);
-    (this._form = this.groupCampingForm),
-      (this._fields = this.groupCampingFields),
-      (this._formName = 'Group Camping Form');
+    super(formBuilder, formService, router, dataService);
 
+    // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ACCORDION_GROUP_CAMPING)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
-            this._postObj = res;
-            this._postObj['activity'] = 'Group Camping';
+            this.data = res;
           }
         })
     );
+
+    // declare activity type
+    (this.postObj['activity'] = 'Group Camping'),
+      // initialize the form and populate with values if they exist.
+      (this.form = new FormGroup({
+        standardRateGroupsTotalPeopleStandardControl: new FormControl(
+          this.data.standardRateGroupsTotalPeopleStandard || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        standardRateGroupsTotalPeopleAdultsControl: new FormControl(
+          this.data.standardRateGroupsTotalPeopleAdults || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        standardRateGroupsTotalPeopleYouthControl: new FormControl(
+          this.data.standardRateGroupsTotalPeopleYouth || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        standardRateGroupsTotalPeopleKidsControl: new FormControl(
+          this.data.standardRateGroupsTotalPeopleKids || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        standardRateGroupsRevenueGrossControl: new FormControl(
+          this.data.standardRateGroupsRevenueGross || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        youthRateGroupsAttendanceGroupNightsControl: new FormControl(
+          this.data.youthRateGroupsAttendanceGroupNights || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        youthRateGroupsAttendancePeopleControl: new FormControl(
+          this.data.youthRateGroupsAttendancePeople || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        youthRateGroupsRevenueGrossControl: new FormControl(
+          this.data.youthRateGroupsRevenueGross || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        varianceNotesControl: new FormControl(this.data.notes || null),
+      })),
+      // link form controls to the object fields they represent
+      (this.fields = {
+        standardRateGroupsTotalPeopleStandard: this.form.get(
+          'standardRateGroupsTotalPeopleStandardControl'
+        ),
+        standardRateGroupsTotalPeopleAdults: this.form.get(
+          'standardRateGroupsTotalPeopleAdultsControl'
+        ),
+        standardRateGroupsTotalPeopleYouth: this.form.get(
+          'standardRateGroupsTotalPeopleYouthControl'
+        ),
+        standardRateGroupsTotalPeopleKids: this.form.get(
+          'standardRateGroupsTotalPeopleKidsControl'
+        ),
+        standardRateGroupsRevenueGross: this.form.get(
+          'standardRateGroupsRevenueGrossControl'
+        ),
+        youthRateGroupsAttendanceGroupNights: this.form.get(
+          'youthRateGroupsAttendanceGroupNightsControl'
+        ),
+        youthRateGroupsAttendancePeople: this.form.get(
+          'youthRateGroupsAttendancePeopleControl'
+        ),
+        youthRateGroupsRevenueGross: this.form.get(
+          'youthRateGroupsRevenueGrossControl'
+        ),
+        notes: this.form.get('varianceNotesControl'),
+      });
   }
 
   async onSubmit() {
     await super.submit();
-  }
-
-  ngOnDestroy() {
-    this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
   }
 }

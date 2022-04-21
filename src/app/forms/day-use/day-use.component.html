@@ -3,28 +3,28 @@
   Not all items shown below will apply to all Day Use areas. Leave fields blank
   if they are not relevant to the sub-area.
 </p>
-<form [formGroup]="dayUseForm">
+<form [formGroup]="form">
   <div class="form-section">
     <h2>People and vehicles</h2>
     <app-people-and-vehicles
-      [peopleAndVehiclesTrailField]="dayUseFields?.peopleAndVehiclesTrail"
-      [peopleAndVehiclesVehicleField]="dayUseFields?.peopleAndVehiclesVehicle"
-      [peopleAndVehiclesBusField]="dayUseFields?.peopleAndVehiclesBus"
+      [peopleAndVehiclesTrailField]="fields?.peopleAndVehiclesTrail"
+      [peopleAndVehiclesVehicleField]="fields?.peopleAndVehiclesVehicle"
+      [peopleAndVehiclesBusField]="fields?.peopleAndVehiclesBus"
     ></app-people-and-vehicles>
   </div>
   <div class="form-section">
     <h2>Picnic Shelters</h2>
     <app-picnic-shelters
-      [picnicRevenueShelterControl]="dayUseFields?.picnicRevenueShelter"
-      [picnicRevenueGrossControl]="dayUseFields?.picnicRevenueGross"
+      [picnicRevenueShelterControl]="fields?.picnicRevenueShelter"
+      [picnicRevenueGrossControl]="fields?.picnicRevenueGross"
     ></app-picnic-shelters>
   </div>
   <div class="form-section">
     <h2>Other day use</h2>
     <app-other-day-use
-      [otherDayUseRevenueSkiiField]="dayUseFields?.otherDayUseRevenueSkii"
+      [otherDayUseRevenueSkiiField]="fields?.otherDayUseRevenueSkii"
       [otherDayUseRevenueHotSpringsField]="
-        dayUseFields?.otherDayUseRevenueHotSprings
+        fields?.otherDayUseRevenueHotSprings
       "
     ></app-other-day-use>
   </div>
@@ -32,7 +32,7 @@
     <h2>Variance notes</h2>
     <app-text-area
       [charCap]="100"
-      [control]="dayUseFields?.notes"
+      [control]="fields?.notes"
       [label]="
         'If any data entered above varies widely from the expected counts, briefly explain the variance.'
       "

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,62 +17,50 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './backcountry-camping.component.html',
   styleUrls: ['./backcountry-camping.component.scss'],
 })
-export class BackcountryCampingComponent
-  extends BaseFormComponent
-  implements OnDestroy
-{
-  public backcountryCampingForm = new FormGroup({
-    peopleControl: new FormControl('', Validators.pattern('^[0-9]*$')),
-    grossCampingRevenueControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    varianceNotesControl: new FormControl(''),
-  });
-
-  public backcountryCampingFields: any = {
-    people: this.backcountryCampingForm.get('peopleControl'),
-    grossCampingRevenue: this.backcountryCampingForm.get(
-      'grossCampingRevenueControl'
-    ),
-    notes: this.backcountryCampingForm.get('varianceNotesControl'),
-  };
-
-  private alive = true;
-  private subscriptions: any[] = [];
-
+export class BackcountryCampingComponent extends BaseFormComponent {
   constructor(
-    protected fb: FormBuilder,
+    protected formBuilder: FormBuilder,
     protected formService: FormService,
-    private dataService: DataService,
+    protected dataService: DataService,
     protected router: Router
   ) {
-    super(fb, formService, router);
-    (this._form = this.backcountryCampingForm),
-      (this._fields = this.backcountryCampingFields),
-      (this._formName = 'Backcountry Camping Form');
+    super(formBuilder, formService, router, dataService);
 
+    // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
-            this._postObj = res;
-            this._postObj['activity'] = 'Backcountry Camping';
+            this.data = res;
           }
         })
     );
+
+    // declare activity type
+    (this.postObj['activity'] = 'Backcountry Camping'),
+      // initialize the form and populate with values if they exist.
+      (this.form = new FormGroup({
+        peopleControl: new FormControl(
+          this.data.people || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        grossCampingRevenueControl: new FormControl(
+          this.data.grossCampingRevenue || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        varianceNotesControl: new FormControl(this.data.notes || null),
+      })),
+      // link form controls to the object fields they represent
+      (this.fields = {
+        people: this.form.get('peopleControl'),
+        grossCampingRevenue: this.form.get('grossCampingRevenueControl'),
+        notes: this.form.get('varianceNotesControl'),
+      });
   }
 
   async onSubmit() {
     await super.submit();
-  }
-
-  ngOnDestroy() {
-    this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
   }
 }

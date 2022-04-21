@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,67 +17,60 @@ import { Constants } from 'src/app/shared/utils/constants';
   templateUrl: './boating.component.html',
   styleUrls: ['./boating.component.scss'],
 })
-export class BoatingComponent extends BaseFormComponent implements OnDestroy {
-  public boatingForm = new FormGroup({
-    nightsOnDockControl: new FormControl('', Validators.pattern('^[0-9]*$')),
-    nightsOnBuoyControl: new FormControl('', Validators.pattern('^[0-9]*$')),
-    miscellaneousBoatsControl: new FormControl(
-      '',
-      Validators.pattern('^[0-9]*$')
-    ),
-    grossBoatingRevenueControl: new FormControl(
-      '',
-      Validators.pattern('/^-?(0|[1-9]d*)?$/')
-    ),
-    varianceNotesControl: new FormControl(''),
-  });
-
-  public boatingFields: any = {
-    boatAttendanceNightsOnDock: this.boatingForm.get('nightsOnDockControl'),
-    boatAttendanceNightsOnBouys: this.boatingForm.get('nightsOnBuoyControl'),
-    boatAttendanceMiscellaneous: this.boatingForm.get(
-      'miscellaneousBoatsControl'
-    ),
-    boatRevenueGross: this.boatingForm.get('grossBoatingRevenueControl'),
-    notes: this.boatingForm.get('varianceNotesControl'),
-  };
-
-  private alive = true;
-  private subscriptions: any[] = [];
-
+export class BoatingComponent extends BaseFormComponent {
   constructor(
-    protected fb: FormBuilder,
+    protected formBuilder: FormBuilder,
     protected formService: FormService,
-    private dataService: DataService,
+    protected dataService: DataService,
     protected router: Router
   ) {
-    super(fb, formService, router);
-    this._form = this.boatingForm;
-    this._fields = this.boatingFields;
-    // TODO: populate this with incoming data.
-    this._formName = 'Boating Form';
+    super(formBuilder, formService, router, dataService);
 
+    // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ACCORDION_BOATING)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
-            this._postObj = res;
-            this._postObj['activity'] = 'Boating';
+            this.data = res;
           }
         })
     );
+
+    // declare activity type
+    (this.postObj['activity'] = 'Boating'),
+      // initialize the form and populate with values if they exist.
+      (this.form = new FormGroup({
+        boatAttendanceNightsOnDockControl: new FormControl(
+          this.data.boatAttendanceNightsOnDock || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        boatAttendanceNightsOnBouysControl: new FormControl(
+          this.data.boatAttendanceNightsOnBouys || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        boatAttendanceMiscellaneousControl: new FormControl(
+          this.data.boatAttendanceMiscellaneous || null,
+          Validators.pattern('^[0-9]*$')
+        ),
+        boatRevenueGrossControl: new FormControl(
+          this.data.boatRevenueGross || null,
+          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+        ),
+        varianceNotesControl: new FormControl(this.data.notes || null),
+      })),
+      // link form controls to the object fields they represent
+      (this.fields = {
+        boatAttendanceNightsOnDock: this.form.get('boatAttendanceNightsOnDockControl'),
+        boatAttendanceNightsOnBouys: this.form.get('boatAttendanceNightsOnBouysControl'),
+        boatAttendanceMiscellaneous: this.form.get('boatAttendanceMiscellaneousControl'),
+        boatRevenueGross: this.form.get('boatRevenueGrossControl'),
+        notes: this.form.get('varianceNotesControl'),
+      });
   }
 
   async onSubmit() {
     await super.submit();
-  }
-
-  ngOnDestroy() {
-    this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
   }
 }
