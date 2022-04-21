@@ -54,6 +54,8 @@ export class Utils {
   }
 
   public convertYYYYMMToMMMMYYYY(date) {
-    return moment(new Date(date.substring(0, 4), date.slice(-2) - 1)).format('MMMM YYYY');
+    return moment(new Date(date.substring(0, 4), date.slice(-2) - 1)).format(
+      'MMMM YYYY'
+    );
   }
 }

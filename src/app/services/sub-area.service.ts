@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { Constants } from '../shared/utils/constants';
 import { ApiService } from './api.service';
 import { DataService } from './data.service';
 import { EventService, EventObject, EventKeywords } from './event.service';
@@ -88,5 +89,24 @@ export class SubAreaService {
       // TODO: We may want to change this.
       this.dataService.setItemValue(id, 'error');
     }
+  }
+
+  public clearAccordionCache() {
+    this.dataService.clearItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA);
+    this.dataService.clearItemValue(
+      Constants.dataIds.ACCORDION_BACKCOUNTRY_CABINS
+    );
+    this.dataService.clearItemValue(
+      Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING
+    );
+    this.dataService.clearItemValue(Constants.dataIds.ACCORDION_BOATING);
+    this.dataService.clearItemValue(Constants.dataIds.ACCORDION_DAY_USE);
+    this.dataService.clearItemValue(
+      Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS
+    );
+    this.dataService.clearItemValue(
+      Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING
+    );
+    this.dataService.clearItemValue(Constants.dataIds.ACCORDION_GROUP_CAMPING);
   }
 }

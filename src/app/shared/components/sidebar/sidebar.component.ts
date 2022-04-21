@@ -3,6 +3,7 @@ import { takeWhile } from 'rxjs/internal/operators/takeWhile';
 import { SideBarService } from 'src/app/services/sidebar.service';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
+import { SubAreaService } from 'src/app/services/sub-area.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,7 +23,8 @@ export class SidebarComponent implements OnDestroy {
 
   constructor(
     protected sideBarService: SideBarService,
-    protected router: Router
+    protected router: Router,
+    protected subAreaService: SubAreaService
   ) {
     this.routes = router.config.filter(function (obj) {
       return obj.path !== '**' && obj.path !== 'unauthorized';
@@ -44,6 +46,17 @@ export class SidebarComponent implements OnDestroy {
           this.hide = hide;
         })
     );
+  }
+
+  onNavigate(route) {
+    switch (route) {
+      case 'enter-data':
+        this.subAreaService.clearAccordionCache();
+        break;
+      default:
+        break;
+    }
+    this.router.navigate([route]);
   }
 
   ngOnDestroy() {
