@@ -23,6 +23,7 @@ import { TokenInterceptor } from './shared/utils/token-interceptor';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { ApiService } from './services/api.service';
 import { AutoFetchService } from './services/auto-fetch.service';
+import { InfiniteLoadingBarModule } from './shared/components/infinite-loading-bar/infinite-loading-bar.module';
 
 export function initConfig(
   configService: ConfigService,
@@ -53,6 +54,7 @@ export function initConfig(
     HeaderModule,
     FooterModule,
     HomeModule,
+    InfiniteLoadingBarModule,
   ],
   providers: [
     {

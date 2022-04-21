@@ -23,7 +23,6 @@ export class BoatingAccordionComponent implements OnDestroy {
       .pipe(takeWhile(() => this.alive))
       .subscribe((res) => {
         this.data = res;
-        console.log(this.data);
         this.buildAccordion();
       });
   }

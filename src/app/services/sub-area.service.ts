@@ -7,6 +7,7 @@ import { EventService, EventObject, EventKeywords } from './event.service';
 import { ToastService, ToastTypes } from './toast.service';
 
 import * as moment from 'moment';
+import { InfiniteLoadingBarService } from '../shared/components/infinite-loading-bar/infinite-loading-bar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +17,12 @@ export class SubAreaService {
     private dataService: DataService,
     private eventService: EventService,
     private toastService: ToastService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private infiniteLoadingService: InfiniteLoadingBarService
   ) {}
 
   async fetchSubArea(id, orcs, subAreaName, date) {
+    this.infiniteLoadingService.incrementFetchCount();
     let res;
     let errorSubject = '';
     try {
@@ -60,10 +63,12 @@ export class SubAreaService {
       // TODO: We may want to change this.
       this.dataService.setItemValue(id, 'error');
     }
+    this.infiniteLoadingService.decrimentFetchCount();
   }
 
   //subarea?orcs=0041&subAreaName=Maple%20Bay&activity=Day%20Use&date=202204
   async fetchActivityDetails(id, orcs, subAreaName, activity, date) {
+    this.infiniteLoadingService.incrementFetchCount();
     let res;
     let errorSubject = '';
     try {
@@ -97,6 +102,7 @@ export class SubAreaService {
       // TODO: We may want to change this.
       this.dataService.setItemValue(id, 'error');
     }
+    this.infiniteLoadingService.decrimentFetchCount();
   }
 
   public clearAccordionCache() {
