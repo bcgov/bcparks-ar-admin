@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { InfiniteLoadingBarService } from '../shared/components/infinite-loading-bar/infinite-loading-bar.service';
 import { Constants } from '../shared/utils/constants';
 import { Utils } from '../shared/utils/utils';
 import { ApiService } from './api.service';
@@ -15,11 +16,13 @@ export class ParkService {
     private dataService: DataService,
     private eventService: EventService,
     private toastService: ToastService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private infiniteLoadingService: InfiniteLoadingBarService
   ) {}
   public utils = new Utils();
 
   async fetchEnterDataPark() {
+    this.infiniteLoadingService.incrementFetchCount();
     let res;
     let errorSubject = '';
     try {
@@ -46,5 +49,6 @@ export class ParkService {
       // TODO: We may want to change this.
       this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_PARK, 'error');
     }
+    this.infiniteLoadingService.decrimentFetchCount();
   }
 }
