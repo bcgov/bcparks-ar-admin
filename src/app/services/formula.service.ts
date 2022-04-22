@@ -34,20 +34,6 @@ export class FormulaService {
   }
 
   /**
-   * Returns `n` if `n` is an integer, including 0, otherwise `undefined`
-   * @function
-   * @param {number} n Value to check
-   * @memberof FormulaService
-   * @returns `n` if `n` is an integer, including 0, otherwise `undefined`
-   */
-  checkValidNumber(n: number) {
-    if (this.isValidNumber(n)) {
-      return n;
-    }
-    return undefined;
-  }
-
-  /**
    * Returns the sum of all numbers in an array, unless there are no non-null values.
    * @function
    * @param {any[]} arr Array to summarize

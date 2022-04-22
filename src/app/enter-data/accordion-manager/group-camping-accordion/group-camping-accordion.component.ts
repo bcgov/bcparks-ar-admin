@@ -55,7 +55,6 @@ export class GroupCampingAccordionComponent implements OnDestroy {
           },
         ],
         attendanceTotal: this.formulaService.groupCampingStandardAttendance([
-          this.data?.standardRateGroupsTotalPeopleStandard,
           this.data?.standardRateGroupsTotalPeopleAdults,
           this.data?.standardRateGroupsTotalPeopleYouth,
           this.data?.standardRateGroupsTotalPeopleKids,
