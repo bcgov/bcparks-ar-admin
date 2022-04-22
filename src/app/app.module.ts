@@ -24,6 +24,8 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
 import { ApiService } from './services/api.service';
 import { AutoFetchService } from './services/auto-fetch.service';
 import { InfiniteLoadingBarModule } from './shared/components/infinite-loading-bar/infinite-loading-bar.module';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function initConfig(
   configService: ConfigService,
@@ -55,6 +57,8 @@ export function initConfig(
     FooterModule,
     HomeModule,
     InfiniteLoadingBarModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

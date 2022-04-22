@@ -32,4 +32,11 @@ export class Constants {
     dayUse:
       'https://bcparks.ca/_shared/images/icons/26x26icons/activity/hiking.svg',
   };
+
+  public static readonly ToastTypes: any = {
+    SUCCESS: 0,
+    WARNING: 1,
+    INFO: 2,
+    ERROR: 3,
+  };
 }
