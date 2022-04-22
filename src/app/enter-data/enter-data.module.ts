@@ -20,6 +20,7 @@ import { FrontcountryCabinsModule } from '../forms/frontcountry-cabins/frontcoun
 import { FrontcountryCampingModule } from '../forms/frontcountry-camping/frontcountry-camping.module';
 import { GroupCampingModule } from '../forms/group-camping/group-camping.module';
 import { FormService } from '../services/form.service';
+import { TextToLoadingSpinnerModule } from '../shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
 
 @NgModule({
   declarations: [EnterDataComponent, SubAreaSearchComponent],
@@ -43,6 +44,7 @@ import { FormService } from '../services/form.service';
     FrontcountryCabinsModule,
     FrontcountryCampingModule,
     GroupCampingModule,
+    TextToLoadingSpinnerModule,
   ],
   exports: [EnterDataComponent],
   providers: [FormService, FormService],

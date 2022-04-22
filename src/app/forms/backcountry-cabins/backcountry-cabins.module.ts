@@ -5,6 +5,7 @@ import { BackcountryCabinsSectionModule } from './sections/backcountry-cabins-se
 import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-area.module';
 import { BaseFormModule } from 'src/app/shared/components/forms/base-form/base-form.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
 
 @NgModule({
   declarations: [BackcountryCabinsComponent],
@@ -15,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BaseFormModule,
     FormsModule,
     ReactiveFormsModule,
+    TextToLoadingSpinnerModule,
   ],
   exports: [BackcountryCabinsComponent],
 })

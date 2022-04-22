@@ -28,7 +28,6 @@ export class FormService {
         res = await firstValueFrom(
           this.apiService.post('subarea', obj, { type: 'activity' })
         );
-        console.log('this is res for postActivity', res);
         return res;
       }
     } catch (e) {

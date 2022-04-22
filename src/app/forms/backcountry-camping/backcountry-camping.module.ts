@@ -5,6 +5,7 @@ import { BackcountryCampingSectionModule } from './sections/backcountry-camping-
 import { BaseFormModule } from 'src/app/shared/components/forms/base-form/base-form.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-area.module';
+import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
 
 @NgModule({
   declarations: [BackcountryCampingComponent],
@@ -15,6 +16,7 @@ import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-a
     BaseFormModule,
     FormsModule,
     ReactiveFormsModule,
+    TextToLoadingSpinnerModule,
   ],
   exports: [BackcountryCampingComponent],
 })

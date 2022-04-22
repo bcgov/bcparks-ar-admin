@@ -7,7 +7,6 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from 'src/app/shared/utils/utils';
 import { FormService } from 'src/app/services/form.service';
-import { InfiniteLoadingBarService } from 'src/app/shared/components/infinite-loading-bar/infinite-loading-bar.service';
 
 @Component({
   selector: 'app-sub-area-search',
@@ -35,15 +34,14 @@ export class SubAreaSearchComponent implements OnDestroy {
   public modelPark = '';
   public modelSubArea = null;
 
-  public fetchCount = 0;
+  public loading: any = false;
 
   constructor(
     protected dataService: DataService,
     protected subAreaService: SubAreaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private formService: FormService,
-    protected infiniteLoadingservice: InfiniteLoadingBarService
+    private formService: FormService
   ) {
     this.subscriptions.push(
       dataService
@@ -59,15 +57,6 @@ export class SubAreaSearchComponent implements OnDestroy {
               this.presetUI(activatedRoute.snapshot.queryParams);
             }
           }
-        })
-    );
-
-    this.subscriptions.push(
-      infiniteLoadingservice
-        .getFetchCount()
-        .pipe(takeWhile(() => this.alive))
-        .subscribe((res) => {
-          this.fetchCount = res;
         })
     );
   }

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
+import { SubAreaService } from 'src/app/services/sub-area.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -22,9 +23,10 @@ export class BoatingComponent extends BaseFormComponent {
     protected formBuilder: FormBuilder,
     protected formService: FormService,
     protected dataService: DataService,
-    protected router: Router
+    protected router: Router,
+    protected subAreaService: SubAreaService
   ) {
-    super(formBuilder, formService, router, dataService);
+    super(formBuilder, formService, router, dataService, subAreaService);
 
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -62,15 +64,25 @@ export class BoatingComponent extends BaseFormComponent {
       })),
       // link form controls to the object fields they represent
       (this.fields = {
-        boatAttendanceNightsOnDock: this.form.get('boatAttendanceNightsOnDockControl'),
-        boatAttendanceNightsOnBouys: this.form.get('boatAttendanceNightsOnBouysControl'),
-        boatAttendanceMiscellaneous: this.form.get('boatAttendanceMiscellaneousControl'),
+        boatAttendanceNightsOnDock: this.form.get(
+          'boatAttendanceNightsOnDockControl'
+        ),
+        boatAttendanceNightsOnBouys: this.form.get(
+          'boatAttendanceNightsOnBouysControl'
+        ),
+        boatAttendanceMiscellaneous: this.form.get(
+          'boatAttendanceMiscellaneousControl'
+        ),
         boatRevenueGross: this.form.get('boatRevenueGrossControl'),
         notes: this.form.get('varianceNotesControl'),
       });
   }
 
+  public loading = false;
+
   async onSubmit() {
+    this.loading = true;
     await super.submit();
+    this.loading = false;
   }
 }

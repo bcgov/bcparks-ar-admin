@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
+import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 export interface formResult {
@@ -32,7 +33,8 @@ export class BaseFormComponent implements OnDestroy {
     public fb: FormBuilder,
     public fs: FormService,
     public r: Router,
-    public ds: DataService
+    public ds: DataService,
+    public ss: SubAreaService
   ) {
     this.form = this.fb.group({});
 
@@ -101,6 +103,15 @@ export class BaseFormComponent implements OnDestroy {
 
     const res = await this.fs.postActivity(form.payload);
 
+    // Refresh the accordion with new data.
+    await this.ss.fetchActivityDetails(
+      'accordion-' + this.postObj.activity,
+      this.postObj.orcs,
+      this.postObj.subAreaName,
+      this.postObj.activity,
+      this.postObj.date
+    );
+
     if (res) {
       this.r.navigate(['/enter-data'], {
         queryParams: {
@@ -132,8 +143,8 @@ export class BaseFormComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-      for (let i = 0; i < this.subscriptions.length; i++) {
-        this.subscriptions[i]?.unsubscribe();
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i]?.unsubscribe();
     }
   }
 }

@@ -6,6 +6,7 @@ import { PicnicSheltersModule } from './sections/picnic-shelters/picnic-shelters
 import { OtherDayUseModule } from './sections/other-day-use/other-day-use.module';
 import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-area.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
 
 @NgModule({
   declarations: [DayUseComponent],
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     OtherDayUseModule,
     TextAreaModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TextToLoadingSpinnerModule,
   ],
   exports: [DayUseComponent],
 })

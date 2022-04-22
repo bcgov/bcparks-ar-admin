@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
+import { SubAreaService } from 'src/app/services/sub-area.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -22,9 +23,10 @@ export class BackcountryCampingComponent extends BaseFormComponent {
     protected formBuilder: FormBuilder,
     protected formService: FormService,
     protected dataService: DataService,
-    protected router: Router
+    protected router: Router,
+    protected subAreaService: SubAreaService
   ) {
-    super(formBuilder, formService, router, dataService);
+    super(formBuilder, formService, router, dataService, subAreaService);
 
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -60,7 +62,11 @@ export class BackcountryCampingComponent extends BaseFormComponent {
       });
   }
 
+  public loading = false;
+
   async onSubmit() {
+    this.loading = true;
     await super.submit();
+    this.loading = false;
   }
 }
