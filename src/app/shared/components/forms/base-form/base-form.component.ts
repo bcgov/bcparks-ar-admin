@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
+import { FormulaService } from 'src/app/services/formula.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -11,6 +12,7 @@ export interface formResult {
   form: FormGroup;
   isValid?: boolean;
   error: any; // errors or error codes
+  result: any; // submission result
   fields?: any; // raw key:value pairs
   payload?: any; // object for API submission
   invalidFields?: any;
@@ -30,16 +32,17 @@ export class BaseFormComponent implements OnDestroy {
   public alive = true;
 
   constructor(
-    public fb: FormBuilder,
-    public fs: FormService,
-    public r: Router,
-    public ds: DataService,
-    public ss: SubAreaService
+    public bFormBuilder: FormBuilder,
+    public bFormService: FormService,
+    public bRouter: Router,
+    public bDataService: DataService,
+    public bSubAreaService: SubAreaService,
+    public bFormulaService: FormulaService
   ) {
-    this.form = this.fb.group({});
+    this.form = this.bFormBuilder.group({});
 
     this.subscriptions.push(
-      this.ds
+      this.bDataService
         .getItemValue(Constants.dataIds.FORM_PARAMS)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
@@ -54,7 +57,7 @@ export class BaseFormComponent implements OnDestroy {
   collect() {
     let res: any = {};
     for (const field of Object.keys(this.fields)) {
-      const value = this.fields[field]?.value || null;
+      const value = this.fields[field]?.value;
       res = { ...res, [field]: value };
     }
     return res;
@@ -63,7 +66,8 @@ export class BaseFormComponent implements OnDestroy {
   // delete null fields in preparation for API submission
   trimNullFields(allFields: any) {
     for (const f of Object.keys(allFields)) {
-      if (!allFields[f]) {
+      if (!this.bFormulaService.isValidNumber(allFields[f])) {
+        console.log(f, allFields[f]);
         delete allFields[f];
       }
     }
@@ -92,19 +96,11 @@ export class BaseFormComponent implements OnDestroy {
   async submit() {
     const payload = this.makePayload();
     // TODO: PUT goes here.
-    const form: formResult = {
-      error: null, // return errors if unsuccessful PUT
-      form: this.form,
-      fields: this.collect(),
-      isValid: this.validate(),
-      payload: payload,
-      invalidFields: this.getInvalidFields(),
-    };
 
-    const res = await this.fs.postActivity(form.payload);
+    const res = await this.bFormService.postActivity(payload);
 
     // Refresh the accordion with new data.
-    await this.ss.fetchActivityDetails(
+    await this.bSubAreaService.fetchActivityDetails(
       'accordion-' + this.postObj.activity,
       this.postObj.orcs,
       this.postObj.subAreaName,
@@ -113,7 +109,7 @@ export class BaseFormComponent implements OnDestroy {
     );
 
     if (res) {
-      this.r.navigate(['/enter-data'], {
+      this.bRouter.navigate(['/enter-data'], {
         queryParams: {
           date: this.postObj.date,
           orcs: this.postObj.orcs,
@@ -123,8 +119,20 @@ export class BaseFormComponent implements OnDestroy {
       });
     } else {
       // TODO: handle error
-      this.r.navigate(['/']);
+      this.bRouter.navigate(['/']);
     }
+
+    const fResult: formResult = {
+      error: null, // return errors if unsuccessful PUT
+      form: this.form,
+      fields: this.collect(),
+      isValid: this.validate(),
+      result: res,
+      payload: payload,
+      invalidFields: this.getInvalidFields(),
+    };
+
+    return fResult;
   }
 
   // clear the form of all data.

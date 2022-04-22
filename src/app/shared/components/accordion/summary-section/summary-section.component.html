@@ -3,30 +3,38 @@
   <div class="mb-3" *ngIf="section.attendanceItems">
     <div *ngFor="let attendanceItem of section.attendanceItems">
       <div class="d-flex justify-content-between p-2 border-top">
-        <div>{{ attendanceItem.itemName }}</div>
+        <div>{{ attendanceItem?.itemName }}</div>
         <div className="text-align-end">
-          {{ attendanceItem?.value?.toString() || "-" }}
+          {{ isDefined(attendanceItem?.value) ? attendanceItem.value : "-" }}
         </div>
       </div>
     </div>
     <app-calculation-display
-      [label]="section.attendanceLabel?.toUpperCase()"
-      [value]="calcAttendance()"
+      *ngIf="section?.attendanceTotal"
+      [label]="section?.attendanceLabel?.toUpperCase()"
+      [value]="section?.attendanceTotal?.result"
+      [subtext]="section?.attendanceTotal?.formula"
       [colorClass]="'blue'"
     ></app-calculation-display>
   </div>
   <div class="mb-3" *ngIf="section.revenueItems">
     <div *ngFor="let revenueItem of section.revenueItems">
       <div class="d-flex justify-content-between p-2 border-top">
-        <div>{{ revenueItem.itemName }}</div>
+        <div>{{ revenueItem?.itemName }}</div>
         <div className="text-align-end">
-          ${{ revenueItem?.value?.toString() || "-" }}
+          {{
+            isDefined(revenueItem?.value)
+              ? (revenueItem.value | currency: "CAD":"symbol-narrow":"1.2-2")
+              : "-"
+          }}
         </div>
       </div>
     </div>
     <app-calculation-display
-      [label]="section.revenueLabel?.toUpperCase()"
-      [value]="'$' + calcRevenue()"
+      *ngIf="section?.revenueTotal"
+      [label]="section?.revenueLabel?.toUpperCase()"
+      [value]="section?.revenueTotal?.result"
+      [subtext]="section?.revenueTotal?.formula"
       [colorClass]="'green'"
     ></app-calculation-display>
   </div>

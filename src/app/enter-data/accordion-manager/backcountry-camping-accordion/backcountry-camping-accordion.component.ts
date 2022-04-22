@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
+import { FormulaService } from 'src/app/services/formula.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -17,7 +18,10 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
   public data;
   public summaries: summarySection[] = [];
 
-  constructor(protected dataService: DataService) {
+  constructor(
+    protected dataService: DataService,
+    protected formulaService: FormulaService
+  ) {
     dataService
       .getItemValue(Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING)
       .pipe(takeWhile(() => this.alive))
@@ -43,7 +47,9 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.grossCampingRevenue,
           },
         ],
-        revenueTotal: undefined,
+        revenueTotal: this.formulaService.basicNetRevenue([
+          this.data?.grossCampingRevenue,
+        ]),
       },
     ];
   }

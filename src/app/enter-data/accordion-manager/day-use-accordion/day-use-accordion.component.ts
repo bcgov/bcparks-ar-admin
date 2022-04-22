@@ -39,43 +39,42 @@ export class DayUseAccordionComponent implements OnDestroy {
         attendanceItems: [
           {
             itemName: 'Trail counter',
-            value: this.formulaService.validateLineItemValue(
-              this.data?.peopleAndVehiclesTrail
-            ),
+            value: this.data?.peopleAndVehiclesTrail,
           },
           {
             itemName: 'Vehicle count',
-            value: this.formulaService.validateLineItemValue(
-              this.data?.peopleAndVehiclesVehicle
-            ),
+            value: this.data?.peopleAndVehiclesVehicle,
           },
           {
             itemName: 'Bus count',
-            value: this.formulaService.validateLineItemValue(
-              this.data?.peopleAndVehiclesBus
-            ),
+            value: this.data?.peopleAndVehiclesBus,
           },
         ],
-        attendanceTotal: 0, // will leverage formulaService
+        attendanceTotal: this.formulaService.dayUseVehicleAttendance(
+          [this.data?.peopleAndVehiclesVehicle],
+          [this.data?.peopleAndVehiclesBus],
+          this.data?.config?.attendanceVehiclesModifier,
+          this.data?.config?.attendanceBusModifier
+        ),
       },
       {
         title: 'Picnic shelters',
+        attendanceItems: [
+          {
+            itemName: 'Picnic shelter rentals',
+            value: this.data?.picnicRevenueShelter,
+          },
+        ],
         revenueLabel: 'Net Revenue',
         revenueItems: [
           {
-            itemName: 'Picnic shelter rentals',
-            value: this.formulaService.validateLineItemValue(
-              this.data?.picnicRevenueShelter
-            ),
-          },
-          {
             itemName: 'Gross picnic revenue',
-            value: this.formulaService.validateLineItemValue(
-              this.data?.picnicRevenueGross
-            ),
+            value: this.data?.picnicRevenueGross,
           },
         ],
-        revenueTotal: 0, // will leverage formulaService
+        revenueTotal: this.formulaService.basicNetRevenue([
+          this.data?.picnicRevenueGross,
+        ]),
       },
       {
         title: 'Other day use',
@@ -83,18 +82,17 @@ export class DayUseAccordionComponent implements OnDestroy {
         revenueItems: [
           {
             itemName: 'Gross skiing revenue',
-            value: this.formulaService.validateLineItemValue(
-              this.data?.otherDayUseRevenueSkii
-            ),
+            value: this.data?.otherDayUseRevenueSkii,
           },
           {
             itemName: 'Gross hot springs revenue',
-            value: this.formulaService.validateLineItemValue(
-              this.data?.otherDayUseRevenueHotSprings
-            ),
+            value: this.data?.otherDayUseRevenueHotSprings,
           },
         ],
-        revenueTotal: 0, // will leverage formulaService
+        revenueTotal: this.formulaService.basicNetRevenue([
+          this.data?.otherDayUseRevenueSkii,
+          this.data?.otherDayUseRevenueHotSprings,
+        ]),
       },
     ];
   }

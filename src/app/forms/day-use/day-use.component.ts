@@ -10,6 +10,7 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
+import { FormulaService } from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -24,10 +25,17 @@ export class DayUseComponent extends BaseFormComponent {
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
-    protected subAreaService: SubAreaService
+    protected subAreaService: SubAreaService,
+    protected formulaService: FormulaService
   ) {
-    super(formBuilder, formService, router, dataService, subAreaService);
-
+    super(
+      formBuilder,
+      formService,
+      router,
+      dataService,
+      subAreaService,
+      formulaService
+    );
     // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
@@ -45,34 +53,34 @@ export class DayUseComponent extends BaseFormComponent {
       // initialize the form and populate with values if they exist.
       (this.form = new FormGroup({
         peopleAndVehiclesTrailControl: new FormControl(
-          this.data.peopleAndVehiclesTrail || null,
+          this.data.peopleAndVehiclesTrail,
           Validators.pattern('^[0-9]*$')
         ),
         peopleAndVehiclesVehicleControl: new FormControl(
-          this.data.peopleAndVehiclesVehicle || null,
+          this.data.peopleAndVehiclesVehicle,
           Validators.pattern('^[0-9]*$')
         ),
         peopleAndVehiclesBusControl: new FormControl(
-          this.data.peopleAndVehiclesBus || null,
+          this.data.peopleAndVehiclesBus,
           Validators.pattern('^[0-9]*$')
         ),
         picnicRevenueShelterControl: new FormControl(
-          this.data.picnicRevenueShelter || null,
+          this.data.picnicRevenueShelter,
           Validators.pattern('^[0-9]*$')
         ),
         picnicRevenueGrossControl: new FormControl(
-          this.data.picnicRevenueGross || null,
+          this.data.picnicRevenueGross,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         otherDayUseRevenueSkiiControl: new FormControl(
-          this.data.otherDayUseRevenueSkii || null,
+          this.data.otherDayUseRevenueSkii,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         otherDayUseRevenueHotSpringsControl: new FormControl(
-          this.data.otherDayUseRevenueHotSprings || null,
+          this.data.otherDayUseRevenueHotSprings,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
-        varianceNotesControl: new FormControl(this.data.notes || null),
+        varianceNotesControl: new FormControl(this.data.notes),
       })),
       // link form controls to the object fields they represent
       (this.fields = {
