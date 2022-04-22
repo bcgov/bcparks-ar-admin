@@ -53,6 +53,15 @@
     ></app-text-area>
   </div>
   <div class="d-flex flex-row-reverse">
-    <button class="btn btn-primary px-5" (click)="onSubmit()">Submit</button>
+    <button
+      class="btn btn-primary px-5"
+      [disabled]="loading"
+      (click)="onSubmit()"
+    >
+      <app-text-to-loading-spinner
+        [text]="'Submit'"
+        (loadingStatus)="loading = $event"
+      ></app-text-to-loading-spinner>
+    </button>
   </div>
 </form>

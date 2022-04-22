@@ -27,8 +27,6 @@ export class ApiService {
 
   post(pk, obj, queryParamsObject = null as any) {
     let queryString = this.generateQueryString(queryParamsObject);
-    console.log('posting', `${this.apiPath}/${pk}?${queryString}`);
-    console.log('body', obj);
     return this.http.post<any>(`${this.apiPath}/${pk}?${queryString}`, obj);
   }
 

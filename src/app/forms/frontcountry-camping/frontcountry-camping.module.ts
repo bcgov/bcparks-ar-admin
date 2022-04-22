@@ -7,6 +7,7 @@ import { OtherFrontcountryCampingRevenueModule } from './sections/other-frontcou
 import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-area.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BaseFormModule } from 'src/app/shared/components/forms/base-form/base-form.module';
+import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
 
 @NgModule({
   declarations: [FrontcountryCampingComponent],
@@ -18,7 +19,8 @@ import { BaseFormModule } from 'src/app/shared/components/forms/base-form/base-f
     TextAreaModule,
     FormsModule,
     ReactiveFormsModule,
-    BaseFormModule
+    BaseFormModule,
+    TextToLoadingSpinnerModule,
   ],
   exports: [FrontcountryCampingComponent],
 })

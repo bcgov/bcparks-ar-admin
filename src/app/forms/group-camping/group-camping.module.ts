@@ -5,6 +5,7 @@ import { StandardRateGroupsModule } from './sections/standard-rate-groups/standa
 import { YouthRateGroupsModule } from './sections/youth-rate-groups/youth-rate-groups.module';
 import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-area.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
 
 @NgModule({
   declarations: [GroupCampingComponent],
@@ -15,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TextAreaModule,
     FormsModule,
     ReactiveFormsModule,
+    TextToLoadingSpinnerModule,
   ],
   exports: [GroupCampingComponent],
 })
