@@ -15,7 +15,7 @@
   ],
   "private": true,
   "dependencies": {
-    "@angular/animations": "~13.3.0",
+    "@angular/animations": "^13.3.4",
     "@angular/common": "~13.3.0",
     "@angular/compiler": "~13.3.0",
     "@angular/core": "~13.3.0",
@@ -35,6 +35,7 @@
     "keycloak-js": "^17.0.1",
     "moment": "^2.29.2",
     "ngx-bootstrap": "^8.0.0",
+    "ngx-toastr": "^14.3.0",
     "popper.js": "^1.16.1",
     "rxjs": "^7.5.5",
     "tslib": "^2.3.0",

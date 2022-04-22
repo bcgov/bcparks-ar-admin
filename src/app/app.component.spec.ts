@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { EnterDataModule } from './enter-data/enter-data.module';
 import { ExportReportsModule } from './export-reports/export-reports.module';
@@ -30,6 +31,7 @@ describe('AppComponent', () => {
         HeaderModule,
         FooterModule,
         HomeModule,
+        ToastrModule.forRoot(),
       ],
       declarations: [AppComponent],
       providers: [
