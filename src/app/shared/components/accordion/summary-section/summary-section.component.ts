@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormulaService } from 'src/app/services/formula.service';
+import {
+  formulaResult,
+  FormulaService,
+} from 'src/app/services/formula.service';
 
 export interface summaryLineItem {
   itemName: string;
@@ -9,11 +12,11 @@ export interface summaryLineItem {
 export interface summarySection {
   title?: string;
   attendanceLabel?: string;
-  attendanceTotal?: number;
+  attendanceTotal?: formulaResult;
   attendanceItems?: Array<summaryLineItem>;
   revenueLabel?: string;
   revenueItems?: Array<summaryLineItem>;
-  revenueTotal?: number;
+  revenueTotal?: formulaResult;
 }
 
 @Component({
@@ -35,28 +38,8 @@ export class SummarySectionComponent implements OnInit {
     }
   }
 
-  calcAttendance() {
-    let sum = 0;
-    if (this.section.attendanceItems) {
-      for (let item of this.section.attendanceItems) {
-        if (item.value) {
-          sum += item.value;
-        }
-      }
-    }
-    return sum;
-  }
-
-  calcRevenue() {
-    let sum = 0;
-    if (this.section.revenueItems) {
-      for (let item of this.section.revenueItems) {
-        if (item.value) {
-          sum += item.value * 100;
-        }
-      }
-    }
-    // TODO: properly account for rounding errors.
-    return sum / 100;
+  // need this to check if value is `0` (truthy)
+  isDefined(value) {
+    return this.formulaService.isValidNumber(value);
   }
 }

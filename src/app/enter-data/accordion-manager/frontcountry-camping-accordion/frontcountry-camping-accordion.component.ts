@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
+import { FormulaService } from 'src/app/services/formula.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -17,7 +18,10 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
   public data;
   public summaries: summarySection[] = [];
 
-  constructor(protected dataService: DataService) {
+  constructor(
+    protected dataService: DataService,
+    protected formulaService: FormulaService
+  ) {
     dataService
       .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING)
       .pipe(takeWhile(() => this.alive))
@@ -50,7 +54,15 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.campingPartyNightsAttendanceLongStay,
           },
         ],
-        attendanceTotal: undefined,
+        attendanceTotal: this.formulaService.frontcountryCampingPartyAttendance(
+          [
+            this.data?.campingPartyNightsAttendanceStandard,
+            this.data?.campingPartyNightsAttendanceSenior,
+            this.data?.campingPartyNightsAttendanceSocial,
+            this.data?.campingPartyNightsAttendanceLongStay,
+          ],
+          this.data?.config?.attendanceModifier
+        ),
         revenueLabel: 'Net Revenue',
         revenueItems: [
           {
@@ -58,7 +70,9 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.campingPartyNightsRevenueGross,
           },
         ],
-        revenueTotal: undefined,
+        revenueTotal: this.formulaService.basicNetRevenue([
+          this.data?.campingPartyNightsRevenueGross,
+        ]),
       },
       {
         title: 'Second cars / additional vehicles',
@@ -77,15 +91,22 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.secondCarsAttendanceSocial,
           },
         ],
-        attendanceTotal: undefined,
+        attendanceTotal:
+          this.formulaService.frontcountryCampingSecondCarAttendance([
+            this.data?.secondCarsAttendanceStandard,
+            this.data?.secondCarsAttendanceSenior,
+            this.data?.secondCarsAttendanceSocial,
+          ]),
         revenueLabel: 'Net Revenue',
         revenueItems: [
           {
             itemName: 'Gross 2nd car revenue',
-            value: this.data?.secondCarsAttendanceSocial,
+            value: this.data?.secondCarsRevenueGross,
           },
         ],
-        revenueTotal: undefined,
+        revenueTotal: this.formulaService.basicNetRevenue([
+          this.data?.secondCarsRevenueGross,
+        ]),
       },
       {
         title: 'Other frontcountry camping revenue',
@@ -104,7 +125,11 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.otherRevenueShower,
           },
         ],
-        revenueTotal: undefined,
+        revenueTotal: this.formulaService.basicNetRevenue([
+          this.data?.otherRevenueGrossSani,
+          this.data?.otherRevenueElectrical,
+          this.data?.otherRevenueShower,
+        ]),
       },
     ];
   }

@@ -10,6 +10,7 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
+import { FormulaService } from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -24,10 +25,17 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
-    protected subAreaService: SubAreaService
+    protected subAreaService: SubAreaService,
+    protected formulaService: FormulaService
   ) {
-    super(formBuilder, formService, router, dataService, subAreaService);
-
+    super(
+      formBuilder,
+      formService,
+      router,
+      dataService,
+      subAreaService,
+      formulaService
+    );
     // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
@@ -45,54 +53,54 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
       // initialize the form and populate with values if they exist.
       (this.form = new FormGroup({
         campingPartyNightsAttendanceStandardControl: new FormControl(
-          this.data.campingPartyNightsAttendanceStandard || null,
+          this.data.campingPartyNightsAttendanceStandard,
           Validators.pattern('^[0-9]*$')
         ),
         campingPartyNightsAttendanceSeniorControl: new FormControl(
-          this.data.campingPartyNightsAttendanceSenior || null,
+          this.data.campingPartyNightsAttendanceSenior,
           Validators.pattern('^[0-9]*$')
         ),
         campingPartyNightsAttendanceSocialControl: new FormControl(
-          this.data.campingPartyNightsAttendanceSocial || null,
+          this.data.campingPartyNightsAttendanceSocial,
           Validators.pattern('^[0-9]*$')
         ),
         campingPartyNightsAttendanceLongStayControl: new FormControl(
-          this.data.campingPartyNightsAttendanceLongStay || null,
+          this.data.campingPartyNightsAttendanceLongStay,
           Validators.pattern('^[0-9]*$')
         ),
         campingPartyNightsRevenueGrossControl: new FormControl(
-          this.data.campingPartyNightsRevenueGross || null,
+          this.data.campingPartyNightsRevenueGross,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         secondCarsAttendanceStandardControl: new FormControl(
-          this.data.secondCarsAttendanceStandard || null,
+          this.data.secondCarsAttendanceStandard,
           Validators.pattern('^[0-9]*$')
         ),
         secondCarsAttendanceSeniorControl: new FormControl(
-          this.data.secondCarsAttendanceSenior || null,
+          this.data.secondCarsAttendanceSenior,
           Validators.pattern('^[0-9]*$')
         ),
         secondCarsAttendanceSocialControl: new FormControl(
-          this.data.secondCarsAttendanceSocial || null,
+          this.data.secondCarsAttendanceSocial,
           Validators.pattern('^[0-9]*$')
         ),
         secondCarsRevenueGrossControl: new FormControl(
-          this.data.secondCarsRevenueGross || null,
+          this.data.secondCarsRevenueGross,
           Validators.pattern('^[0-9]*$')
         ),
         otherRevenueGrossSaniControl: new FormControl(
-          this.data.otherRevenueGrossSani || null,
+          this.data.otherRevenueGrossSani,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         otherRevenueElectricalControl: new FormControl(
-          this.data.otherRevenueElectrical || null,
+          this.data.otherRevenueElectrical,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         otherRevenueShowerControl: new FormControl(
-          this.data.otherRevenueShower || null,
+          this.data.otherRevenueShower,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
-        varianceNotesControl: new FormControl(this.data.notes || null),
+        varianceNotesControl: new FormControl(this.data.notes),
       })),
       // link form controls to the object fields they represent
       (this.fields = {

@@ -10,6 +10,7 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
+import { FormulaService } from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -24,10 +25,10 @@ export class GroupCampingComponent extends BaseFormComponent {
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
-    protected subAreaService: SubAreaService
+    protected subAreaService: SubAreaService,
+    protected formulaService: FormulaService
   ) {
-    super(formBuilder, formService, router, dataService, subAreaService);
-
+    super(formBuilder, formService, router, dataService, subAreaService, formulaService);
     // push existing form data to parent subscriptions
     this.subscriptions.push(
       this.dataService
@@ -45,38 +46,38 @@ export class GroupCampingComponent extends BaseFormComponent {
       // initialize the form and populate with values if they exist.
       (this.form = new FormGroup({
         standardRateGroupsTotalPeopleStandardControl: new FormControl(
-          this.data.standardRateGroupsTotalPeopleStandard || null,
+          this.data.standardRateGroupsTotalPeopleStandard,
           Validators.pattern('^[0-9]*$')
         ),
         standardRateGroupsTotalPeopleAdultsControl: new FormControl(
-          this.data.standardRateGroupsTotalPeopleAdults || null,
+          this.data.standardRateGroupsTotalPeopleAdults,
           Validators.pattern('^[0-9]*$')
         ),
         standardRateGroupsTotalPeopleYouthControl: new FormControl(
-          this.data.standardRateGroupsTotalPeopleYouth || null,
+          this.data.standardRateGroupsTotalPeopleYouth,
           Validators.pattern('^[0-9]*$')
         ),
         standardRateGroupsTotalPeopleKidsControl: new FormControl(
-          this.data.standardRateGroupsTotalPeopleKids || null,
+          this.data.standardRateGroupsTotalPeopleKids,
           Validators.pattern('^[0-9]*$')
         ),
         standardRateGroupsRevenueGrossControl: new FormControl(
-          this.data.standardRateGroupsRevenueGross || null,
+          this.data.standardRateGroupsRevenueGross,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         youthRateGroupsAttendanceGroupNightsControl: new FormControl(
-          this.data.youthRateGroupsAttendanceGroupNights || null,
+          this.data.youthRateGroupsAttendanceGroupNights,
           Validators.pattern('^[0-9]*$')
         ),
         youthRateGroupsAttendancePeopleControl: new FormControl(
-          this.data.youthRateGroupsAttendancePeople || null,
+          this.data.youthRateGroupsAttendancePeople,
           Validators.pattern('^[0-9]*$')
         ),
         youthRateGroupsRevenueGrossControl: new FormControl(
-          this.data.youthRateGroupsRevenueGross || null,
+          this.data.youthRateGroupsRevenueGross,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
-        varianceNotesControl: new FormControl(this.data.notes || null),
+        varianceNotesControl: new FormControl(this.data.notes),
       })),
       // link form controls to the object fields they represent
       (this.fields = {

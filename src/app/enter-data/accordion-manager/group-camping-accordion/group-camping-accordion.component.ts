@@ -1,7 +1,7 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
+import { FormulaService } from 'src/app/services/formula.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -18,7 +18,10 @@ export class GroupCampingAccordionComponent implements OnDestroy {
   public data;
   public summaries: summarySection[] = [];
 
-  constructor(protected dataService: DataService) {
+  constructor(
+    protected dataService: DataService,
+    protected formulaService: FormulaService
+  ) {
     dataService
       .getItemValue(Constants.dataIds.ACCORDION_GROUP_CAMPING)
       .pipe(takeWhile(() => this.alive))
@@ -51,7 +54,12 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             value: this.data?.standardRateGroupsTotalPeopleKids,
           },
         ],
-        attendanceTotal: undefined,
+        attendanceTotal: this.formulaService.groupCampingStandardAttendance([
+          this.data?.standardRateGroupsTotalPeopleStandard,
+          this.data?.standardRateGroupsTotalPeopleAdults,
+          this.data?.standardRateGroupsTotalPeopleYouth,
+          this.data?.standardRateGroupsTotalPeopleKids,
+        ]),
         revenueLabel: 'Net Revenue',
         revenueItems: [
           {
@@ -59,7 +67,9 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             value: this.data?.standardRateGroupsRevenueGross,
           },
         ],
-        revenueTotal: undefined,
+        revenueTotal: this.formulaService.basicNetRevenue([
+          this.data?.standardRateGroupsRevenueGross,
+        ]),
       },
       {
         title: 'Youth rate groups',
@@ -74,7 +84,6 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             value: this.data?.youthRateGroupsAttendancePeople,
           },
         ],
-        attendanceTotal: undefined,
         revenueLabel: 'Net Revenue',
         revenueItems: [
           {
@@ -82,7 +91,9 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             value: this.data?.youthRateGroupsRevenueGross,
           },
         ],
-        revenueTotal: undefined,
+        revenueTotal: this.formulaService.basicNetRevenue([
+          this.data?.youthRateGroupsRevenueGross,
+        ]),
       },
     ];
   }

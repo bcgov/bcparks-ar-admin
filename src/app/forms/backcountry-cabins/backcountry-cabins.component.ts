@@ -10,6 +10,7 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
+import { FormulaService } from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -24,9 +25,10 @@ export class BackcountryCabinsComponent extends BaseFormComponent {
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
-    protected subAreaService: SubAreaService
+    protected subAreaService: SubAreaService,
+    protected formulaService: FormulaService
   ) {
-    super(formBuilder, formService, router, dataService, subAreaService);
+    super(formBuilder, formService, router, dataService, subAreaService, formulaService);
 
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -45,22 +47,22 @@ export class BackcountryCabinsComponent extends BaseFormComponent {
       // initialize the form and populate with values if they exist.
       (this.form = new FormGroup({
         peopleAdultControl: new FormControl(
-          this.data.peopleAdult || null,
+          this.data.peopleAdult,
           Validators.pattern('^[0-9]*$')
         ),
         peopleChildControl: new FormControl(
-          this.data.peopleChild || null,
+          this.data.peopleChild,
           Validators.pattern('^[0-9]*$')
         ),
         peopleFamilyControl: new FormControl(
-          this.data.peopleFamily || null,
+          this.data.peopleFamily,
           Validators.pattern('^[0-9]*$')
         ),
         revenueFamilyControl: new FormControl(
-          this.data.revenueFamily || null,
+          this.data.revenueFamily,
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
-        varianceNotesControl: new FormControl(this.data.notes || null),
+        varianceNotesControl: new FormControl(this.data.notes),
       })),
       // link form controls to the object fields they represent
       (this.fields = {

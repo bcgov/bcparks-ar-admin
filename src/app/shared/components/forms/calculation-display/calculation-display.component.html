@@ -1,6 +1,10 @@
-<div class="d-flex {{colorClass}}">
-  <div class="p-2 flex-grow-1"><strong>{{ label }}</strong></div>
-  <div class="p-2"><strong>{{ value || "-" }}</strong></div>
+<div class="d-flex {{ colorClass }}">
+  <div class="p-2 flex-grow-1">
+    <strong>{{ label }}</strong>
+  </div>
+  <div class="p-2">
+    <strong>{{ isDefined(value) ? value : "-" }}</strong>
+  </div>
 </div>
 <div *ngIf="subtext" class="ps-2">
   <small class="text-muted">{{ subtext }}</small>
