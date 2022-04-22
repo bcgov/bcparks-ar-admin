@@ -19,3 +19,14 @@ nav {
 a:hover {
   cursor: pointer;
 }
+
+.breadcrumb .breadcrumb-items::before {
+  content: "/";
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+
+.breadcrumb .breadcrumb-items:nth-child(1)::before {
+  content: "";
+  padding-left: 0rem;
+}

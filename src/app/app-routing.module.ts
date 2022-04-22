@@ -38,36 +38,64 @@ const routes: Routes = [
         path: 'backcountry-cabins',
         component: BackcountryCabinsComponent,
         canActivate: [AuthGuard],
+        data: {
+          label: 'Backcountry Cabins',
+          breadcrumb: 'Backcountry Cabins',
+        },
       },
       {
         path: 'backcountry-camping',
         component: BackcountryCampingComponent,
         canActivate: [AuthGuard],
+        data: {
+          label: 'Backcountry Camping',
+          breadcrumb: 'Backcountry Camping',
+        },
       },
       {
         path: 'boating',
         component: BoatingComponent,
         canActivate: [AuthGuard],
+        data: {
+          label: 'Boating',
+          breadcrumb: 'Boating',
+        },
       },
       {
         path: 'day-use',
         component: DayUseComponent,
         canActivate: [AuthGuard],
+        data: {
+          label: 'Day Use',
+          breadcrumb: 'Day Use',
+        },
       },
       {
         path: 'frontcountry-cabins',
         component: FrontcountryCabinsComponent,
         canActivate: [AuthGuard],
+        data: {
+          label: 'Frontcountry Cabins',
+          breadcrumb: 'Frontcountry Cabins',
+        },
       },
       {
         path: 'frontcountry-camping',
         component: FrontcountryCampingComponent,
         canActivate: [AuthGuard],
+        data: {
+          label: 'Frontcountry Camping',
+          breadcrumb: 'Frontcountry Camping',
+        },
       },
       {
         path: 'group-camping',
         component: GroupCampingComponent,
         canActivate: [AuthGuard],
+        data: {
+          label: 'Group Camping',
+          breadcrumb: 'Group Camping',
+        },
       },
     ],
   },
