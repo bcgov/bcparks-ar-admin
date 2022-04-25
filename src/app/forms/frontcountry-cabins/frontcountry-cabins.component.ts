@@ -44,10 +44,14 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
         .subscribe((res) => {
           if (res) {
             this.data = res;
+            this.setForm();
           }
         })
     );
+    this.setForm();
+  }
 
+  setForm() {
     // declare activity type
     (this.postObj['activity'] = 'Frontcountry Cabins'),
       // initialize the form and populate with values if they exist.

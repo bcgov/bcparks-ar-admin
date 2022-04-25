@@ -16,12 +16,12 @@ export class DataService {
   }
 
   setItemValue(id, value): void {
-    this.checkIfDataExists(id);
+    this.checkIfDataExists(id) ? null : this.initItem(id);
     this.data[id].next(value);
   }
 
   public getItemValue(id) {
-    this.checkIfDataExists(id);
+    this.checkIfDataExists(id) ? null : this.initItem(id);
     return this.data[id].asObservable();
   }
 
@@ -30,8 +30,6 @@ export class DataService {
   }
 
   checkIfDataExists(id) {
-    if (!this.data[id]) {
-      this.initItem(id);
-    }
+    return this.data[id] ? true : false;
   }
 }
