@@ -94,6 +94,20 @@ export class BaseFormComponent implements OnDestroy {
     return { ...this.postObj, ...trimmedFields };
   }
 
+  // disable all fields in the form
+  disable() {
+    for (const control of Object.keys(this.form.controls)) {
+      this.form.get(control)?.disable();
+    }
+  }
+
+  // enable all fields in the form
+  enable() {
+    for (const control of Object.keys(this.form.controls)) {
+      this.form.get(control)?.enable();
+    }
+  }
+
   // return current state of form
   async submit() {
     const payload = this.makePayload();
