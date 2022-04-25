@@ -44,7 +44,7 @@ export class FormulaService {
     let sum: number = 0;
     let nullArray = true;
     for (let num of arr) {
-      if (this.isValidNumber(num)) {
+      if (this.isValidNumber(num) && typeof num === 'number') {
         sum += num;
         nullArray = false;
       }
@@ -76,7 +76,10 @@ export class FormulaService {
    * @returns string
    */
   formatMoney(amt: number): string {
-    return formatCurrency(amt, 'en-CA', '$', undefined, '1.2-2');
+    if (this.isValidNumber(amt)) {
+      return formatCurrency(amt, 'en-CA', '$', undefined, '1.2-2');
+    }
+    return '';
   }
 
   /**
@@ -91,26 +94,31 @@ export class FormulaService {
     if (!dPlaces) {
       dPlaces = this.defaultDecimalPlaces;
     }
-    return formatNumber(value, 'en-CA', `1.0-${dPlaces}`);
+    if (this.isValidNumber(value)){
+      return formatNumber(value, 'en-CA', `1.0-${dPlaces}`);
+    }
+    return '';
   }
 
   /**
    * Calculates gross revenue and then deducts 5% GST.
    * @function
    * @param {any[]} revenues Array of revenue numbers
+   * @param {any[]} customPercent custom percentage (default is 5%)
    * @memberof FormulaService
    * @returns `formulaResult` object
    */
-  basicNetRevenue(revenues: any[]): formulaResult {
+  basicNetRevenue(revenues: any[], customPercent?: number): formulaResult {
     let result: any = null;
+    let percent = customPercent ? customPercent : this.gstPercent
     const gross = this.arraySum(revenues);
-    const net = this.deductPercentage(gross, this.gstPercent);
+    const net = this.deductPercentage(gross, percent);
     if (this.isValidNumber(gross)) {
       result = this.formatMoney(net);
     }
     let res: formulaResult = {
       result: result,
-      formula: `Net revenue = Gross revenue - ${this.gstPercent}% GST`,
+      formula: `Net revenue = Gross revenue - ${percent}% GST`,
     };
     return res;
   }
@@ -125,7 +133,7 @@ export class FormulaService {
    */
   totalWithModifier(arr: any[], mod?: number): number {
     let result = this.arraySum(arr);
-    if (mod) {
+    if (mod || mod === 0) {
       result *= mod;
     }
     return result;
@@ -140,7 +148,7 @@ export class FormulaService {
    * @returns string
    */
   formatTotalWithModifier(arr: any[], mod?: number): string {
-    let result: any = null;
+    let result: any = undefined;
     let total = this.totalWithModifier(arr, mod);
     if (this.isValidNumber(total)) {
       result = this.formatDecimal(total);
