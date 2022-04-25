@@ -12,6 +12,7 @@ import { GroupCampingComponent } from './forms/group-camping/group-camping.compo
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { FormResolver } from './resolvers/form.resolver';
 import { SubAreaResolver } from './resolvers/sub-area.resolver';
 
 const routes: Routes = [
@@ -40,8 +41,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Backcountry Cabins',
-          breadcrumb: 'Backcountry Cabins',
+          breadcrumb: 'Backcountry Cabins Form',
+          activity: 'Backcountry Cabins',
         },
+        resolve: [FormResolver],
       },
       {
         path: 'backcountry-camping',
@@ -49,8 +52,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Backcountry Camping',
-          breadcrumb: 'Backcountry Camping',
+          breadcrumb: 'Backcountry Camping Form',
+          activity: 'Backcountry Camping',
         },
+        resolve: [FormResolver],
       },
       {
         path: 'boating',
@@ -58,8 +63,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Boating',
-          breadcrumb: 'Boating',
+          breadcrumb: 'Boating Form',
+          activity: 'Boating',
         },
+        resolve: [FormResolver],
       },
       {
         path: 'day-use',
@@ -67,8 +74,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Day Use',
-          breadcrumb: 'Day Use',
+          breadcrumb: 'Day Use Form',
+          activity: 'Day Use',
         },
+        resolve: [FormResolver],
       },
       {
         path: 'frontcountry-cabins',
@@ -76,8 +85,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Frontcountry Cabins',
-          breadcrumb: 'Frontcountry Cabins',
+          breadcrumb: 'Frontcountry Cabins Form',
+          activity: 'Frontcountry Cabins',
         },
+        resolve: [FormResolver],
       },
       {
         path: 'frontcountry-camping',
@@ -85,8 +96,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Frontcountry Camping',
-          breadcrumb: 'Frontcountry Camping',
+          breadcrumb: 'Frontcountry Camping Form',
+          activity: 'Frontcountry Camping',
         },
+        resolve: [FormResolver],
       },
       {
         path: 'group-camping',
@@ -94,8 +107,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Group Camping',
-          breadcrumb: 'Group Camping',
+          breadcrumb: 'Group Camping Form',
+          activity: 'Group Camping',
         },
+        resolve: [FormResolver],
       },
     ],
   },
@@ -107,6 +122,7 @@ const routes: Routes = [
       label: 'Export Reports',
       breadcrumb: 'Export Reports',
     },
+    resolve: [FormResolver],
   },
   {
     path: 'unauthorized',

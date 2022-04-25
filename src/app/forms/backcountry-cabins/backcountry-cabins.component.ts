@@ -28,7 +28,14 @@ export class BackcountryCabinsComponent extends BaseFormComponent {
     protected subAreaService: SubAreaService,
     protected formulaService: FormulaService
   ) {
-    super(formBuilder, formService, router, dataService, subAreaService, formulaService);
+    super(
+      formBuilder,
+      formService,
+      router,
+      dataService,
+      subAreaService,
+      formulaService
+    );
 
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -38,10 +45,14 @@ export class BackcountryCabinsComponent extends BaseFormComponent {
         .subscribe((res) => {
           if (res) {
             this.data = res;
+            this.setForm();
           }
         })
     );
+    this.setForm();
+  }
 
+  setForm() {
     // declare activity type
     (this.postObj['activity'] = 'Backcountry Cabins'),
       // initialize the form and populate with values if they exist.

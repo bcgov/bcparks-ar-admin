@@ -47,7 +47,10 @@ export class BaseFormComponent implements OnDestroy {
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
-            this.postObj = res;
+            this.postObj['date'] = res.date;
+            this.postObj['parkName'] = res.parkName;
+            this.postObj['subAreaName'] = res.subAreaName;
+            this.postObj['orcs'] = res.orcs;
           }
         })
     );
@@ -67,7 +70,6 @@ export class BaseFormComponent implements OnDestroy {
   trimNullFields(allFields: any) {
     for (const f of Object.keys(allFields)) {
       if (!this.bFormulaService.isValidNumber(allFields[f])) {
-        console.log(f, allFields[f]);
         delete allFields[f];
       }
     }
