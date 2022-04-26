@@ -1,8 +1,11 @@
-<h1>Backcountry Cabins</h1>
-<p>
-  This section is for standard backcountry cabins, including both reserved and
-  first come, first served. Used for cabins or group cabins.
-</p>
+<div class="form-header">
+  <h1>Backcountry Cabins</h1>
+  <p>
+    This section is for standard backcountry cabins, including both reserved and
+    first come, first served. Used for cabins or group cabins.
+  </p>
+</div>
+
 <form [formGroup]="form">
   <div class="form-section">
     <app-backcountry-cabins-section
@@ -23,16 +26,16 @@
       [id]="'variance-notes'"
     ></app-text-area>
   </div>
-  <div class="d-flex flex-row-reverse">
-    <button
-      class="btn btn-primary px-5"
-      [disabled]="loading"
-      (click)="onSubmit()"
-    >
-      <app-text-to-loading-spinner
-        [text]="'Submit'"
-        (loadingStatus)="loading = $event"
-      ></app-text-to-loading-spinner>
-    </button>
-  </div>
 </form>
+<div class="form-footer d-flex justify-content-between">
+  <app-cancel-button></app-cancel-button>
+  <button
+    class="btn btn-primary px-5"
+    [disabled]="loading"
+    (click)="onSubmit()"
+  >
+    <app-text-to-loading-spinner
+      [text]="'Submit'"
+    ></app-text-to-loading-spinner>
+  </button>
+</div>

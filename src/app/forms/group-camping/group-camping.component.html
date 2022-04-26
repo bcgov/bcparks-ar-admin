@@ -1,8 +1,10 @@
-<h1>Group Camping</h1>
-<p>
-  Include data from all standard group camping, include reserved and first come,
-  first served.
-</p>
+<div class="form-header">
+  <h1>Group Camping</h1>
+  <p>
+    Include data from all standard group camping, include reserved and first
+    come, first served.
+  </p>
+</div>
 <form [formGroup]="form">
   <div class="form-section">
     <h2>Standard rate groups</h2>
@@ -33,9 +35,7 @@
       [youthRateGroupsAttendancePeopleField]="
         fields?.youthRateGroupsAttendancePeople
       "
-      [youthRateGroupsRevenueGrossField]="
-        fields?.youthRateGroupsRevenueGross
-      "
+      [youthRateGroupsRevenueGrossField]="fields?.youthRateGroupsRevenueGross"
     ></app-youth-rate-groups>
   </div>
   <div class="form-section">
@@ -62,3 +62,15 @@
     </button>
   </div>
 </form>
+<div class="form-footer d-flex justify-content-between">
+  <app-cancel-button></app-cancel-button>
+  <button
+    class="btn btn-primary px-5"
+    [disabled]="loading"
+    (click)="onSubmit()"
+  >
+    <app-text-to-loading-spinner
+      [text]="'Submit'"
+    ></app-text-to-loading-spinner>
+  </button>
+</div>

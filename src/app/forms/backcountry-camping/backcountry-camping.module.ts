@@ -6,6 +6,7 @@ import { BaseFormModule } from 'src/app/shared/components/forms/base-form/base-f
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-area.module';
 import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
+import { CancelButtonModule } from '../cancel-button/cancel-button.module';
 
 @NgModule({
   declarations: [BackcountryCampingComponent],
@@ -17,6 +18,7 @@ import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-lo
     FormsModule,
     ReactiveFormsModule,
     TextToLoadingSpinnerModule,
+    CancelButtonModule,
   ],
   exports: [BackcountryCampingComponent],
 })
