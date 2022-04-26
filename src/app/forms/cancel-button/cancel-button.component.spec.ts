@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { CancelButtonComponent } from './cancel-button.component';
 
@@ -8,9 +10,9 @@ describe('CancelButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CancelButtonComponent ]
-    })
-    .compileComponents();
+      imports: [RouterTestingModule, ModalModule.forRoot()],
+      declarations: [CancelButtonComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
