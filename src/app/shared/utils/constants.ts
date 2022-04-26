@@ -18,19 +18,19 @@ export class Constants {
 
   public static readonly iconUrls = {
     frontcountryCamping:
-      'https://bcparks.ca/_shared/images/icons/26x26icons/facility/walk-in-camping.svg',
+      '../../assets/images/walk-in-camping.svg',
     frontcountryCabins:
-      'https://bcparks.ca/_shared/images/icons/26x26icons/facility/shelter.svg',
+      '../../assets/images/shelter.svg',
     groupCamping:
-      'https://bcparks.ca/_shared/images/icons/26x26icons/facility/group-camping.svg',
+      '../../assets/images/group-camping.svg',
     backcountryCamping:
-      'https://bcparks.ca/_shared/images/icons/26x26icons/facility/walk-in-camping.svg',
+      '../../assets/images/walk-in-camping.svg',
     backcountryCabins:
-      'https://bcparks.ca/_shared/images/icons/26x26icons/facility/shelter.svg',
+      '../../assets/images/shelter.svg',
     boating:
-      'https://bcparks.ca/_shared/images/icons/26x26icons/facility/boat-launch.svg',
+      '../../assets/images/boat-launch.svg',
     dayUse:
-      'https://bcparks.ca/_shared/images/icons/26x26icons/activity/hiking.svg',
+      '../../assets/images/hiking.svg',
   };
 
   public static readonly ToastTypes: any = {
