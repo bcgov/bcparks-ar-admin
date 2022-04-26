@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
@@ -10,7 +10,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './cancel-button.component.html',
   styleUrls: ['./cancel-button.component.scss'],
 })
-export class CancelButtonComponent implements OnInit {
+export class CancelButtonComponent implements OnDestroy {
   private navParams = {};
   public subscriptions: any[] = [];
   public alive = true;
@@ -35,8 +35,6 @@ export class CancelButtonComponent implements OnInit {
         })
     );
   }
-
-  ngOnInit(): void {}
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
