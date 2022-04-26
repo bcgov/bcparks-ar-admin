@@ -7,7 +7,7 @@ import { EventService, EventObject, EventKeywords } from './event.service';
 import { ToastService, ToastTypes } from './toast.service';
 
 import * as moment from 'moment';
-import { InfiniteLoadingBarService } from '../shared/components/infinite-loading-bar/infinite-loading-bar.service';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +18,11 @@ export class SubAreaService {
     private eventService: EventService,
     private toastService: ToastService,
     private apiService: ApiService,
-    private infiniteLoadingService: InfiniteLoadingBarService
+    private loadingService: LoadingService
   ) {}
 
   async fetchSubArea(id, orcs, subAreaName, date) {
-    this.infiniteLoadingService.incrementFetchCount();
+    this.loadingService.addToFetchList(id);
     let res;
     let errorSubject = '';
     try {
@@ -63,12 +63,12 @@ export class SubAreaService {
       // TODO: We may want to change this.
       this.dataService.setItemValue(id, 'error');
     }
-    this.infiniteLoadingService.decrimentFetchCount();
+    this.loadingService.removeToFetchList(id);
   }
 
   //subarea?orcs=0041&subAreaName=Maple%20Bay&activity=Day%20Use&date=202204
   async fetchActivityDetails(id, orcs, subAreaName, activity, date) {
-    this.infiniteLoadingService.incrementFetchCount();
+    this.loadingService.addToFetchList(id);
     let res;
     let errorSubject = '';
     try {
@@ -102,7 +102,7 @@ export class SubAreaService {
       // TODO: We may want to change this.
       this.dataService.setItemValue(id, 'error');
     }
-    this.infiniteLoadingService.decrimentFetchCount();
+    this.loadingService.removeToFetchList(id);
   }
 
   public clearAccordionCache() {

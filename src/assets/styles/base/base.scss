@@ -32,7 +32,7 @@ body {
   border: 2px solid $primary-blue;
   border-radius: 4px;
 
-  .accordion-button{
+  .accordion-button {
     color: $primary-blue;
     background-color: white;
     box-shadow: none;
@@ -53,7 +53,9 @@ body {
 }
 
 .form-footer {
-  padding: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .form-section:nth-child(odd) {

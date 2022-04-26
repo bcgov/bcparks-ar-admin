@@ -1,9 +1,9 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { InfiniteLoadingBarService } from '../shared/components/infinite-loading-bar/infinite-loading-bar.service';
 import { ConfigService } from './config.service';
 import { DataService } from './data.service';
 import { EventService } from './event.service';
+import { LoadingService } from './loading.service';
 
 import { ParkService } from './park.service';
 import { ToastService } from './toast.service';
@@ -20,7 +20,7 @@ describe('ParkService', () => {
         ToastService,
         HttpHandler,
         ConfigService,
-        InfiniteLoadingBarService,
+        LoadingService,
       ],
     });
     service = TestBed.inject(ParkService);

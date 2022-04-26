@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { takeWhile } from 'rxjs';
-import { InfiniteLoadingBarService } from './infinite-loading-bar.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-infinite-loading-bar',
@@ -13,9 +13,9 @@ export class InfiniteLoadingBarComponent implements OnDestroy {
 
   public fetchCount = 0;
 
-  constructor(protected infiniteLoadingservice: InfiniteLoadingBarService) {
+  constructor(protected loadingService: LoadingService) {
     this.subscriptions.push(
-      infiniteLoadingservice
+      loadingService
         .getFetchCount()
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
