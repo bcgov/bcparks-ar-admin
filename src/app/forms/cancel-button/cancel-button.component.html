@@ -1,0 +1,49 @@
+<button class="btn btn-secondary px-5" (click)="lgModal.show()">Cancel</button>
+
+<div
+  bsModal
+  #lgModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-cancel"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="dialog-cancel" class="modal-title pull-left">
+          You have unsaved changes
+        </h2>
+        <button
+          type="button"
+          class="btn-close close pull-right"
+          aria-label="Close"
+          (click)="lgModal.hide()"
+        >
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to discard your work?</p>
+      </div>
+      <div class="modal-footer">
+        <div class="w-100 d-flex justify-content-between">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="confirm()"
+          >
+            Discard Changes
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            (click)="lgModal.hide()"
+          >
+            Continue Editing
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
