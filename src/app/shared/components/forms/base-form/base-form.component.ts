@@ -5,6 +5,7 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { FormulaService } from 'src/app/services/formula.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -37,7 +38,8 @@ export class BaseFormComponent implements OnDestroy {
     public bRouter: Router,
     public bDataService: DataService,
     public bSubAreaService: SubAreaService,
-    public bFormulaService: FormulaService
+    public bFormulaService: FormulaService,
+    public bLoadingService: LoadingService
   ) {
     this.form = this.bFormBuilder.group({});
 
@@ -51,6 +53,19 @@ export class BaseFormComponent implements OnDestroy {
             this.postObj['parkName'] = res.parkName;
             this.postObj['subAreaName'] = res.subAreaName;
             this.postObj['orcs'] = res.orcs;
+          }
+        })
+    );
+
+    this.subscriptions.push(
+      bLoadingService
+        .getFetchCount()
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          if (res > 0) {
+            this.disable();
+          } else {
+            this.enable();
           }
         })
     );

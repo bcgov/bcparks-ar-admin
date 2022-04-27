@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { takeWhile } from 'rxjs';
-import { InfiniteLoadingBarService } from '../infinite-loading-bar/infinite-loading-bar.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-text-to-loading-spinner',
@@ -22,13 +22,13 @@ export class TextToLoadingSpinnerComponent implements OnDestroy {
 
   public fetchCount = 0;
 
-  constructor(protected infiniteLoadingservice: InfiniteLoadingBarService) {
+  constructor(protected loadingService: LoadingService) {
     this.subscriptions.push(
-      infiniteLoadingservice
+      loadingService
         .getFetchCount()
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
-          this.fetchCount = res;
+          this.fetchCount = Object.keys(res).length;
           if (this.fetchCount > 0) {
             this.loadingStatus.emit(true);
           } else {

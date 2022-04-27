@@ -13,6 +13,7 @@ import { SubAreaService } from 'src/app/services/sub-area.service';
 import { FormulaService } from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-frontcountry-cabins',
@@ -20,13 +21,16 @@ import { Constants } from 'src/app/shared/utils/constants';
   styleUrls: ['./frontcountry-cabins.component.scss'],
 })
 export class FrontcountryCabinsComponent extends BaseFormComponent {
+  public fetchCount = 0;
+
   constructor(
     protected formBuilder: FormBuilder,
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
     protected subAreaService: SubAreaService,
-    protected formulaService: FormulaService
+    protected formulaService: FormulaService,
+    protected loadingService: LoadingService
   ) {
     super(
       formBuilder,
@@ -34,7 +38,8 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
       router,
       dataService,
       subAreaService,
-      formulaService
+      formulaService,
+      loadingService
     );
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -48,6 +53,16 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
           }
         })
     );
+
+    this.subscriptions.push(
+      loadingService
+        .getFetchCount()
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          this.fetchCount = res;
+        })
+    );
+
     this.setForm();
   }
 
