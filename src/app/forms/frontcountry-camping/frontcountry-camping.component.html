@@ -24,6 +24,8 @@
       [campingPartyNightsRevenueGrossField]="
         fields?.campingPartyNightsRevenueGross
       "
+      [attendanceTotal]="partyAttendanceTotal"
+      [revenueTotal]="partyRevenueTotal"
     ></app-camping-party-nights>
   </div>
   <div class="form-section">
@@ -33,6 +35,8 @@
       [secondCarsAttendanceSeniorField]="fields?.secondCarsAttendanceSenior"
       [secondCarsAttendanceSocialField]="fields?.secondCarsAttendanceSocial"
       [secondCarsRevenueGrossField]="fields?.secondCarsRevenueGross"
+      [attendanceTotal]="vehicleAttendanceTotal"
+      [revenueTotal]="vehicleRevenueTotal"
     ></app-additional-vehicles>
   </div>
   <div class="form-section">
@@ -41,6 +45,7 @@
       [otherRevenueGrossSaniField]="fields?.otherRevenueGrossSani"
       [otherRevenueElectricalField]="fields?.otherRevenueElectrical"
       [otherRevenueShowerField]="fields?.otherRevenueShower"
+      [revenueTotal]="otherRevenueTotal"
     ></app-other-frontcountry-camping-revenue>
   </div>
   <div class="form-section">

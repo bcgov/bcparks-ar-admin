@@ -10,7 +10,10 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
-import { FormulaService } from 'src/app/services/formula.service';
+import {
+  formulaResult,
+  FormulaService,
+} from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -20,6 +23,13 @@ import { Constants } from 'src/app/shared/utils/constants';
   styleUrls: ['./frontcountry-camping.component.scss'],
 })
 export class FrontcountryCampingComponent extends BaseFormComponent {
+  public loading = false;
+  public partyAttendanceTotal: formulaResult = { result: null, formula: '' };
+  public vehicleAttendanceTotal: formulaResult = { result: null, formula: '' };
+  public partyRevenueTotal: formulaResult = { result: null, formula: '' };
+  public vehicleRevenueTotal: formulaResult = { result: null, formula: '' };
+  public otherRevenueTotal: formulaResult = { result: null, formula: '' };
+
   constructor(
     protected formBuilder: FormBuilder,
     protected formService: FormService,
@@ -139,9 +149,42 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
         otherRevenueShower: this.form.get('otherRevenueShowerControl'),
         notes: this.form.get('varianceNotesControl'),
       });
+
+      this.calculateTotals();
+      super.subscribeToChanges(() => {
+        this.calculateTotals();
+      })
   }
 
-  public loading = false;
+  calculateTotals() {
+    this.partyAttendanceTotal =
+      this.formulaService.frontcountryCampingPartyAttendance(
+        [
+          this.fields.campingPartyNightsAttendanceStandard.value,
+          this.fields.campingPartyNightsAttendanceSenior.value,
+          this.fields.campingPartyNightsAttendanceSocial.value,
+          this.fields.campingPartyNightsAttendanceLongStay.value,
+        ],
+        this.data?.config?.attendanceModifier
+      );
+    this.vehicleAttendanceTotal =
+      this.formulaService.frontcountryCampingSecondCarAttendance([
+        this.fields.secondCarsAttendanceStandard.value,
+        this.fields.secondCarsAttendanceSenior.value,
+        this.fields.secondCarsAttendanceSocial.value,
+      ]);
+    this.partyRevenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.campingPartyNightsRevenueGross.value,
+    ]);
+    this.vehicleRevenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.secondCarsRevenueGross.value,
+    ]);
+    this.otherRevenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.otherRevenueGrossSani.value,
+      this.fields.otherRevenueElectrical.value,
+      this.fields.otherRevenueShower.value,
+    ]);
+  }
 
   async onSubmit() {
     this.loading = true;

@@ -10,7 +10,7 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
-import { FormulaService } from 'src/app/services/formula.service';
+import { formulaResult, FormulaService } from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -20,6 +20,9 @@ import { Constants } from 'src/app/shared/utils/constants';
   styleUrls: ['./frontcountry-cabins.component.scss'],
 })
 export class FrontcountryCabinsComponent extends BaseFormComponent {
+  public loading = false;
+  public revenueTotal: formulaResult = { result: null, formula: '' };
+
   constructor(
     protected formBuilder: FormBuilder,
     protected formService: FormService,
@@ -72,9 +75,18 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
         revenueGrossCamping: this.form.get('revenueGrossCampingControl'),
         notes: this.form.get('varianceNotesControl'),
       });
+
+      this.calculateTotals();
+      super.subscribeToChanges(() => {
+        this.calculateTotals();
+      })
   }
 
-  public loading = false;
+  calculateTotals(){
+    this.revenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.revenueGrossCamping.value
+    ])
+  }
 
   async onSubmit() {
     this.loading = true;

@@ -10,7 +10,10 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
-import { FormulaService } from 'src/app/services/formula.service';
+import {
+  formulaResult,
+  FormulaService,
+} from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -20,6 +23,11 @@ import { Constants } from 'src/app/shared/utils/constants';
   styleUrls: ['./backcountry-cabins.component.scss'],
 })
 export class BackcountryCabinsComponent extends BaseFormComponent {
+  
+  public loading = false;
+  public attendanceTotal: formulaResult = { result: null, formula: '' };
+  public revenueTotal: formulaResult = { result: null, formula: '' };
+
   constructor(
     protected formBuilder: FormBuilder,
     protected formService: FormService,
@@ -83,9 +91,23 @@ export class BackcountryCabinsComponent extends BaseFormComponent {
         revenueFamily: this.form.get('revenueFamilyControl'),
         notes: this.form.get('varianceNotesControl'),
       });
+
+    this.calculateTotals();
+    super.subscribeToChanges(() => {
+      this.calculateTotals();
+    });
   }
 
-  public loading = false;
+  calculateTotals() {
+    this.attendanceTotal = this.formulaService.backcountryCabinsAttendance(
+      [this.fields.peopleAdult.value, this.fields.peopleChild.value],
+      [this.fields.peopleFamily.value],
+      this.data?.config?.attendanceModifier
+    );
+    this.revenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.revenueFamily.value
+    ]);
+  }
 
   async onSubmit() {
     this.loading = true;

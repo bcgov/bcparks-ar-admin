@@ -56,6 +56,20 @@ export class BaseFormComponent implements OnDestroy {
     );
   }
 
+  // subscribe to changes in the form - pass a callback in if necessary.
+  subscribeToChanges(callback?) {
+    for (const control of Object.keys(this.form.controls)) {
+      this.form
+        .get(control)
+        ?.valueChanges.pipe(takeWhile(() => this.alive))
+        .subscribe((changes) => {
+          if (callback) {
+            callback();
+          }
+        });
+    }
+  }
+
   // gather the simplified key:value form data and format for submission
   collect() {
     let res: any = {};

@@ -10,7 +10,7 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
-import { FormulaService } from 'src/app/services/formula.service';
+import { formulaResult, FormulaService } from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -20,6 +20,11 @@ import { Constants } from 'src/app/shared/utils/constants';
   styleUrls: ['./group-camping.component.scss'],
 })
 export class GroupCampingComponent extends BaseFormComponent {
+  public loading = false;
+  public attendanceTotal: formulaResult = { result: null, formula: '' };
+  public standardRevenueTotal: formulaResult = { result: null, formula: '' };
+  public youthRevenueTotal: formulaResult = { result: null, formula: '' };
+  
   constructor(
     protected formBuilder: FormBuilder,
     protected formService: FormService,
@@ -119,9 +124,26 @@ export class GroupCampingComponent extends BaseFormComponent {
         ),
         notes: this.form.get('varianceNotesControl'),
       });
+
+      this.calculateTotals();
+      super.subscribeToChanges(() => {
+        this.calculateTotals();
+      })
   }
 
-  public loading = false;
+  calculateTotals(){
+    this.attendanceTotal = this.formulaService.groupCampingStandardAttendance([
+      this.fields.standardRateGroupsTotalPeopleAdults.value,
+      this.fields.standardRateGroupsTotalPeopleYouth.value,
+      this.fields.standardRateGroupsTotalPeopleKids.value,
+    ]);
+    this.standardRevenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.standardRateGroupsRevenueGross.value
+    ]);
+    this.youthRevenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.youthRateGroupsRevenueGross.value
+    ])
+  }
 
   async onSubmit() {
     this.loading = true;
