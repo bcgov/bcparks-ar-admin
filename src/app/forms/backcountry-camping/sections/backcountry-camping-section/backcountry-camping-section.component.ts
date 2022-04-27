@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
   selector: 'app-backcountry-camping-section',
@@ -9,6 +10,7 @@ import { FormControl } from '@angular/forms';
 export class BackcountryCampingSectionComponent implements OnInit {
   @Input() peopleField = new FormControl; 
   @Input() grossCampingRevenueField = new FormControl; 
+  @Input() revenueTotal: formulaResult = {result: null, formula: ''};
 
   constructor() { }
 
