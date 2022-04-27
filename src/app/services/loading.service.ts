@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoadingService {
   public fetchList = new BehaviorSubject({});
-  public fetchCount = new BehaviorSubject(1);
+  public loading = new BehaviorSubject(false);
 
   constructor() {}
 
@@ -14,25 +14,33 @@ export class LoadingService {
     let obj = { ...this.fetchList.value };
     obj[id] = attributes;
     this.fetchList.next(obj);
-    this.updateFetchCount();
+    this.updateLoadingStatus();
   }
 
   removeToFetchList(id) {
     let obj = { ...this.fetchList.value };
     delete obj[id];
     this.fetchList.next(obj);
-    this.updateFetchCount();
+    this.updateLoadingStatus();
   }
 
-  updateFetchCount() {
-    this.fetchCount.next(Object.keys(this.fetchList.value).length);
+  updateLoadingStatus() {
+    // We have these extra checks so we don't constantly spam the subscribers.
+    if (Object.keys(this.fetchList.value).length > 0 && !this.loading.value) {
+      this.loading.next(true);
+    } else if (
+      Object.keys(this.fetchList.value).length <= 0 &&
+      this.loading.value
+    ) {
+      this.loading.next(false);
+    }
   }
 
   getFetchList() {
     return this.fetchList.asObservable();
   }
 
-  getFetchCount() {
-    return this.fetchCount.asObservable();
+  getLoadingStatus() {
+    return this.loading.asObservable();
   }
 }

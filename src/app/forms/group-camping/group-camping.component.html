@@ -54,7 +54,7 @@
   <app-cancel-button></app-cancel-button>
   <button
     class="btn btn-primary px-5"
-    [disabled]="fetchCount > 0"
+    [disabled]="loading"
     (click)="onSubmit()"
   >
     <app-text-to-loading-spinner

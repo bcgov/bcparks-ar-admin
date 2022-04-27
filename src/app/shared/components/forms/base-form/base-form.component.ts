@@ -31,8 +31,7 @@ export class BaseFormComponent implements OnDestroy {
   public fields: any = {}; // object linking API fields to form controls & values
   public subscriptions: any[] = [];
   public alive = true;
-  public loading: boolean = true;
-  public fetchCount: number = 0;
+  public loading = false;
 
   constructor(
     public bFormBuilder: FormBuilder,
@@ -46,30 +45,26 @@ export class BaseFormComponent implements OnDestroy {
     this.form = this.bFormBuilder.group({});
 
     this.subscriptions.push(
-      this.bDataService
+      bDataService
         .getItemValue(Constants.dataIds.FORM_PARAMS)
         .pipe(takeWhile(() => this.alive))
-        .subscribe(
-          (res) => {
-            if (res) {
-              this.postObj['date'] = res.date;
-              this.postObj['parkName'] = res.parkName;
-              this.postObj['subAreaName'] = res.subAreaName;
-              this.postObj['orcs'] = res.orcs;
-            }
-          },
-          bLoadingService
-          .getFetchCount()
-          .pipe(takeWhile(() => this.alive))
-          .subscribe((res) => {
-            this.fetchCount = res;
-            if (res > 0) {
-              this.disable();
-            } else {
-              this.enable();
-            }
-          })
-        )
+        .subscribe((res) => {
+          if (res) {
+            this.postObj['date'] = res.date;
+            this.postObj['parkName'] = res.parkName;
+            this.postObj['subAreaName'] = res.subAreaName;
+            this.postObj['orcs'] = res.orcs;
+          }
+        }),
+      bLoadingService
+        .getLoadingStatus()
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          this.loading = res;
+          if (!this.loading) {
+            this.enable();
+          }
+        })
     );
   }
 
@@ -141,12 +136,11 @@ export class BaseFormComponent implements OnDestroy {
 
   // return current state of form
   async submit() {
-    this.loading = true;
     const payload = this.makePayload();
     // TODO: PUT goes here.
-    
+
     const res = await this.bFormService.postActivity(payload);
-    
+
     // Refresh the accordion with new data.
     await this.bSubAreaService.fetchActivityDetails(
       'accordion-' + this.postObj.activity,
@@ -154,23 +148,21 @@ export class BaseFormComponent implements OnDestroy {
       this.postObj.subAreaName,
       this.postObj.activity,
       this.postObj.date
-      );
-      
-      if (res) {
-        this.bRouter.navigate(['/enter-data'], {
-          queryParams: {
-            date: this.postObj.date,
-            orcs: this.postObj.orcs,
-            parkName: this.postObj.parkName,
-            subArea: this.postObj.subAreaName,
-          },
-        });
-      } else {
-        // TODO: handle error
-        this.bRouter.navigate(['/']);
-      }
+    );
 
-    this.loading = false;
+    if (res) {
+      this.bRouter.navigate(['/enter-data'], {
+        queryParams: {
+          date: this.postObj.date,
+          orcs: this.postObj.orcs,
+          parkName: this.postObj.parkName,
+          subArea: this.postObj.subAreaName,
+        },
+      });
+    } else {
+      // TODO: handle error
+      this.bRouter.navigate(['/']);
+    }
 
     const fResult: formResult = {
       error: null, // return errors if unsuccessful PUT
