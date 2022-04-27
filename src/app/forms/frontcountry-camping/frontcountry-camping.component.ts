@@ -24,7 +24,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./frontcountry-camping.component.scss'],
 })
 export class FrontcountryCampingComponent extends BaseFormComponent {
-  public fetchCount = 0;
   public loading = false;
   public partyAttendanceTotal: formulaResult = { result: null, formula: '' };
   public vehicleAttendanceTotal: formulaResult = { result: null, formula: '' };
@@ -62,16 +61,6 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
           }
         })
     );
-
-    this.subscriptions.push(
-      loadingService
-        .getFetchCount()
-        .pipe(takeWhile(() => this.alive))
-        .subscribe((res) => {
-          this.fetchCount = res;
-        })
-    );
-
     this.setForm();
   }
 

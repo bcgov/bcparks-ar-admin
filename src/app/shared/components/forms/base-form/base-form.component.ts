@@ -31,6 +31,7 @@ export class BaseFormComponent implements OnDestroy {
   public fields: any = {}; // object linking API fields to form controls & values
   public subscriptions: any[] = [];
   public alive = true;
+  public fetchCount: number = 0;
 
   constructor(
     public bFormBuilder: FormBuilder,
@@ -47,14 +48,22 @@ export class BaseFormComponent implements OnDestroy {
       this.bDataService
         .getItemValue(Constants.dataIds.FORM_PARAMS)
         .pipe(takeWhile(() => this.alive))
-        .subscribe((res) => {
-          if (res) {
-            this.postObj['date'] = res.date;
-            this.postObj['parkName'] = res.parkName;
-            this.postObj['subAreaName'] = res.subAreaName;
-            this.postObj['orcs'] = res.orcs;
-          }
-        })
+        .subscribe(
+          (res) => {
+            if (res) {
+              this.postObj['date'] = res.date;
+              this.postObj['parkName'] = res.parkName;
+              this.postObj['subAreaName'] = res.subAreaName;
+              this.postObj['orcs'] = res.orcs;
+            }
+          },
+          bLoadingService
+            .getFetchCount()
+            .pipe(takeWhile(() => this.alive))
+            .subscribe((res) => {
+              this.fetchCount = res;
+            })
+        )
     );
 
     this.subscriptions.push(

@@ -21,7 +21,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./frontcountry-cabins.component.scss'],
 })
 export class FrontcountryCabinsComponent extends BaseFormComponent {
-  public fetchCount = 0;
   public loading = false;
   public revenueTotal: formulaResult = { result: null, formula: '' };
 
@@ -55,16 +54,6 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
           }
         })
     );
-
-    this.subscriptions.push(
-      loadingService
-        .getFetchCount()
-        .pipe(takeWhile(() => this.alive))
-        .subscribe((res) => {
-          this.fetchCount = res;
-        })
-    );
-
     this.setForm();
   }
 
