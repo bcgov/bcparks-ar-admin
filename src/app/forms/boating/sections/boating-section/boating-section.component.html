@@ -29,9 +29,8 @@
     <div class="row">
       <app-calculation-display
         [label]="'BOAT ATTENDANCE'"
-        [subtext]="
-          'Boat attendance = (On dock + On buoys + Miscellaneous boats)  x 3.2'
-        "
+        [subtext]="attendanceTotal?.formula"
+        [value]="attendanceTotal?.result"
       ></app-calculation-display>
     </div>
   </div>
@@ -49,7 +48,8 @@
       <app-calculation-display
         [colorClass]="'green'"
         [label]="'NET REVENUE'"
-        [subtext]="'Net revenue = Gross revenue - 5% GST'"
+        [subtext]="revenueTotal?.formula"
+        [value]="revenueTotal?.result"
       ></app-calculation-display>
     </div>
   </div>

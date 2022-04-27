@@ -43,7 +43,8 @@
     <div class="row">
       <app-calculation-display
         [label]="'VEHICLE ATTENDANCE'"
-        [subtext]="'Vehicle attendance = (Vehicles x 3.5) + (Bus count x 40)'"
+        [subtext]="attendanceTotal?.formula"
+        [value]="attendanceTotal?.result"
       ></app-calculation-display>
     </div>
   </div>

@@ -32,7 +32,8 @@
       <app-calculation-display
         [colorClass]="'green'"
         [label]="'NET REVENUE'"
-        [subtext]="'Net revenue = Gross revenue - 5% GST'"
+        [subtext]="revenueTotal?.formula"
+        [value]="revenueTotal?.result"
       ></app-calculation-display>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
   selector: 'app-people-and-vehicles',
@@ -10,6 +11,7 @@ export class PeopleAndVehiclesComponent implements OnInit {
   @Input() peopleAndVehiclesTrailField = new FormControl;
   @Input() peopleAndVehiclesVehicleField = new FormControl;
   @Input() peopleAndVehiclesBusField = new FormControl;
+  @Input() attendanceTotal: formulaResult = {result: null, formula: ''};
 
   constructor() { }
 

@@ -10,7 +10,10 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
-import { FormulaService } from 'src/app/services/formula.service';
+import {
+  formulaResult,
+  FormulaService,
+} from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -22,6 +25,10 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class DayUseComponent extends BaseFormComponent {
   public fetchCount = 0;
+  public loading = false;
+  public attendanceTotal: formulaResult = { result: null, formula: '' };
+  public picnicRevenueTotal: formulaResult = { result: null, formula: '' };
+  public otherRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
     protected formBuilder: FormBuilder,
@@ -116,9 +123,28 @@ export class DayUseComponent extends BaseFormComponent {
         ),
         notes: this.form.get('varianceNotesControl'),
       });
+
+    this.calculateTotals();
+    super.subscribeToChanges(() => {
+      this.calculateTotals();
+    });
   }
 
-  public loading = false;
+  calculateTotals() {
+    this.attendanceTotal = this.formulaService.dayUseVehicleAttendance(
+      [this.fields.peopleAndVehiclesVehicle.value],
+      [this.fields.peopleAndVehiclesBus.value],
+      this.data?.config?.attendanceVehiclesModifier,
+      this.data?.config?.attendanceBusModifier
+    );
+    this.picnicRevenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.picnicRevenueGross.value,
+    ]);
+    this.otherRevenueTotal = this.formulaService.basicNetRevenue([
+      this.fields.otherDayUseRevenueSkii.value,
+      this.fields.otherDayUseRevenueHotSprings.value,
+    ]);
+  }
 
   async onSubmit() {
     this.loading = true;
