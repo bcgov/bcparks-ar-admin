@@ -112,6 +112,13 @@ export class DayUseComponent extends BaseFormComponent {
         notes: this.form.get('varianceNotesControl'),
       });
 
+    if (this.loading) {
+      this.disable();
+    } else {
+      // In case we init form after service is done fetching for some reason.
+      this.enable();
+    }
+
     this.calculateTotals();
     super.subscribeToChanges(() => {
       this.calculateTotals();

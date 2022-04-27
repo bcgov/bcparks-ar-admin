@@ -10,7 +10,10 @@ import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
-import { formulaResult, FormulaService } from 'src/app/services/formula.service';
+import {
+  formulaResult,
+  FormulaService,
+} from 'src/app/services/formula.service';
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -78,16 +81,30 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
         notes: this.form.get('varianceNotesControl'),
       });
 
+    if (this.loading) {
+      this.disable();
+    } else {
+      // In case we init form after service is done fetching for some reason.
+      this.enable();
+    }
+
+    if (this.loading) {
+      this.disable();
+    } else {
+      // In case we init form after service is done fetching for some reason.
+      this.enable();
+    }
+
+    this.calculateTotals();
+    super.subscribeToChanges(() => {
       this.calculateTotals();
-      super.subscribeToChanges(() => {
-        this.calculateTotals();
-      })
+    });
   }
 
-  calculateTotals(){
+  calculateTotals() {
     this.revenueTotal = this.formulaService.basicNetRevenue([
-      this.fields.revenueGrossCamping.value
-    ])
+      this.fields.revenueGrossCamping.value,
+    ]);
   }
 
   async onSubmit() {

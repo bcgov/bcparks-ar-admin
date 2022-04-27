@@ -11,15 +11,15 @@ export class InfiniteLoadingBarComponent implements OnDestroy {
   private alive = true;
   private subscriptions: any[] = [];
 
-  public fetchCount = 0;
+  public loading = false;
 
   constructor(protected loadingService: LoadingService) {
     this.subscriptions.push(
       loadingService
-        .getFetchCount()
+        .getLoadingStatus()
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
-          this.fetchCount = res;
+          this.loading = res;
         })
     );
   }

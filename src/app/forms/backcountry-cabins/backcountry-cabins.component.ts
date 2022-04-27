@@ -93,6 +93,13 @@ export class BackcountryCabinsComponent extends BaseFormComponent {
         notes: this.form.get('varianceNotesControl'),
       });
 
+    if (this.loading) {
+      this.disable();
+    } else {
+      // In case we init form after service is done fetching for some reason.
+      this.enable();
+    }
+
     this.calculateTotals();
     super.subscribeToChanges(() => {
       this.calculateTotals();
@@ -106,7 +113,7 @@ export class BackcountryCabinsComponent extends BaseFormComponent {
       this.data?.config?.attendanceModifier
     );
     this.revenueTotal = this.formulaService.basicNetRevenue([
-      this.fields.revenueFamily.value
+      this.fields.revenueFamily.value,
     ]);
   }
 

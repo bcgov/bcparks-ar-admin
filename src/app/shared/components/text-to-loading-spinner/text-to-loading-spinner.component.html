@@ -1,5 +1,5 @@
-<span *ngIf="fetchCount === 0">{{ text }}</span>
-<span *ngIf="fetchCount > 0">
+<span *ngIf="!loading">{{ text }}</span>
+<span *ngIf="loading">
   <span
     class="spinner-border spinner-border-sm"
     role="status"
