@@ -69,54 +69,93 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
       // initialize the form and populate with values if they exist.
       (this.form = new FormGroup({
         campingPartyNightsAttendanceStandardControl: new FormControl(
-          this.data.campingPartyNightsAttendanceStandard,
+          {
+            value: this.data.campingPartyNightsAttendanceStandard,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         campingPartyNightsAttendanceSeniorControl: new FormControl(
-          this.data.campingPartyNightsAttendanceSenior,
+          {
+            value: this.data.campingPartyNightsAttendanceSenior,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         campingPartyNightsAttendanceSocialControl: new FormControl(
-          this.data.campingPartyNightsAttendanceSocial,
+          {
+            value: this.data.campingPartyNightsAttendanceSocial,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         campingPartyNightsAttendanceLongStayControl: new FormControl(
-          this.data.campingPartyNightsAttendanceLongStay,
+          {
+            value: this.data.campingPartyNightsAttendanceLongStay,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         campingPartyNightsRevenueGrossControl: new FormControl(
-          this.data.campingPartyNightsRevenueGross,
+          {
+            value: this.data.campingPartyNightsRevenueGross,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         secondCarsAttendanceStandardControl: new FormControl(
-          this.data.secondCarsAttendanceStandard,
+          {
+            value: this.data.secondCarsAttendanceStandard,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         secondCarsAttendanceSeniorControl: new FormControl(
-          this.data.secondCarsAttendanceSenior,
+          {
+            value: this.data.secondCarsAttendanceSenior,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         secondCarsAttendanceSocialControl: new FormControl(
-          this.data.secondCarsAttendanceSocial,
+          {
+            value: this.data.secondCarsAttendanceSocial,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         secondCarsRevenueGrossControl: new FormControl(
-          this.data.secondCarsRevenueGross,
+          {
+            value: this.data.secondCarsRevenueGross,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         otherRevenueGrossSaniControl: new FormControl(
-          this.data.otherRevenueGrossSani,
+          {
+            value: this.data.otherRevenueGrossSani,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         otherRevenueElectricalControl: new FormControl(
-          this.data.otherRevenueElectrical,
+          {
+            value: this.data.otherRevenueElectrical,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         otherRevenueShowerControl: new FormControl(
-          this.data.otherRevenueShower,
+          {
+            value: this.data.otherRevenueShower,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
-        varianceNotesControl: new FormControl(this.data.notes),
+        varianceNotesControl: new FormControl({
+          value: this.data.notes,
+          disabled: this.loading,
+        }),
       })),
       // link form controls to the object fields they represent
       (this.fields = {
@@ -150,13 +189,6 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
         otherRevenueShower: this.form.get('otherRevenueShowerControl'),
         notes: this.form.get('varianceNotesControl'),
       });
-
-    if (this.loading) {
-      this.disable();
-    } else {
-      // In case we init form after service is done fetching for some reason.
-      this.enable();
-    }
 
     this.calculateTotals();
     super.subscribeToChanges(() => {

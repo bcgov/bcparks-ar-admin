@@ -67,34 +67,58 @@ export class DayUseComponent extends BaseFormComponent {
       // initialize the form and populate with values if they exist.
       (this.form = new FormGroup({
         peopleAndVehiclesTrailControl: new FormControl(
-          this.data.peopleAndVehiclesTrail,
+          {
+            value: this.data.peopleAndVehiclesTrail,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         peopleAndVehiclesVehicleControl: new FormControl(
-          this.data.peopleAndVehiclesVehicle,
+          {
+            value: this.data.peopleAndVehiclesVehicle,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         peopleAndVehiclesBusControl: new FormControl(
-          this.data.peopleAndVehiclesBus,
+          {
+            value: this.data.peopleAndVehiclesBus,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         picnicRevenueShelterControl: new FormControl(
-          this.data.picnicRevenueShelter,
+          {
+            value: this.data.picnicRevenueShelter,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         picnicRevenueGrossControl: new FormControl(
-          this.data.picnicRevenueGross,
+          {
+            value: this.data.picnicRevenueGross,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         otherDayUseRevenueSkiiControl: new FormControl(
-          this.data.otherDayUseRevenueSkii,
+          {
+            value: this.data.otherDayUseRevenueSkii,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         otherDayUseRevenueHotSpringsControl: new FormControl(
-          this.data.otherDayUseRevenueHotSprings,
+          {
+            value: this.data.otherDayUseRevenueHotSprings,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
-        varianceNotesControl: new FormControl(this.data.notes),
+        varianceNotesControl: new FormControl({
+          value: this.data.notes,
+          disabled: this.loading,
+        }),
       })),
       // link form controls to the object fields they represent
       (this.fields = {
@@ -111,13 +135,6 @@ export class DayUseComponent extends BaseFormComponent {
         ),
         notes: this.form.get('varianceNotesControl'),
       });
-
-    if (this.loading) {
-      this.disable();
-    } else {
-      // In case we init form after service is done fetching for some reason.
-      this.enable();
-    }
 
     this.calculateTotals();
     super.subscribeToChanges(() => {
