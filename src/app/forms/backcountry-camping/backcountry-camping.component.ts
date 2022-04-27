@@ -24,7 +24,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./backcountry-camping.component.scss'],
 })
 export class BackcountryCampingComponent extends BaseFormComponent {
-  public loading = false;
   public revenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
@@ -95,8 +94,6 @@ export class BackcountryCampingComponent extends BaseFormComponent {
   }
 
   async onSubmit() {
-    this.loading = true;
     await super.submit();
-    this.loading = false;
   }
 }

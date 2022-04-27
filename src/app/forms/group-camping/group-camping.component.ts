@@ -21,7 +21,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./group-camping.component.scss'],
 })
 export class GroupCampingComponent extends BaseFormComponent {
-  public loading = false;
   public attendanceTotal: formulaResult = { result: null, formula: '' };
   public standardRevenueTotal: formulaResult = { result: null, formula: '' };
   public youthRevenueTotal: formulaResult = { result: null, formula: '' };
@@ -148,8 +147,6 @@ export class GroupCampingComponent extends BaseFormComponent {
   }
 
   async onSubmit() {
-    this.loading = true;
     await super.submit();
-    this.loading = false;
   }
 }

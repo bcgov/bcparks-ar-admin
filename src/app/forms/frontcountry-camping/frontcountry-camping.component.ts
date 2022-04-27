@@ -24,7 +24,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./frontcountry-camping.component.scss'],
 })
 export class FrontcountryCampingComponent extends BaseFormComponent {
-  public loading = false;
   public partyAttendanceTotal: formulaResult = { result: null, formula: '' };
   public vehicleAttendanceTotal: formulaResult = { result: null, formula: '' };
   public partyRevenueTotal: formulaResult = { result: null, formula: '' };
@@ -189,8 +188,6 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
   }
 
   async onSubmit() {
-    this.loading = true;
     await super.submit();
-    this.loading = false;
   }
 }

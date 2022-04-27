@@ -24,7 +24,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./day-use.component.scss'],
 })
 export class DayUseComponent extends BaseFormComponent {
-  public loading = false;
   public attendanceTotal: formulaResult = { result: null, formula: '' };
   public picnicRevenueTotal: formulaResult = { result: null, formula: '' };
   public otherRevenueTotal: formulaResult = { result: null, formula: '' };
@@ -136,8 +135,6 @@ export class DayUseComponent extends BaseFormComponent {
   }
 
   async onSubmit() {
-    this.loading = true;
     await super.submit();
-    this.loading = false;
   }
 }
