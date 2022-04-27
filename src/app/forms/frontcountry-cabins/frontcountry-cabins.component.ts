@@ -21,7 +21,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./frontcountry-cabins.component.scss'],
 })
 export class FrontcountryCabinsComponent extends BaseFormComponent {
-  public loading = false;
   public revenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
@@ -92,8 +91,6 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
   }
 
   async onSubmit() {
-    this.loading = true;
     await super.submit();
-    this.loading = false;
   }
 }

@@ -24,7 +24,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./boating.component.scss'],
 })
 export class BoatingComponent extends BaseFormComponent {
-  public loading = false;
   public attendanceTotal: formulaResult = { result: null, formula: '' };
   public revenueTotal: formulaResult = { result: null, formula: '' };
 
@@ -120,8 +119,6 @@ export class BoatingComponent extends BaseFormComponent {
   }
 
   async onSubmit() {
-    this.loading = true;
     await super.submit();
-    this.loading = false;
   }
 }
