@@ -133,7 +133,7 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
             value: this.data.secondCarsRevenueGross,
             disabled: this.loading,
           },
-          this.validationService.counterFieldValidator()
+          this.validationService.moneyFieldValidator()
         ),
         otherRevenueGrossSaniControl: new FormControl(
           {
