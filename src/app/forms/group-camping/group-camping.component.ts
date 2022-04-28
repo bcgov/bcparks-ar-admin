@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,6 +17,7 @@ import {
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { LoadingService } from 'src/app/services/loading.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-group-camping',
@@ -35,7 +36,9 @@ export class GroupCampingComponent extends BaseFormComponent {
     protected router: Router,
     protected subAreaService: SubAreaService,
     protected formulaService: FormulaService,
-    protected loadingService: LoadingService
+    protected loadingService: LoadingService,
+    protected validationService: ValidationService,
+    protected changeDetectior: ChangeDetectorRef
   ) {
     super(
       formBuilder,
@@ -44,7 +47,8 @@ export class GroupCampingComponent extends BaseFormComponent {
       dataService,
       subAreaService,
       formulaService,
-      loadingService
+      loadingService,
+      changeDetectior
     );
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -71,56 +75,56 @@ export class GroupCampingComponent extends BaseFormComponent {
             value: this.data.standardRateGroupsTotalPeopleStandard,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         standardRateGroupsTotalPeopleAdultsControl: new FormControl(
           {
             value: this.data.standardRateGroupsTotalPeopleAdults,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         standardRateGroupsTotalPeopleYouthControl: new FormControl(
           {
             value: this.data.standardRateGroupsTotalPeopleYouth,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         standardRateGroupsTotalPeopleKidsControl: new FormControl(
           {
             value: this.data.standardRateGroupsTotalPeopleKids,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         standardRateGroupsRevenueGrossControl: new FormControl(
           {
             value: this.data.standardRateGroupsRevenueGross,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         youthRateGroupsAttendanceGroupNightsControl: new FormControl(
           {
             value: this.data.youthRateGroupsAttendanceGroupNights,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         youthRateGroupsAttendancePeopleControl: new FormControl(
           {
             value: this.data.youthRateGroupsAttendancePeople,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         youthRateGroupsRevenueGrossControl: new FormControl(
           {
             value: this.data.youthRateGroupsRevenueGross,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         varianceNotesControl: new FormControl({
           value: this.data.notes,

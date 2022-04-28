@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,6 +17,7 @@ import {
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { LoadingService } from 'src/app/services/loading.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-boating',
@@ -34,7 +35,9 @@ export class BoatingComponent extends BaseFormComponent {
     protected router: Router,
     protected subAreaService: SubAreaService,
     protected formulaService: FormulaService,
-    protected loadingService: LoadingService
+    protected loadingService: LoadingService,
+    protected validationService: ValidationService,
+    protected changeDetectior: ChangeDetectorRef
   ) {
     super(
       formBuilder,
@@ -43,7 +46,8 @@ export class BoatingComponent extends BaseFormComponent {
       dataService,
       subAreaService,
       formulaService,
-      loadingService
+      loadingService,
+      changeDetectior
     );
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -70,28 +74,28 @@ export class BoatingComponent extends BaseFormComponent {
             value: this.data.boatAttendanceNightsOnDock,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         boatAttendanceNightsOnBouysControl: new FormControl(
           {
             value: this.data.boatAttendanceNightsOnBouys,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         boatAttendanceMiscellaneousControl: new FormControl(
           {
             value: this.data.boatAttendanceMiscellaneous,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         boatRevenueGrossControl: new FormControl(
           {
             value: this.data.boatRevenueGross,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         varianceNotesControl: new FormControl({
           value: this.data.notes,
