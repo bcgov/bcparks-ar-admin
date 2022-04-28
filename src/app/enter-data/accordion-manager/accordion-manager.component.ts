@@ -47,7 +47,6 @@ export class AccordionManagerComponent implements OnDestroy {
       'collapsebackcountryCabins':'backcountryCabins',
       'collapseboating': 'boating',
     };
-    console.log('Current Accordion Clicked:', currentId);
     let clickedItem = document.getElementById(currentId);
 
     // Collapse anything else if it's open besides the one transitioning to collapsed or show
@@ -67,8 +66,6 @@ export class AccordionManagerComponent implements OnDestroy {
                 hideItem.dispatchEvent(clickEvent);
               }
             }
-        } else {
-          // console.log(`Not touching ${keys[key]}`);
         }
       }
     }
