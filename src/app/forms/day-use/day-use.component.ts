@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,6 +17,7 @@ import {
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { LoadingService } from 'src/app/services/loading.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-day-use',
@@ -35,7 +36,9 @@ export class DayUseComponent extends BaseFormComponent {
     protected router: Router,
     protected subAreaService: SubAreaService,
     protected formulaService: FormulaService,
-    protected loadingService: LoadingService
+    protected loadingService: LoadingService,
+    protected validationService: ValidationService,
+    protected changeDetectior: ChangeDetectorRef
   ) {
     super(
       formBuilder,
@@ -44,7 +47,8 @@ export class DayUseComponent extends BaseFormComponent {
       dataService,
       subAreaService,
       formulaService,
-      loadingService
+      loadingService,
+      changeDetectior
     );
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -71,49 +75,49 @@ export class DayUseComponent extends BaseFormComponent {
             value: this.data.peopleAndVehiclesTrail,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         peopleAndVehiclesVehicleControl: new FormControl(
           {
             value: this.data.peopleAndVehiclesVehicle,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         peopleAndVehiclesBusControl: new FormControl(
           {
             value: this.data.peopleAndVehiclesBus,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         picnicRevenueShelterControl: new FormControl(
           {
             value: this.data.picnicRevenueShelter,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         picnicRevenueGrossControl: new FormControl(
           {
             value: this.data.picnicRevenueGross,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         otherDayUseRevenueSkiiControl: new FormControl(
           {
             value: this.data.otherDayUseRevenueSkii,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         otherDayUseRevenueHotSpringsControl: new FormControl(
           {
             value: this.data.otherDayUseRevenueHotSprings,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         varianceNotesControl: new FormControl({
           value: this.data.notes,

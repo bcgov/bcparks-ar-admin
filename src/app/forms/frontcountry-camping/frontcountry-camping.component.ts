@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,6 +17,7 @@ import {
 import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { LoadingService } from 'src/app/services/loading.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-frontcountry-camping',
@@ -37,7 +38,9 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
     protected router: Router,
     protected subAreaService: SubAreaService,
     protected formulaService: FormulaService,
-    protected loadingService: LoadingService
+    protected loadingService: LoadingService,
+    protected validationService: ValidationService,
+    protected changeDetectior: ChangeDetectorRef
   ) {
     super(
       formBuilder,
@@ -46,7 +49,8 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
       dataService,
       subAreaService,
       formulaService,
-      loadingService
+      loadingService,
+      changeDetectior
     );
     // push existing form data to parent subscriptions
     this.subscriptions.push(
@@ -73,84 +77,84 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
             value: this.data.campingPartyNightsAttendanceStandard,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         campingPartyNightsAttendanceSeniorControl: new FormControl(
           {
             value: this.data.campingPartyNightsAttendanceSenior,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         campingPartyNightsAttendanceSocialControl: new FormControl(
           {
             value: this.data.campingPartyNightsAttendanceSocial,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         campingPartyNightsAttendanceLongStayControl: new FormControl(
           {
             value: this.data.campingPartyNightsAttendanceLongStay,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         campingPartyNightsRevenueGrossControl: new FormControl(
           {
             value: this.data.campingPartyNightsRevenueGross,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         secondCarsAttendanceStandardControl: new FormControl(
           {
             value: this.data.secondCarsAttendanceStandard,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         secondCarsAttendanceSeniorControl: new FormControl(
           {
             value: this.data.secondCarsAttendanceSenior,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         secondCarsAttendanceSocialControl: new FormControl(
           {
             value: this.data.secondCarsAttendanceSocial,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         secondCarsRevenueGrossControl: new FormControl(
           {
             value: this.data.secondCarsRevenueGross,
             disabled: this.loading,
           },
-          Validators.pattern('^[0-9]*$')
+          this.validationService.counterFieldValidator()
         ),
         otherRevenueGrossSaniControl: new FormControl(
           {
             value: this.data.otherRevenueGrossSani,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         otherRevenueElectricalControl: new FormControl(
           {
             value: this.data.otherRevenueElectrical,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         otherRevenueShowerControl: new FormControl(
           {
             value: this.data.otherRevenueShower,
             disabled: this.loading,
           },
-          Validators.pattern('/^-?(0|[1-9]d*)?$/')
+          this.validationService.moneyFieldValidator()
         ),
         varianceNotesControl: new FormControl({
           value: this.data.notes,

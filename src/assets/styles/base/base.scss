@@ -61,3 +61,8 @@ body {
 .form-section:nth-child(odd) {
   background-color: $form-grey;
 }
+
+.invalid-field{
+  border: 2px solid $form-invalid;
+  border-radius: 6px
+}

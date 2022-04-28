@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
@@ -12,7 +12,6 @@ import { Constants } from 'src/app/shared/utils/constants';
 export interface formResult {
   form: FormGroup;
   isValid?: boolean;
-  error: any; // errors or error codes
   result: any; // submission result
   fields?: any; // raw key:value pairs
   payload?: any; // object for API submission
@@ -24,7 +23,7 @@ export interface formResult {
   templateUrl: './base-form.component.html',
   styleUrls: ['./base-form.component.scss'],
 })
-export class BaseFormComponent implements OnDestroy {
+export class BaseFormComponent implements OnInit, OnDestroy {
   public form: FormGroup; // the base form.
   public data: any = {}; // existing form data
   public postObj: any = {}; // post object
@@ -40,7 +39,8 @@ export class BaseFormComponent implements OnDestroy {
     public bDataService: DataService,
     public bSubAreaService: SubAreaService,
     public bFormulaService: FormulaService,
-    public bLoadingService: LoadingService
+    public bLoadingService: LoadingService,
+    public bChangeDetector: ChangeDetectorRef
   ) {
     this.form = this.bFormBuilder.group({});
     this.subscriptions.push(
@@ -73,6 +73,10 @@ export class BaseFormComponent implements OnDestroy {
           }
         })
     );
+  }
+
+  ngOnInit() {
+    this.bChangeDetector.detectChanges();
   }
 
   // subscribe to changes in the form - pass a callback in if necessary.
@@ -146,35 +150,38 @@ export class BaseFormComponent implements OnDestroy {
   // return current state of form
   async submit() {
     const payload = this.makePayload();
-    // TODO: PUT goes here.
+    let res = [];
+    // check form validity - do not submit if form is invalid.
+    if (this.validate()) {
+      res = await this.bFormService.postActivity(payload);
 
-    const res = await this.bFormService.postActivity(payload);
+      // Refresh the accordion with new data.
+      await this.bSubAreaService.fetchActivityDetails(
+        'accordion-' + this.postObj.activity,
+        this.postObj.orcs,
+        this.postObj.subAreaName,
+        this.postObj.activity,
+        this.postObj.date
+      );
 
-    // Refresh the accordion with new data.
-    await this.bSubAreaService.fetchActivityDetails(
-      'accordion-' + this.postObj.activity,
-      this.postObj.orcs,
-      this.postObj.subAreaName,
-      this.postObj.activity,
-      this.postObj.date
-    );
-
-    if (res) {
-      this.bRouter.navigate(['/enter-data'], {
-        queryParams: {
-          date: this.postObj.date,
-          orcs: this.postObj.orcs,
-          parkName: this.postObj.parkName,
-          subArea: this.postObj.subAreaName,
-        },
-      });
+      if (res) {
+        this.bRouter.navigate(['/enter-data'], {
+          queryParams: {
+            date: this.postObj.date,
+            orcs: this.postObj.orcs,
+            parkName: this.postObj.parkName,
+            subArea: this.postObj.subAreaName,
+          },
+        });
+      } else {
+        // TODO: handle error
+        this.bRouter.navigate(['/']);
+      }
     } else {
-      // TODO: handle error
-      this.bRouter.navigate(['/']);
+      // TODO: handle invalid fields here
     }
 
     const fResult: formResult = {
-      error: null, // return errors if unsuccessful PUT
       form: this.form,
       fields: this.collect(),
       isValid: this.validate(),
