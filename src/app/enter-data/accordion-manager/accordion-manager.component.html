@@ -1,23 +1,23 @@
 <div>
   <div *ngIf="accordions?.frontcountryCamping">
-    <app-frontcountry-camping-accordion></app-frontcountry-camping-accordion>
+    <app-frontcountry-camping-accordion (click)="accordionToggle('collapsefrontcountryCamping')"></app-frontcountry-camping-accordion>
   </div>
   <div *ngIf="accordions?.frontcountryCabins">
-    <app-frontcountry-cabins-accordion></app-frontcountry-cabins-accordion>
+    <app-frontcountry-cabins-accordion (click)="accordionToggle('collapsefrontcountryCabins')"></app-frontcountry-cabins-accordion>
   </div>
   <div *ngIf="accordions?.groupCamping">
-    <app-group-camping-accordion></app-group-camping-accordion>
+    <app-group-camping-accordion (click)="accordionToggle('collapsegroupCamping')"></app-group-camping-accordion>
   </div>
   <div *ngIf="accordions?.dayUse">
-    <app-day-use-accordion></app-day-use-accordion>
+    <app-day-use-accordion (click)="accordionToggle('collapsedayuse')"></app-day-use-accordion>
   </div>
   <div *ngIf="accordions?.backcountryCamping">
-    <app-backcountry-camping-accordion></app-backcountry-camping-accordion>
+    <app-backcountry-camping-accordion (click)="accordionToggle('collapsebackcountryCamping')"></app-backcountry-camping-accordion>
   </div>
   <div *ngIf="accordions?.backcountryCabins">
-    <app-backcountry-cabins-accordion></app-backcountry-cabins-accordion>
+    <app-backcountry-cabins-accordion (click)="accordionToggle('collapsebackcountryCabins')"></app-backcountry-cabins-accordion>
   </div>
   <div *ngIf="accordions?.boating">
-    <app-boating-accordion></app-boating-accordion>
+    <app-boating-accordion (click)="accordionToggle('collapseboating')"></app-boating-accordion>
   </div>
 </div>
