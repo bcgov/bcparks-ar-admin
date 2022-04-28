@@ -154,7 +154,9 @@ export class SubAreaSearchComponent implements OnDestroy {
         this.subAreaDisabled = false;
         this.continueDisabled = true;
 
-        this.subAreas.selectData = [];
+        if (this.dataPreloaded) {
+          this.subAreas.selectData = [];
+        }
         break;
       case 'subArea':
         this.typeAheadDisabled = false;
