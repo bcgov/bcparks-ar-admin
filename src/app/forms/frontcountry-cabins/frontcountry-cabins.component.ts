@@ -65,14 +65,23 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
       // initialize the form and populate with values if they exist.
       (this.form = new FormGroup({
         totalAttendancePartiesControl: new FormControl(
-          this.data.totalAttendanceParties,
+          {
+            value: this.data.totalAttendanceParties,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         revenueGrossCampingControl: new FormControl(
-          this.data.revenueGrossCamping,
+          {
+            value: this.data.revenueGrossCamping,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
-        varianceNotesControl: new FormControl(this.data.notes),
+        varianceNotesControl: new FormControl({
+          value: this.data.notes,
+          disabled: this.loading,
+        }),
       })),
       // link form controls to the object fields they represent
       (this.fields = {
@@ -80,20 +89,6 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
         revenueGrossCamping: this.form.get('revenueGrossCampingControl'),
         notes: this.form.get('varianceNotesControl'),
       });
-
-    if (this.loading) {
-      this.disable();
-    } else {
-      // In case we init form after service is done fetching for some reason.
-      this.enable();
-    }
-
-    if (this.loading) {
-      this.disable();
-    } else {
-      // In case we init form after service is done fetching for some reason.
-      this.enable();
-    }
 
     this.calculateTotals();
     super.subscribeToChanges(() => {

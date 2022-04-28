@@ -67,38 +67,65 @@ export class GroupCampingComponent extends BaseFormComponent {
       // initialize the form and populate with values if they exist.
       (this.form = new FormGroup({
         standardRateGroupsTotalPeopleStandardControl: new FormControl(
-          this.data.standardRateGroupsTotalPeopleStandard,
+          {
+            value: this.data.standardRateGroupsTotalPeopleStandard,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         standardRateGroupsTotalPeopleAdultsControl: new FormControl(
-          this.data.standardRateGroupsTotalPeopleAdults,
+          {
+            value: this.data.standardRateGroupsTotalPeopleAdults,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         standardRateGroupsTotalPeopleYouthControl: new FormControl(
-          this.data.standardRateGroupsTotalPeopleYouth,
+          {
+            value: this.data.standardRateGroupsTotalPeopleYouth,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         standardRateGroupsTotalPeopleKidsControl: new FormControl(
-          this.data.standardRateGroupsTotalPeopleKids,
+          {
+            value: this.data.standardRateGroupsTotalPeopleKids,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         standardRateGroupsRevenueGrossControl: new FormControl(
-          this.data.standardRateGroupsRevenueGross,
+          {
+            value: this.data.standardRateGroupsRevenueGross,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
         youthRateGroupsAttendanceGroupNightsControl: new FormControl(
-          this.data.youthRateGroupsAttendanceGroupNights,
+          {
+            value: this.data.youthRateGroupsAttendanceGroupNights,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         youthRateGroupsAttendancePeopleControl: new FormControl(
-          this.data.youthRateGroupsAttendancePeople,
+          {
+            value: this.data.youthRateGroupsAttendancePeople,
+            disabled: this.loading,
+          },
           Validators.pattern('^[0-9]*$')
         ),
         youthRateGroupsRevenueGrossControl: new FormControl(
-          this.data.youthRateGroupsRevenueGross,
+          {
+            value: this.data.youthRateGroupsRevenueGross,
+            disabled: this.loading,
+          },
           Validators.pattern('/^-?(0|[1-9]d*)?$/')
         ),
-        varianceNotesControl: new FormControl(this.data.notes),
+        varianceNotesControl: new FormControl({
+          value: this.data.notes,
+          disabled: this.loading,
+        }),
       })),
       // link form controls to the object fields they represent
       (this.fields = {
@@ -128,13 +155,6 @@ export class GroupCampingComponent extends BaseFormComponent {
         ),
         notes: this.form.get('varianceNotesControl'),
       });
-
-    if (this.loading) {
-      this.disable();
-    } else {
-      // In case we init form after service is done fetching for some reason.
-      this.enable();
-    }
 
     this.calculateTotals();
     super.subscribeToChanges(() => {

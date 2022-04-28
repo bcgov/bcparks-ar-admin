@@ -43,9 +43,8 @@ export class BaseFormComponent implements OnDestroy {
     public bLoadingService: LoadingService
   ) {
     this.form = this.bFormBuilder.group({});
-
     this.subscriptions.push(
-      bDataService
+      this.bDataService
         .getItemValue(Constants.dataIds.FORM_PARAMS)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
@@ -56,13 +55,21 @@ export class BaseFormComponent implements OnDestroy {
             this.postObj['orcs'] = res.orcs;
           }
         }),
-      bLoadingService
+      this.bLoadingService
         .getLoadingStatus()
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           this.loading = res;
-          if (!this.loading) {
-            this.enable();
+          // if enable()/disable() arent wrapped in setTimeout(), race conditions can occur
+          // https://github.com/angular/angular/issues/22556
+          if (this.loading) {
+            setTimeout(() => {
+              this.disable();
+            });
+          } else {
+            setTimeout(() => {
+              this.enable();
+            });
           }
         })
     );
@@ -71,14 +78,16 @@ export class BaseFormComponent implements OnDestroy {
   // subscribe to changes in the form - pass a callback in if necessary.
   subscribeToChanges(callback?) {
     for (const control of Object.keys(this.form.controls)) {
-      this.form
-        .get(control)
-        ?.valueChanges.pipe(takeWhile(() => this.alive))
-        .subscribe((changes) => {
-          if (callback) {
-            callback(changes);
-          }
-        });
+      this.subscriptions.push(
+        this.form
+          .get(control)
+          ?.valueChanges.pipe(takeWhile(() => this.alive))
+          .subscribe((changes) => {
+            if (callback) {
+              callback(changes);
+            }
+          })
+      );
     }
   }
 
