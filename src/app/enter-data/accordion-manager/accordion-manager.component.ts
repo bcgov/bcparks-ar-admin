@@ -15,6 +15,16 @@ export class AccordionManagerComponent implements OnDestroy {
   private subscriptions: any[] = [];
   public subAreaData;
 
+  private mappedAccordionItems = {
+      'collapsefrontcountryCamping': 'frontcountryCamping',
+      'collapsefrontcountryCabins': 'frontcountryCabins',
+      'collapsegroupCamping': 'groupCamping',
+      'collapsedayuse': 'dayuse',
+      'collapsebackcountryCamping': 'backcountryCamping',
+      'collapsebackcountryCabins':'backcountryCabins',
+      'collapseboating': 'boating',
+    };
+
   public accordions = {
     frontcountryCamping: false,
     frontcountryCabins: false,
@@ -38,29 +48,20 @@ export class AccordionManagerComponent implements OnDestroy {
   }
 
   accordionToggle(currentId) {
-    let mappedAccordionItems = {
-      'collapsefrontcountryCamping': 'frontcountryCamping',
-      'collapsefrontcountryCabins': 'frontcountryCabins',
-      'collapsegroupCamping': 'groupCamping',
-      'collapsedayuse': 'dayuse',
-      'collapsebackcountryCamping': 'backcountryCamping',
-      'collapsebackcountryCabins':'backcountryCabins',
-      'collapseboating': 'boating',
-    };
     let clickedItem = document.getElementById(currentId);
 
     // Collapse anything else if it's open besides the one transitioning to collapsed or show
     if (clickedItem && clickedItem.classList.contains('collapsing')) {
-      const keys = Object.keys(mappedAccordionItems);
+      const keys = Object.keys(this.mappedAccordionItems);
       for (const key in keys) {
         // Don't touch the one we are actively getting clicked on
-        if (mappedAccordionItems[keys[key]] !== mappedAccordionItems[currentId]) {
+        if (this.mappedAccordionItems[keys[key]] !== this.mappedAccordionItems[currentId]) {
             let item = document.getElementById(keys[key]);
             let clickEvent = new Event('click');
 
             // Check if it's open.
             if (item && item.classList.contains('show')) {
-              let hideItem = document.getElementById(mappedAccordionItems[keys[key]])?.firstChild;
+              let hideItem = document.getElementById(this.mappedAccordionItems[keys[key]])?.firstChild;
               if (hideItem) {
                 hideItem.dispatchEvent(clickEvent);
               }
@@ -80,6 +81,19 @@ export class AccordionManagerComponent implements OnDestroy {
       dayUse: false,
       boating: false,
     };
+
+    const keys = Object.keys(this.mappedAccordionItems);
+    for (const key in keys) {
+        let item = document.getElementById(keys[key]);
+        let clickEvent = new Event('click');
+        // Check if it's open.
+        if (item && item.classList.contains('show')) {
+          let hideItem = document.getElementById(this.mappedAccordionItems[keys[key]])?.firstChild;
+          if (hideItem) {
+            hideItem.dispatchEvent(clickEvent);
+        }
+      }
+    }
   }
 
   buildAccordions() {
