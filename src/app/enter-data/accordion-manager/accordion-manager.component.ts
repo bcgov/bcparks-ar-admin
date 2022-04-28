@@ -51,7 +51,6 @@ export class AccordionManagerComponent implements OnDestroy {
 
     // Collapse anything else if it's open besides the one transitioning to collapsed or show
     if (clickedItem && clickedItem.classList.contains('collapsing')) {
-      // console.log('Hiding the others if they are open.');
       const keys = Object.keys(mappedAccordionItems);
       for (const key in keys) {
         // Don't touch the one we are actively getting clicked on
