@@ -16,6 +16,7 @@ export class BreadcrumbComponent implements OnDestroy {
   public currentNavigation: any;
 
   public breadcrumbs: any[] = [];
+  public lastBreadcrumb: {};
 
   constructor(
     protected router: Router,
@@ -28,6 +29,7 @@ export class BreadcrumbComponent implements OnDestroy {
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           this.breadcrumbs = res;
+          this.lastBreadcrumb = this.breadcrumbs.pop();
         })
     );
   }
