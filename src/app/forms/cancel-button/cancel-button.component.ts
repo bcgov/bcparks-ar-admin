@@ -1,4 +1,4 @@
-import { Component, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, Input, OnDestroy, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
@@ -11,6 +11,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./cancel-button.component.scss'],
 })
 export class CancelButtonComponent implements OnDestroy {
+  @Input() disabled = false;
+
   private navParams = {};
   public subscriptions: any[] = [];
   public alive = true;

@@ -30,14 +30,12 @@
   </div>
 </form>
 <div class="form-footer d-flex justify-content-between">
-  <app-cancel-button></app-cancel-button>
+  <app-cancel-button [disabled]="loading"></app-cancel-button>
   <button
     class="btn btn-primary px-5"
     [disabled]="loading"
     (click)="onSubmit()"
   >
-    <app-text-to-loading-spinner
-      [text]="'Save'"
-    ></app-text-to-loading-spinner>
+    <app-text-to-loading-spinner [text]="'Save'"></app-text-to-loading-spinner>
   </button>
 </div>
