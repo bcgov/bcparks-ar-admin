@@ -17,6 +17,9 @@ export class ValidationService {
     ]
   }
 
+  // As of yet, we cannot differentiate between an empty field (valid) and an invalid NaN field (e, -0, 12-3, etc). Both return null.
+  // https://github.com/angular/angular/issues/2962
+
   counterFieldValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       let errors: any = {};
