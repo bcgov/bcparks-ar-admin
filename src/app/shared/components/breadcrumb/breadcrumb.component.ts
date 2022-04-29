@@ -30,6 +30,12 @@ export class BreadcrumbComponent implements OnDestroy {
         .subscribe((res) => {
           this.breadcrumbs = res;
           this.lastBreadcrumb = this.breadcrumbs.pop();
+          if (this.lastBreadcrumb['label'] !== 'Home') {
+            this.breadcrumbs.unshift({
+              label: 'Home',
+              url: '',
+            });
+          }
         })
     );
   }
