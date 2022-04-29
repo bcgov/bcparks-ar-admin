@@ -149,6 +149,8 @@ export class BaseFormComponent implements OnInit, OnDestroy {
 
   // return current state of form
   async submit() {
+    // We want to override loading to be sure everything is disabled.
+    this.loading = true;
     const payload = this.makePayload();
     let res = [];
     // check form validity - do not submit if form is invalid.
@@ -178,6 +180,7 @@ export class BaseFormComponent implements OnInit, OnDestroy {
         this.bRouter.navigate(['/']);
       }
     } else {
+      this.loading = false;
       // TODO: handle invalid fields here
     }
 
