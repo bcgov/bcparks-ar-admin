@@ -20,4 +20,11 @@ export class TextInputComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  blockInvalidChars(e){
+    if (e.key === 'e' || e.key === 'E') {
+      e.preventDefault();
+    }
+  }
+
 }
