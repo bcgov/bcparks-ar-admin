@@ -8,6 +8,7 @@ import { TextAreaModule } from 'src/app/shared/components/forms/text-area/text-a
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
 import { CancelButtonModule } from '../cancel-button/cancel-button.module';
+import { ParkHeaderModule } from '../park-header/park-header.module';
 
 @NgModule({
   declarations: [DayUseComponent],
@@ -21,6 +22,7 @@ import { CancelButtonModule } from '../cancel-button/cancel-button.module';
     ReactiveFormsModule,
     TextToLoadingSpinnerModule,
     CancelButtonModule,
+    ParkHeaderModule,
   ],
   exports: [DayUseComponent],
 })
