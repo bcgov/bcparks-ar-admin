@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { takeWhile } from 'rxjs';
+import { Subscription, takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { TypeaheadComponent } from 'src/app/shared/components/typeahead/typeahead.component';
@@ -17,7 +17,7 @@ export class SubAreaSearchComponent implements OnDestroy {
   @ViewChild(TypeaheadComponent) typeAhead: TypeaheadComponent;
 
   private alive = true;
-  private subscriptions: any[] = [];
+  private subscriptions = new Subscription();
   private utils = new Utils();
   private dataPreloaded = false;
 
@@ -43,7 +43,7 @@ export class SubAreaSearchComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     private formService: FormService
   ) {
-    this.subscriptions.push(
+    this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
         .pipe(takeWhile(() => this.alive))
@@ -198,8 +198,6 @@ export class SubAreaSearchComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }

@@ -12,6 +12,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
 import { Utils } from '../../utils/utils';
 import { takeWhile } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-date-picker',
@@ -28,7 +29,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() required = false;
 
   private alive = true;
-  private subscriptions: any[] = [];
+  private subscriptions = new Subscription();
 
   public ngbDate: NgbDateStruct = null as any;
   public minNgbDate: NgbDateStruct = null as any;
@@ -59,7 +60,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.ngbDate = this.control.value || null;
     if (this.reset) {
-      this.subscriptions.push(
+      this.subscriptions.add(
         this.reset
           .pipe(takeWhile(() => this.alive))
           .subscribe(() => this.clearDate())
@@ -90,8 +91,6 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }

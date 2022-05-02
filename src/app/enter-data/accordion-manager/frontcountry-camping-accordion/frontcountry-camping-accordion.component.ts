@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { takeWhile } from 'rxjs';
+import { Subscription, takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormulaService } from 'src/app/services/formula.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
@@ -12,7 +12,7 @@ import { Constants } from 'src/app/shared/utils/constants';
 })
 export class FrontcountryCampingAccordionComponent implements OnDestroy {
   private alive = true;
-  private subscriptions: any[] = [];
+  private subscriptions = new Subscription();
 
   public icons = Constants.iconUrls;
   public data;
@@ -22,13 +22,15 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
     protected dataService: DataService,
     protected formulaService: FormulaService
   ) {
-    dataService
-      .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((res) => {
-        this.data = res;
-        this.buildAccordion();
-      });
+    this.subscriptions.add(
+      dataService
+        .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe((res) => {
+          this.data = res;
+          this.buildAccordion();
+        })
+    );
   }
 
   buildAccordion() {
@@ -136,8 +138,6 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }

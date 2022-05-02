@@ -5,7 +5,7 @@ import {
   OnDestroy,
   Output,
 } from '@angular/core';
-import { takeWhile } from 'rxjs';
+import { Subscription, takeWhile } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
@@ -18,12 +18,12 @@ export class TextToLoadingSpinnerComponent implements OnDestroy {
   @Output() loadingStatus: EventEmitter<boolean> = new EventEmitter();
 
   private alive = true;
-  private subscriptions: any[] = [];
+  private subscriptions = new Subscription();
 
   public loading = false;
 
   constructor(protected loadingService: LoadingService) {
-    this.subscriptions.push(
+    this.subscriptions.add(
       loadingService
         .getLoadingStatus()
         .pipe(takeWhile(() => this.alive))
@@ -36,8 +36,6 @@ export class TextToLoadingSpinnerComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }

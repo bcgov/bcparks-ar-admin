@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { takeWhile } from 'rxjs';
+import { Subscription, takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { FormulaService } from 'src/app/services/formula.service';
@@ -33,9 +33,10 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
   public data: any = {}; // existing form data
   public postObj: any = {}; // post object
   public fields: any = {}; // object linking API fields to form controls & values
-  public subscriptions: any[] = [];
+  public subscriptions = new Subscription();
   public alive = true;
   public loading = false;
+  public dataId: any = '';
 
   constructor(
     public bFormBuilder: FormBuilder,
@@ -48,7 +49,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
     public bChangeDetector: ChangeDetectorRef
   ) {
     this.form = this.bFormBuilder.group({});
-    this.subscriptions.push(
+    this.subscriptions.add(
       this.bDataService
         .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .pipe(takeWhile(() => this.alive))
@@ -59,7 +60,9 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
             this.postObj['subAreaName'] = res.subAreaName;
             this.postObj['orcs'] = res.orcs;
           }
-        }),
+        })
+    );
+    this.subscriptions.add(
       this.bLoadingService
         .getLoadingStatus()
         .pipe(takeWhile(() => this.alive))
@@ -87,7 +90,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
   // subscribe to changes in the form - pass a callback in if necessary.
   subscribeToChanges(callback?) {
     for (const control of Object.keys(this.form.controls)) {
-      this.subscriptions.push(
+      this.subscriptions.add(
         this.form
           .get(control)
           ?.valueChanges.pipe(takeWhile(() => this.alive))
@@ -217,8 +220,6 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i]?.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }

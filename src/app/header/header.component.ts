@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, Event } from '@angular/router';
-import { filter, takeWhile } from 'rxjs';
+import { filter, Subscription, takeWhile } from 'rxjs';
 import { ConfigService } from '../services/config.service';
 import { KeycloakService } from '../services/keycloak.service';
 
@@ -10,7 +10,7 @@ import { KeycloakService } from '../services/keycloak.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnDestroy {
-  private subscriptions: any[] = [];
+  private subscriptions = new Subscription();
   private alive = true;
 
   public envName: string;
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnDestroy {
       return obj.path !== '**' && obj.path !== 'unauthorized';
     });
 
-    this.subscriptions.push(
+    this.subscriptions.add(
       router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
         .pipe(takeWhile(() => this.alive))
@@ -50,8 +50,6 @@ export class HeaderComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }

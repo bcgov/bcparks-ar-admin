@@ -49,7 +49,7 @@ export class BackcountryCampingComponent extends BaseFormComponent {
     );
     
     // push existing form data to parent subscriptions
-    this.subscriptions.push(
+    this.subscriptions.add(
       this.dataService
         .getItemValue(Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING)
         .pipe(takeWhile(() => this.alive))

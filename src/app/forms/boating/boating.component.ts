@@ -49,7 +49,7 @@ export class BoatingComponent extends BaseFormComponent {
       changeDetectior
     );
     // push existing form data to parent subscriptions
-    this.subscriptions.push(
+    this.subscriptions.add(
       this.dataService
         .getItemValue(Constants.dataIds.ACCORDION_BOATING)
         .pipe(takeWhile(() => this.alive))
