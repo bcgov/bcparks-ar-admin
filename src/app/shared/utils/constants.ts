@@ -9,7 +9,7 @@ export class Constants {
     ACCORDION_BOATING: 'accordion-Boating',
     ACCORDION_BACKCOUNTRY_CAMPING: 'accordion-Backcountry Camping',
     ACCORDION_BACKCOUNTRY_CABINS: 'accordion-Backcountry Cabins',
-    FORM_PARAMS: 'form-params',
+    ENTER_DATA_URL_PARAMS: 'enter-data-url-params',
   };
 
   public static readonly ApplicationRoles: any = {
@@ -17,20 +17,13 @@ export class Constants {
   };
 
   public static readonly iconUrls = {
-    frontcountryCamping:
-      '../../assets/images/walk-in-camping.svg',
-    frontcountryCabins:
-      '../../assets/images/shelter.svg',
-    groupCamping:
-      '../../assets/images/group-camping.svg',
-    backcountryCamping:
-      '../../assets/images/walk-in-camping.svg',
-    backcountryCabins:
-      '../../assets/images/shelter.svg',
-    boating:
-      '../../assets/images/boat-launch.svg',
-    dayUse:
-      '../../assets/images/hiking.svg',
+    frontcountryCamping: '../../assets/images/walk-in-camping.svg',
+    frontcountryCabins: '../../assets/images/shelter.svg',
+    groupCamping: '../../assets/images/group-camping.svg',
+    backcountryCamping: '../../assets/images/walk-in-camping.svg',
+    backcountryCabins: '../../assets/images/shelter.svg',
+    boating: '../../assets/images/boat-launch.svg',
+    dayUse: '../../assets/images/hiking.svg',
   };
 
   public static readonly ToastTypes: any = {

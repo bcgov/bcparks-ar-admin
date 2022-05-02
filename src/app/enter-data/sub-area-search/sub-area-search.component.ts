@@ -101,7 +101,7 @@ export class SubAreaSearchComponent implements OnDestroy {
         date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
         orcs: this.selectedPark.sk,
         parkName: this.selectedPark.parkName,
-        subArea: this.selectedSubArea,
+        subAreaName: this.selectedSubArea,
       },
     });
   }
@@ -170,7 +170,7 @@ export class SubAreaSearchComponent implements OnDestroy {
     let date = params['date'];
     const orcs = params['orcs'];
     const parkName = params['parkName'];
-    const subArea = params['subArea'];
+    const subArea = params['subAreaName'];
 
     if (date) {
       date = this.utils.convertYYYYMMToJSDate(date);
