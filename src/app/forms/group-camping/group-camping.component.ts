@@ -61,7 +61,6 @@ export class GroupCampingComponent extends BaseFormComponent {
   }
 
   setForm() {
-    console.log(this.data);
     // declare activity type
     (this.postObj['activity'] = 'Group Camping'),
       // initialize the form and populate with values if they exist.
