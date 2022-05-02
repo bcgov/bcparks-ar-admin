@@ -8,10 +8,10 @@ import { FormControl } from '@angular/forms';
 })
 export class TextInputComponent implements OnInit {
   @Input() type = 'text'; // text, number
-  @Input() control = new FormControl;
+  @Input() control = new FormControl();
   @Input() label;
   @Input() icon;
-  @Input() placeholder = "No data";
+  @Input() placeholder = 'No data';
   @Input() id;
   @Input() ariaLabel;
   @Input() ariaDescribedBy;
@@ -21,10 +21,9 @@ export class TextInputComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  blockInvalidChars(e){
-    if (e.key === 'e' || e.key === 'E') {
+  blockInvalidChars(e) {
+    if (e.key === 'e' || e.key === 'E' || e.key === '-') {
       e.preventDefault();
     }
   }
-
 }

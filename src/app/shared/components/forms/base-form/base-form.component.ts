@@ -200,7 +200,6 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
       payload: payload,
       invalidFields: this.getInvalidFields(),
     };
-
     return fResult;
   }
 
