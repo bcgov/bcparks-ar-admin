@@ -1,10 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';

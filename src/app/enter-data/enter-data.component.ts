@@ -45,7 +45,7 @@ export class EnterDataComponent implements OnDestroy {
 
     this.subscriptions.push(
       dataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {

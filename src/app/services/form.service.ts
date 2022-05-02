@@ -23,7 +23,7 @@ export class FormService {
   private utils = new Utils();
 
   setFormParams(params) {
-    this.dataService.setItemValue(Constants.dataIds.FORM_PARAMS, params);
+    this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS, params);
   }
 
   async postActivity(obj) {

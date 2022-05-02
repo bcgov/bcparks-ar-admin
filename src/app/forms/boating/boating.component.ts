@@ -3,7 +3,6 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';

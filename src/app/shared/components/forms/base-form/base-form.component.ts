@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
@@ -23,7 +28,7 @@ export interface formResult {
   templateUrl: './base-form.component.html',
   styleUrls: ['./base-form.component.scss'],
 })
-export class BaseFormComponent implements OnInit, OnDestroy {
+export class BaseFormComponent implements AfterViewChecked, OnDestroy {
   public form: FormGroup; // the base form.
   public data: any = {}; // existing form data
   public postObj: any = {}; // post object
@@ -45,7 +50,7 @@ export class BaseFormComponent implements OnInit, OnDestroy {
     this.form = this.bFormBuilder.group({});
     this.subscriptions.push(
       this.bDataService
-        .getItemValue(Constants.dataIds.FORM_PARAMS)
+        .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
@@ -75,7 +80,7 @@ export class BaseFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit() {
+  ngAfterViewChecked() {
     this.bChangeDetector.detectChanges();
   }
 
@@ -172,7 +177,7 @@ export class BaseFormComponent implements OnInit, OnDestroy {
             date: this.postObj.date,
             orcs: this.postObj.orcs,
             parkName: this.postObj.parkName,
-            subArea: this.postObj.subAreaName,
+            subAreaName: this.postObj.subAreaName,
           },
         });
       } else {
