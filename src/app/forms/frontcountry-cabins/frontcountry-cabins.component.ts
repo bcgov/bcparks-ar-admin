@@ -48,7 +48,7 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
       changeDetectior
     );
     // push existing form data to parent subscriptions
-    this.subscriptions.push(
+    this.subscriptions.add(
       this.dataService
         .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS)
         .pipe(takeWhile(() => this.alive))

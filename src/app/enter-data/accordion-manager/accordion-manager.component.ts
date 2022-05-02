@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { takeWhile } from 'rxjs';
+import { Subscription, takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -12,18 +12,18 @@ export class AccordionManagerComponent implements OnDestroy {
   public icons = Constants.iconUrls;
 
   private alive = true;
-  private subscriptions: any[] = [];
+  private subscriptions = new Subscription();
   public subAreaData;
 
   private mappedAccordionItems = {
-      'collapsefrontcountryCamping': 'frontcountryCamping',
-      'collapsefrontcountryCabins': 'frontcountryCabins',
-      'collapsegroupCamping': 'groupCamping',
-      'collapsedayuse': 'dayuse',
-      'collapsebackcountryCamping': 'backcountryCamping',
-      'collapsebackcountryCabins':'backcountryCabins',
-      'collapseboating': 'boating',
-    };
+    collapsefrontcountryCamping: 'frontcountryCamping',
+    collapsefrontcountryCabins: 'frontcountryCabins',
+    collapsegroupCamping: 'groupCamping',
+    collapsedayuse: 'dayuse',
+    collapsebackcountryCamping: 'backcountryCamping',
+    collapsebackcountryCabins: 'backcountryCabins',
+    collapseboating: 'boating',
+  };
 
   public accordions = {
     frontcountryCamping: false,
@@ -36,7 +36,7 @@ export class AccordionManagerComponent implements OnDestroy {
   };
 
   constructor(protected dataService: DataService) {
-    this.subscriptions.push(
+    this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
         .pipe(takeWhile(() => this.alive))
@@ -55,17 +55,22 @@ export class AccordionManagerComponent implements OnDestroy {
       const keys = Object.keys(this.mappedAccordionItems);
       for (const key in keys) {
         // Don't touch the one we are actively getting clicked on
-        if (this.mappedAccordionItems[keys[key]] !== this.mappedAccordionItems[currentId]) {
-            let item = document.getElementById(keys[key]);
-            let clickEvent = new Event('click');
+        if (
+          this.mappedAccordionItems[keys[key]] !==
+          this.mappedAccordionItems[currentId]
+        ) {
+          let item = document.getElementById(keys[key]);
+          let clickEvent = new Event('click');
 
-            // Check if it's open.
-            if (item && item.classList.contains('show')) {
-              let hideItem = document.getElementById(this.mappedAccordionItems[keys[key]])?.firstChild;
-              if (hideItem) {
-                hideItem.dispatchEvent(clickEvent);
-              }
+          // Check if it's open.
+          if (item && item.classList.contains('show')) {
+            let hideItem = document.getElementById(
+              this.mappedAccordionItems[keys[key]]
+            )?.firstChild;
+            if (hideItem) {
+              hideItem.dispatchEvent(clickEvent);
             }
+          }
         }
       }
     }
@@ -84,13 +89,15 @@ export class AccordionManagerComponent implements OnDestroy {
 
     const keys = Object.keys(this.mappedAccordionItems);
     for (const key in keys) {
-        let item = document.getElementById(keys[key]);
-        let clickEvent = new Event('click');
-        // Check if it's open.
-        if (item && item.classList.contains('show')) {
-          let hideItem = document.getElementById(this.mappedAccordionItems[keys[key]])?.firstChild;
-          if (hideItem) {
-            hideItem.dispatchEvent(clickEvent);
+      let item = document.getElementById(keys[key]);
+      let clickEvent = new Event('click');
+      // Check if it's open.
+      if (item && item.classList.contains('show')) {
+        let hideItem = document.getElementById(
+          this.mappedAccordionItems[keys[key]]
+        )?.firstChild;
+        if (hideItem) {
+          hideItem.dispatchEvent(clickEvent);
         }
       }
     }
@@ -129,8 +136,6 @@ export class AccordionManagerComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }

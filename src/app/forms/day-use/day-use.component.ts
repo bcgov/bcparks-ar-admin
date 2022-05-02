@@ -50,7 +50,7 @@ export class DayUseComponent extends BaseFormComponent {
       changeDetectior
     );
     // push existing form data to parent subscriptions
-    this.subscriptions.push(
+    this.subscriptions.add(
       this.dataService
         .getItemValue(Constants.dataIds.ACCORDION_DAY_USE)
         .pipe(takeWhile(() => this.alive))

@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, takeWhile } from 'rxjs';
+import { filter, Subscription, takeWhile } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { Constants } from '../shared/utils/constants';
 import { Utils } from '../shared/utils/utils';
@@ -12,7 +12,7 @@ import { Utils } from '../shared/utils/utils';
 })
 export class EnterDataComponent implements OnDestroy {
   private alive = true;
-  private subscriptions: any[] = [];
+  private subscriptions = new Subscription();
   public subAreaData;
 
   public onChildRoute = false;
@@ -24,7 +24,7 @@ export class EnterDataComponent implements OnDestroy {
   the date and location you want to view.`;
 
   constructor(protected dataService: DataService, protected router: Router) {
-    this.subscriptions.push(
+    this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
         .pipe(takeWhile(() => this.alive))
@@ -33,7 +33,7 @@ export class EnterDataComponent implements OnDestroy {
         })
     );
 
-    this.subscriptions.push(
+    this.subscriptions.add(
       router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
         .pipe(takeWhile(() => this.alive))
@@ -43,7 +43,7 @@ export class EnterDataComponent implements OnDestroy {
         })
     );
 
-    this.subscriptions.push(
+    this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .pipe(takeWhile(() => this.alive))
@@ -57,8 +57,6 @@ export class EnterDataComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }

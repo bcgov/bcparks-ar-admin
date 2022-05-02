@@ -4,6 +4,7 @@ import { SideBarService } from 'src/app/services/sidebar.service';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
 import { SubAreaService } from 'src/app/services/sub-area.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +20,7 @@ export class SidebarComponent implements OnDestroy {
 
   private alive = true;
 
-  private subscriptions: any[] = [];
+  private subscriptions = new Subscription();
 
   constructor(
     protected sideBarService: SideBarService,
@@ -30,7 +31,7 @@ export class SidebarComponent implements OnDestroy {
       return obj.path !== '**' && obj.path !== 'unauthorized';
     });
 
-    this.subscriptions.push(
+    this.subscriptions.add(
       router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
         .pipe(takeWhile(() => this.alive))
@@ -39,7 +40,7 @@ export class SidebarComponent implements OnDestroy {
         })
     );
 
-    this.subscriptions.push(
+    this.subscriptions.add(
       sideBarService.toggleChange
         .pipe(takeWhile(() => this.alive))
         .subscribe((hide) => {
@@ -61,9 +62,7 @@ export class SidebarComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 
   getPathFromUrl(url) {
