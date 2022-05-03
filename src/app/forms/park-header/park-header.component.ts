@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
-import { takeWhile } from 'rxjs';
+import { Subscription, takeWhile } from 'rxjs';
 import { Utils } from '../../shared/utils/utils';
 
 @Component({
@@ -14,11 +14,11 @@ export class ParkHeaderComponent implements OnDestroy {
   public subAreaName;
   public date;
   public utils = new Utils();
-  public subscriptions: any[] = [];
+  public subscriptions = new Subscription();
   public alive = true;
 
   constructor(protected dataService: DataService) {
-    this.subscriptions.push(
+    this.subscriptions.add(
       this.dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .pipe(takeWhile(() => this.alive))
@@ -35,8 +35,6 @@ export class ParkHeaderComponent implements OnDestroy {
   }
   ngOnDestroy() {
     this.alive = false;
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i]?.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 }
