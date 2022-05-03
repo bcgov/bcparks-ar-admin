@@ -2,7 +2,7 @@
   <h3 *ngIf="section?.title">{{ section?.title }}</h3>
   <div class="mb-3" *ngIf="section.attendanceItems">
     <div *ngFor="let attendanceItem of section.attendanceItems">
-      <div class="d-flex justify-content-between p-2 border-top">
+      <div class="d-flex justify-content-between p-2 border-bottom">
         <div>{{ attendanceItem?.itemName }}</div>
         <div className="text-align-end">
           {{ isDefined(attendanceItem?.value) ? attendanceItem.value : "-" }}
@@ -19,7 +19,7 @@
   </div>
   <div class="mb-3" *ngIf="section.revenueItems">
     <div *ngFor="let revenueItem of section.revenueItems">
-      <div class="d-flex justify-content-between p-2 border-top">
+      <div class="d-flex justify-content-between p-2 border-bottom">
         <div>{{ revenueItem?.itemName }}</div>
         <div className="text-align-end">
           {{
