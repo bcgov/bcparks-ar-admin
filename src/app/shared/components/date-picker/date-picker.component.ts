@@ -11,7 +11,6 @@ import {
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
 import { Utils } from '../../utils/utils';
-import { takeWhile } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -28,7 +27,6 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() reset: EventEmitter<any>;
   @Input() required = false;
 
-  private alive = true;
   private subscriptions = new Subscription();
 
   public ngbDate: NgbDateStruct = null as any;
@@ -60,11 +58,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.ngbDate = this.control.value || null;
     if (this.reset) {
-      this.subscriptions.add(
-        this.reset
-          .pipe(takeWhile(() => this.alive))
-          .subscribe(() => this.clearDate())
-      );
+      this.subscriptions.add(this.reset.subscribe(() => this.clearDate()));
     }
   }
 
@@ -90,7 +84,6 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription, takeWhile } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
@@ -11,7 +11,6 @@ import { Constants } from 'src/app/shared/utils/constants';
 export class AccordionManagerComponent implements OnDestroy {
   public icons = Constants.iconUrls;
 
-  private alive = true;
   private subscriptions = new Subscription();
   public subAreaData;
 
@@ -39,7 +38,6 @@ export class AccordionManagerComponent implements OnDestroy {
     this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           this.subAreaData = res;
           this.buildAccordions();
@@ -135,7 +133,6 @@ export class AccordionManagerComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }

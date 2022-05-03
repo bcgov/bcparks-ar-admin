@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, takeWhile } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from '../../utils/constants';
 import { summarySection } from './summary-section/summary-section.component';
@@ -19,7 +19,6 @@ export class AccordionComponent implements OnDestroy {
   @Input() summaries: Array<summarySection> = [];
   @Input() editLink: string = '';
 
-  private alive = true;
   private subscriptions = new Subscription();
 
   private formParams;
@@ -34,7 +33,6 @@ export class AccordionComponent implements OnDestroy {
     this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
             this.formParams = res;
@@ -51,7 +49,6 @@ export class AccordionComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }

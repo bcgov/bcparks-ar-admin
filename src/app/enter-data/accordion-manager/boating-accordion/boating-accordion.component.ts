@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription, takeWhile } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormulaService } from 'src/app/services/formula.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
@@ -11,7 +11,6 @@ import { Constants } from 'src/app/shared/utils/constants';
   styleUrls: ['./boating-accordion.component.scss'],
 })
 export class BoatingAccordionComponent implements OnDestroy {
-  private alive = true;
   private subscriptions = new Subscription();
 
   public icons = Constants.iconUrls;
@@ -25,7 +24,6 @@ export class BoatingAccordionComponent implements OnDestroy {
     this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ACCORDION_BOATING)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -74,7 +72,6 @@ export class BoatingAccordionComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }
