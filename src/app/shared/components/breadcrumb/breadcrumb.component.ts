@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription, takeWhile } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from '../../utils/constants';
@@ -11,7 +11,6 @@ import { Constants } from '../../utils/constants';
   styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnDestroy {
-  private alive = true;
   private subscriptions = new Subscription();
   private enterDataUrlParams;
 
@@ -27,23 +26,20 @@ export class BreadcrumbComponent implements OnDestroy {
     protected dataService: DataService
   ) {
     this.subscriptions.add(
-      breadcrumbService.breadcrumbs
-        .pipe(takeWhile(() => this.alive))
-        .subscribe((res) => {
-          this.breadcrumbs = res;
-          this.lastBreadcrumb = this.breadcrumbs.pop();
-          if (this.lastBreadcrumb?.label !== 'Home') {
-            this.breadcrumbs.unshift({
-              label: 'Home',
-              url: '',
-            });
-          }
-        })
+      breadcrumbService.breadcrumbs.subscribe((res) => {
+        this.breadcrumbs = res;
+        this.lastBreadcrumb = this.breadcrumbs.pop();
+        if (this.lastBreadcrumb?.label !== 'Home') {
+          this.breadcrumbs.unshift({
+            label: 'Home',
+            url: '',
+          });
+        }
+      })
     );
-      this.subscriptions.add(
+    this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
             this.enterDataUrlParams = res;
@@ -64,7 +60,6 @@ export class BreadcrumbComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }

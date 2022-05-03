@@ -1,11 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { takeWhile } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
@@ -52,7 +47,6 @@ export class BoatingComponent extends BaseFormComponent {
     this.subscriptions.add(
       this.dataService
         .getItemValue(Constants.dataIds.ACCORDION_BOATING)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
             this.data = res;

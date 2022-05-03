@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, Subscription, takeWhile } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { Constants } from '../shared/utils/constants';
 import { Utils } from '../shared/utils/utils';
@@ -11,7 +11,6 @@ import { Utils } from '../shared/utils/utils';
   styleUrls: ['./enter-data.component.scss'],
 })
 export class EnterDataComponent implements OnDestroy {
-  private alive = true;
   private subscriptions = new Subscription();
   public subAreaData;
 
@@ -27,7 +26,6 @@ export class EnterDataComponent implements OnDestroy {
     this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           this.subAreaData = res;
         })
@@ -36,7 +34,6 @@ export class EnterDataComponent implements OnDestroy {
     this.subscriptions.add(
       router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
-        .pipe(takeWhile(() => this.alive))
         .subscribe((event: any) => {
           this.onChildRoute =
             event.url.split('?')[0] !== '/enter-data' ? true : false;
@@ -46,7 +43,6 @@ export class EnterDataComponent implements OnDestroy {
     this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
             this.formParams = res;
@@ -56,7 +52,6 @@ export class EnterDataComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, takeWhile } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -26,7 +26,6 @@ export class CancelButtonComponent implements OnDestroy {
     this.subscriptions.add(
       this.dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
             this.navParams['date'] = res.date;
@@ -52,7 +51,6 @@ export class CancelButtonComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription, takeWhile } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { FormulaService } from 'src/app/services/formula.service';
@@ -52,7 +52,6 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
     this.subscriptions.add(
       this.bDataService
         .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           if (res) {
             this.postObj['date'] = res.date;
@@ -63,23 +62,20 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
         })
     );
     this.subscriptions.add(
-      this.bLoadingService
-        .getLoadingStatus()
-        .pipe(takeWhile(() => this.alive))
-        .subscribe((res) => {
-          this.loading = res;
-          // if enable()/disable() arent wrapped in setTimeout(), race conditions can occur
-          // https://github.com/angular/angular/issues/22556
-          if (this.loading) {
-            setTimeout(() => {
-              this.disable();
-            });
-          } else {
-            setTimeout(() => {
-              this.enable();
-            });
-          }
-        })
+      this.bLoadingService.getLoadingStatus().subscribe((res) => {
+        this.loading = res;
+        // if enable()/disable() arent wrapped in setTimeout(), race conditions can occur
+        // https://github.com/angular/angular/issues/22556
+        if (this.loading) {
+          setTimeout(() => {
+            this.disable();
+          });
+        } else {
+          setTimeout(() => {
+            this.enable();
+          });
+        }
+      })
     );
   }
 
@@ -91,14 +87,11 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
   subscribeToChanges(callback?) {
     for (const control of Object.keys(this.form.controls)) {
       this.subscriptions.add(
-        this.form
-          .get(control)
-          ?.valueChanges.pipe(takeWhile(() => this.alive))
-          .subscribe((changes) => {
-            if (callback) {
-              callback(changes);
-            }
-          })
+        this.form.get(control)?.valueChanges.subscribe((changes) => {
+          if (callback) {
+            callback(changes);
+          }
+        })
       );
     }
   }
@@ -219,7 +212,6 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }

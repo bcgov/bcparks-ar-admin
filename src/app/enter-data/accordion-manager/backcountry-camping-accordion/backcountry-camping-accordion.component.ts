@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription, takeWhile } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormulaService } from 'src/app/services/formula.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
@@ -11,7 +11,6 @@ import { Constants } from 'src/app/shared/utils/constants';
   styleUrls: ['./backcountry-camping-accordion.component.scss'],
 })
 export class BackcountryCampingAccordionComponent implements OnDestroy {
-  private alive = true;
   private subscriptions = new Subscription();
 
   public icons = Constants.iconUrls;
@@ -25,7 +24,6 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
     this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING)
-        .pipe(takeWhile(() => this.alive))
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -57,7 +55,6 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.alive = false;
     this.subscriptions.unsubscribe();
   }
 }
