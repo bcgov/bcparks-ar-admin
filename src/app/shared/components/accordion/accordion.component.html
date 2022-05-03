@@ -1,6 +1,6 @@
 <div class="accordion mb-3">
   <div class="accordion-item">
-    <div class="accordion-header" id="{{id}}">
+    <div class="accordion-header" id="{{ id }}">
       <button
         class="accordion-button d-flex justify-content-between align-content-center collapsed"
         type="button"
@@ -23,12 +23,18 @@
             </div>
           </div>
         </div>
-        <div class="col justify-content-end mx-2 d-none d-lg-flex">
+        <div class="col justify-content-end mx-3 d-none d-lg-flex">
           <div class="text-muted">
             {{ secondaryText }}
           </div>
         </div>
       </button>
+      <!--mobile-->
+      <div class="row justify-content-end mx-2 mb-2 d-lg-none d-flex">
+        <div class="text-muted">
+          {{ secondaryText }}
+        </div>
+      </div>
     </div>
     <div
       id="collapse{{ id }}"
@@ -38,14 +44,14 @@
       <div class="accordion-body">
         <div *ngIf="summaries">
           <div *ngFor="let item of summaries">
-            <div class="mb-5">
+            <div class="mb-5 mt-3">
               <app-summary-section [section]="item"></app-summary-section>
             </div>
           </div>
         </div>
         <div *ngIf="notes">
           <h3>Variance notes</h3>
-          <div>{{ notes }}</div>
+          <div class="mb-5">{{ notes }}</div>
         </div>
         <div class="d-flex flex-row-reverse">
           <button
