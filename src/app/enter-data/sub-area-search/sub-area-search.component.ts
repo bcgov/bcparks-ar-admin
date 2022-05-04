@@ -33,6 +33,8 @@ export class SubAreaSearchComponent implements OnDestroy {
   public modelPark = '';
   public modelSubArea = null;
 
+  public maxDate = new Date();
+
   public loading: any = false;
 
   constructor(

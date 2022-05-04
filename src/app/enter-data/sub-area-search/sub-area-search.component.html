@@ -9,6 +9,7 @@
         name="date"
         placeholder="Select date"
         bsDatepicker
+        [maxDate]="maxDate"
         [bsConfig]="{ dateInputFormat: 'MM/YYYY' }"
         (onShown)="onOpenCalendar($event)"
         (ngModelChange)="datePickerOutput($event)"
