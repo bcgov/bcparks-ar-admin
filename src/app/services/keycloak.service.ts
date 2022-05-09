@@ -108,13 +108,13 @@ export class KeycloakService {
 
     const jwt = JwtUtil.decodeToken(token);
 
-    if (!(jwt && jwt.realm_access && jwt.realm_access.roles)) {
+    if (!(jwt && jwt.realm_access && jwt.resource_access["attendance-and-revenue"].roles)) {
       return false;
     }
 
     // Make sure they have at least one instance of including a role in the ROLE array
     return Object.keys(Constants.ApplicationRoles).some((role) => {
-      return jwt.realm_access.roles.includes(Constants.ApplicationRoles[role]);
+      return jwt.resource_access["attendance-and-revenue"].roles.includes(Constants.ApplicationRoles[role]);
     });
   }
 
