@@ -108,7 +108,14 @@ export class KeycloakService {
 
     const jwt = JwtUtil.decodeToken(token);
 
-    if (!(jwt && jwt.resource_access && jwt.resource_access["attendance-and-revenue"].roles)) {
+    if (
+      !(
+        jwt &&
+        jwt.resource_access &&
+        jwt.resource_access['attendance-and-revenue'] &&
+        jwt.resource_access['attendance-and-revenue'].roles
+      )
+    ) {
       return false;
     }
 
