@@ -1,42 +1,40 @@
-<div class="row">
-  <div class="col-6">
-    <div class="row">
-      <div class="col-4">
+<div class="d-flex justify-content-between section-container">
+  <div class="equal-width d-flex flex-column me-3">
+    <div class="d-flex align-items-end flex-row flex-wrap mt-auto">
+      <div class="input-box">
         <app-text-input
           [label]="'Nights on dock'"
-          [icon]="'bi-person-fill'"
+          [icon]="'boat-icon'"
           [control]="nightsOnDock"
           [type]="'number'"
         ></app-text-input>
       </div>
-      <div class="col-4">
+      <div class="input-box">
         <app-text-input
           [label]="'Nights on buoys'"
-          [icon]="'bi-person-fill'"
+          [icon]="'boat-icon'"
           [control]="nightsOnBuoy"
           [type]="'number'"
         ></app-text-input>
       </div>
-      <div class="col-4">
+      <div class="input-box">
         <app-text-input
           [label]="'Miscellaneous boats'"
-          [icon]="'bi-person-fill'"
+          [icon]="'boat-icon'"
           [control]="miscellaneousBoats"
           [type]="'number'"
         ></app-text-input>
       </div>
     </div>
-    <div class="row">
-      <app-calculation-display
-        [label]="'BOAT ATTENDANCE'"
-        [subtext]="attendanceTotal?.formula"
-        [value]="attendanceTotal?.result"
-      ></app-calculation-display>
-    </div>
+    <app-calculation-display
+      [label]="'TOTAL PEOPLE'"
+      [subtext]="attendanceTotal?.formula"
+      [value]="attendanceTotal?.result"
+    ></app-calculation-display>
   </div>
-  <div class="col-6">
-    <div class="row">
-      <div class="col-6">
+  <div class="equal-width d-flex flex-column ms-3">
+    <div class="d-flex align-items-end">
+      <div class="input-box">
         <app-text-input
           [label]="'Gross boating revenue'"
           [control]="grossBoatingRevenue"
@@ -44,7 +42,7 @@
         ></app-text-input>
       </div>
     </div>
-    <div class="row">
+    <div class="mt-auto">
       <app-calculation-display
         [colorClass]="'green'"
         [label]="'NET REVENUE'"

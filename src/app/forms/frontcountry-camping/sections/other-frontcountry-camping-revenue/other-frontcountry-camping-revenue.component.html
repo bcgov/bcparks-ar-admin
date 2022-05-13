@@ -1,26 +1,28 @@
-<div class="row">
-  <div class="col-6">
+<div class="d-flex justify-content-between section-container">
+  <div class="equal-width d-flex flex-column me-3 mt-3">
     <app-info-text
-      [text]="'There are no attendance items to record in Other Frontcountry Camping.'"
+      [text]="
+        'There are no attendance items to record in Other Frontcountry Camping.'
+      "
     ></app-info-text>
   </div>
-  <div class="col-6">
-    <div class="row">
-      <div class="col-4">
+  <div class="equal-width d-flex flex-column ms-3">
+    <div class="d-flex align-items-end flex-row flex-wrap">
+      <div class="input-box">
         <app-text-input
           [label]="'Gross sani revenue'"
           [control]="otherRevenueGrossSaniField"
           [moneyMode]="true"
         ></app-text-input>
       </div>
-      <div class="col-4">
+      <div class="input-box">
         <app-text-input
           [label]="'Gross electrical fee revenue'"
           [control]="otherRevenueElectricalField"
           [moneyMode]="true"
         ></app-text-input>
       </div>
-      <div class="col-4">
+      <div class="input-box">
         <app-text-input
           [label]="'Gross shower revenue'"
           [control]="otherRevenueShowerField"
@@ -28,13 +30,11 @@
         ></app-text-input>
       </div>
     </div>
-    <div class="row">
-      <app-calculation-display
-        [colorClass]="'green'"
-        [label]="'NET REVENUE'"
-        [subtext]="revenueTotal?.formula"
-        [value]="revenueTotal?.result"
-      ></app-calculation-display>
-    </div>
+    <app-calculation-display
+      [colorClass]="'green'"
+      [label]="'NET REVENUE'"
+      [subtext]="revenueTotal?.formula"
+      [value]="revenueTotal?.result"
+    ></app-calculation-display>
   </div>
 </div>

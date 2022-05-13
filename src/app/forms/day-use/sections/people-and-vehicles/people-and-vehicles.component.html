@@ -1,7 +1,7 @@
-<div class="row">
-  <div class="col-6">
-    <div class="row">
-      <div class="col-6">
+<div class="d-flex justify-content-between section-container">
+  <div class="equal-width d-flex flex-column me-3">
+    <div class="d-flex align-items-end flex-row flex-wrap">
+      <div class="input-box">
         <app-text-input
           [label]="'Trail counter'"
           [icon]="'bi-person-fill'"
@@ -9,38 +9,42 @@
           [type]="'number'"
         ></app-text-input>
       </div>
-      <div class="col-6">
-        <label></label>
-        <app-info-text
-          [text]="'If counter captures 2-way traffic, divide the total by 2 before entering.'"
-        ></app-info-text>
-      </div>
+      <app-info-text class="text-block"
+        [text]="
+          'If counter captures 2-way traffic, divide the total by 2 before entering.'
+        "
+      ></app-info-text>
     </div>
   </div>
-  <div class="col-6">
-    <div class="row">
-      <div class="col-6">
-        <app-text-input
-          [label]="'Vehicle count'"
-          [icon]="'bi-person-fill'"
-          [control]="peopleAndVehiclesVehicleField"
-          [type]="'number'"
-        ></app-text-input>
-        <app-text-input
-          [label]="'Bus count'"
-          [icon]="'bi-person-fill'"
-          [control]="peopleAndVehiclesBusField"
-          [type]="'number'"
-        ></app-text-input>
+  <div class="equal-width d-flex flex-column ms-3">
+    <div class="d-flex flex-row long-text">
+      <div class="d-flex flex-column" id="p-and-v-col">
+        <div class="input-box">
+          <app-text-input
+            [label]="'Vehicle count'"
+            [icon]="'car-icon'"
+            [control]="peopleAndVehiclesVehicleField"
+            [type]="'number'"
+          ></app-text-input>
+        </div>
+        <div class="input-box">
+          <app-text-input
+            [label]="'Bus count'"
+            [icon]="'bus-icon'"
+            [control]="peopleAndVehiclesBusField"
+            [type]="'number'"
+          ></app-text-input>
+        </div>
       </div>
-      <div class="col-6">
-        <label></label>
+      <div class="text-block" id="p-and-v-info">
         <app-info-text
-          [text]="'If counters capture day use and camping traffic, subtract camping count before entering here. If counter capture 2-way traffic, divide the total by 2 before entering.'"
+          [text]="
+            'If counters capture day use and camping traffic, subtract camping count before entering here. If counter capture 2-way traffic, divide the total by 2 before entering.'
+          "
         ></app-info-text>
       </div>
     </div>
-    <div class="row">
+    <div class="mt-auto">
       <app-calculation-display
         [label]="'VEHICLE ATTENDANCE'"
         [subtext]="attendanceTotal?.formula"

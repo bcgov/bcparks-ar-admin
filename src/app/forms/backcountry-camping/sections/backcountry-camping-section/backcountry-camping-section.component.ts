@@ -5,7 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-backcountry-camping-section',
   templateUrl: './backcountry-camping-section.component.html',
-  styleUrls: ['./backcountry-camping-section.component.scss']
+  styleUrls: ['./backcountry-camping-section.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class BackcountryCampingSectionComponent implements OnInit {
   @Input() peopleField = new FormControl; 

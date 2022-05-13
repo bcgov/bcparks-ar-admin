@@ -5,7 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-youth-rate-groups',
   templateUrl: './youth-rate-groups.component.html',
-  styleUrls: ['./youth-rate-groups.component.scss']
+  styleUrls: ['./youth-rate-groups.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class YouthRateGroupsComponent implements OnInit {
   @Input() youthRateGroupsAttendanceGroupNightsField = new FormControl;

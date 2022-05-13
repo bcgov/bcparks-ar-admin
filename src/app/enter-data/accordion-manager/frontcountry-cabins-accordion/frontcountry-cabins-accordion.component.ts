@@ -34,14 +34,14 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
   buildAccordion() {
     this.summaries = [
       {
-        attendanceLabel: 'Total Attendance',
+        attendanceLabel: 'Total attendance',
         attendanceItems: [
           {
             itemName: 'Parties',
             value: this.data?.totalAttendanceParties,
           },
         ],
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross camping revenue',

@@ -5,7 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-additional-vehicles',
   templateUrl: './additional-vehicles.component.html',
-  styleUrls: ['./additional-vehicles.component.scss']
+  styleUrls: ['./additional-vehicles.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class AdditionalVehiclesComponent implements OnInit {
   @Input() secondCarsAttendanceStandardField = new FormControl;

@@ -34,8 +34,8 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
   buildAccordion() {
     this.summaries = [
       {
-        title: 'Camping Party Nights',
-        attendanceLabel: 'Total Attendance',
+        title: 'Camping party nights',
+        attendanceLabel: 'Total attendance',
         attendanceItems: [
           {
             itemName: 'Standard',
@@ -63,7 +63,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
           ],
           this.data?.config?.attendanceModifier
         ),
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross camping revenue',
@@ -97,7 +97,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             this.data?.secondCarsAttendanceSenior,
             this.data?.secondCarsAttendanceSocial,
           ]),
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross 2nd car revenue',
@@ -110,7 +110,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
       },
       {
         title: 'Other frontcountry camping revenue',
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross sani revenue',

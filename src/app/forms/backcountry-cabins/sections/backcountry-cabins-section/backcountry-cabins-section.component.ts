@@ -5,7 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-backcountry-cabins-section',
   templateUrl: './backcountry-cabins-section.component.html',
-  styleUrls: ['./backcountry-cabins-section.component.scss'],
+  styleUrls: ['./backcountry-cabins-section.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss'],
 })
 export class BackcountryCabinsSectionComponent implements OnInit {
   @Input() adultAttendance = new FormControl;

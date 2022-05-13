@@ -1,39 +1,30 @@
-<div class="row">
-  <div class="col-6">
-    <div class="row">
-      <div class="col-6">
-        <app-text-input
+<div class="d-flex justify-content-between section-container">
+  <div class="equal-width d-flex flex-column me-3">
+    <div class="d-flex align-items-end flex-row flex-wrap equal-height">
+        <div class="input-box">
+          <app-text-input
           [label]="'Parties'"
           [icon]="'bi-person-fill'"
           [control]="totalAttendancePartiesField"
           [type]="'number'"
         ></app-text-input>
-      </div>
-      <div class="col-6">
-        <label></label>
+        </div>
         <app-info-text
           [text]="'Include all adults, youth, and kids.'"
         ></app-info-text>
-      </div>
     </div>
   </div>
-  <div class="col-6">
-    <div class="row">
-      <div class="col-6">
+  <div class="equal-width d-flex flex-column ms-3">
+    <div class="d-flex align-items-end">
+      <div class="input-box">
         <app-text-input
           [label]="'Gross camping revenue'"
           [control]="revenueGrossCampingField"
           [moneyMode]="true"
         ></app-text-input>
       </div>
-      <div class="col-6">
-        <label></label>
-        <app-info-text
-          [text]="'Camping fee revenue only. Subtract  onsite refunds before entering.'"
-        ></app-info-text>
-      </div>
     </div>
-    <div class="row">
+    <div class="mt-auto">
       <app-calculation-display
         [colorClass]="'green'"
         [label]="'NET REVENUE'"

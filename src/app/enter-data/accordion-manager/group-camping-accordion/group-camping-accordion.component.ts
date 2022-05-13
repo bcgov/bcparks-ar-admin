@@ -59,7 +59,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
           this.data?.standardRateGroupsTotalPeopleYouth,
           this.data?.standardRateGroupsTotalPeopleKids,
         ]),
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross standard group revenue',
@@ -72,7 +72,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
       },
       {
         title: 'Youth rate groups',
-        attendanceLabel: 'Total Attendance',
+        attendanceLabel: 'Total attendance',
         attendanceItems: [
           {
             itemName: 'Group nights',
@@ -83,7 +83,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             value: this.data?.youthRateGroupsAttendancePeople,
           },
         ],
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross youth group revenue',

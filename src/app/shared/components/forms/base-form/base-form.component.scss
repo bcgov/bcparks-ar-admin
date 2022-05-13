@@ -1,0 +1,59 @@
+.equal-width {
+  flex-basis: 100%;
+}
+
+.equal-height {
+  margin-top: 1.6rem;
+}
+
+.input-box {
+  min-width: 9rem;
+  max-width: 9rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.text-block {
+  max-width: 700px;
+}
+
+#p-and-v-info {
+  margin-top: 3rem;
+}
+
+@media only screen and (max-width: 991px) {
+  .section-container {
+    flex-wrap: wrap;
+  }
+
+  .input-box {
+    max-width: 100%;
+    flex-basis: 100%;
+    margin-right: 0rem;
+  }
+
+  .long-text {
+    flex-wrap: wrap;
+  }
+
+  .equal-width {
+    margin-right: 0!important;
+    margin-left: 0!important;
+  }
+
+  .equal-height {
+    margin-top: 0rem;
+  }
+
+  .equal-width:nth-child(2) {
+    margin-top: 1rem;
+  }
+
+  #p-and-v-info {
+    margin-top: 0rem;
+  }
+
+  #p-and-v-col {
+    flex-basis: 100%;
+  }
+}

@@ -1,31 +1,31 @@
-<div class="row">
-  <div class="col-6">
+<div class="d-flex justify-content-between section-container">
+  <div class="equal-width d-flex flex-column me-3 mt-3">
     <app-info-text
       [text]="'There are no attendance items to record in Other Day Use.'"
     ></app-info-text>
   </div>
-  <div class="col-6">
-    <div class="row">
-      <div class="col-6">
+  <div class="equal-width d-flex flex-column ms-3">
+    <div class="d-flex align-items-end flex-row flex-wrap">
+      <div class="input-box">
         <app-text-input
           [label]="'Gross skiing revenue'"
           [control]="otherDayUseRevenueSkiiField"
           [moneyMode]="true"
         ></app-text-input>
       </div>
-      <div class="col-6">
+      <div class="input-box">
         <app-text-input
           [label]="'Gross hot springs revenue'"
           [control]="otherDayUseRevenueHotSpringsField"
           [moneyMode]="true"
         ></app-text-input>
       </div>
-      <app-calculation-display
-        [colorClass]="'green'"
-        [label]="'NET REVENUE'"
-        [subtext]="revenueTotal?.formula"
-        [value]="revenueTotal?.result"
-      ></app-calculation-display>
     </div>
+    <app-calculation-display
+      [colorClass]="'green'"
+      [label]="'NET REVENUE'"
+      [subtext]="revenueTotal?.formula"
+      [value]="revenueTotal?.result"
+    ></app-calculation-display>
   </div>
 </div>
