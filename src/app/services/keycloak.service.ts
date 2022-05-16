@@ -80,7 +80,7 @@ export class KeycloakService {
             // console.log('KC Refresh Success?:', this.keycloakAuth.authServerUrl);
             this.logger.log(`KC Success: ${auth}`);
             if (!auth) {
-              this.keycloakAuth.login({ idpHint: 'idir' });
+              this.keycloakAuth.login();
             } else {
               resolve();
             }
