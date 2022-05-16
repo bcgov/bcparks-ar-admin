@@ -40,7 +40,7 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.people,
           },
         ],
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross camping revenue',

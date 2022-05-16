@@ -65,7 +65,7 @@ export class DayUseAccordionComponent implements OnDestroy {
             value: this.data?.picnicRevenueShelter,
           },
         ],
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross picnic revenue',
@@ -78,7 +78,7 @@ export class DayUseAccordionComponent implements OnDestroy {
       },
       {
         title: 'Other day use',
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross skiing revenue',

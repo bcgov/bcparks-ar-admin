@@ -22,7 +22,7 @@ export class Constants {
     groupCamping: '../../assets/images/group-camping.svg',
     backcountryCamping: '../../assets/images/walk-in-camping.svg',
     backcountryCabins: '../../assets/images/shelter.svg',
-    boating: '../../assets/images/boat-launch.svg',
+    boating: '../../assets/images/sailing.svg',
     dayUse: '../../assets/images/hiking.svg',
   };
 

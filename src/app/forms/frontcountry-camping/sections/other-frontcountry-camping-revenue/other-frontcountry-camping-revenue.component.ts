@@ -5,7 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-other-frontcountry-camping-revenue',
   templateUrl: './other-frontcountry-camping-revenue.component.html',
-  styleUrls: ['./other-frontcountry-camping-revenue.component.scss'],
+  styleUrls: ['./other-frontcountry-camping-revenue.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss'],
 })
 export class OtherFrontcountryCampingRevenueComponent implements OnInit {
   @Input() otherRevenueGrossSaniField = new FormControl();

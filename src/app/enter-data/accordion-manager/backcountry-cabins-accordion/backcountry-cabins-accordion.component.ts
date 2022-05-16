@@ -54,7 +54,7 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
           [this.data?.peopleFamily],
           this.data?.config?.attendanceModifier
         ),
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Family',

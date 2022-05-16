@@ -45,7 +45,7 @@ body {
 }
 
 .form-section {
-  padding: 2rem;
+  padding: 2rem 4rem 2rem 4rem;
 }
 
 .form-header {
@@ -62,7 +62,47 @@ body {
   background-color: $form-grey;
 }
 
-.invalid-field{
+.invalid-field {
   border: 2px solid $form-invalid;
   border-radius: 6px
+}
+
+.car-icon {
+  background-image: url('/assets/images/car.svg');
+  background-position: center center;
+  background-size: 26px auto;
+  height: auto;
+  line-height: 1.6;
+  width: 40px;
+  background-repeat: no-repeat;
+}
+
+.bus-icon {
+  background-image: url('/assets/images/bus.svg');
+  background-position: center center;
+  background-size: 24px auto;
+  height: auto;
+  line-height: 1.6;
+  width: 40px;
+  background-repeat: no-repeat;
+}
+
+.boat-icon {
+  background-image: url('/assets/images/boat.svg');
+  background-position: center center;
+  background-size: 24px auto;
+  height: auto;
+  line-height: 1.6;
+  width: 40px;
+  background-repeat: no-repeat;
+}
+
+.picnic-icon {
+  background-image: url('/assets/images/picnic.svg');
+  background-position: center center;
+  background-size: 24px auto;
+  height: auto;
+  line-height: 1.6;
+  width: 40px;
+  background-repeat: no-repeat;
 }

@@ -1,4 +1,4 @@
-<label *ngIf="label" for="{{ id }}" class="fw-bold">{{ label }}</label>
+<label *ngIf="label" for="{{ id }}" class="fw-bold mb-2">{{ label }}</label>
 
 <!-- For type number -->
 <div *ngIf="!moneyMode && type === 'number'" class="input-group mb-3" [ngClass]="{'invalid-field': control?.errors}">

@@ -5,7 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-boating-section',
   templateUrl: './boating-section.component.html',
-  styleUrls: ['./boating-section.component.scss'],
+  styleUrls: ['./boating-section.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss'],
 })
 export class BoatingSectionComponent implements OnInit {
   @Input() nightsOnDock = new FormControl;

@@ -5,7 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-frontcountry-cabins-section',
   templateUrl: './frontcountry-cabins-section.component.html',
-  styleUrls: ['./frontcountry-cabins-section.component.scss']
+  styleUrls: ['./frontcountry-cabins-section.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class FrontcountryCabinsSectionComponent implements OnInit {
   @Input() totalAttendancePartiesField = new FormControl;

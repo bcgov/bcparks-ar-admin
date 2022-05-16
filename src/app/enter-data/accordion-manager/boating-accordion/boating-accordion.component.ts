@@ -57,7 +57,7 @@ export class BoatingAccordionComponent implements OnDestroy {
           ],
           this.data?.config?.attendanceModifier
         ),
-        revenueLabel: 'Net Revenue',
+        revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross boating revenue',

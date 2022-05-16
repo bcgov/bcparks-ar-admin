@@ -1,55 +1,51 @@
-<div class="row">
-  <div class="col-6">
-    <div class="row">
-      <div class="col-4">
+<div class="d-flex justify-content-between section-container">
+  <div class="equal-width d-flex flex-column me-3">
+    <div class="d-flex align-items-end flex-row flex-wrap">
+      <div class="input-box">
         <app-text-input
           [label]="'Standard'"
-          [icon]="'bi-person-fill'"
+          [icon]="'car-icon'"
           [control]="secondCarsAttendanceStandardField"
           [type]="'number'"
         ></app-text-input>
       </div>
-      <div class="col-4">
+      <div class="input-box">
         <app-text-input
           [label]="'Senior'"
-          [icon]="'bi-person-fill'"
+          [icon]="'car-icon'"
           [control]="secondCarsAttendanceSeniorField"
           [type]="'number'"
         ></app-text-input>
       </div>
-      <div class="col-4">
+      <div class="input-box">
         <app-text-input
           [label]="'Social services fee exemption'"
-          [icon]="'bi-person-fill'"
+          [icon]="'car-icon'"
           [control]="secondCarsAttendanceSocialField"
           [type]="'number'"
         ></app-text-input>
       </div>
     </div>
-    <div class="row">
-      <app-calculation-display
-        [label]="'TOTAL CARS'"
-        [subtext]="attendanceTotal?.formula"
-        [value]="attendanceTotal?.result"
-      ></app-calculation-display>
-    </div>
+    <app-calculation-display
+      [label]="'TOTAL CARS'"
+      [subtext]="attendanceTotal?.formula"
+      [value]="attendanceTotal?.result"
+    ></app-calculation-display>
   </div>
-  <div class="col-6">
-    <div class="row">
-      <div class="col-4">
+  <div class="equal-width d-flex flex-column ms-3">
+    <div class="d-flex align-items-end flex-wrap">
+      <div class="input-box">
         <app-text-input
           [label]="'Gross 2nd car revenue'"
           [control]="secondCarsRevenueGrossField"
           [moneyMode]="true"
         ></app-text-input>
       </div>
-      <div class="col-8">
-        <app-info-text
-          [text]="'Subtract onsite refunds before entering.'"
-        ></app-info-text>
-      </div>
+      <app-info-text
+      [text]="'Subtract onsite refunds before entering.'"
+    ></app-info-text>
     </div>
-    <div class="row">
+    <div class="mt-auto">
       <app-calculation-display
         [colorClass]="'green'"
         [label]="'NET REVENUE'"

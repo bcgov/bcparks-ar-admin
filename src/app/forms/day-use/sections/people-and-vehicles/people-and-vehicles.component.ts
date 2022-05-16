@@ -5,7 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-people-and-vehicles',
   templateUrl: './people-and-vehicles.component.html',
-  styleUrls: ['./people-and-vehicles.component.scss']
+  styleUrls: ['./people-and-vehicles.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class PeopleAndVehiclesComponent implements OnInit {
   @Input() peopleAndVehiclesTrailField = new FormControl;
