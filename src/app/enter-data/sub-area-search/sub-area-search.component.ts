@@ -75,10 +75,10 @@ export class SubAreaSearchComponent implements OnDestroy {
   parkTypeaheadOutput(event) {
     this.setButtonState('park');
     this.selectedPark = this.parks[event];
-    for (let i = 0; i < this.selectedPark.subAreas.length; i++) {
+    for (let i = 0; i < this.selectedPark.subAreas?.length; i++) {
       this.subAreas.selectData.push({
-        id: this.selectedPark.subAreas[i],
-        label: this.selectedPark.subAreas[i],
+        id: this.selectedPark.subAreas[i].id,
+        label: this.selectedPark.subAreas[i].name,
       });
     }
     this.router.navigate([], {
@@ -93,15 +93,19 @@ export class SubAreaSearchComponent implements OnDestroy {
 
   subAreaOutput(event) {
     this.setButtonState('subArea');
-    this.selectedSubArea = event;
-
+    // we can get subarea name and id from the park object.
+    let subAreaFilter = this.selectedPark.subAreas.filter(subArea => {
+      return subArea.id = event;
+    });
+    this.selectedSubArea = subAreaFilter[0];
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
         date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
         orcs: this.selectedPark.sk,
         parkName: this.selectedPark.parkName,
-        subAreaName: this.selectedSubArea,
+        subAreaId: this.selectedSubArea.id,
+        subAreaName: this.selectedSubArea.name
       },
     });
   }
@@ -118,7 +122,7 @@ export class SubAreaSearchComponent implements OnDestroy {
     this.subAreaService.fetchSubArea(
       Constants.dataIds.ENTER_DATA_SUB_AREA,
       this.selectedPark.sk,
-      this.selectedSubArea,
+      this.selectedSubArea.id,
       this.utils.convertJSDateToYYYYMM(new Date(this.modelDate))
     );
   }
@@ -127,7 +131,8 @@ export class SubAreaSearchComponent implements OnDestroy {
     this.formService.setFormParams({
       date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
       parkName: this.selectedPark.parkName,
-      subAreaName: this.selectedSubArea,
+      subAreaId: this.selectedSubArea.id,
+      subAreaName: this.selectedSubArea.name,
       orcs: this.selectedPark.sk,
     });
   }
@@ -170,7 +175,7 @@ export class SubAreaSearchComponent implements OnDestroy {
     let date = params['date'];
     const orcs = params['orcs'];
     const parkName = params['parkName'];
-    const subArea = params['subAreaName'];
+    const subAreaId = params['subAreaId'];
 
     if (date) {
       date = this.utils.convertYYYYMMToJSDate(date);
@@ -187,10 +192,10 @@ export class SubAreaSearchComponent implements OnDestroy {
       this.modelPark = parkName;
       this.parkTypeaheadOutput(parkName);
     }
-    if (date && orcs && subArea) {
+    if (date && orcs && subAreaId) {
       state = 'subArea';
-      this.modelSubArea = subArea;
-      this.subAreaOutput(subArea);
+      this.modelSubArea = subAreaId;
+      this.subAreaOutput(subAreaId);
       this.setFormParams();
     }
     this.dataPreloaded = true;

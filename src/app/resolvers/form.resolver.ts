@@ -20,12 +20,12 @@ export class FormResolver implements Resolve<void> {
       !this.dataService.checkIfDataExists('accordion-' + activity) &&
       route.queryParams['date'] &&
       route.queryParams['orcs'] &&
-      route.queryParams['subAreaName']
+      route.queryParams['subAreaId']
     ) {
       this.subAreaService.fetchSubArea(
         Constants.dataIds.ENTER_DATA_SUB_AREA,
         route.queryParams['orcs'],
-        route.queryParams['subAreaName'],
+        route.queryParams['subAreaId'],
         route.queryParams['date']
       );
       this.formService.setFormParams(route.queryParams);
