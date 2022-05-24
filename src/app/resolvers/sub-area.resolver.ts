@@ -13,12 +13,12 @@ export class SubAreaResolver implements Resolve<void> {
     if (
       route.queryParams['date'] &&
       route.queryParams['orcs'] &&
-      route.queryParams['subAreaName']
+      route.queryParams['subAreaId']
     ) {
       this.subAreaService.fetchSubArea(
         Constants.dataIds.ENTER_DATA_SUB_AREA,
         route.queryParams['orcs'],
-        route.queryParams['subAreaName'],
+        route.queryParams['subAreaId'],
         route.queryParams['date']
       );
     }

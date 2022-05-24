@@ -21,7 +21,7 @@ export class SubAreaService {
     private loadingService: LoadingService
   ) {}
 
-  async fetchSubArea(id, orcs, subAreaName, date) {
+  async fetchSubArea(id, orcs, subAreaId, date) {
     this.loadingService.addToFetchList(id);
     let res;
     let errorSubject = '';
@@ -29,7 +29,7 @@ export class SubAreaService {
       errorSubject = 'sub-area';
 
       res = await firstValueFrom(
-        this.apiService.get('park', { orcs: orcs, subAreaName: subAreaName })
+        this.apiService.get('park', {orcs: orcs, subAreaId: subAreaId })
       );
       res = res.data[0];
       this.dataService.setItemValue(id, res);
@@ -45,7 +45,7 @@ export class SubAreaService {
           this.fetchActivityDetails(
             `accordion-${activity}`,
             orcs,
-            subAreaName,
+            subAreaId,
             activity,
             date
           );
@@ -66,8 +66,8 @@ export class SubAreaService {
     this.loadingService.removeToFetchList(id);
   }
 
-  //subarea?orcs=0041&subAreaName=Maple%20Bay&activity=Day%20Use&date=202204
-  async fetchActivityDetails(id, orcs, subAreaName, activity, date) {
+  //subarea?subAreaId=0001&activity=Day%20Use&date=202204
+  async fetchActivityDetails(id, orcs, subAreaId, activity, date) {
     this.loadingService.addToFetchList(id);
     let res;
     let errorSubject = '';
@@ -78,7 +78,7 @@ export class SubAreaService {
       res = await firstValueFrom(
         this.apiService.get('subarea', {
           orcs: orcs,
-          subAreaName: subAreaName,
+          subAreaId: subAreaId,
           activity: activity,
           date: date,
         })

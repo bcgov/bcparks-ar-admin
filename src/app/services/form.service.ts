@@ -30,8 +30,8 @@ export class FormService {
     let res;
     try {
       // We require queryParam type = activity
-      // In obj we need orcs, subAreaName, activity and date
-      if (obj.orcs && obj.subAreaName && obj.activity && obj.date) {
+      // In obj we need subAreaId, activity and date
+      if (obj.subAreaId && obj.activity && obj.date) {
         delete obj.pk;
         delete obj.sk;
         res = await firstValueFrom(

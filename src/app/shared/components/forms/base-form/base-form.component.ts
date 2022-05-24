@@ -56,7 +56,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
           if (res) {
             this.postObj['date'] = res.date;
             this.postObj['parkName'] = res.parkName;
-            this.postObj['subAreaName'] = res.subAreaName;
+            this.postObj['subAreaId'] = res.subAreaId;
             this.postObj['orcs'] = res.orcs;
           }
         })
@@ -162,7 +162,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
       await this.bSubAreaService.fetchActivityDetails(
         'accordion-' + this.postObj.activity,
         this.postObj.orcs,
-        this.postObj.subAreaName,
+        this.postObj.subAreaId,
         this.postObj.activity,
         this.postObj.date
       );
@@ -173,7 +173,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
             date: this.postObj.date,
             orcs: this.postObj.orcs,
             parkName: this.postObj.parkName,
-            subAreaName: this.postObj.subAreaName,
+            subAreaId: this.postObj.subAreaId,
           },
         });
       } else {
