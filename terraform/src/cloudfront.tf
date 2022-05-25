@@ -158,8 +158,25 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     Environment = var.target_env
   }
 
-  viewer_certificate {
-    cloudfront_default_certificate = true
+  # Not using vanity
+  dynamic "viewer_certificate" {
+    for_each = var.enable_vanity_domain ? [] : [1]
+
+    content {
+      cloudfront_default_certificate = true
+    }
   }
-  
+
+  # Using vanity
+  dynamic "viewer_certificate" {
+    for_each = var.enable_vanity_domain ? [1] : []
+
+    content {
+      acm_certificate_arn = var.vanity_domain_certs_arn
+      ssl_support_method = "sni-only"
+      minimum_protocol_version = "TLSv1.2_2021"
+    }
+  }
+
+  aliases = var.vanity_domain
 }
