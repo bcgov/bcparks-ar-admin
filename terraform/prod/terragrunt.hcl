@@ -29,6 +29,6 @@ api_gateway_origin_id = "${local.api_gateway_origin_id}"
 api_gateway_path_pattern = "${local.api_gateway_path_pattern}"
 enable_vanity_domain = true
 vanity_domain_certs_arn = "${local.ssl_cert_arn}"
-vanity_domain = ["reserve-admin.bcparks.ca"]
+vanity_domain = ["attendance-revenue.bcparks.ca"]
 EOF
 }
