@@ -94,9 +94,7 @@ export class SubAreaSearchComponent implements OnDestroy {
   subAreaOutput(event) {
     this.setButtonState('subArea');
     // we can get subarea name and id from the park object.
-    let subAreaFilter = this.selectedPark.subAreas.filter(subArea => {
-      return subArea.id = event;
-    });
+    let subAreaFilter = this.subAreas.selectData.filter(subArea => subArea.id === event);
     this.selectedSubArea = subAreaFilter[0];
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
@@ -105,7 +103,7 @@ export class SubAreaSearchComponent implements OnDestroy {
         orcs: this.selectedPark.sk,
         parkName: this.selectedPark.parkName,
         subAreaId: this.selectedSubArea.id,
-        subAreaName: this.selectedSubArea.name
+        subAreaName: this.selectedSubArea.label
       },
     });
   }
@@ -132,7 +130,7 @@ export class SubAreaSearchComponent implements OnDestroy {
       date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
       parkName: this.selectedPark.parkName,
       subAreaId: this.selectedSubArea.id,
-      subAreaName: this.selectedSubArea.name,
+      subAreaName: this.selectedSubArea.label,
       orcs: this.selectedPark.sk,
     });
   }
