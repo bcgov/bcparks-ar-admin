@@ -1,1 +1,41 @@
-<p>export-reports works!</p>
+<div class="container my-5">
+  <div class="card w-auto">
+    <div class="card-body">
+      <h3 class="card-title">Export all</h3>
+      <p class="card-text text-muted">
+        Generate a full report with no filters.
+      </p>
+      <label class="card-text fw-bold">Exporter status:</label>
+      <div>{{ status }}</div>
+      <p class="card-text mt-3 mb-4">
+        <ngb-progressbar
+          type="{{ progressBarColour }}"
+          [value]="percentageComplete"
+          [striped]="true"
+          [animated]="animated"
+          ><i>{{
+            progressBarTextOverride || percentageComplete + "%"
+          }}</i></ngb-progressbar
+        >
+      </p>
+      <div class="d-flex justify-content-between">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="disableGenerate"
+          (click)="generateReport()"
+        >
+          Generate Report
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="disableDownload"
+          (click)="downloadReport()"
+        >
+          Download Report
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

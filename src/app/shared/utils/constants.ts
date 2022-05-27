@@ -10,6 +10,7 @@ export class Constants {
     ACCORDION_BACKCOUNTRY_CAMPING: 'accordion-Backcountry Camping',
     ACCORDION_BACKCOUNTRY_CABINS: 'accordion-Backcountry Cabins',
     ENTER_DATA_URL_PARAMS: 'enter-data-url-params',
+    EXPORT_ALL_POLLING_DATA: 'export-all-polling-data',
   };
 
   public static readonly ApplicationRoles: any = {
