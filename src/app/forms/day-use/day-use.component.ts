@@ -91,6 +91,13 @@ export class DayUseComponent extends BaseFormComponent {
           },
           this.validationService.counterFieldValidator()
         ),
+        picnicShelterPeopleControl: new FormControl(
+          {
+            value: this.data.picnicShelterPeople,
+            disabled: this.loading,
+          },
+          this.validationService.counterFieldValidator()
+        ),
         picnicRevenueGrossControl: new FormControl(
           {
             value: this.data.picnicRevenueGross,
@@ -98,12 +105,12 @@ export class DayUseComponent extends BaseFormComponent {
           },
           this.validationService.moneyFieldValidator()
         ),
-        otherDayUseRevenueSkiiControl: new FormControl(
+        otherDayUsePeopleHotSpringsControl: new FormControl(
           {
-            value: this.data.otherDayUseRevenueSkii,
+            value: this.data.otherDayUsePeopleHotSprings,
             disabled: this.loading,
           },
-          this.validationService.moneyFieldValidator()
+          this.validationService.counterFieldValidator()
         ),
         otherDayUseRevenueHotSpringsControl: new FormControl(
           {
@@ -125,8 +132,11 @@ export class DayUseComponent extends BaseFormComponent {
         ),
         peopleAndVehiclesBus: this.form.get('peopleAndVehiclesBusControl'),
         picnicRevenueShelter: this.form.get('picnicRevenueShelterControl'),
+        picnicShelterPeople: this.form.get('picnicShelterPeopleControl'),
         picnicRevenueGross: this.form.get('picnicRevenueGrossControl'),
-        otherDayUseRevenueSkii: this.form.get('otherDayUseRevenueSkiiControl'),
+        otherDayUsePeopleHotSprings: this.form.get(
+          'otherDayUsePeopleHotSpringsControl'
+        ),
         otherDayUseRevenueHotSprings: this.form.get(
           'otherDayUseRevenueHotSpringsControl'
         ),
@@ -141,6 +151,7 @@ export class DayUseComponent extends BaseFormComponent {
 
   calculateTotals() {
     this.attendanceTotal = this.formulaService.dayUseVehicleAttendance(
+      [this.fields.peopleAndVehiclesTrail.value],
       [this.fields.peopleAndVehiclesVehicle.value],
       [this.fields.peopleAndVehiclesBus.value],
       this.data?.config?.attendanceVehiclesModifier,
@@ -150,7 +161,6 @@ export class DayUseComponent extends BaseFormComponent {
       this.fields.picnicRevenueGross.value,
     ]);
     this.otherRevenueTotal = this.formulaService.basicNetRevenue([
-      this.fields.otherDayUseRevenueSkii.value,
       this.fields.otherDayUseRevenueHotSprings.value,
     ]);
   }

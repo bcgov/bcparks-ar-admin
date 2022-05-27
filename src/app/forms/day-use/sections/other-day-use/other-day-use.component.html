@@ -1,18 +1,16 @@
 <div class="d-flex justify-content-between section-container">
   <div class="equal-width d-flex flex-column me-3 mt-3">
-    <app-info-text
-      [text]="'There are no attendance items to record in Other Day Use.'"
-    ></app-info-text>
+     <div class="input-box">
+      <app-text-input
+        [label]="'Hot springs people'"
+        [icon]="'bi-person-fill'"
+        [control]="otherDayUsePeopleHotSpringsField"
+        [type]="'number'"
+      ></app-text-input>
+    </div>
   </div>
   <div class="equal-width d-flex flex-column ms-3">
     <div class="d-flex align-items-end flex-row flex-wrap">
-      <div class="input-box">
-        <app-text-input
-          [label]="'Gross skiing revenue'"
-          [control]="otherDayUseRevenueSkiiField"
-          [moneyMode]="true"
-        ></app-text-input>
-      </div>
       <div class="input-box">
         <app-text-input
           [label]="'Gross hot springs revenue'"
