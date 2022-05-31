@@ -29,7 +29,12 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
   public animated = true;
   public currentState = 0;
   public progressBarColour = 'secondary';
-  public signedUrl = '';
+  public dateGenerated;
+  public signedURL;
+
+  public exportMessage = 'Last export: -';
+
+  public initialLoad = true;
 
   constructor(
     private exportService: ExportService,
@@ -40,19 +45,27 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
         .getItemValue(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
         .subscribe((res) => {
           if (res) {
+            this.initialLoad = false;
             if (res.error) {
               this.setState(this.stateDictionary.ERROR);
               this.status = res.error;
               this.progressBarTextOverride = 'ERROR';
             } else {
-              if (res.jobObj.progressPercentage === 100) {
-                this.setState(this.stateDictionary.READY_TO_DOWNLOAD);
-                this.signedUrl = res.signedURL;
-              } else {
-                this.setState(this.stateDictionary.GENERATING);
+              if (this.currentState !== 0) {
+                if (res.jobObj.progressPercentage === 100) {
+                  this.setState(this.stateDictionary.READY_TO_DOWNLOAD);
+                } else {
+                  this.setState(this.stateDictionary.GENERATING);
+                }
+                this.percentageComplete = res.jobObj.progressPercentage;
+                this.status = res.jobObj.progressDescription;
               }
-              this.percentageComplete = res.jobObj.progressPercentage;
-              this.status = res.jobObj.progressDescription;
+
+              this.setExportMessage(res);
+
+              this.signedURL = res?.['signedURL']
+                ? res?.['signedURL']
+                : undefined;
             }
           }
         })
@@ -63,6 +76,7 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
 
   async generateReport() {
     this.setState(this.stateDictionary.GENERATING);
+    this.setExportMessage(null);
     this.exportService.generateReport(
       Constants.dataIds.EXPORT_ALL_POLLING_DATA
     );
@@ -113,8 +127,29 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
   }
 
   downloadReport() {
-    if (this.signedUrl) {
-      window.open(this.signedUrl, '_blank');
+    if (this.signedURL) {
+      window.open(this.signedURL, '_blank');
+    }
+  }
+
+  setExportMessage(res) {
+    if (
+      res &&
+      (this.currentState === 0 ||
+        this.currentState === 2 ||
+        this.percentageComplete === 100)
+    ) {
+      this.dateGenerated = res?.['jobObj']?.['dateGenerated']
+        ? new Date(res?.['jobObj']?.['dateGenerated'])
+        : undefined;
+      if (this.dateGenerated) {
+        this.exportMessage = `Last export: ${this.dateGenerated}`;
+      } else {
+        this.exportMessage = 'No previous report found. Click generate report.';
+      }
+    } else {
+      this.dateGenerated = undefined;
+      this.exportMessage = 'Exporter running.';
     }
   }
 

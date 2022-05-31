@@ -66,7 +66,7 @@ export class ExportService {
     // Every time we poll, we update the data service.
     this.dataService.setItemValue(dataId, res);
 
-    if (res.jobObj.progressPercentage !== 100) {
+    if (res.jobObj && res.jobObj.progressPercentage !== 100) {
       // Repeat every second until job is complete.
       await this.delay(this.pollingRate);
       this.pollReportStatus(dataId);
