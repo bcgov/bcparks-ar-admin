@@ -20,15 +20,16 @@
   <div class="form-section">
     <h2>Picnic Shelters</h2>
     <app-picnic-shelters
+      [picnicShelterPeopleControl]="fields?.picnicShelterPeople"
       [picnicRevenueShelterControl]="fields?.picnicRevenueShelter"
       [picnicRevenueGrossControl]="fields?.picnicRevenueGross"
       [revenueTotal]="picnicRevenueTotal"
     ></app-picnic-shelters>
   </div>
   <div class="form-section">
-    <h2>Other day use</h2>
+    <h2>Hot springs</h2>
     <app-other-day-use
-      [otherDayUseRevenueSkiiField]="fields?.otherDayUseRevenueSkii"
+      [otherDayUsePeopleHotSpringsField]="fields?.otherDayUsePeopleHotSprings"
       [otherDayUseRevenueHotSpringsField]="fields?.otherDayUseRevenueHotSprings"
       [revenueTotal]="otherRevenueTotal"
     ></app-other-day-use>

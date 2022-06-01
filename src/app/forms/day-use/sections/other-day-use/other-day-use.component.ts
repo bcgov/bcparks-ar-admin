@@ -8,7 +8,7 @@ import { formulaResult } from 'src/app/services/formula.service';
   styleUrls: ['./other-day-use.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class OtherDayUseComponent implements OnInit {
-  @Input() otherDayUseRevenueSkiiField = new FormControl;
+  @Input() otherDayUsePeopleHotSpringsField = new FormControl;
   @Input() otherDayUseRevenueHotSpringsField = new FormControl;
   @Input() revenueTotal: formulaResult = {result: null, formula: ''};
 

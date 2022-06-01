@@ -209,6 +209,7 @@ export class FormulaService {
   /**
    * Calculates total vehicle attendance for day use.
    * @function
+   * @param {any[]} trailCount Array of trail count numbers
    * @param {any[]} vehicles Array of vehicle numbers
    * @param {any[]} buses Array of bus numbers
    * @param {number} vehicleMod Multiplier for vehicles (optional)
@@ -217,11 +218,13 @@ export class FormulaService {
    * @returns `formulaResult` object
    */
   dayUseVehicleAttendance(
+    trailCount: any[],
     vehicles: any[],
     buses: any[],
     vehicleMod?: number,
     busMod?: number
   ): formulaResult {
+    let trailCountTotal = this.totalWithModifier(trailCount);
     let vehicleTotal = this.totalWithModifier(vehicles, vehicleMod);
     let busTotal = this.totalWithModifier(buses, busMod);
     let vehicleFormula = 'Vehicles';
@@ -233,8 +236,8 @@ export class FormulaService {
       busFormula = `(Bus count x ${busMod})`;
     }
     return {
-      result: this.formatTotalWithModifier([vehicleTotal, busTotal]),
-      formula: `Vehicle attendance = ${vehicleFormula} + ${busFormula}`,
+      result: this.formatTotalWithModifier([vehicleTotal, busTotal, trailCountTotal ]),
+      formula: `Vehicle attendance = ${vehicleFormula} + ${busFormula} + Trail count`,
     };
   }
 

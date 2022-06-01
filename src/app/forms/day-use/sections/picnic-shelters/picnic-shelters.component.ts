@@ -8,6 +8,7 @@ import { formulaResult } from 'src/app/services/formula.service';
   styleUrls: ['./picnic-shelters.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class PicnicSheltersComponent implements OnInit {
+  @Input() picnicShelterPeopleControl = new FormControl;
   @Input() picnicRevenueShelterControl = new FormControl;
   @Input() picnicRevenueGrossControl = new FormControl;
   @Input() revenueTotal: formulaResult = {result: null, formula: ''};

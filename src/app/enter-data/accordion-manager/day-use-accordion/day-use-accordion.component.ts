@@ -35,12 +35,8 @@ export class DayUseAccordionComponent implements OnDestroy {
     this.summaries = [
       {
         title: 'People and vehicles',
-        attendanceLabel: 'Vehicle attendance',
+        attendanceLabel: 'Total attendance',
         attendanceItems: [
-          {
-            itemName: 'Trail counter',
-            value: this.data?.peopleAndVehiclesTrail,
-          },
           {
             itemName: 'Vehicle count',
             value: this.data?.peopleAndVehiclesVehicle,
@@ -49,8 +45,13 @@ export class DayUseAccordionComponent implements OnDestroy {
             itemName: 'Bus count',
             value: this.data?.peopleAndVehiclesBus,
           },
+          {
+            itemName: 'Trail count',
+            value: this.data?.peopleAndVehiclesTrail,
+          },
         ],
         attendanceTotal: this.formulaService.dayUseVehicleAttendance(
+          [this.data?.peopleAndVehiclesTrail],
           [this.data?.peopleAndVehiclesVehicle],
           [this.data?.peopleAndVehiclesBus],
           this.data?.config?.attendanceVehiclesModifier,
@@ -63,6 +64,10 @@ export class DayUseAccordionComponent implements OnDestroy {
           {
             itemName: 'Picnic shelter rentals',
             value: this.data?.picnicRevenueShelter,
+          },
+          {
+            itemName: 'Picnic shelter people',
+            value: this.data?.picnicShelterPeople,
           },
         ],
         revenueLabel: 'Net revenue',
@@ -77,20 +82,21 @@ export class DayUseAccordionComponent implements OnDestroy {
         ]),
       },
       {
-        title: 'Other day use',
+        title: 'Hot springs',
+        attendanceItems: [
+          {
+            itemName: 'Hot springs people',
+            value: this.data?.otherDayUsePeopleHotSprings,
+          },
+        ],
         revenueLabel: 'Net revenue',
         revenueItems: [
-          {
-            itemName: 'Gross skiing revenue',
-            value: this.data?.otherDayUseRevenueSkii,
-          },
           {
             itemName: 'Gross hot springs revenue',
             value: this.data?.otherDayUseRevenueHotSprings,
           },
         ],
         revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.otherDayUseRevenueSkii,
           this.data?.otherDayUseRevenueHotSprings,
         ]),
       },
