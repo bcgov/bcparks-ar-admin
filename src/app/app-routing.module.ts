@@ -12,6 +12,7 @@ import { GroupCampingComponent } from './forms/group-camping/group-camping.compo
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { ExportResolver } from './resolvers/export.resolver';
 import { FormResolver } from './resolvers/form.resolver';
 import { SubAreaResolver } from './resolvers/sub-area.resolver';
 
@@ -122,7 +123,7 @@ const routes: Routes = [
       label: 'Export Reports',
       breadcrumb: 'Export Reports',
     },
-    resolve: [FormResolver],
+    resolve: [ExportResolver],
   },
   {
     path: 'unauthorized',

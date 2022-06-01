@@ -1,1 +1,62 @@
-<p>export-reports works!</p>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <div>
+        <h3 class="card-title">Export all</h3>
+        <p class="card-text text-muted">
+          Generate a full report with no filters.
+        </p>
+      </div>
+
+      <hr />
+
+      <div class="pb-2">
+        <label class="card-text fw-bold">Exporter status:</label>
+        <div>{{ status }}</div>
+        <p class="card-text mt-2">
+          <ngb-progressbar
+            type="{{ progressBarColour }}"
+            [value]="percentageComplete"
+            [striped]="true"
+            [animated]="animated"
+            ><i>{{
+              progressBarTextOverride || percentageComplete + "%"
+            }}</i></ngb-progressbar
+          >
+        </p>
+        <div class="mt-4">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="disableGenerate"
+            (click)="generateReport()"
+          >
+            Generate Report
+          </button>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="pb-2">
+        <label class="card-text fw-bold">Download Report:</label>
+        <!-- <div *ngIf="initialLoad && !dateGenerated">Last export: -</div>
+        <div *ngIf="!initialLoad && !dateGenerated">
+          No previous report found. Click generate report.
+        </div>
+        <div *ngIf="dateGenerated">Last export: {{ dateGenerated }}</div> -->
+        <div>{{ exportMessage }}</div>
+        <div class="mt-3">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!dateGenerated"
+            (click)="downloadReport()"
+          >
+            Download Report
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
