@@ -172,7 +172,7 @@ export class KeycloakService {
     if (!jwt) {
       return '';
     }
-
-    return `${jwt.displayName}`;
+    console.log(jwt)
+    return `${jwt.preferred_username}`;
   }
 }
