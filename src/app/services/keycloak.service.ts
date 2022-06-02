@@ -172,6 +172,6 @@ export class KeycloakService {
     if (!jwt) {
       return '';
     }
-    return `${jwt.preferred_username}`;
+    return `${jwt.name}`;
   }
 }
