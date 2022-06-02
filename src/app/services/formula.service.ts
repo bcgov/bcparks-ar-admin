@@ -168,7 +168,7 @@ export class FormulaService {
     attendances: any[],
     modifier?: number
   ): formulaResult {
-    let formula = `Total attendance = (Standard + Senior + SSFE + Long stay)`;
+    let formula = `Total attendance = (Standard + Senior + SSCFE + Long stay)`;
     if (modifier) {
       formula += ` x ${modifier}`;
     }
@@ -188,7 +188,7 @@ export class FormulaService {
   frontcountryCampingSecondCarAttendance(attendances: any[]): formulaResult {
     return {
       result: this.formatTotalWithModifier(attendances),
-      formula: `Total attendance = (Standard + Senior + SSFE)`,
+      formula: `Total attendance = (Standard + Senior + SSCFE)`,
     };
   }
 
@@ -227,10 +227,10 @@ export class FormulaService {
     let trailCountTotal = this.totalWithModifier(trailCount);
     let vehicleTotal = this.totalWithModifier(vehicles, vehicleMod);
     let busTotal = this.totalWithModifier(buses, busMod);
-    let vehicleFormula = 'Vehicles';
+    let vehicleFormula = 'Vehicle count';
     let busFormula = 'Bus count';
     if (vehicleMod) {
-      vehicleFormula = `(Vehicles x ${vehicleMod})`;
+      vehicleFormula = `(Vehicle count x ${vehicleMod})`;
     }
     if (busMod) {
       busFormula = `(Bus count x ${busMod})`;
@@ -263,7 +263,7 @@ export class FormulaService {
     }
     return {
       result: this.formatTotalWithModifier([individualTotal, familyTotal]),
-      formula: `Total people = Adults + Children + ${familyFormula}`,
+      formula: `Total people = Adults + Youths + ${familyFormula}`,
     };
   }
 
