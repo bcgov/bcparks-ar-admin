@@ -3,8 +3,8 @@
 <div class="form-header">
   <h1>Frontcountry Camping</h1>
   <p>
-    This section is for standard frontcountry camping, including both reserved
-    and first come, first served. Used for cabins or group camping.
+    This section is for frontcountry camping, including both reserved
+    and first come, first served. It should not be used for cabins or group camping.
   </p>
 </div>
 <form [formGroup]="form">
@@ -42,7 +42,7 @@
     ></app-additional-vehicles>
   </div>
   <div class="form-section">
-    <h2>Other frontcountry camping revenue</h2>
+    <h2>Other frontcountry camping</h2>
     <app-other-frontcountry-camping-revenue
       [otherRevenueGrossSaniField]="fields?.otherRevenueGrossSani"
       [otherRevenueElectricalField]="fields?.otherRevenueElectrical"

@@ -42,7 +42,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Backcountry Cabins',
-          breadcrumb: 'Backcountry Cabins Form',
+          breadcrumb: 'Backcountry Cabins',
           activity: 'Backcountry Cabins',
         },
         resolve: [FormResolver],
@@ -53,7 +53,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Backcountry Camping',
-          breadcrumb: 'Backcountry Camping Form',
+          breadcrumb: 'Backcountry Camping',
           activity: 'Backcountry Camping',
         },
         resolve: [FormResolver],
@@ -64,7 +64,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Boating',
-          breadcrumb: 'Boating Form',
+          breadcrumb: 'Boating',
           activity: 'Boating',
         },
         resolve: [FormResolver],
@@ -75,7 +75,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Day Use',
-          breadcrumb: 'Day Use Form',
+          breadcrumb: 'Day Use',
           activity: 'Day Use',
         },
         resolve: [FormResolver],
@@ -86,7 +86,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Frontcountry Cabins',
-          breadcrumb: 'Frontcountry Cabins Form',
+          breadcrumb: 'Frontcountry Cabins',
           activity: 'Frontcountry Cabins',
         },
         resolve: [FormResolver],
@@ -97,7 +97,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Frontcountry Camping',
-          breadcrumb: 'Frontcountry Camping Form',
+          breadcrumb: 'Frontcountry Camping',
           activity: 'Frontcountry Camping',
         },
         resolve: [FormResolver],
@@ -108,7 +108,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           label: 'Group Camping',
-          breadcrumb: 'Group Camping Form',
+          breadcrumb: 'Group Camping',
           activity: 'Group Camping',
         },
         resolve: [FormResolver],
