@@ -188,7 +188,7 @@ export class FormulaService {
   frontcountryCampingSecondCarAttendance(attendances: any[]): formulaResult {
     return {
       result: this.formatTotalWithModifier(attendances),
-      formula: `Total attendance = (Standard + Senior + SSCFE)`,
+      formula: `Total second cars = (Standard + Senior + SSCFE)`,
     };
   }
 

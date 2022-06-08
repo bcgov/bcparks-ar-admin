@@ -37,11 +37,11 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
         attendanceLabel: 'Total People',
         attendanceItems: [
           {
-            itemName: 'Adult (16+)',
+            itemName: 'Adults (16+)',
             value: this.data?.peopleAdult,
           },
           {
-            itemName: 'Child (6-15)',
+            itemName: 'Youths (6-15)',
             value: this.data?.peopleChild,
           },
           {
