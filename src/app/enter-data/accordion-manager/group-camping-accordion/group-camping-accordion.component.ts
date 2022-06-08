@@ -75,7 +75,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
         attendanceLabel: 'Total attendance',
         attendanceItems: [
           {
-            itemName: 'Group nights',
+            itemName: 'Youth group nights',
             value: this.data?.youthRateGroupsAttendanceGroupNights,
           },
           {

@@ -76,7 +76,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
       },
       {
         title: 'Second cars / additional vehicles',
-        attendanceLabel: 'Total attendance',
+        attendanceLabel: 'Total second cars',
         attendanceItems: [
           {
             itemName: 'Standard',
