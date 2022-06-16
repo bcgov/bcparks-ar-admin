@@ -1,0 +1,33 @@
+@import "/src/assets/styles/layout/no-sidebar";
+
+button.btn {
+  background: $primary;
+  color: $white;
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.95em;
+}
+
+button.btn,
+a.reg-link {
+  width: 16rem;
+  max-width: 100%;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+a.reg-link {
+  text-align: left;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  color: $grey;
+  text-decoration: underline;
+  margin-top: 0.25rem;
+  font-size: 0.88em;
+
+  i {
+    margin-right: 4px;
+  }
+}
