@@ -12,6 +12,7 @@ import { GroupCampingComponent } from './forms/group-camping/group-camping.compo
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { LoginComponent } from './login/login.component';
 import { ExportResolver } from './resolvers/export.resolver';
 import { FormResolver } from './resolvers/form.resolver';
 import { SubAreaResolver } from './resolvers/sub-area.resolver';
@@ -129,6 +130,19 @@ const routes: Routes = [
     path: 'unauthorized',
     pathMatch: 'full',
     component: NotAuthorizedComponent,
+    data: {
+      showSideBar: false,
+      showBreadCrumb: false,
+    },
+  },
+  {
+    path: 'login',
+    pathMatch: 'full',
+    component: LoginComponent,
+    data: {
+      showSideBar: false,
+      showBreadCrumb: false,
+    },
   },
   {
     // wildcard route

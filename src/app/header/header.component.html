@@ -26,13 +26,14 @@
       <button
         class="navbar-toggler"
         type="button"
+        *ngIf="showSideBar"
         (click)="isMenuCollapsed = !isMenuCollapsed"
       >
         &#9776;
       </button>
       <div class="d-none d-lg-inline">
         <div class="me-auto"></div>
-        <div *ngIf="isAuthenticated" class="navbar-text me-3">
+        <div *ngIf="isAuthorized" class="navbar-text me-3">
           {{ welcomeMsg }}
         </div>
       </div>
@@ -53,7 +54,7 @@
         >
           <a [routerLink]="[route.path]">{{ route.data.label }}</a>
         </li>
-        <div *ngIf="isAuthenticated" class="navbar-text welcome-text p-2">
+        <div *ngIf="isAuthorized" class="navbar-text welcome-text p-2">
           {{ welcomeMsg }}
         </div>
       </ul>

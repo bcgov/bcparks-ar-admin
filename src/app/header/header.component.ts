@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, Event } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { ConfigService } from '../services/config.service';
@@ -10,12 +10,14 @@ import { KeycloakService } from '../services/keycloak.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnDestroy {
+  @Input() showSideBar = true;
+  
   private subscriptions = new Subscription();
 
   public envName: string;
   public showBanner = true;
   public welcomeMsg: String;
-  public isAuthenticated: boolean;
+  public isAuthorized: boolean;
   public isMenuCollapsed = true;
   public routes: any[] = [];
   public currentRoute: any;
@@ -37,7 +39,7 @@ export class HeaderComponent implements OnDestroy {
         })
     );
 
-    this.isAuthenticated = this.keycloakService.isAuthenticated();
+    this.isAuthorized = this.keycloakService.isAuthorized();
     this.welcomeMsg = this.keycloakService.getWelcomeMessage();
 
     this.envName = this.configService.config['ENVIRONMENT'];
