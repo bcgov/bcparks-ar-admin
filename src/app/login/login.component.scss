@@ -1,33 +1,49 @@
-@import "/src/assets/styles/layout/no-sidebar";
+@import "src/assets/themes/variables";
 
-button.btn {
-  background: $primary;
-  color: $white;
-  text-align: center;
-  margin-top: 0.75rem;
-  font-size: 0.95em;
+.login-container {
+  background-color: $white;
+  min-height: 100%;
 }
 
-button.btn,
-a.reg-link {
-  width: 16rem;
-  max-width: 100%;
+.login-form {
+  background: $white;
+  max-width: 50rem;
+  height: fit-content;
+}
+
+@media screen and (min-width: 768px) {
+  .login-container {
+    background: $form-grey;
+  }
+  .login-form {
+    border: 1px solid $alpha-border-color;
+    width: 75%;
+  }
+}
+
+.btn-login {
+  background: $primary;
+  color: $white;
+  margin-top: 0.75rem;
 
   &:hover {
     opacity: 0.9;
   }
 }
 
+.btn-login,
+a.reg-link {
+  width: 18rem;
+  max-width: 100%;
+}
+
 a.reg-link {
   text-align: left;
   margin-bottom: 0.5rem;
   display: inline-block;
-  color: $grey;
-  text-decoration: underline;
   margin-top: 0.25rem;
-  font-size: 0.88em;
 
   i {
-    margin-right: 4px;
+    margin-right: 0.25rem;
   }
 }

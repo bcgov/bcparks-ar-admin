@@ -13,11 +13,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     if (this.keycloakService.isAuthenticated()) {
       if (this.keycloakService.isAuthorized()) {
-        console.log('login::authorized && authenticated');
         this.router.navigate(['/']);
         return;
       } else {
-        console.log('login::not authorized');
         this.router.navigate(['/unauthorized']);
         return;
       }

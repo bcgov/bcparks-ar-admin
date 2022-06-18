@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
 
     // Not authenticated
     if (!this.keycloakService.isAuthenticated()) {
-      if (!lastIdp) {
+      if (lastIdp === null) {
         // If an identity provider hasn't been selected then show the login page.
         return this.router.parseUrl('/login');
       }
@@ -29,14 +29,16 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    if (!lastIdp) {
+    if (lastIdp === null) {
       // Store the identity provider that was used to successfully log in.
       // Even if the user is unauthorized, we still want to store this because
       // we don't have a logout, so there is no point allowing the user to select
       // a different IDP, as Keycloak will just ignore the selection when the user
       // is authenticated already.
       const idp = this.keycloakService.getIdpFromToken();
-      sessionStorage.setItem(this.keycloakService.LAST_IDP_AUTHENTICATED, idp);
+      if (idp !== '') {
+        sessionStorage.setItem(this.keycloakService.LAST_IDP_AUTHENTICATED, idp);
+      }
     }
 
     // Not authorized

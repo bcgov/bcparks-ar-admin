@@ -15,14 +15,11 @@ export class NotAuthorizedComponent implements OnInit {
 
   ngOnInit() {
     if (this.keycloakService.isAuthenticated()) {
-      console.log('not-authorized:authenticated');
       if (this.keycloakService.isAuthorized()) {
-        console.log('not-authorized::authenticated && authorized');
         this.router.navigate(['/']);
         return;
       }
     } else {
-      console.log('not-authorized:not authenticated');
       this.router.navigate(['/login']);
       return;
     }

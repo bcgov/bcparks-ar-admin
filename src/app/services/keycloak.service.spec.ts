@@ -48,20 +48,6 @@ describe('KeycloakService', () => {
     expect(idp).toEqual('bceid-basic-and-business');
   });
 
-  it('idp should be `bceid-basic-and-business` if the preferred_username is user@bceid-basic-and-business', () => {
-    spyOn(JwtUtil, 'decodeToken').and.callFake(() => {
-      return {
-        preferred_username: 'user@bceid-basic-and-business',
-      };
-    });
-    const keycloak = TestBed.get(KeycloakService);
-    spyOn(keycloak, 'getToken').and.callFake(() => {
-      return 'not-empty';
-    });
-    const idp = keycloak.getIdpFromToken();
-    expect(idp).toEqual('bceid-basic-and-business');
-  });
-
   it('idp should be `bcsc` if the token does not match any known patterns', () => {
     spyOn(JwtUtil, 'decodeToken').and.callFake(() => {
       return {
