@@ -9,7 +9,15 @@
           [type]="'number'"
         ></app-text-input>
         </div>
-    </div>
+      </div>
+      <div class="mt-auto">
+        <app-calculation-display
+          [colorClass]="'blue'"
+          [label]="'TOTAL ATTENDANCE'"
+          [subtext]="attendanceTotal?.formula"
+          [value]="attendanceTotal?.result"
+        ></app-calculation-display>
+      </div>
   </div>
   <div class="equal-width d-flex flex-column ms-3">
     <div class="d-flex align-items-end">

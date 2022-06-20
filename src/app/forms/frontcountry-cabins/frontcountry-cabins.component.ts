@@ -20,6 +20,7 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class FrontcountryCabinsComponent extends BaseFormComponent {
   public revenueTotal: formulaResult = { result: null, formula: '' };
+  public attendanceTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
     protected formBuilder: FormBuilder,
@@ -94,6 +95,10 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
   }
 
   calculateTotals() {
+    this.attendanceTotal = this.formulaService.frontcountryCabinsAttendance(
+    [this.fields.totalAttendanceParties.value],
+    this.data?.config?.attendanceModifier
+    );
     this.revenueTotal = this.formulaService.basicNetRevenue([
       this.fields.revenueGrossCamping.value,
     ]);
