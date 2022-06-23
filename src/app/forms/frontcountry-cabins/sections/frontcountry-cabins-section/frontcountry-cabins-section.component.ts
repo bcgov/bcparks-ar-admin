@@ -11,6 +11,7 @@ export class FrontcountryCabinsSectionComponent implements OnInit {
   @Input() totalAttendancePartiesField = new FormControl;
   @Input() revenueGrossCampingField = new FormControl;
   @Input() revenueTotal: formulaResult = {result: null, formula: ''};
+  @Input() attendanceTotal: formulaResult = {result: null, formula: ''};
 
   constructor() { }
 

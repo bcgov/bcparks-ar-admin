@@ -41,6 +41,10 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
             value: this.data?.totalAttendanceParties,
           },
         ],
+        attendanceTotal: this.formulaService.frontcountryCabinsAttendance(
+          [this.data?.totalAttendanceParties],
+          this.data?.config?.attendanceModifier
+        ),
         revenueLabel: 'Net revenue',
         revenueItems: [
           {

@@ -94,7 +94,7 @@ export class FormulaService {
     if (!dPlaces) {
       dPlaces = this.defaultDecimalPlaces;
     }
-    if (this.isValidNumber(value)){
+    if (this.isValidNumber(value)) {
       return formatNumber(value, 'en-CA', `1.0-${dPlaces}`);
     }
     return '';
@@ -110,7 +110,7 @@ export class FormulaService {
    */
   basicNetRevenue(revenues: any[], customPercent?: number): formulaResult {
     let result: any = null;
-    let percent = customPercent ? customPercent : this.gstPercent
+    let percent = customPercent ? customPercent : this.gstPercent;
     const gross = this.arraySum(revenues);
     const net = this.deductPercentage(gross, percent);
     if (this.isValidNumber(gross)) {
@@ -236,7 +236,11 @@ export class FormulaService {
       busFormula = `(Bus count x ${busMod})`;
     }
     return {
-      result: this.formatTotalWithModifier([vehicleTotal, busTotal, trailCountTotal ]),
+      result: this.formatTotalWithModifier([
+        vehicleTotal,
+        busTotal,
+        trailCountTotal,
+      ]),
       formula: `Vehicle attendance = ${vehicleFormula} + ${busFormula} + Trail count`,
     };
   }
@@ -264,6 +268,24 @@ export class FormulaService {
     return {
       result: this.formatTotalWithModifier([individualTotal, familyTotal]),
       formula: `Total people = Adults + Youths + ${familyFormula}`,
+    };
+  }
+
+  /**
+   * Calculates total people attendance for frontcountry cabins.
+   * @function
+   * @param {any[]} parties Array of individual party counts
+   * @param {number} partyMod Multiplier for parties (optional)
+   * @memberof FormulaService
+   * @returns `formulaResult` object
+   */
+  frontcountryCabinsAttendance(
+    parties: any[],
+    partyMod?: number
+  ): formulaResult {
+    return {
+      result: this.formatTotalWithModifier(parties, partyMod),
+      formula: `Total Attendance = Parties x ${partyMod}`,
     };
   }
 
