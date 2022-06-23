@@ -96,8 +96,10 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
 
   calculateTotals() {
     this.attendanceTotal = this.formulaService.frontcountryCabinsAttendance(
-    [this.fields.totalAttendanceParties.value],
-    this.data?.config?.attendanceModifier
+      [
+        this.fields.totalAttendanceParties.value
+      ],
+      this.data?.config?.attendanceModifier
     );
     this.revenueTotal = this.formulaService.basicNetRevenue([
       this.fields.revenueGrossCamping.value,
