@@ -119,10 +119,7 @@ export class KeycloakService {
       return false;
     }
 
-    // Make sure they have at least one instance of including a role in the ROLE array
-    return Object.keys(Constants.ApplicationRoles).some((role) => {
-      return jwt.resource_access["attendance-and-revenue"].roles.includes(Constants.ApplicationRoles[role]);
-    });
+    return jwt.resource_access['attendance-and-revenue'].roles.length >= 1;
   }
 
   /**
