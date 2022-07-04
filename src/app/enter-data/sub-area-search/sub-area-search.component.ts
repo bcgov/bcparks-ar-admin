@@ -48,7 +48,7 @@ export class SubAreaSearchComponent implements OnDestroy {
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
         .subscribe((res) => {
-          if (res && res.typeAheadData.length > 0) {
+          if (res && res.typeAheadData?.length > 0) {
             this.parks = res;
             if (
               !this.dataPreloaded &&

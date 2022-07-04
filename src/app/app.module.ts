@@ -37,8 +37,8 @@ export function initConfig(
   return async () => {
     await configService.init();
     apiService.init();
-    autoFetchService.run();
     await keycloakService.init();
+    autoFetchService.run();
   };
 }
 

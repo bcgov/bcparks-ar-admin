@@ -32,8 +32,6 @@ export class FormService {
       // We require queryParam type = activity
       // In obj we need subAreaId, activity and date
       if (obj.subAreaId && obj.activity && obj.date) {
-        delete obj.pk;
-        delete obj.sk;
         res = await firstValueFrom(
           this.apiService.post('subarea', obj, { type: 'activity' })
         );
