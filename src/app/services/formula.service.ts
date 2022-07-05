@@ -56,15 +56,15 @@ export class FormulaService {
   }
 
   /**
-   * Returns the result when value is deducted by percent
+   * Finds the net when net * (1+percentage) = gross value
    * @function
-   * @param {number} value Original value
+   * @param {number} value Gross value
    * @param {number} percentage percentage to deduct (10 = 10%)
    * @memberof FormulaService
    * @returns number
    */
   deductPercentage(value: number, percentage: number): number {
-    const result = (value * (100 - percentage)) / 100;
+    const result = (value * 100) / (100 + percentage)
     return result;
   }
 
