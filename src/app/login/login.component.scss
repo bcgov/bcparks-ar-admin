@@ -1,8 +1,14 @@
 @import "src/assets/themes/variables";
 
+h1 {
+  font-size: 2.8rem;
+  font-weight: normal;
+}
+
 .login-container {
   background-color: $white;
   min-height: 100%;
+  padding: 1.4rem 0.6rem;
 }
 
 .login-form {
@@ -14,6 +20,7 @@
 @media screen and (min-width: 768px) {
   .login-container {
     background: $form-grey;
+    padding: 0;
   }
   .login-form {
     border: 1px solid $alpha-border-color;
