@@ -21,6 +21,7 @@ import { HomeModule } from './home/home.module';
 import { KeycloakService } from './services/keycloak.service';
 import { TokenInterceptor } from './shared/utils/token-interceptor';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { LoginComponent } from './login/login.component';
 import { ApiService } from './services/api.service';
 import { AutoFetchService } from './services/auto-fetch.service';
 import { InfiniteLoadingBarModule } from './shared/components/infinite-loading-bar/infinite-loading-bar.module';
@@ -38,12 +39,14 @@ export function initConfig(
     await configService.init();
     apiService.init();
     await keycloakService.init();
-    autoFetchService.run();
+    if (keycloakService.isAuthorized()) {
+      autoFetchService.run();
+    }
   };
 }
 
 @NgModule({
-  declarations: [AppComponent, NotAuthorizedComponent],
+  declarations: [AppComponent, NotAuthorizedComponent, LoginComponent],
   imports: [
     BrowserModule,
     CommonModule,

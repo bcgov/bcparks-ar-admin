@@ -4,19 +4,28 @@ import { Constants } from '../shared/utils/constants';
 import { JwtUtil } from '../shared/utils/jwt-utils';
 import { ConfigService } from './config.service';
 import { LoggerService } from './logger.service';
+import { ToastService } from './toast.service';
 
 declare let Keycloak: any;
 
 @Injectable()
 export class KeycloakService {
+  public LAST_IDP_AUTHENTICATED = 'kc-last-idp-authenticated';
   private keycloakAuth: any;
   private keycloakEnabled: boolean;
   private keycloakUrl: string;
   private keycloakRealm: string;
 
+  public readonly idpHintEnum = {
+    BCEID: 'bceid-basic-and-business',
+    BCSC: 'bcsc',
+    IDIR: 'idir',
+  };
+
   constructor(
     private configService: ConfigService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private toastService: ToastService
   ) {}
 
   async init() {
@@ -79,13 +88,14 @@ export class KeycloakService {
           .then((auth) => {
             // console.log('KC Refresh Success?:', this.keycloakAuth.authServerUrl);
             this.logger.log(`KC Success: ${auth}`);
-            if (!auth) {
-              this.keycloakAuth.login();
-            } else {
-              resolve();
-            }
+            resolve();
           })
           .catch((err) => {
+            this.toastService.addMessage(
+              'Failed to initialize Keycloak.',
+              'Keycloak Service',
+              Constants.ToastTypes.ERROR
+            );
             this.logger.log(`KC error: ${err}`);
             reject();
           });
@@ -94,12 +104,26 @@ export class KeycloakService {
   }
 
   /**
+   * Check if the current user is logged in.
+   *
+   * @returns {boolean} true if the user is logged in.
+   * @memberof KeycloakService
+   */
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    if (!token) {
+      return false;
+    }
+    return this.keycloakAuth && this.keycloakAuth.authenticated === true;
+  }
+
+  /**
    * Check if the current user is logged in and has admin access.
    *
    * @returns {boolean} true if the user has access, false otherwise.
    * @memberof KeycloakService
    */
-  isAuthenticated(): boolean {
+  isAuthorized(): boolean {
     const token = this.getToken();
 
     if (!token) {
@@ -170,5 +194,58 @@ export class KeycloakService {
       return '';
     }
     return `${jwt.name}`;
+  }
+
+  /**
+   * Redirects to keycloak and logs in
+   *
+   * @param {string} idpHint see idpHintEnum for valid values
+   * @memberof KeycloakService
+   */
+  login(idpHint: string) {
+    let redirectUri = window.location.href;
+    // by default keycloak login will want to redirect back to the login page
+    // redirect to '/dayuse' instead
+    if (redirectUri.endsWith('/login')) {
+      redirectUri = redirectUri.slice(0, redirectUri.lastIndexOf('/'));
+    }
+    return (
+      this.keycloakAuth &&
+      this.keycloakAuth.login({ idpHint: idpHint, redirectUri: redirectUri })
+    );
+  }
+
+  /**
+   * Infers the identity provider from the JWT token
+   *
+   * @remarks
+   * If IDIR and BCEID users are being redirected to the BCSC login
+   * page to re-authenticate, it means the client mappers in Keycloak
+   * (idir_userid and bceid_userid) haven't been properly setup.
+   *
+   * @memberof KeycloakService
+   */
+  getIdpFromToken(): string {
+    const token = this.getToken();
+
+    if (!token) {
+      return '';
+    }
+
+    const jwt = JwtUtil.decodeToken(token);
+
+    // idir users have an idir_userid property
+    if (jwt.idir_userid !== undefined) {
+      return this.idpHintEnum.IDIR;
+    }
+
+    // bceid users will have a bceid_userid property
+    if (jwt.bceid_userid !== undefined) {
+      return this.idpHintEnum.BCEID;
+    }
+
+    // BCSC users have no distinguishing traits, but BCSC is asssumed
+    // if it's not BCeID or IDIR
+    return this.idpHintEnum.BCSC;
   }
 }
