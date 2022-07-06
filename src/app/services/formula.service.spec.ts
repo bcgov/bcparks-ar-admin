@@ -34,14 +34,14 @@ describe('FormulaService', () => {
   });
 
   it('should deduct percentages correctly', () => {
-    expect(service.deductPercentage(100, 5)).toBe(95);
-    expect(service.deductPercentage(5, 37)).toBe(3.15);
-    expect(service.deductPercentage(0, 25)).toBe(0);
-    expect(service.deductPercentage(25, 0)).toBe(25);
-    expect(service.deductPercentage(25, 100)).toBe(0);
-    expect(service.deductPercentage(1, 0.005)).toBeCloseTo(1, 3);
-    expect(service.deductPercentage(NaN, 50)).toBeNaN();
-    expect(service.deductPercentage(100, NaN)).toBeNaN();
+    expect(service.inversePercentage(50, 100)).toBe(25);
+    expect(service.inversePercentage(5, 37)).toBeCloseTo(3.65, 2);
+    expect(service.inversePercentage(0, 25)).toBe(0);
+    expect(service.inversePercentage(25, 0)).toBe(25);
+    expect(service.inversePercentage(25, 100)).toBe(12.5);
+    expect(service.inversePercentage(1, 0.005)).toBeCloseTo(1, 3);
+    expect(service.inversePercentage(NaN, 50)).toBeNaN();
+    expect(service.inversePercentage(100, NaN)).toBeNaN();
   });
 
   it('should format money correctly', () => {
@@ -61,9 +61,9 @@ describe('FormulaService', () => {
   });
 
   it('should calculate baseNetRevenue properly', () => {
-    expect(service.basicNetRevenue([1, 2, 3], 5).result).toBe('$5.70');
+    expect(service.basicNetRevenue([1, 2, 3], 5).result).toBe('$5.71');
     expect(service.basicNetRevenue([0, 0, 0]).result).toBe('$0.00');
-    expect(service.basicNetRevenue([NaN, 0, 25], 10).result).toBe('$22.50');
+    expect(service.basicNetRevenue([NaN, 0, 25], 10).result).toBe('$22.73');
     expect(service.basicNetRevenue([NaN, 0, 25], 10).formula).toBe(
       'Net revenue = Gross revenue - 10% GST'
     );
