@@ -63,7 +63,7 @@ export class FormulaService {
    * @memberof FormulaService
    * @returns number
    */
-  deductPercentage(value: number, percentage: number): number {
+  inversePercentage(value: number, percentage: number): number {
     const result = (value * 100) / (100 + percentage)
     return result;
   }
@@ -112,7 +112,7 @@ export class FormulaService {
     let result: any = null;
     let percent = customPercent ? customPercent : this.gstPercent;
     const gross = this.arraySum(revenues);
-    const net = this.deductPercentage(gross, percent);
+    const net = this.inversePercentage(gross, percent);
     if (this.isValidNumber(gross)) {
       result = this.formatMoney(net);
     }
