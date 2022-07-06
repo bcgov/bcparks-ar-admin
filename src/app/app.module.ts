@@ -39,7 +39,9 @@ export function initConfig(
     await configService.init();
     apiService.init();
     await keycloakService.init();
-    autoFetchService.run();
+    if (keycloakService.isAuthorized()) {
+      autoFetchService.run();
+    }
   };
 }
 
