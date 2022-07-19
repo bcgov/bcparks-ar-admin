@@ -1,39 +1,68 @@
 <div class="accordion mb-3">
   <div class="accordion-item">
-    <div class="accordion-header" id="{{ id }}">
-      <button
-        class="accordion-button d-flex justify-content-between align-content-center collapsed"
-        type="button"
-        data-bs-toggle="collapse"
-        [attr.data-bs-target]="'#collapse' + id"
-        aria-expanded="true"
-        aria-controls="id"
-      >
-        <div class="col d-flex justify-content-start">
-          <div class="d-flex align-items-center">
-            <img
-              class="d-none d-lg-block me-3"
-              src="{{ icon }}"
-              alt="{{ title }}"
-              width="{{ iconSize }}"
-              height="{{ iconSize }}"
-            />
-            <div class="h3 mb-0 pb-0">
-              {{ title }}
+    <div class="accordion-header-row d-flex flex-column flex-md-row">
+      <!--mobile-->
+      <div class="edit-row d-md-none">
+        <div class="d-flex justify-content-end p-1 px-3">
+          <button
+            class="btn px-0 fw-bolder text-nowrap"
+            (click)="edit()"
+            [disabled]="!editLink"
+          >
+            <i class="bi bi-pencil"></i>
+            Edit
+          </button>
+        </div>
+      </div>
+      <div class="accordion-header" id="{{ id }}">
+        <button
+          class="accordion-button d-flex justify-content-between align-content-center collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapse' + id"
+          aria-expanded="true"
+          aria-controls="id"
+        >
+          <div class="col d-flex justify-content-start">
+            <div class="d-flex align-items-center">
+              <img
+                class="d-none d-lg-block me-3"
+                src="{{ icon }}"
+                alt="{{ title }}"
+                width="{{ iconSize }}"
+                height="{{ iconSize }}"
+              />
+              <div class="h3 mb-0 pb-0">
+                {{ title }}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col justify-content-end mx-3 d-none d-lg-flex">
+          <div class="col justify-content-end mx-3 d-none d-lg-flex">
+            <div class="text-muted">
+              {{ secondaryText }}
+            </div>
+          </div>
+        </button>
+        <!--mobile-->
+        <div class="row justify-content-end mx-2 mb-2 d-lg-none d-flex">
           <div class="text-muted">
             {{ secondaryText }}
           </div>
         </div>
-      </button>
-      <!--mobile-->
-      <div class="row justify-content-end mx-2 mb-2 d-lg-none d-flex">
-        <div class="text-muted">
-          {{ secondaryText }}
-        </div>
+      </div>
+      <div
+        class="edit-column justify-content-center flex-column d-none d-md-flex"
+      >
+        <button
+          class="btn px-0 fw-bolder text-nowrap"
+          (click)="edit()"
+          [disabled]="!editLink"
+        >
+          <i class="bi bi-pencil"></i>
+          Edit
+        </button>
+        <!-- same element height as mobile secondaryText-->
+        <div class="mx-2 mb-2 d-lg-none text-muted">&nbsp;</div>
       </div>
     </div>
     <div
@@ -52,15 +81,6 @@
         <div *ngIf="notes">
           <h3>Variance notes</h3>
           <div class="mb-5">{{ notes }}</div>
-        </div>
-        <div class="d-flex flex-row-reverse">
-          <button
-            class="btn btn-primary px-5"
-            (click)="edit()"
-            [disabled]="!editLink"
-          >
-            Edit
-          </button>
         </div>
       </div>
     </div>

@@ -1,0 +1,66 @@
+@import "src/assets/themes/variables";
+
+$edit-col-width: 108px;
+$margin-overlap: 6px;
+$border-width: 2px;
+$border-radius: 4px;
+
+.accordion-header-row {
+  border: $border-width solid $primary-blue;
+  border-radius: $border-radius;
+
+  @media screen and (min-width: 768px) {
+    .accordion-header {
+      flex: 1;
+      border-right: $border-width solid $primary-blue;
+    }
+  }
+
+  .edit-row {
+    border-bottom: $border-width solid $primary-blue;
+  }
+
+  .edit-column {
+    flex: 0 0 calc($edit-col-width - $border-width);
+  }
+
+  .edit-row,
+  .edit-column {
+    button.btn {
+      color: $primary-blue;
+
+      i {
+        border-bottom: 1px solid $primary-blue;
+      }
+    }
+  }
+}
+
+.accordion-body {
+  @media screen and (min-width: 768px) {
+    width: calc(100% - $edit-col-width);
+  }
+
+  border: $border-width solid $primary-blue;
+  border-radius: $border-radius;
+
+  // use a negative margin and solid background to overlap the
+  // accordion-header when the body is open, hiding the bottom
+  // border and rounded corner of the header
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: -$margin-overlap;
+  padding-top: $margin-overlap;
+  background-color: $white;
+}
+
+.accordion-collapse.collapsing {
+  margin-top: -$margin-overlap;
+  padding-top: $margin-overlap;
+
+  & ~ .accordion-header-row > .accordion-header-edit-button {
+    border: $border-width solid $primary-blue;
+    border-bottom-right-radius: $border-radius;
+  }
+}
