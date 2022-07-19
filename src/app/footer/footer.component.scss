@@ -11,15 +11,16 @@
   margin: 0 auto;
   position: absolute;
   top: 50%;
-  left: 50%;
+  right: 50%;
   margin-right: -50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-5%, -50%);
   white-space: nowrap;
 }
 
 a {
   color: white;
   text-decoration: none;
+  font-weight: bold
 }
 
 a:hover {
