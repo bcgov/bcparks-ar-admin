@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, UrlTree, Router } from '@angular/router';
+import { CanActivate, UrlTree, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { KeycloakService } from '../services/keycloak.service';
 
 @Injectable({
@@ -11,7 +11,10 @@ export class AuthGuard implements CanActivate {
     private readonly router: Router
   ) {}
 
-  canActivate(): boolean | UrlTree {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree {
     // When a successful login occurs, we store the identity provider used in sessionStorage.
     const lastIdp = sessionStorage.getItem(
       this.keycloakService.LAST_IDP_AUTHENTICATED
@@ -43,7 +46,10 @@ export class AuthGuard implements CanActivate {
       // is authenticated already.
       const idp = this.keycloakService.getIdpFromToken();
       if (idp !== '') {
-        sessionStorage.setItem(this.keycloakService.LAST_IDP_AUTHENTICATED, idp);
+        sessionStorage.setItem(
+          this.keycloakService.LAST_IDP_AUTHENTICATED,
+          idp
+        );
       }
     }
 
@@ -51,6 +57,10 @@ export class AuthGuard implements CanActivate {
     if (!this.keycloakService.isAuthorized()) {
       // login was successful but the user doesn't have necessary Keycloak roles.
       return this.router.parseUrl('/unauthorized');
+    }
+
+    if (!this.keycloakService.isAllowed('export-reports') && state.url === '/export-reports') {
+      return this.router.parseUrl('/');
     }
 
     // Show the requested page.

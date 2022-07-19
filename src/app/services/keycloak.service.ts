@@ -147,6 +147,28 @@ export class KeycloakService {
   }
 
   /**
+   * Returns whether or not the user has sysadmin role
+   *
+   * @returns {boolean} User is a sysadmin.
+   * @memberof KeycloakService
+   */
+  isAllowed(service): boolean {
+    if (service !== 'export-reports') {
+      return true;
+    }
+    const token = this.getToken();
+
+    if (!token) {
+      return false;
+    }
+
+    const jwt = JwtUtil.decodeToken(token);
+    return jwt?.resource_access?.['attendance-and-revenue']?.roles.includes(
+      'sysadmin'
+    );
+  }
+
+  /**
    * Returns the current keycloak auth token.
    *
    * @returns {string} keycloak auth token.
