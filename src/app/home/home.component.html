@@ -4,14 +4,14 @@
       <span>BC Parks - Attendance and Revenue</span>
     </h1>
   </div>
-  <div class="row">
+  <div class="row justify-content-center">
     <div class="col-lg-6 col-md-12" *ngFor="let card of cardConfig">
-      <app-nav-card
-        [cardHeader]="card.cardHeader"
-        [cardTitle]="card.cardTitle"
-        [cardText]="card.cardText"
-        [navigation]="card.navigation"
-      ></app-nav-card>
+        <app-nav-card
+          [cardHeader]="card.cardHeader"
+          [cardTitle]="card.cardTitle"
+          [cardText]="card.cardText"
+          [navigation]="card.navigation"
+        ></app-nav-card>
     </div>
   </div>
 </div>
