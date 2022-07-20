@@ -4,6 +4,7 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Subscription } from 'rxjs';
+import { KeycloakService } from 'src/app/services/keycloak.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,10 +23,16 @@ export class SidebarComponent implements OnDestroy {
   constructor(
     protected sideBarService: SideBarService,
     protected router: Router,
-    protected subAreaService: SubAreaService
+    protected subAreaService: SubAreaService,
+    protected keyCloakService: KeycloakService
   ) {
+
     this.routes = router.config.filter(function (obj) {
-      return obj.path !== '**' && obj.path !== 'unauthorized';
+      if (obj.path === 'export-reports') {
+        return keyCloakService.isAllowed('export-reports');
+      } else {
+        return obj.path !== '**' && obj.path !== 'unauthorized';
+      }
     });
 
     this.subscriptions.add(
