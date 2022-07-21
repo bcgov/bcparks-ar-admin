@@ -30,7 +30,10 @@ $border-radius: 4px;
       color: $primary-blue;
 
       i {
-        border-bottom: 1px solid $primary-blue;
+        border-bottom: 2px solid $primary-blue;
+        margin-right: 0.4em;
+        font-size: 1.05em;
+        -webkit-text-stroke-width: 1px;
       }
     }
   }
