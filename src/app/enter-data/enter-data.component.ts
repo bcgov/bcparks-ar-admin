@@ -15,7 +15,11 @@ export class EnterDataComponent implements OnDestroy {
   public subAreaData;
 
   public onChildRoute = false;
-  public formParams;
+  public formParams = {
+    parkName: '',
+    subAreaName: '',
+    date: '',
+  };
   public utils = new Utils();
 
   public text = `Select the data and location above for the Attendance and Revenue data you
