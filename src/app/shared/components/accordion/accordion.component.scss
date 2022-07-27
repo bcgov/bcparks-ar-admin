@@ -1,3 +1,5 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
 @import "src/assets/themes/variables";
 
 $edit-col-width: 108px;
@@ -9,7 +11,7 @@ $border-radius: 4px;
   border: $border-width solid $primary-blue;
   border-radius: $border-radius;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: map-get($grid-breakpoints, "md")) {
     .accordion-header {
       flex: 1;
       border-right: $border-width solid $primary-blue;
@@ -40,7 +42,7 @@ $border-radius: 4px;
 }
 
 .accordion-body {
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: map-get($grid-breakpoints, "md")) {
     width: calc(100% - $edit-col-width);
   }
 
@@ -50,7 +52,6 @@ $border-radius: 4px;
   // use a negative margin and solid background to overlap the
   // accordion-header when the body is open, hiding the bottom
   // border and rounded corner of the header
-  border-top: none;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   margin-top: -$margin-overlap;
