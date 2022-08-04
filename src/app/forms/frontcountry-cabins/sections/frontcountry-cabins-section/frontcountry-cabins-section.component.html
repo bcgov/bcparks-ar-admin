@@ -9,6 +9,11 @@
           [type]="'number'"
         ></app-text-input>
         </div>
+        <app-info-text class="text-block"
+          [text]="
+            'Includes all adults, youth, and kids.'
+          "
+        ></app-info-text>
       </div>
       <div class="mt-auto">
         <app-calculation-display
@@ -20,7 +25,7 @@
       </div>
   </div>
   <div class="equal-width d-flex flex-column ms-3">
-    <div class="d-flex align-items-end">
+    <div class="d-flex align-items-end flex-row flex-wrap equal-height">
       <div class="input-box">
         <app-text-input
           [label]="'Gross camping revenue'"
@@ -28,6 +33,11 @@
           [moneyMode]="true"
         ></app-text-input>
       </div>
+      <app-info-text class="text-block"
+        [text]="
+          'Camping fee revenue only. Subtract onsite refunds before entering.'
+        "
+      ></app-info-text>
     </div>
     <div class="mt-auto">
       <app-calculation-display
