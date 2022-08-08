@@ -1,20 +1,38 @@
 @import "/src/assets/themes/variables";
 
-#footer {
-  background-color: $primary-nav;
-  height: 4.1rem;
-  position: relative;
+@media only screen and (min-width: 769px) {
+  #footer {
+    background-color: $primary-nav;
+    height: 4.1rem;
+    position: relative;
+  }
+
+  .row {
+    max-width: 29rem;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin-right: -50%;
+    transform: translate(-5%, -50%);
+    white-space: nowrap;
+  }
 }
 
-.row {
-  max-width: 29rem;
-  margin: 0 auto;
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  margin-right: -50%;
-  transform: translate(-5%, -50%);
-  white-space: nowrap;
+@media only screen and (max-width: 768px) {
+  #footer {
+    background-color: $primary-nav;
+    height: 4.9rem;
+    position: relative;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
 }
 
 a {
