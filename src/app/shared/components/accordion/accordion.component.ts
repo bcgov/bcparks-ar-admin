@@ -46,6 +46,7 @@ export class AccordionComponent implements OnDestroy {
       relativeTo: this.activatedRoute,
       queryParams: this.formParams,
     });
+    window.scrollTo(0,0);
   }
 
   ngOnDestroy() {
