@@ -46,7 +46,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             value: this.data?.standardRateGroupsTotalPeopleAdults,
           },
           {
-            itemName: 'Youth (6-15)',
+            itemName: 'Youths (6-15)',
             value: this.data?.standardRateGroupsTotalPeopleYouth,
           },
           {

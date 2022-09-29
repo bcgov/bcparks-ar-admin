@@ -202,7 +202,7 @@ export class FormulaService {
   groupCampingStandardAttendance(attendances: any[]): formulaResult {
     return {
       result: this.formatTotalWithModifier(attendances),
-      formula: `Total people = (Adult + Youth + Children)`,
+      formula: `Total people = (Adults + Youths + Kids)`,
     };
   }
 
