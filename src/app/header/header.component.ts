@@ -30,7 +30,10 @@ export class HeaderComponent implements OnDestroy {
     this.routes = router.config.filter(function (obj) {
       if (obj.path === 'export-reports') {
         return keycloakService.isAllowed('export-reports');
-      } else {
+      } else if (obj.path === 'lock-records') {
+        return keycloakService.isAllowed('lock-records')
+      }
+        {
         return obj.path !== '**' && obj.path !== 'unauthorized';
       }
     });

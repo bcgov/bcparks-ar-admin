@@ -16,6 +16,8 @@ import { LoginComponent } from './login/login.component';
 import { ExportResolver } from './resolvers/export.resolver';
 import { FormResolver } from './resolvers/form.resolver';
 import { SubAreaResolver } from './resolvers/sub-area.resolver';
+import { LockRecordsComponent } from './lock-records/lock-records.component';
+import { LockRecordsResolver } from './resolvers/lock-records.resolver';
 
 const routes: Routes = [
   {
@@ -125,6 +127,16 @@ const routes: Routes = [
       breadcrumb: 'Export Reports',
     },
     resolve: [ExportResolver],
+  },
+  {
+    path: 'lock-records',
+    component: LockRecordsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      label: 'Lock Records',
+      breadcrumb: 'Lock Records',
+    },
+    resolve: [LockRecordsResolver],
   },
   {
     path: 'unauthorized',

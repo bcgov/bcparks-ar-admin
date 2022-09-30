@@ -26,5 +26,14 @@ export class HomeComponent {
         navigation: 'export-reports',
       });
     }
+    if (keyCloakService.isAllowed('lock-records')) {
+      this.cardConfig.push({
+        cardHeader: 'Lock/Unlock Records',
+        cardTitle: 'Lock/Unlock by fiscal year',
+        cardText: 'Use this section to lock/unlock fiscal years (April-March) against editing.',
+        navigation: 'lock-records',
+      });
+    }
+
   }
 }

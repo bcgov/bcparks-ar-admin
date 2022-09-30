@@ -153,7 +153,7 @@ export class KeycloakService {
    * @memberof KeycloakService
    */
   isAllowed(service): boolean {
-    if (service !== 'export-reports') {
+    if (service !== 'export-reports' && service !== 'lock-records') {
       return true;
     }
     const token = this.getToken();

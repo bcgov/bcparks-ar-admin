@@ -7,10 +7,16 @@
           <button
             class="btn px-0 fw-bolder text-nowrap"
             (click)="edit()"
-            [disabled]="!editLink"
+            [disabled]="!editLink || isLocked"
           >
-            <i class="bi bi-pencil"></i>
-            Edit
+            <div *ngIf="isLocked">
+              <i class="bi bi-lock"></i>
+              Locked
+            </div>
+            <div *ngIf="!isLocked">
+              <i class="bi bi-pencil"></i>
+              Edit
+            </div>
           </button>
         </div>
       </div>
@@ -56,10 +62,16 @@
         <button
           class="btn px-0 fw-bolder text-nowrap"
           (click)="edit()"
-          [disabled]="!editLink"
+          [disabled]="!editLink || isLocked"
         >
-          <i class="bi bi-pencil"></i>
-          Edit
+          <div *ngIf="isLocked">
+            <i class="bi bi-lock"></i>
+            Locked
+          </div>
+          <div *ngIf="!isLocked">
+            <i class="bi bi-pencil"></i>
+            Edit
+          </div>
         </button>
       </div>
     </div>

@@ -28,6 +28,7 @@ import { InfiniteLoadingBarModule } from './shared/components/infinite-loading-b
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoadingService } from './services/loading.service';
+import { LockRecordsModule } from './lock-records/lock-records.module';
 
 export function initConfig(
   configService: ConfigService,
@@ -57,6 +58,7 @@ export function initConfig(
     BreadcrumbModule,
     ExportReportsModule,
     EnterDataModule,
+    LockRecordsModule,
     HeaderModule,
     FooterModule,
     HomeModule,
