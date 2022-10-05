@@ -26,10 +26,11 @@ export class SidebarComponent implements OnDestroy {
     protected subAreaService: SubAreaService,
     protected keyCloakService: KeycloakService
   ) {
-
     this.routes = router.config.filter(function (obj) {
       if (obj.path === 'export-reports') {
         return keyCloakService.isAllowed('export-reports');
+      } else if (obj.path === 'lock-records') {
+        return keyCloakService.isAllowed('lock-records');
       } else {
         return obj.path !== '**' && obj.path !== 'unauthorized';
       }

@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { Constants } from './constants';
 
 export class Utils {
   public convertArrayIntoObjForTypeAhead(
@@ -43,6 +44,15 @@ export class Utils {
       month: jSDate.getMonth() + 1,
       day: jSDate.getDate(),
     };
+  }
+
+  public getFiscalYearFromYYYYMM(date) {
+    let year = Number(date.substring(0, 4));
+    const month = Number(date.slice(-2));
+    if (month > Constants.FiscalYearFinalMonth) {
+      year += 1;
+    }
+    return year;
   }
 
   public convertJSDateToYYYYMM(date: Date) {

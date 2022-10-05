@@ -1,0 +1,51 @@
+<section class="container mt-5">
+  <h1 class="mb-1">Lock or Unlock Records</h1>
+  <p>
+    Select a date rage below to lock or unlock all records for all parks for the
+    selected dates.
+  </p>
+</section>
+<section class="container mt-3">
+  <div>
+    <label class="fw-bold mb-2">Date range:</label>
+    <div class="row mb-3">
+      <div class="col-md-12 col-lg-4">
+        <button (click)="dp.toggle()" class="form-control">
+          <span
+            autocomplete="off"
+            bsDatepicker
+            #dp="bsDatepicker"
+            minMode="year"
+            (onShown)="onOpenCalendar($event)"
+            (bsValueChange)="datePickerOutput($event)"
+          >
+          </span>
+          <div class="text-muted d-flex justify-content-left">
+            <i class="bi-calendar me-2 text-muted"></i>
+            {{ fiscalYearRangeString }}
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-4">
+      <button
+        class="btn btn-primary w-100"
+        type="button"
+        (click)="submit()"
+        [disabled]="fiscalYearRangeString === 'Select a fiscal year'"
+      >
+        <app-text-to-loading-spinner
+          [text]="'Lock Records '"
+          (loadingStatus)="loading = $event"
+        ></app-text-to-loading-spinner>
+      </button>
+    </div>
+  </div>
+</section>
+<section class="container mt-5">
+  <app-fiscal-year-lock-table
+    [data]="fiscalYearsList"
+  ></app-fiscal-year-lock-table>
+</section>

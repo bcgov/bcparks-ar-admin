@@ -1,24 +1,23 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ConfigService } from 'src/app/services/config.service';
 
-import { AccordionComponent } from './accordion.component';
+import { FiscalYearUnlockerComponent } from './fiscal-year-unlocker.component';
 
-describe('AccordionComponent', () => {
-  let component: AccordionComponent;
-  let fixture: ComponentFixture<AccordionComponent>;
+describe('FiscalYearUnlockerComponent', () => {
+  let component: FiscalYearUnlockerComponent;
+  let fixture: ComponentFixture<FiscalYearUnlockerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule],
-      declarations: [AccordionComponent],
+      imports: [HttpClientModule],
+      declarations: [FiscalYearUnlockerComponent],
       providers: [ConfigService],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccordionComponent);
+    fixture = TestBed.createComponent(FiscalYearUnlockerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

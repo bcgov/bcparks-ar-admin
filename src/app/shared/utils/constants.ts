@@ -11,11 +11,15 @@ export class Constants {
     ACCORDION_BACKCOUNTRY_CABINS: 'accordion-Backcountry Cabins',
     ENTER_DATA_URL_PARAMS: 'enter-data-url-params',
     EXPORT_ALL_POLLING_DATA: 'export-all-polling-data',
+    LOCK_RECORDS_FISCAL_YEARS_DATA: 'lock-records-fiscal-years-data',
   };
 
   public static readonly ApplicationRoles: any = {
     ADMIN: 'sysadmin',
   };
+
+  // March
+  public static readonly FiscalYearFinalMonth: number = 3;
 
   public static readonly iconUrls = {
     frontcountryCamping: '../../assets/images/walk-in-camping.svg',
