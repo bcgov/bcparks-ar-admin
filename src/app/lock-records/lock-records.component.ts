@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Utils } from '../shared/utils/utils';
 import { Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { FiscalYearLockService } from '../services/fiscal-year-lock.service';
@@ -19,6 +20,7 @@ export class LockRecordsComponent implements OnInit {
   public modelDate = NaN;
   public maxDate = new Date();
   public fiscalYearRangeString = 'Select a fiscal year';
+  private utils = new Utils();
 
   constructor(
     protected dataService: DataService,
@@ -34,6 +36,7 @@ export class LockRecordsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.maxDate = this.utils.getLatestLockableFiscalYear(new Date());
     this.fiscalYearLockService.fetchFiscalYear();
   }
 

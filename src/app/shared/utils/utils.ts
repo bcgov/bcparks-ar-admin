@@ -55,6 +55,14 @@ export class Utils {
     return year;
   }
 
+  public getLatestLockableFiscalYear(dateObj) {
+    let year = dateObj.getFullYear()-1;
+    // JS months are 0-indexed.
+    let month = dateObj.getMonth()+1;
+    let endYear = this.getFiscalYearFromYYYYMM(`${year}${month}`);
+    return new Date(endYear, Constants.FiscalYearFinalMonth, 0, 23, 59, 59, 999);
+  }
+
   public convertJSDateToYYYYMM(date: Date) {
     return moment(date).format('YYYYMM');
   }
