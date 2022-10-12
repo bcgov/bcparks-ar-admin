@@ -8,7 +8,7 @@
       <ng-template #cellTemplateComponent></ng-template>
     </span>
     <span *ngIf="!rowData[column.id].cellTemplate">
-      {{ rowData[column.id].value }}
+      {{ rowData[column.id].display ? rowData[column.id].display : rowData[column.id].value }}
     </span>
   </div>
 </td>

@@ -1,13 +1,16 @@
 <section class="container mt-5">
   <h1 class="mb-1">Lock or Unlock Records</h1>
   <p>
-    Select a date rage below to lock or unlock all records for all parks for the
-    selected dates.
+    Select a fiscal year to lock records for all parks.
   </p>
 </section>
 <section class="container mt-3">
   <div>
-    <label class="fw-bold mb-2">Date range:</label>
+    <label class="fw-bold mb-2">Fiscal Year</label>
+    <div class="text-muted mb-3">
+      To lock a fiscal year, select the year that the fiscal year ends.<br>
+      <em>e.g.</em> To lock April 2021&ndash;March 2022, select 2022.
+    </div>
     <div class="row mb-3">
       <div class="col-md-12 col-lg-4">
         <button (click)="dp.toggle()" class="form-control">
@@ -35,7 +38,7 @@
         class="btn btn-primary w-100"
         type="button"
         (click)="submit()"
-        [disabled]="fiscalYearRangeString === 'Select a fiscal year'"
+        [disabled]="!modelDate"
       >
         <app-text-to-loading-spinner
           [text]="'Lock Records '"

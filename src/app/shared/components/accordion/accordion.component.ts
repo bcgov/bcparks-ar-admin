@@ -1,4 +1,8 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from '../../utils/utils';
 import { Subscription } from 'rxjs';
@@ -20,36 +24,20 @@ export class AccordionComponent implements OnDestroy {
   @Input() notes: string = '';
   @Input() summaries: Array<summarySection> = [];
   @Input() editLink: string = '';
-  @Input() set recordLock(value: boolean) {
-    if (value !== null){
-      this._recordLock = value;
-    } else {
-      this._recordLock = true;
-    }
-    this.lockRecords();
-    this.changeDetectorRef.detectChanges();
-  };
-
-  get recordLock(): boolean {
-    return this._recordLock
-  }
-
-  public _recordLock = true;
-
-  public FISCAL_YEAR_FINAL_MONTH = 3;
+  @Input() recordLock;
 
   private subscriptions = new Subscription();
   private formParams;
   private utils = new Utils();
-  public isLocked = true;
+  public isLocked;
+  public isFiscalYearLocked = true;
   public readonly iconSize = 50; // icon size in px
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fiscalYearLockService: FiscalYearLockService,
-    protected dataService: DataService,
-    private changeDetectorRef: ChangeDetectorRef
+    protected dataService: DataService
   ) {
     this.subscriptions.add(
       dataService
@@ -57,22 +45,26 @@ export class AccordionComponent implements OnDestroy {
         .subscribe((res) => {
           if (res) {
             this.formParams = res;
+            this.setFiscalLockVar();
           }
         })
     );
   }
 
-  async lockRecords() {
-    // extract year from form params
+  async setFiscalLockVar() {
     if (this.formParams?.date) {
+      // extract year from form params
       const year = this.utils.getFiscalYearFromYYYYMM(this.formParams.date);
-      const lock = await this.fiscalYearLockService.fetchFiscalYear(year);
-      if (!this._recordLock) {
-        this.isLocked = lock.isLocked;
-      } else {
-        this.isLocked = this._recordLock;
-      }
+      const fiscalLock = await this.fiscalYearLockService.fetchFiscalYear(year);
+      this.isFiscalYearLocked = fiscalLock.isLocked ?? false; 
     }
+  }
+
+  lockCheck(){
+    if (this.isFiscalYearLocked || this.recordLock === true) {
+      return true;
+    }
+    return false;
   }
 
   edit() {

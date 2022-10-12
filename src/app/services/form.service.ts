@@ -26,6 +26,18 @@ export class FormService {
     this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS, params);
   }
 
+  getErrorMsg(err): string {
+    try {
+      const e = (err as any);
+      if (err.status === 409) {
+        return 'Record is locked, unable to edit until record is unlocked.'
+      }
+    } catch (error) {
+      // generic error, fall through
+    }
+    return 'Failed to update report';
+  }
+
   async postActivity(obj) {
     let res;
     try {
@@ -43,8 +55,10 @@ export class FormService {
         return res;
       }
     } catch (e) {
+      // typescript needs separate function to handle 'e' of type potentially 'unknown'.
+      const message = this.getErrorMsg(e);
       this.toastService.addMessage(
-        `Failed to update report`,
+        message,
         `Error`,
         Constants.ToastTypes.ERROR
       );

@@ -85,11 +85,10 @@ export class FiscalYearLockService {
           fiscalYearEnd: year,
         })
       );
-      const prevYear = year - 1;
       // trigger refresh of cached list of fetched fiscal year locks
       this.fetchFiscalYear();
       this.toastService.addMessage(
-        `Fiscal year from April ${prevYear} to March ${year} successfully ${ptString}`,
+        `The fiscal years you selected are now ${ptString}.`,
         `Fiscal year ${ptString}`,
         ToastTypes.SUCCESS
       );

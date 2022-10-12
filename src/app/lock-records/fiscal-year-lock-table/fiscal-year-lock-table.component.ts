@@ -43,6 +43,13 @@ export class FiscalYearLockTableComponent implements OnInit {
     return lockedYears;
   }
 
+  getFiscalYearString(fiscalYearEnd): string {
+    const startYear = Number(fiscalYearEnd) - 1;
+    const endYear = String(fiscalYearEnd).substring(2, 4);
+    // note that the separator should be an en dash, not a hyphen
+    return startYear + '–' + endYear;
+  }
+
   // fiscalYearEndObject schema
   // pk: fiscalYearEnd
   // sk: 2022
@@ -51,9 +58,10 @@ export class FiscalYearLockTableComponent implements OnInit {
     this.columnSchema = [
       {
         id: 'year',
-        displayHeader: 'Year',
+        displayHeader: 'Fiscal Year',
         columnClasses: 'ps-3 pe-5',
         mapValue: (row) => row.sk,
+        mapDisplay: (row) => this.getFiscalYearString(row.sk),
       },
       {
         id: 'parkName',

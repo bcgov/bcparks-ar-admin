@@ -19,8 +19,9 @@ export class LockRecordsComponent implements OnInit {
   public fiscalYearsList: any[] = [];
   public modelDate = NaN;
   public maxDate = new Date();
-  public fiscalYearRangeString = 'Select a fiscal year';
   private utils = new Utils();
+  public defaultRangeString = 'Select fiscal year end';
+  public fiscalYearRangeString = this.defaultRangeString;
 
   constructor(
     protected dataService: DataService,
@@ -49,11 +50,13 @@ export class LockRecordsComponent implements OnInit {
     this.modelDate = selectedYear;
     const startDate = this.fiscalYearStartMonth + ' ' + (selectedYear - 1);
     const endDate = this.fiscalYearEndMonth + ' ' + selectedYear;
-    const displayRange = `${startDate} - ${endDate}`;
+    const displayRange = `${startDate}–${endDate}`;
     this.fiscalYearRangeString = displayRange;
   }
 
   submit() {
     this.fiscalYearLockService.lockUnlockFiscalYear(this.modelDate, true);
+    this.modelDate = NaN;
+    this.fiscalYearRangeString = this.defaultRangeString;
   }
 }
