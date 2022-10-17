@@ -9,12 +9,28 @@ import { DataService } from './data.service';
 export class ExportService {
   private pollingRate = 1000;
   private retryPollingRate = 10000;
+  private retryTimeout = 300000 // 5 minutes
   private numberOfRetrys = 5;
 
   constructor(
     private apiService: ApiService,
     private dataService: DataService
   ) {}
+
+  async checkForReports(dataId, errorObj = {}) {
+    let res;
+    try {
+      res = await firstValueFrom(
+        this.apiService.get('export', { getJob: true })
+        );
+        if (Object.keys(errorObj).length > 0) {
+          res.error = errorObj;
+        }
+      this.dataService.setItemValue(dataId, res);
+    } catch (error) {
+      this.dataService.setItemValue(dataId, null);
+    }
+  }
 
   async generateReport(dataId) {
     try {
@@ -25,53 +41,87 @@ export class ExportService {
       this.pollReportStatus(dataId);
       return res;
     } catch (error) {
-      this.dataService.setItemValue(dataId, {
-        error: 'Unable to create job. Please try again.',
-      });
-      console.log(error);
+      this.checkForReports(dataId, {
+        state: 'error',
+        msg: 'Unable to create job. Please try again.'
+      })
       return error;
     }
   }
 
-  async pollReportStatus(dataId, retryCounter = 0) {
+  async pollReportStatus(dataId) {
+    const maxAttempts = this.retryTimeout / this.pollingRate;
+    let attempts = 0;
+    let pollObj = {
+      dataId: dataId,
+      retryCount: 0,
+      state: 'polling',
+    };
+    // Poll for results.
+    do {
+      attempts += 1;
+      // If result is taking too long, stop polling.
+      if (attempts >= maxAttempts) {
+        this.checkForReports(pollObj.dataId, {
+          state: 'error',
+          msg: 'Function timeout. Please try again.',
+        });
+        break;
+      }
+      pollObj = await this.pollTick(pollObj);
+    } while (pollObj.state !== 'finished');
+    return;
+  }
+
+  async pollTick(pollObj) {
+    let tickObj = pollObj;
     let res;
     try {
+      // Check for existing job status.
       res = await firstValueFrom(
         this.apiService.get('export', { getJob: true })
       );
-      if (res.error) {
-        throw res.error;
+      if (res.error || res.jobObj.progressState === 'error') {
+        throw 'error';
       }
     } catch (error) {
-      if (this.numberOfRetrys > retryCounter) {
-        const retryCount = Number(retryCounter) + 1;
-        this.dataService.setItemValue(dataId, {
-          error:
-            'Error, retry attempt ' + retryCount + ' of ' + this.numberOfRetrys,
+      // If error, retry fetch/generation up to number of max retries.
+      if (this.numberOfRetrys > pollObj.retryCount) {
+        const retries = pollObj.retryCount + 1;
+        this.dataService.setItemValue(pollObj.dataId, {
+          error: {
+            state: 'retrying',
+            msg:
+              'Error, retry attempt ' + retries + ' of ' + this.numberOfRetrys,
+          },
         });
         await this.delay(this.retryPollingRate);
-        this.pollReportStatus(dataId, retryCount);
-        return;
-      } else {
-        this.dataService.setItemValue(dataId, {
-          error: 'Unable to get job information. Please try again.',
-        });
-        console.log(error);
-        return error;
+        // If report generation error, attempt to regenerate.
+        if (res.jobObj.progressState === 'error') {
+          this.dataService.setItemValue(pollObj.dataId, null);
+          await firstValueFrom(this.apiService.get('export'));
+        }
+        tickObj.retryCount = retries;
+        tickObj.state = 'retrying';
+        return tickObj;
       }
+      // Max retries exceeded. Stop polling.
+      // Check for previously generated reports so user can still access them.
+      this.checkForReports(tickObj.dataId, {
+        state: 'error',
+        msg: 'Unable to get job information. Please try again.',
+      });
+      tickObj.state = 'finished';
+      return tickObj;
     }
-
-    retryCounter = 0;
-
     // Every time we poll, we update the data service.
-    this.dataService.setItemValue(dataId, res);
-
-    if (res.jobObj && res.jobObj.progressPercentage !== 100) {
-      // Repeat every second until job is complete.
+    this.dataService.setItemValue(pollObj.dataId, res);
+    if (res.jobObj && res.jobObj.progressState !== 'complete') {
       await this.delay(this.pollingRate);
-      this.pollReportStatus(dataId);
+      return tickObj;
     }
-    return;
+    tickObj.state = 'finished';
+    return tickObj;
   }
 
   delay(time) {

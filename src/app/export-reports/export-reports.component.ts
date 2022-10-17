@@ -18,6 +18,7 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
     STANDBY: 0,
     GENERATING: 1,
     READY_TO_DOWNLOAD: 2,
+    RETRYING: 98,
     ERROR: 99,
   };
 
@@ -47,12 +48,16 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
           if (res) {
             this.initialLoad = false;
             if (res.error) {
-              this.setState(this.stateDictionary.ERROR);
-              this.status = res.error;
-              this.progressBarTextOverride = 'ERROR';
+              if (res.error.state === 'retrying') {
+                this.setState(this.stateDictionary.RETRYING);
+              } else {
+                this.setState(this.stateDictionary.ERROR);
+                this.setExportMessage(res);
+              }
+              this.status = res.error.msg;
             } else {
               if (this.currentState !== 0) {
-                if (res.jobObj.progressPercentage === 100) {
+                if (res.jobObj.progressState === 'complete') {
                   this.setState(this.stateDictionary.READY_TO_DOWNLOAD);
                 } else {
                   this.setState(this.stateDictionary.GENERATING);
@@ -62,11 +67,11 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
               }
 
               this.setExportMessage(res);
-
-              this.signedURL = res?.['signedURL']
-                ? res?.['signedURL']
-                : undefined;
             }
+
+            this.signedURL = res?.['signedURL']
+              ? res?.['signedURL']
+              : undefined;
           }
         })
     );
@@ -112,14 +117,26 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
         this.currentState = 2;
         this.progressBarColour = 'success';
         break;
-      case 99:
+      case 98:
         this.animated = true;
+        this.status = 'Error, retrying.';
+        this.percentageComplete = 100;
+        this.disableGenerate = true;
+        this.disableDownload = true;
+        this.currentState = 3;
+        this.progressBarColour = 'secondary';
+        this.progressBarTextOverride = 'RETRYING';
+        break;
+      case 99:
+        this.animated = false;
         this.status = 'Error, please try again.';
         this.percentageComplete = 100;
         this.disableGenerate = false;
-        this.disableDownload = true;
+        this.disableDownload = false;
         this.currentState = 3;
         this.progressBarColour = 'danger';
+        this.exportMessage = 'Exporter failed. Try again';
+        this.progressBarTextOverride = 'ERROR';
         break;
       default:
         break;
@@ -139,9 +156,13 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
         this.currentState === 2 ||
         this.percentageComplete === 100)
     ) {
-      this.dateGenerated = res?.['jobObj']?.['dateGenerated']
-        ? new Date(res?.['jobObj']?.['dateGenerated'])
-        : undefined;
+      if (res?.jobObj?.dateGenerated) {
+        if (res.jobObj.progressState === 'error'){
+          this.dateGenerated = new Date(res.jobObj.lastSuccessfulJob?.dateGenerated) || undefined;
+        } else {
+          this.dateGenerated = new Date(res.jobObj.dateGenerated);
+        }
+      }
       if (this.dateGenerated) {
         this.exportMessage = `Last export: ${this.dateGenerated}`;
       } else {
