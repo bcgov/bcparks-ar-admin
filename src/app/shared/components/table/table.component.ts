@@ -1,12 +1,13 @@
 import { Component, Input, OnChanges } from '@angular/core';
 
 export interface columnSchema {
-  id: string;
-  displayHeader: string;
-  mapValue: Function;
-  cellTemplate?: Function;
-  width?: string;
-  columnClasses?: string;
+  id: string; // unique column identifier
+  displayHeader: string; // column header title
+  mapValue: Function; // function that returns the value of the cell
+  mapDisplay?: Function; // function that returns what to display in the cell, if different from the value.
+  cellTemplate?: Function; // function that returns a component to fill the cell
+  width?: string; // relative column width (0-100%)
+  columnClasses?: string; // injectable column classes
 }
 
 @Component({
@@ -40,6 +41,9 @@ export class TableComponent implements OnChanges {
           row[col.id] = {
             value: col.mapValue(item),
           };
+          if (col.mapDisplay) {
+            row[col.id].display = col.mapDisplay(item);
+          }
           if (col.cellTemplate) {
             row[col.id].cellTemplate = col.cellTemplate(item);
           }
