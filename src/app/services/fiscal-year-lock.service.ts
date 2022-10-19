@@ -88,7 +88,7 @@ export class FiscalYearLockService {
       // trigger refresh of cached list of fetched fiscal year locks
       this.fetchFiscalYear();
       this.toastService.addMessage(
-        `The fiscal years you selected are now ${ptString}.`,
+        `The records you selected are now ${ptString}.`,
         `Fiscal year ${ptString}`,
         ToastTypes.SUCCESS
       );
