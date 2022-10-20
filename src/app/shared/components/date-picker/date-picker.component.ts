@@ -9,7 +9,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Utils } from '../../utils/utils';
 import { Subscription } from 'rxjs';
 
@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./date-picker.component.scss'],
 })
 export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() control: FormControl;
+  @Input() control: UntypedFormControl;
   @Input() isValidate = false;
   @Input() isDisabled = false;
   @Input() minDate: Date = null as any;

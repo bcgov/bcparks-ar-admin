@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -17,12 +17,12 @@ describe('ValidationService', () => {
       imports: [ReactiveFormsModule, FormsModule],
     });
     service = TestBed.inject(ValidationService);
-    form = new FormGroup({
-      counter: new FormControl(
+    form = new UntypedFormGroup({
+      counter: new UntypedFormControl(
         null,
         service.counterFieldValidator()
       ),
-      money: new FormControl(
+      money: new UntypedFormControl(
         null,
         service.moneyFieldValidator()
       )

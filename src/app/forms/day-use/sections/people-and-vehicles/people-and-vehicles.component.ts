@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
@@ -8,9 +8,9 @@ import { formulaResult } from 'src/app/services/formula.service';
   styleUrls: ['./people-and-vehicles.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class PeopleAndVehiclesComponent implements OnInit {
-  @Input() peopleAndVehiclesTrailField = new FormControl;
-  @Input() peopleAndVehiclesVehicleField = new FormControl;
-  @Input() peopleAndVehiclesBusField = new FormControl;
+  @Input() peopleAndVehiclesTrailField = new UntypedFormControl;
+  @Input() peopleAndVehiclesVehicleField = new UntypedFormControl;
+  @Input() peopleAndVehiclesBusField = new UntypedFormControl;
   @Input() attendanceTotal: formulaResult = {result: null, formula: ''};
 
   constructor() { }

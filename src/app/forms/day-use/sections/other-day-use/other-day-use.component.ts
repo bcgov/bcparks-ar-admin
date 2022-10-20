@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { formulaResult } from 'src/app/services/formula.service';
   styleUrls: ['./other-day-use.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class OtherDayUseComponent implements OnInit {
-  @Input() otherDayUsePeopleHotSpringsField = new FormControl;
-  @Input() otherDayUseRevenueHotSpringsField = new FormControl;
+  @Input() otherDayUsePeopleHotSpringsField = new UntypedFormControl;
+  @Input() otherDayUseRevenueHotSpringsField = new UntypedFormControl;
   @Input() revenueTotal: formulaResult = {result: null, formula: ''};
 
   constructor() { }

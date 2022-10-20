@@ -4,7 +4,7 @@ import {
   Component,
   OnDestroy,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
@@ -15,7 +15,7 @@ import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 export interface formResult {
-  form: FormGroup;
+  form: UntypedFormGroup;
   isValid?: boolean;
   result: any; // submission result
   fields?: any; // raw key:value pairs
@@ -29,7 +29,7 @@ export interface formResult {
   styleUrls: ['./base-form.component.scss'],
 })
 export class BaseFormComponent implements AfterViewChecked, OnDestroy {
-  public form: FormGroup; // the base form.
+  public form: UntypedFormGroup; // the base form.
   public data: any = {}; // existing form data
   public postObj: any = {}; // post object
   public fields: any = {}; // object linking API fields to form controls & values
@@ -39,7 +39,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
   public dataId: any = '';
 
   constructor(
-    public bFormBuilder: FormBuilder,
+    public bFormBuilder: UntypedFormBuilder,
     public bFormService: FormService,
     public bRouter: Router,
     public bDataService: DataService,

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
@@ -8,9 +8,9 @@ import { formulaResult } from 'src/app/services/formula.service';
   styleUrls: ['./picnic-shelters.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class PicnicSheltersComponent implements OnInit {
-  @Input() picnicShelterPeopleControl = new FormControl;
-  @Input() picnicRevenueShelterControl = new FormControl;
-  @Input() picnicRevenueGrossControl = new FormControl;
+  @Input() picnicShelterPeopleControl = new UntypedFormControl;
+  @Input() picnicRevenueShelterControl = new UntypedFormControl;
+  @Input() picnicRevenueGrossControl = new UntypedFormControl;
   @Input() revenueTotal: formulaResult = {result: null, formula: ''};
 
   constructor() { }

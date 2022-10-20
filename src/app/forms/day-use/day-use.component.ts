@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
@@ -24,7 +24,7 @@ export class DayUseComponent extends BaseFormComponent {
   public otherRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
-    protected formBuilder: FormBuilder,
+    protected formBuilder: UntypedFormBuilder,
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
@@ -62,64 +62,64 @@ export class DayUseComponent extends BaseFormComponent {
     // declare activity type
     (this.postObj['activity'] = 'Day Use'),
       // initialize the form and populate with values if they exist.
-      (this.form = new FormGroup({
-        peopleAndVehiclesTrailControl: new FormControl(
+      (this.form = new UntypedFormGroup({
+        peopleAndVehiclesTrailControl: new UntypedFormControl(
           {
             value: this.data.peopleAndVehiclesTrail,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        peopleAndVehiclesVehicleControl: new FormControl(
+        peopleAndVehiclesVehicleControl: new UntypedFormControl(
           {
             value: this.data.peopleAndVehiclesVehicle,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        peopleAndVehiclesBusControl: new FormControl(
+        peopleAndVehiclesBusControl: new UntypedFormControl(
           {
             value: this.data.peopleAndVehiclesBus,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        picnicRevenueShelterControl: new FormControl(
+        picnicRevenueShelterControl: new UntypedFormControl(
           {
             value: this.data.picnicRevenueShelter,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        picnicShelterPeopleControl: new FormControl(
+        picnicShelterPeopleControl: new UntypedFormControl(
           {
             value: this.data.picnicShelterPeople,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        picnicRevenueGrossControl: new FormControl(
+        picnicRevenueGrossControl: new UntypedFormControl(
           {
             value: this.data.picnicRevenueGross,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        otherDayUsePeopleHotSpringsControl: new FormControl(
+        otherDayUsePeopleHotSpringsControl: new UntypedFormControl(
           {
             value: this.data.otherDayUsePeopleHotSprings,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        otherDayUseRevenueHotSpringsControl: new FormControl(
+        otherDayUseRevenueHotSpringsControl: new UntypedFormControl(
           {
             value: this.data.otherDayUseRevenueHotSprings,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        varianceNotesControl: new FormControl({
+        varianceNotesControl: new UntypedFormControl({
           value: this.data.notes,
           disabled: this.loading,
         }),

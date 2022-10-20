@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
@@ -9,11 +9,11 @@ import { formulaResult } from 'src/app/services/formula.service';
 })
 
 export class CampingPartyNightsComponent implements OnInit {
-  @Input() campingPartyNightsAttendanceStandardField = new FormControl;
-  @Input() campingPartyNightsAttendanceSeniorField = new FormControl;
-  @Input() campingPartyNightsAttendanceSocialField = new FormControl;
-  @Input() campingPartyNightsAttendanceLongStayField = new FormControl;
-  @Input() campingPartyNightsRevenueGrossField = new FormControl;
+  @Input() campingPartyNightsAttendanceStandardField = new UntypedFormControl;
+  @Input() campingPartyNightsAttendanceSeniorField = new UntypedFormControl;
+  @Input() campingPartyNightsAttendanceSocialField = new UntypedFormControl;
+  @Input() campingPartyNightsAttendanceLongStayField = new UntypedFormControl;
+  @Input() campingPartyNightsRevenueGrossField = new UntypedFormControl;
   @Input() attendanceTotal: formulaResult = {result: null, formula: ''};
   @Input() revenueTotal: formulaResult = {result: null, formula: ''};
 

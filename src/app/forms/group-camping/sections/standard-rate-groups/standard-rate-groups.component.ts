@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
@@ -8,11 +8,11 @@ import { formulaResult } from 'src/app/services/formula.service';
   styleUrls: ['./standard-rate-groups.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class StandardRateGroupsComponent implements OnInit {
-  @Input() standardRateGroupsTotalPeopleStandardField = new FormControl;
-  @Input() standardRateGroupsTotalPeopleAdultsField = new FormControl;
-  @Input() standardRateGroupsTotalPeopleYouthField = new FormControl;
-  @Input() standardRateGroupsTotalPeopleKidsField = new FormControl;
-  @Input() standardRateGroupsRevenueGrossField = new FormControl;
+  @Input() standardRateGroupsTotalPeopleStandardField = new UntypedFormControl;
+  @Input() standardRateGroupsTotalPeopleAdultsField = new UntypedFormControl;
+  @Input() standardRateGroupsTotalPeopleYouthField = new UntypedFormControl;
+  @Input() standardRateGroupsTotalPeopleKidsField = new UntypedFormControl;
+  @Input() standardRateGroupsRevenueGrossField = new UntypedFormControl;
   @Input() attendanceTotal: formulaResult = { result: null, formula: '' };
   @Input() revenueTotal: formulaResult = { result: null, formula: '' };
 

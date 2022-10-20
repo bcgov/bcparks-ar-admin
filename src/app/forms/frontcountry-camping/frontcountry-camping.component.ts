@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
@@ -26,7 +26,7 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
   public otherRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
-    protected formBuilder: FormBuilder,
+    protected formBuilder: UntypedFormBuilder,
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
@@ -64,92 +64,92 @@ export class FrontcountryCampingComponent extends BaseFormComponent {
     // declare activity type
     (this.postObj['activity'] = 'Frontcountry Camping'),
       // initialize the form and populate with values if they exist.
-      (this.form = new FormGroup({
-        campingPartyNightsAttendanceStandardControl: new FormControl(
+      (this.form = new UntypedFormGroup({
+        campingPartyNightsAttendanceStandardControl: new UntypedFormControl(
           {
             value: this.data.campingPartyNightsAttendanceStandard,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        campingPartyNightsAttendanceSeniorControl: new FormControl(
+        campingPartyNightsAttendanceSeniorControl: new UntypedFormControl(
           {
             value: this.data.campingPartyNightsAttendanceSenior,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        campingPartyNightsAttendanceSocialControl: new FormControl(
+        campingPartyNightsAttendanceSocialControl: new UntypedFormControl(
           {
             value: this.data.campingPartyNightsAttendanceSocial,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        campingPartyNightsAttendanceLongStayControl: new FormControl(
+        campingPartyNightsAttendanceLongStayControl: new UntypedFormControl(
           {
             value: this.data.campingPartyNightsAttendanceLongStay,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        campingPartyNightsRevenueGrossControl: new FormControl(
+        campingPartyNightsRevenueGrossControl: new UntypedFormControl(
           {
             value: this.data.campingPartyNightsRevenueGross,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        secondCarsAttendanceStandardControl: new FormControl(
+        secondCarsAttendanceStandardControl: new UntypedFormControl(
           {
             value: this.data.secondCarsAttendanceStandard,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        secondCarsAttendanceSeniorControl: new FormControl(
+        secondCarsAttendanceSeniorControl: new UntypedFormControl(
           {
             value: this.data.secondCarsAttendanceSenior,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        secondCarsAttendanceSocialControl: new FormControl(
+        secondCarsAttendanceSocialControl: new UntypedFormControl(
           {
             value: this.data.secondCarsAttendanceSocial,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        secondCarsRevenueGrossControl: new FormControl(
+        secondCarsRevenueGrossControl: new UntypedFormControl(
           {
             value: this.data.secondCarsRevenueGross,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        otherRevenueGrossSaniControl: new FormControl(
+        otherRevenueGrossSaniControl: new UntypedFormControl(
           {
             value: this.data.otherRevenueGrossSani,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        otherRevenueElectricalControl: new FormControl(
+        otherRevenueElectricalControl: new UntypedFormControl(
           {
             value: this.data.otherRevenueElectrical,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        otherRevenueShowerControl: new FormControl(
+        otherRevenueShowerControl: new UntypedFormControl(
           {
             value: this.data.otherRevenueShower,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        varianceNotesControl: new FormControl({
+        varianceNotesControl: new UntypedFormControl({
           value: this.data.notes,
           disabled: this.loading,
         }),

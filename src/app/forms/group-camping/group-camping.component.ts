@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
@@ -24,7 +24,7 @@ export class GroupCampingComponent extends BaseFormComponent {
   public youthRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
-    protected formBuilder: FormBuilder,
+    protected formBuilder: UntypedFormBuilder,
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
@@ -62,64 +62,64 @@ export class GroupCampingComponent extends BaseFormComponent {
     // declare activity type
     (this.postObj['activity'] = 'Group Camping'),
       // initialize the form and populate with values if they exist.
-      (this.form = new FormGroup({
-        standardRateGroupsTotalPeopleStandardControl: new FormControl(
+      (this.form = new UntypedFormGroup({
+        standardRateGroupsTotalPeopleStandardControl: new UntypedFormControl(
           {
             value: this.data.standardRateGroupsTotalPeopleStandard,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        standardRateGroupsTotalPeopleAdultsControl: new FormControl(
+        standardRateGroupsTotalPeopleAdultsControl: new UntypedFormControl(
           {
             value: this.data.standardRateGroupsTotalPeopleAdults,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        standardRateGroupsTotalPeopleYouthControl: new FormControl(
+        standardRateGroupsTotalPeopleYouthControl: new UntypedFormControl(
           {
             value: this.data.standardRateGroupsTotalPeopleYouth,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        standardRateGroupsTotalPeopleKidsControl: new FormControl(
+        standardRateGroupsTotalPeopleKidsControl: new UntypedFormControl(
           {
             value: this.data.standardRateGroupsTotalPeopleKids,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        standardRateGroupsRevenueGrossControl: new FormControl(
+        standardRateGroupsRevenueGrossControl: new UntypedFormControl(
           {
             value: this.data.standardRateGroupsRevenueGross,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        youthRateGroupsAttendanceGroupNightsControl: new FormControl(
+        youthRateGroupsAttendanceGroupNightsControl: new UntypedFormControl(
           {
             value: this.data.youthRateGroupsAttendanceGroupNights,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        youthRateGroupsAttendancePeopleControl: new FormControl(
+        youthRateGroupsAttendancePeopleControl: new UntypedFormControl(
           {
             value: this.data.youthRateGroupsAttendancePeople,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        youthRateGroupsRevenueGrossControl: new FormControl(
+        youthRateGroupsRevenueGrossControl: new UntypedFormControl(
           {
             value: this.data.youthRateGroupsRevenueGross,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        varianceNotesControl: new FormControl({
+        varianceNotesControl: new UntypedFormControl({
           value: this.data.notes,
           disabled: this.loading,
         }),
