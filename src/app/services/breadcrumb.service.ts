@@ -20,20 +20,27 @@ export class BreadcrumbService {
   readonly breadcrumbs = this._breadcrumbs.asObservable();
 
   constructor(private router: Router) {
+    // Initial seed
+    this.setBreadcrum();
+
     this.router.events
       .pipe(
         // Filter the NavigationEnd events as the breadcrumb is updated only when the route reaches its end
         filter((event) => event instanceof NavigationEnd)
       )
       .subscribe(() => {
-        // Construct the breadcrumb hierarchy
-        const root = this.router.routerState.snapshot.root;
-        const breadcrumbs: Breadcrumb[] = [];
-        this.addBreadcrumb(root, [], breadcrumbs);
-
-        // Emit the new hierarchy
-        this._breadcrumbs.next(breadcrumbs);
+        this.setBreadcrum();
       });
+  }
+
+  private setBreadcrum() {
+    // Construct the breadcrumb hierarchy
+    const root = this.router.routerState.snapshot.root;
+    const breadcrumbs: Breadcrumb[] = [];
+    this.addBreadcrumb(root, [], breadcrumbs);
+
+    // Emit the new hierarchy
+    this._breadcrumbs.next(breadcrumbs);
   }
 
   private addBreadcrumb(
