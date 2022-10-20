@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
@@ -8,10 +8,10 @@ import { formulaResult } from 'src/app/services/formula.service';
   styleUrls: ['./boating-section.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss'],
 })
 export class BoatingSectionComponent implements OnInit {
-  @Input() nightsOnDock = new FormControl;
-  @Input() nightsOnBuoy = new FormControl;
-  @Input() miscellaneousBoats = new FormControl;
-  @Input() grossBoatingRevenue = new FormControl;
+  @Input() nightsOnDock = new UntypedFormControl;
+  @Input() nightsOnBuoy = new UntypedFormControl;
+  @Input() miscellaneousBoats = new UntypedFormControl;
+  @Input() grossBoatingRevenue = new UntypedFormControl;
   @Input() attendanceTotal: formulaResult = {result: null, formula: ''};
   @Input() revenueTotal: formulaResult = {result: null, formula: ''};
 

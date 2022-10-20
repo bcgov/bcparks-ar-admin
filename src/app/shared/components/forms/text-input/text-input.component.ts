@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-text-input',
@@ -8,7 +8,7 @@ import { FormControl } from '@angular/forms';
 })
 export class TextInputComponent implements OnInit {
   @Input() type = 'text'; // text, number
-  @Input() control = new FormControl;
+  @Input() control = new UntypedFormControl;
   @Input() label;
   @Input() icon;
   @Input() placeholder = "No data";

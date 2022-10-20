@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
@@ -22,7 +22,7 @@ export class BackcountryCampingComponent extends BaseFormComponent {
   public revenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
-    protected formBuilder: FormBuilder,
+    protected formBuilder: UntypedFormBuilder,
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
@@ -61,22 +61,22 @@ export class BackcountryCampingComponent extends BaseFormComponent {
     // declare activity type
     (this.postObj['activity'] = 'Backcountry Camping'),
       // initialize the form and populate with values if they exist.
-      (this.form = new FormGroup({
-        peopleControl: new FormControl(
+      (this.form = new UntypedFormGroup({
+        peopleControl: new UntypedFormControl(
           {
             value: this.data.people,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        grossCampingRevenueControl: new FormControl(
+        grossCampingRevenueControl: new UntypedFormControl(
           {
             value: this.data.grossCampingRevenue,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        varianceNotesControl: new FormControl({
+        varianceNotesControl: new UntypedFormControl({
           value: this.data.notes,
           disabled: this.loading,
         }),

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { formulaResult } from 'src/app/services/formula.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { formulaResult } from 'src/app/services/formula.service';
   styleUrls: ['./backcountry-camping-section.component.scss', '../../../../shared/components/forms/base-form/base-form.component.scss']
 })
 export class BackcountryCampingSectionComponent implements OnInit {
-  @Input() peopleField = new FormControl; 
-  @Input() grossCampingRevenueField = new FormControl; 
+  @Input() peopleField = new UntypedFormControl; 
+  @Input() grossCampingRevenueField = new UntypedFormControl; 
   @Input() revenueTotal: formulaResult = {result: null, formula: ''};
 
   constructor() { }

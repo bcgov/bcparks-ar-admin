@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
@@ -23,7 +23,7 @@ export class BoatingComponent extends BaseFormComponent {
   public revenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor(
-    protected formBuilder: FormBuilder,
+    protected formBuilder: UntypedFormBuilder,
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
@@ -61,36 +61,36 @@ export class BoatingComponent extends BaseFormComponent {
     // declare activity type
     (this.postObj['activity'] = 'Boating'),
       // initialize the form and populate with values if they exist.
-      (this.form = new FormGroup({
-        boatAttendanceNightsOnDockControl: new FormControl(
+      (this.form = new UntypedFormGroup({
+        boatAttendanceNightsOnDockControl: new UntypedFormControl(
           {
             value: this.data.boatAttendanceNightsOnDock,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        boatAttendanceNightsOnBouysControl: new FormControl(
+        boatAttendanceNightsOnBouysControl: new UntypedFormControl(
           {
             value: this.data.boatAttendanceNightsOnBouys,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        boatAttendanceMiscellaneousControl: new FormControl(
+        boatAttendanceMiscellaneousControl: new UntypedFormControl(
           {
             value: this.data.boatAttendanceMiscellaneous,
             disabled: this.loading,
           },
           this.validationService.counterFieldValidator()
         ),
-        boatRevenueGrossControl: new FormControl(
+        boatRevenueGrossControl: new UntypedFormControl(
           {
             value: this.data.boatRevenueGross,
             disabled: this.loading,
           },
           this.validationService.moneyFieldValidator()
         ),
-        varianceNotesControl: new FormControl({
+        varianceNotesControl: new UntypedFormControl({
           value: this.data.notes,
           disabled: this.loading,
         }),
