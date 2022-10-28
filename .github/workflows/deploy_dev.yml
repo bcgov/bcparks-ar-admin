@@ -217,7 +217,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TFC_TEAM_TOKEN }}
 
       - name: Setup terragrunt
-        uses: autero1/terragrunt-github-action@v1.0.0
+        uses: autero1/action-terragrunt@v1.0.0
         with:
           terragrunt_version: ${{ env.TG_VERSION }}
 
