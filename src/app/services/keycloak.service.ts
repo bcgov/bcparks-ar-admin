@@ -24,7 +24,7 @@ export class KeycloakService {
 
   constructor(
     private configService: ConfigService,
-    private logger: LoggerService,
+    private loggerService: LoggerService,
     private toastService: ToastService
   ) {}
 
@@ -46,28 +46,28 @@ export class KeycloakService {
           clientId: !keycloak_client_id ? 'nrpti-admin' : keycloak_client_id,
         };
 
-        // console.log('KC Auth init.');
+        this.loggerService.debug('KC Auth init.');
 
         this.keycloakAuth = new Keycloak(config);
 
         this.keycloakAuth.onAuthSuccess = () => {
-          // console.log('onAuthSuccess');
+          this.loggerService.debug('onAuthSuccess');
         };
 
         this.keycloakAuth.onAuthError = () => {
-          // console.log('onAuthError');
+          this.loggerService.debug('onAuthError');
         };
 
         this.keycloakAuth.onAuthRefreshSuccess = () => {
-          // console.log('onAuthRefreshSuccess');
+          this.loggerService.debug('onAuthRefreshSuccess');
         };
 
         this.keycloakAuth.onAuthRefreshError = () => {
-          // console.log('onAuthRefreshError');
+          this.loggerService.debug('onAuthRefreshError');
         };
 
         this.keycloakAuth.onAuthLogout = () => {
-          // console.log('onAuthLogout');
+          this.loggerService.debug('onAuthLogout');
         };
 
         // Try to get refresh tokens in the background
@@ -75,10 +75,10 @@ export class KeycloakService {
           this.keycloakAuth
             .updateToken()
             .then((refreshed) => {
-              this.logger.log(`KC refreshed token?: ${refreshed}`);
+              this.loggerService.log(`KC refreshed token?: ${refreshed}`);
             })
             .catch((err) => {
-              this.logger.log(`KC refresh error: ${err}`);
+              this.loggerService.log(`KC refresh error: ${err}`);
             });
         };
 
@@ -86,8 +86,8 @@ export class KeycloakService {
         this.keycloakAuth
           .init({})
           .then((auth) => {
-            // console.log('KC Refresh Success?:', this.keycloakAuth.authServerUrl);
-            this.logger.log(`KC Success: ${auth}`);
+            this.loggerService.debug(`KC Refresh Success?:${this.keycloakAuth.authServerUrl}`);
+            this.loggerService.log(`KC Success: ${auth}`);
             resolve();
           })
           .catch((err) => {
@@ -96,7 +96,7 @@ export class KeycloakService {
               'Keycloak Service',
               Constants.ToastTypes.ERROR
             );
-            this.logger.log(`KC error: ${err}`);
+            this.loggerService.log(`KC error: ${err}`);
             reject();
           });
       });
@@ -190,12 +190,12 @@ export class KeycloakService {
       this.keycloakAuth
         .updateToken(30)
         .then((refreshed) => {
-          this.logger.log(`KC refreshed token?: ${refreshed}`);
+          this.loggerService.log(`KC refreshed token?: ${refreshed}`);
           observer.next();
           observer.complete();
         })
         .catch((err) => {
-          this.logger.log(`KC refresh error: ${err}`);
+          this.loggerService.log(`KC refresh error: ${err}`);
           observer.error();
         });
 

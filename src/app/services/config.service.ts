@@ -9,7 +9,7 @@ import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class ConfigService {
-  private configuration = {};
+  private configuration: any = {};
 
   constructor(private httpClient: HttpClient) {}
   /**
@@ -34,11 +34,17 @@ export class ConfigService {
       }
     }
 
-    if (this.configuration['debugMode']) {
+    if (this.configuration['logLevel'] === 0) {
       console.log('Configuration:', this.configuration);
     }
 
     return Promise.resolve();
+  }
+
+  get logLevel(): any {
+    if (window['__env'] && window['__env'].logLevel != undefined)
+    // Can be overidden by the js console.
+    return window['__env'].logLevel;
   }
 
   get config(): any {
