@@ -5,6 +5,7 @@ import { ApiService } from './api.service';
 import { DataService } from './data.service';
 import { EventKeywords, EventObject, EventService } from './event.service';
 import { LoadingService } from './loading.service';
+import { LoggerService } from './logger.service';
 import { ToastService, ToastTypes } from './toast.service';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class FiscalYearLockService {
     private dataService: DataService,
     private apiService: ApiService,
     private toastService: ToastService,
+    private loggerService: LoggerService,
     private loadingService: LoadingService,
     private eventService: EventService
   ) {}
@@ -30,6 +32,7 @@ export class FiscalYearLockService {
     try {
       errorSubject = 'lock-records-fiscal-years-data';
       if (year) {
+        this.loggerService.debug(`fiscalYearEnd GET: ${year}`);
         res = await firstValueFrom(
           this.apiService.get('fiscalYearEnd', { fiscalYearEnd: year })
         );
@@ -41,6 +44,7 @@ export class FiscalYearLockService {
         res
       );
     } catch (e) {
+        this.loggerService.error(`${e}`);
       this.toastService.addMessage(
         'Please refresh the page.',
         `Error getting ${errorSubject}`,
@@ -80,6 +84,7 @@ export class FiscalYearLockService {
     }
     try {
       errorSubject = `lock-records-${subPath}-fiscal-year`;
+      this.loggerService.debug(`fiscalYearEnd POST: ${year} ${subPath}`);
       res = await firstValueFrom(
         this.apiService.post(`fiscalYearEnd/${subPath}`, null, {
           fiscalYearEnd: year,
@@ -93,6 +98,7 @@ export class FiscalYearLockService {
         ToastTypes.SUCCESS
       );
     } catch (e) {
+      this.loggerService.debug(`${e}`);
       this.toastService.addMessage(
         `Something went wrong during fiscal year ${subPath}`,
         `Error: ${errorSubject}`,

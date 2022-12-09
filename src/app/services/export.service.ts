@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from './api.service';
 import { DataService } from './data.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +15,14 @@ export class ExportService {
 
   constructor(
     private apiService: ApiService,
-    private dataService: DataService
+    private dataService: DataService,
+    private loggerService: LoggerService
   ) {}
 
   async checkForReports(dataId, errorObj = {}) {
     let res;
     try {
+      this.loggerService.debug(`Export GET job`);
       res = await firstValueFrom(
         this.apiService.get('export', { getJob: true })
         );
@@ -34,6 +37,7 @@ export class ExportService {
 
   async generateReport(dataId) {
     try {
+      this.loggerService.debug(`Export GET`);
       const res = await firstValueFrom(this.apiService.get('export'));
       if (res.error) {
         throw res.error;
@@ -41,6 +45,7 @@ export class ExportService {
       this.pollReportStatus(dataId);
       return res;
     } catch (error) {
+      this.loggerService.error(`${error}`);
       this.checkForReports(dataId, {
         state: 'error',
         msg: 'Unable to create job. Please try again.'
@@ -78,6 +83,7 @@ export class ExportService {
     let res;
     try {
       // Check for existing job status.
+      this.loggerService.debug(`Export GET job pollTick`);
       res = await firstValueFrom(
         this.apiService.get('export', { getJob: true })
       );
@@ -85,6 +91,7 @@ export class ExportService {
         throw 'error';
       }
     } catch (error) {
+      this.loggerService.error(`${error}`);
       // If error, retry fetch/generation up to number of max retries.
       if (this.numberOfRetrys > pollObj.retryCount) {
         const retries = pollObj.retryCount + 1;

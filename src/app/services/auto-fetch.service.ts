@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Constants } from '../shared/utils/constants';
+import { LoggerService } from './logger.service';
 import { ParkService } from './park.service';
 
 @Injectable({
@@ -10,11 +11,12 @@ export class AutoFetchService {
   public timeIntevalSeconds = 60 * 60;
   public fetchQueue = [Constants.dataIds.ENTER_DATA_PARK];
 
-  constructor(private parkService: ParkService) {}
+  constructor(private parkService: ParkService, private loggerService: LoggerService) {}
 
   async run() {
     this.runFetches(this.fetchQueue);
     setInterval(() => {
+      this.loggerService.debug(`runFetches ${this.fetchQueue}`);
       this.runFetches(this.fetchQueue);
     }, this.timeIntevalSeconds * 1000);
   }

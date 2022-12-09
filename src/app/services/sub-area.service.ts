@@ -8,6 +8,7 @@ import { ToastService, ToastTypes } from './toast.service';
 
 import * as moment from 'moment';
 import { LoadingService } from './loading.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class SubAreaService {
     private eventService: EventService,
     private toastService: ToastService,
     private apiService: ApiService,
+    private loggerService: LoggerService,
     private loadingService: LoadingService
   ) {}
 
@@ -27,7 +29,7 @@ export class SubAreaService {
     let errorSubject = '';
     try {
       errorSubject = 'sub-area';
-
+      this.loggerService.debug(`Park GET: ${orcs} ${subAreaId}`);
       res = await firstValueFrom(
         this.apiService.get('park', {orcs: orcs, subAreaId: subAreaId })
       );
@@ -52,6 +54,7 @@ export class SubAreaService {
         }
       }
     } catch (e) {
+      this.loggerService.error(`${e}`);
       this.toastService.addMessage(
         `Please refresh the page.`,
         `Error getting ${errorSubject}`,
@@ -74,6 +77,7 @@ export class SubAreaService {
     try {
       // we're getting a single item
       errorSubject = 'sub-area-activity';
+      this.loggerService.debug(`Subarea GET: ${orcs} ${subAreaId} ${activity} ${date}`);
 
       res = await firstValueFrom(
         this.apiService.get('subarea', {
@@ -91,6 +95,7 @@ export class SubAreaService {
 
       this.dataService.setItemValue(id, res);
     } catch (e) {
+      this.loggerService.error(`${e}`);
       this.toastService.addMessage(
         `Please refresh the page.`,
         `Error getting ${errorSubject}`,

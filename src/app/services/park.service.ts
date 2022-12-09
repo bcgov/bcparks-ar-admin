@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 import { DataService } from './data.service';
 import { EventKeywords, EventObject, EventService } from './event.service';
 import { LoadingService } from './loading.service';
+import { LoggerService } from './logger.service';
 import { ToastService, ToastTypes } from './toast.service';
 
 @Injectable({
@@ -17,6 +18,7 @@ export class ParkService {
     private eventService: EventService,
     private toastService: ToastService,
     private apiService: ApiService,
+    private loggerService: LoggerService,
     private loadingService: LoadingService
   ) {}
   public utils = new Utils();
@@ -30,6 +32,7 @@ export class ParkService {
       errorSubject = 'park';
 
       // TODO: Enable this when our endpoint is ready
+      this.loggerService.debug(`Park GET`);
       res = await firstValueFrom(this.apiService.get('park'));
       let dataObj = this.utils.convertArrayIntoObjForTypeAhead(
         res,
@@ -38,6 +41,7 @@ export class ParkService {
       );
       this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_PARK, dataObj);
     } catch (e) {
+      this.loggerService.error(`${e}`);
       this.toastService.addMessage(
         `Please refresh the page.`,
         `Error getting ${errorSubject}`,
