@@ -17,7 +17,7 @@ export class KeycloakService {
   private keycloakRealm: string;
 
   public readonly idpHintEnum = {
-    BCEID: 'bceid-basic-and-business',
+    BCEID: 'bceid',
     BCSC: 'bcsc',
     IDIR: 'idir',
   };
