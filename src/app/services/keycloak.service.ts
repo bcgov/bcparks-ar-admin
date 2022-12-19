@@ -212,9 +212,10 @@ export class KeycloakService {
 
     const jwt = JwtUtil.decodeToken(token);
 
-    if (!jwt) {
+    if (!jwt || !jwt.name) {
       return '';
     }
+
     return `${jwt.name}`;
   }
 
