@@ -34,7 +34,7 @@ describe('KeycloakService', () => {
     expect(idp).toEqual('idir');
   });
 
-  it('idp should be `bceid-basic-and-business` if the token has an bceid_userid property', () => {
+  it('idp should be `bceid` if the token has an bceid_userid property', () => {
     spyOn(JwtUtil, 'decodeToken').and.callFake(() => {
       return {
         bceid_userid: '12345',
@@ -45,7 +45,7 @@ describe('KeycloakService', () => {
       return 'not-empty';
     });
     const idp = keycloak.getIdpFromToken();
-    expect(idp).toEqual('bceid-basic-and-business');
+    expect(idp).toEqual('bceid');
   });
 
   it('idp should be `bcsc` if the token does not match any known patterns', () => {
