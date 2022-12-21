@@ -1,9 +1,11 @@
-run-name: Deploying {{GITHUB_REF}} to Test
+name: Deploy Test
+
+run-name: Deploying ${{ github.ref }} to test
 
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 env:
   TF_VERSION: 0.14.7
@@ -32,17 +34,17 @@ jobs:
           role-session-name: parks-ar-admin-sandbox-gh-action
           role-skip-session-tagging: true
 
-      - uses: 'marvinpinto/action-inject-ssm-secrets@v1.2.1'
+      - uses: "marvinpinto/action-inject-ssm-secrets@v1.2.1"
         with:
-          ssm_parameter: '/parks-ar-sandbox/s3-bucket-admin-artifacts'
-          env_variable_name: 'S3_BUCKET_ARTIFACTS'
+          ssm_parameter: "/parks-ar-sandbox/s3-bucket-admin-artifacts"
+          env_variable_name: "S3_BUCKET_ARTIFACTS"
 
       - name: Copy from s3 sandbox
         env:
-          s3_bucket: '${{ env.S3_BUCKET_ARTIFACTS }}'
+          s3_bucket: "${{ env.S3_BUCKET_ARTIFACTS }}"
           dir_name: ${{ github.sha }}
         run: |
-         aws s3 sync s3://$s3_bucket/$dir_name/ dist/bcparks-ar-admin
+          aws s3 sync s3://$s3_bucket/$dir_name/ dist/bcparks-ar-admin
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -55,21 +57,21 @@ jobs:
           role-session-name: parks-ar-admin-test-gh-action
           role-skip-session-tagging: true
 
-      - uses: 'marvinpinto/action-inject-ssm-secrets@v1.2.1'
+      - uses: "marvinpinto/action-inject-ssm-secrets@v1.2.1"
         with:
-          ssm_parameter: '/parks-ar-admin/s3-bucket'
-          env_variable_name: 'S3_BUCKET'
+          ssm_parameter: "/parks-ar-admin/s3-bucket"
+          env_variable_name: "S3_BUCKET"
 
       - name: Deploy to Test S3
         env:
-          s3_bucket: '${{ env.S3_BUCKET }}-${{ env.TARGET_ENV }}'
-          dir_name: ${{ github.event.inputs.releaseTag }}
+          s3_bucket: "${{ env.S3_BUCKET }}-${{ env.TARGET_ENV }}"
+          dir_name: ${{ github.ref }}
         run: |
-         aws s3 sync dist/bcparks-ar-admin s3://$s3_bucket/$dir_name/
+          aws s3 sync dist/bcparks-ar-admin s3://$s3_bucket/$dir_name/
 
   terragrunt:
     name: Run Terragrunt
-    needs: ['s3']
+    needs: ["s3"]
     runs-on: ubuntu-20.04
     environment: test
     strategy:
@@ -78,7 +80,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.inputs.releaseTag }}
+          ref: ${{ github.ref }}
 
       ### Get environment variables from AWS Parameter Store ###
       - name: Configure AWS credentials
@@ -93,28 +95,28 @@ jobs:
           role-skip-session-tagging: true
 
       # Admin variables
-      - uses: 'marvinpinto/action-inject-ssm-secrets@v1.2.1'
+      - uses: "marvinpinto/action-inject-ssm-secrets@v1.2.1"
         with:
-          ssm_parameter: '/parks-ar-admin/s3-bucket'
-          env_variable_name: 'S3_BUCKET'
-      - uses: 'marvinpinto/action-inject-ssm-secrets@v1.2.1'
+          ssm_parameter: "/parks-ar-admin/s3-bucket"
+          env_variable_name: "S3_BUCKET"
+      - uses: "marvinpinto/action-inject-ssm-secrets@v1.2.1"
         with:
-          ssm_parameter: '/parks-ar-admin/origin-id'
-          env_variable_name: 'ORIGIN_ID'
+          ssm_parameter: "/parks-ar-admin/origin-id"
+          env_variable_name: "ORIGIN_ID"
 
       # API variables
-      - uses: 'marvinpinto/action-inject-ssm-secrets@v1.2.1'
+      - uses: "marvinpinto/action-inject-ssm-secrets@v1.2.1"
         with:
           ssm_parameter: /parks-ar-api/origin-domain
-          env_variable_name: 'API_GATEWAY_ORIGIN_DOMAIN'
-      - uses: 'marvinpinto/action-inject-ssm-secrets@v1.2.1'
+          env_variable_name: "API_GATEWAY_ORIGIN_DOMAIN"
+      - uses: "marvinpinto/action-inject-ssm-secrets@v1.2.1"
         with:
           ssm_parameter: /parks-ar-api/origin-id
-          env_variable_name: 'API_GATEWAY_ORIGIN_ID'
-      - uses: 'marvinpinto/action-inject-ssm-secrets@v1.2.1'
+          env_variable_name: "API_GATEWAY_ORIGIN_ID"
+      - uses: "marvinpinto/action-inject-ssm-secrets@v1.2.1"
         with:
           ssm_parameter: /parks-ar-api/gateway-path-pattern
-          env_variable_name: 'API_GATEWAY_PATH_PATTERN'
+          env_variable_name: "API_GATEWAY_PATH_PATTERN"
 
       - name: Setup Terrafrom
         uses: hashicorp/setup-terraform@v1
@@ -130,7 +132,7 @@ jobs:
       - name: Terragrunt Apply
         working-directory: ${{ env.TG_SRC_PATH }}/${{ env.TFC_WORKSPACE }}
         env:
-          app_version: ${{ github.event.inputs.releaseTag }}
+          app_version: ${{ github.ref }}
           s3_bucket: ${{ env.S3_BUCKET }}
           s3_bucket_assets: ${{ env.S3_BUCKET_ASSETS }}
           origin_id: ${{ env.ORIGIN_ID }}
@@ -145,7 +147,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [terragrunt, s3]
     steps:
-      - name: Send alert if building admin-test fails. 
+      - name: Send alert if building admin-test fails.
         id: failure_alert
         run: |
           curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/${{ secrets.ROCKETCHAT_TOKEN }}
