@@ -80,7 +80,7 @@ jobs:
       - run: yarn build
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16-node16
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -116,7 +116,7 @@ jobs:
         node: ['16']
     steps:
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16-node16
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -139,7 +139,7 @@ jobs:
           aws s3 sync s3://$s3_bucket/$dir_name/ dist/bcparks-ar-admin
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16-node16
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -176,7 +176,7 @@ jobs:
 
       ### Get environment variables from AWS Parameter Store ###
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16-node16
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
