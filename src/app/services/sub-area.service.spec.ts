@@ -61,7 +61,7 @@ describe('SubAreaService', () => {
     expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
     expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
 
-    expect(apiServiceSpy).toHaveBeenCalledWith('park', {orcs: 22, subAreaId: 222 });
+    expect(apiServiceSpy).toHaveBeenCalledWith('park', { orcs: 22, subAreaId: 222 });
   });
 
   it('fetches activity details', async () => {
@@ -72,12 +72,13 @@ describe('SubAreaService', () => {
     expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
     expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
 
-    expect(apiServiceSpy).toHaveBeenCalledWith('subarea', {
-                                                            orcs: 11,
-                                                            subAreaId: 111,
-                                                            activity: 1111,
-                                                            date: null,
-                                                          });
+    expect(apiServiceSpy).toHaveBeenCalledWith('subarea',
+      {
+        orcs: 11,
+        subAreaId: 111,
+        activity: 1111,
+        date: null,
+      });
   });
 
   it('clears accordion cache', async () => {
