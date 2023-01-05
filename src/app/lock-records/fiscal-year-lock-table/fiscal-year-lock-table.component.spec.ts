@@ -46,6 +46,6 @@ describe('FiscalYearLockTableComponent', () => {
     expect(component.columnSchema[1].mapValue()).toBe('All Parks');
     expect(component.columnSchema[2].mapValue({ sk: '2012', isLocked: true })).toBe(true);
     expect(component.columnSchema[2].mapValue({ sk: '2012', isLocked: false })).toBe(false);
-    expect(component.columnSchema[2].cellTemplate?.({ sk: '2012', isLocked: false })?.data?.data).toBe({ sk: '2012', isLocked: false });
+    expect(component.columnSchema[2].cellTemplate?.({ sk: '2012', isLocked: false })?.data?.data).toEqual({ sk: '2012', isLocked: false });
   });
 });
