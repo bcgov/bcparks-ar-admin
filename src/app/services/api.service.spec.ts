@@ -19,6 +19,9 @@ describe('ApiService', () => {
   let mockHttpClient = {
     post: () => {
       return {};
+    },
+    get: () => {
+      return {};
     }
   }
 
