@@ -21,7 +21,8 @@ export class ConfigService {
     // any configuration data.
     this.configuration = window['__env'];
 
-    if (this.configuration['configEndpoint'] === true) {
+    if (this.configuration?.configEndpoint !== undefined
+        && this.configuration['configEndpoint'] === true) {
       try {
         // Attempt to get application via this.httpClient. This uses the url of the application that you are running it from
         // This will not work for local because it will try and get localhost:4200/api instead of 3000/api...
@@ -34,7 +35,8 @@ export class ConfigService {
       }
     }
 
-    if (this.configuration['logLevel'] === 0) {
+    if (this.configuration?.logLevel !== undefined
+        && this.configuration['logLevel'] === 0) {
       console.log('Configuration:', this.configuration);
     }
 
