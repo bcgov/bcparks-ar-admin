@@ -36,15 +36,19 @@ export class JwtUtil {
      * @memberof JwtUtil
      */
     static decodeToken(token: string) {
-      const parts = token.split('.');
-      if (parts.length !== 3) {
+      try {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+          return null;
+        }
+        const decoded = this.urlBase64Decode(parts[1]);
+        if (!decoded) {
+          return null;
+        }
+        return JSON.parse(decoded);
+      } catch (e) {
         return null;
       }
-      const decoded = this.urlBase64Decode(parts[1]);
-      if (!decoded) {
-        return null;
-      }
-      return JSON.parse(decoded);
     }
   }
   
