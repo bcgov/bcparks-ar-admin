@@ -157,7 +157,7 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
         this.percentageComplete === 100)
     ) {
       if (res?.jobObj?.dateGenerated) {
-        if (res.jobObj.progressState === 'error'){
+        if (res.jobObj.progressState === 'error') {
           this.dateGenerated = new Date(res.jobObj.lastSuccessfulJob?.dateGenerated) || undefined;
         } else {
           this.dateGenerated = new Date(res.jobObj.dateGenerated);
