@@ -25,7 +25,7 @@ describe('ExportReportsComponent', () => {
     }
   }
 
-  beforeEach(async () => {let dataService;
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NgbModule],
       declarations: [ExportReportsComponent],
