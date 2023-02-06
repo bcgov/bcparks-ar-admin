@@ -19,6 +19,7 @@ export class SubAreaSearchComponent implements OnDestroy {
   private subscriptions = new Subscription();
   private utils = new Utils();
   private dataPreloaded = false;
+  private previousDateChosen;
 
   public parks = { typeAheadData: [] as any[] };
   public subAreas = { selectData: [] as any[] };
@@ -62,14 +63,22 @@ export class SubAreaSearchComponent implements OnDestroy {
   }
 
   datePickerOutput(event) {
-    this.setButtonState('date');
+    // Safety check for dates.
+    if (new Date(this.modelDate) <= this.maxDate) {
+      this.setButtonState('date');
 
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: {
-        date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
-      },
-    });
+      // Store this new date as the last successful date.
+      this.previousDateChosen = this.modelDate;
+
+      this.router.navigate([], {
+        relativeTo: this.activatedRoute,
+        queryParams: {
+          date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
+        },
+      });
+    } else {
+      this.modelDate = this.previousDateChosen;
+    }
   }
 
   parkTypeaheadOutput(event) {
@@ -177,12 +186,18 @@ export class SubAreaSearchComponent implements OnDestroy {
 
     if (date) {
       date = this.utils.convertYYYYMMToJSDate(date);
+      // Don't allow future dates.
+      const now = new Date();
+      if (now < date) {
+        date = now;
+      }
     }
 
     let state = 'none';
     if (date) {
       state = 'date';
-      this.modelDate = date;
+      // Store the incoming date
+      this.previousDateChosen = this.modelDate = date;
       this.datePickerOutput(null);
     }
     if (date && orcs) {
