@@ -104,14 +104,7 @@ describe('SubAreaSearchComponent', () => {
     await fixture.detectChanges();
 
     // NB: We're not testing utils date fn
-    expect(navigateSpy).toHaveBeenCalledWith([], {
-      relativeTo: {
-        snapshot: { queryParams: { id: 123 } }
-      },
-      queryParams: {
-        date: 'Invalid date'
-      }
-    });
+    expect(navigateSpy).toHaveBeenCalledTimes(0);
   });
 
   it('should set park typeahead output', async () => {
