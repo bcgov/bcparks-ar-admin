@@ -7,6 +7,8 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from 'src/app/shared/utils/utils';
 import { FormService } from 'src/app/services/form.service';
+import { ChangeDetectorRef  } from '@angular/core';
+import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
 
 @Component({
   selector: 'app-sub-area-search',
@@ -43,7 +45,8 @@ export class SubAreaSearchComponent implements OnDestroy {
     protected subAreaService: SubAreaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private formService: FormService
+    private formService: FormService,
+    private cRef: ChangeDetectorRef
   ) {
     this.subscriptions.add(
       dataService
@@ -77,7 +80,11 @@ export class SubAreaSearchComponent implements OnDestroy {
         },
       });
     } else {
-      this.modelDate = this.previousDateChosen;
+      const self = this;
+      setTimeout(() => {
+        this.modelDate = this.previousDateChosen;
+        self.cRef.detectChanges();
+      }, 50)
     }
   }
 
