@@ -7,6 +7,8 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from 'src/app/shared/utils/utils';
 import { FormService } from 'src/app/services/form.service';
+import { ChangeDetectorRef  } from '@angular/core';
+import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
 
 @Component({
   selector: 'app-sub-area-search',
@@ -19,6 +21,7 @@ export class SubAreaSearchComponent implements OnDestroy {
   private subscriptions = new Subscription();
   private utils = new Utils();
   private dataPreloaded = false;
+  private previousDateChosen;
 
   public parks = { typeAheadData: [] as any[] };
   public subAreas = { selectData: [] as any[] };
@@ -42,7 +45,8 @@ export class SubAreaSearchComponent implements OnDestroy {
     protected subAreaService: SubAreaService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private formService: FormService
+    private formService: FormService,
+    private cRef: ChangeDetectorRef
   ) {
     this.subscriptions.add(
       dataService
@@ -62,14 +66,26 @@ export class SubAreaSearchComponent implements OnDestroy {
   }
 
   datePickerOutput(event) {
-    this.setButtonState('date');
+    // Safety check for dates.
+    if (new Date(this.modelDate) <= this.maxDate) {
+      this.setButtonState('date');
 
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: {
-        date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
-      },
-    });
+      // Store this new date as the last successful date.
+      this.previousDateChosen = this.modelDate;
+
+      this.router.navigate([], {
+        relativeTo: this.activatedRoute,
+        queryParams: {
+          date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
+        },
+      });
+    } else {
+      const self = this;
+      setTimeout(() => {
+        this.modelDate = this.previousDateChosen;
+        self.cRef.detectChanges();
+      }, 50)
+    }
   }
 
   parkTypeaheadOutput(event) {
@@ -177,12 +193,18 @@ export class SubAreaSearchComponent implements OnDestroy {
 
     if (date) {
       date = this.utils.convertYYYYMMToJSDate(date);
+      // Don't allow future dates.
+      const now = new Date();
+      if (now < date) {
+        date = now;
+      }
     }
 
     let state = 'none';
     if (date) {
       state = 'date';
-      this.modelDate = date;
+      // Store the incoming date
+      this.previousDateChosen = this.modelDate = date;
       this.datePickerOutput(null);
     }
     if (date && orcs) {

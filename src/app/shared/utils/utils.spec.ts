@@ -15,8 +15,8 @@ describe('Utils Testing', async () => {
     expect(NGBDateNull).toBe(null);
 
     let dt = new Date();
-    dt.setDate(31);
     dt.setMonth(11);
+    dt.setDate(31);
     dt.setFullYear(2014);
     let NGBDate = utils.convertJSDateToNGBDate(dt);
     expect(NGBDate).toEqual({"year":2014,"month":12,"day":31});
