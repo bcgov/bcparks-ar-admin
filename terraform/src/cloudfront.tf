@@ -1,21 +1,29 @@
 #bucket containing the static files to serve out
 resource "aws_s3_bucket" "bcgov-parks-ar-admin" {
   bucket = "${var.s3_bucket}-${var.target_env}"
-  acl    = "private"
 
   tags   = {
     Name = var.s3_bucket_name
   }
 }
 
+resource "aws_s3_bucket_acl" "bcgov-parks-ar-admin-acl" {
+  bucket = "${var.s3_bucket}-${var.target_env}"
+  acl    = "private"
+}
+
 #bucket to hold cloudfront logs#
 resource "aws_s3_bucket" "parks-ar-admin-logs" {
   bucket = "${var.s3_bucket}-logs-${var.target_env}"
-  acl    = "private"
 
   tags   = {
     Name = "${var.s3_bucket_name} Logs"
   }
+}
+
+resource "aws_s3_bucket_acl" "parks-ar-admin-logs-acl" {
+  bucket = "${var.s3_bucket}-logs-${var.target_env}"
+  acl    = "private"
 }
 
 #Access ID so CF can read the non-public bucket containing static site files
