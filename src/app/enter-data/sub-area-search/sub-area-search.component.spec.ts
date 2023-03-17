@@ -32,6 +32,25 @@ describe('SubAreaSearchComponent', () => {
     }
   }
 
+  const mockContainer = {
+    monthSelectedHandler: (event) => {
+
+    },
+    _store: {
+      dispatch: () => {
+
+      }
+    },
+    _actions: {
+      select: (aDate) => {
+
+      }
+    },
+    setViewMode: (data) => {
+
+    }
+  }
+
   const mockFormService = {
     setItemValue: () => {
       return of({
@@ -94,7 +113,7 @@ describe('SubAreaSearchComponent', () => {
     expect(component.parks).toEqual(typeaheadData);
   });
 
-  it('should navigate to the new route', async () => {
+  it('should not navigate to the new route', async () => {
     expect(component).toBeTruthy();
     const navigateSpy = spyOn(router, 'navigate');
 
@@ -105,6 +124,28 @@ describe('SubAreaSearchComponent', () => {
 
     // NB: We're not testing utils date fn
     expect(navigateSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should open the calendar', async () => {
+    expect(component).toBeTruthy();
+    await fixture.isStable();
+    const containerSpy = spyOn(mockContainer, 'setViewMode');
+
+    component.onOpenCalendar(mockContainer);
+    expect(containerSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should navigate to the new route', async () => {
+    expect(component).toBeTruthy();
+    const navigateSpy = spyOn(router, 'navigate');
+
+    await fixture.isStable();
+    component.modelDate = "2022-01-01";
+    await component.datePickerOutput('Park');
+    await fixture.detectChanges();
+
+    // NB: We're not testing utils date fn
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should set park typeahead output', async () => {
