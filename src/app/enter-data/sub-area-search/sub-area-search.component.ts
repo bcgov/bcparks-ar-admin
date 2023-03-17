@@ -66,6 +66,10 @@ export class SubAreaSearchComponent implements OnDestroy {
   }
 
   datePickerOutput(event) {
+    console.log("***********************************************event:", event);
+    console.log("1", new Date(this.modelDate));
+    console.log("2", this.maxDate);
+    console.log("3", new Date(this.modelDate) <= this.maxDate);
     // Safety check for dates.
     if (new Date(this.modelDate) <= this.maxDate) {
       this.setButtonState('date');
@@ -105,6 +109,9 @@ export class SubAreaSearchComponent implements OnDestroy {
         parkName: this.selectedPark.parkName,
       },
     });
+    if (this.selectedSubArea) {
+      this.subAreaOutput(this.selectedSubArea.id)
+    }
   }
 
   subAreaOutput(event) {
