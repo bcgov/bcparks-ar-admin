@@ -7,11 +7,11 @@ import {
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ActivityService } from 'src/app/services/activity.service';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { FormulaService } from 'src/app/services/formula.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 export interface formResult {
@@ -43,7 +43,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
     public bFormService: FormService,
     public bRouter: Router,
     public bDataService: DataService,
-    public bSubAreaService: SubAreaService,
+    public bActivityService: ActivityService,
     public bFormulaService: FormulaService,
     public bLoadingService: LoadingService,
     public bChangeDetector: ChangeDetectorRef
@@ -156,10 +156,10 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
     let res = [];
     // check form validity - do not submit if form is invalid.
     if (this.validate()) {
-      res = await this.bFormService.postActivity(payload);
+      res = await this.bActivityService.postActivity(payload);
 
       // Refresh the accordion with new data.
-      await this.bSubAreaService.fetchActivityDetails(
+      await this.bActivityService.fetchActivityDetails(
         'accordion-' + this.postObj.activity,
         this.postObj.orcs,
         this.postObj.subAreaId,

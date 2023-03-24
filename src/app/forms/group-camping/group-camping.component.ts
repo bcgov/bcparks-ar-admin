@@ -1,5 +1,9 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
@@ -12,6 +16,7 @@ import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/bas
 import { Constants } from 'src/app/shared/utils/constants';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ValidationService } from 'src/app/services/validation.service';
+import { ActivityService } from 'src/app/services/activity.service';
 
 @Component({
   selector: 'app-group-camping',
@@ -28,7 +33,7 @@ export class GroupCampingComponent extends BaseFormComponent {
     protected formService: FormService,
     protected dataService: DataService,
     protected router: Router,
-    protected subAreaService: SubAreaService,
+    protected activityService: ActivityService,
     protected formulaService: FormulaService,
     protected loadingService: LoadingService,
     protected validationService: ValidationService,
@@ -39,7 +44,7 @@ export class GroupCampingComponent extends BaseFormComponent {
       formService,
       router,
       dataService,
-      subAreaService,
+      activityService,
       formulaService,
       loadingService,
       changeDetectior
