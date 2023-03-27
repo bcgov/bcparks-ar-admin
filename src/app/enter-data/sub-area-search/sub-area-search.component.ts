@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
@@ -14,7 +14,7 @@ import { ChangeDetectorRef } from '@angular/core';
   templateUrl: './sub-area-search.component.html',
   styleUrls: ['./sub-area-search.component.scss'],
 })
-export class SubAreaSearchComponent implements OnDestroy {
+export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   @ViewChild(TypeaheadComponent) typeAhead: TypeaheadComponent;
 
   private subscriptions = new Subscription();
@@ -69,10 +69,6 @@ export class SubAreaSearchComponent implements OnDestroy {
   }
 
   datePickerOutput(event) {
-    console.log('***********************************************event:', event);
-    console.log('1', new Date(this.modelDate));
-    console.log('2', this.maxDate);
-    console.log('3', new Date(this.modelDate) <= this.maxDate);
     // Safety check for dates.
     if (new Date(this.modelDate) <= this.maxDate) {
       this.setButtonState('date');
