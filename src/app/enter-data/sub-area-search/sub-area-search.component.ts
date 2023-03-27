@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
@@ -7,15 +7,14 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from 'src/app/shared/utils/utils';
 import { FormService } from 'src/app/services/form.service';
-import { ChangeDetectorRef  } from '@angular/core';
-import { setTime } from 'ngx-bootstrap/chronos/utils/date-setters';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-sub-area-search',
   templateUrl: './sub-area-search.component.html',
   styleUrls: ['./sub-area-search.component.scss'],
 })
-export class SubAreaSearchComponent implements OnDestroy {
+export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   @ViewChild(TypeaheadComponent) typeAhead: TypeaheadComponent;
 
   private subscriptions = new Subscription();
@@ -65,11 +64,11 @@ export class SubAreaSearchComponent implements OnDestroy {
     );
   }
 
+  ngAfterViewInit() {
+    this.cRef.detectChanges();
+  }
+
   datePickerOutput(event) {
-    console.log("***********************************************event:", event);
-    console.log("1", new Date(this.modelDate));
-    console.log("2", this.maxDate);
-    console.log("3", new Date(this.modelDate) <= this.maxDate);
     // Safety check for dates.
     if (new Date(this.modelDate) <= this.maxDate) {
       this.setButtonState('date');
@@ -87,8 +86,7 @@ export class SubAreaSearchComponent implements OnDestroy {
       const self = this;
       setTimeout(() => {
         this.modelDate = this.previousDateChosen;
-        self.cRef.detectChanges();
-      }, 50)
+      }, 50);
     }
   }
 
@@ -110,14 +108,16 @@ export class SubAreaSearchComponent implements OnDestroy {
       },
     });
     if (this.selectedSubArea) {
-      this.subAreaOutput(this.selectedSubArea.id)
+      this.subAreaOutput(this.selectedSubArea.id);
     }
   }
 
   subAreaOutput(event) {
     this.setButtonState('subArea');
     // we can get subarea name and id from the park object.
-    let subAreaFilter = this.subAreas.selectData.filter(subArea => subArea.id === event);
+    let subAreaFilter = this.subAreas.selectData.filter(
+      (subArea) => subArea.id === event
+    );
     this.selectedSubArea = subAreaFilter[0];
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
@@ -126,7 +126,7 @@ export class SubAreaSearchComponent implements OnDestroy {
         orcs: this.selectedPark.sk,
         parkName: this.selectedPark.parkName,
         subAreaId: this.selectedSubArea.id,
-        subAreaName: this.selectedSubArea.label
+        subAreaName: this.selectedSubArea.label,
       },
     });
   }

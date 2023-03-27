@@ -6,9 +6,9 @@ import { DataService } from './data.service';
 import { EventService, EventObject, EventKeywords } from './event.service';
 import { ToastService, ToastTypes } from './toast.service';
 
-import * as moment from 'moment';
 import { LoadingService } from './loading.service';
 import { LoggerService } from './logger.service';
+import { ActivityService } from './activity.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,8 @@ export class SubAreaService {
     private toastService: ToastService,
     private apiService: ApiService,
     private loggerService: LoggerService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private activityService: ActivityService
   ) {}
 
   async fetchSubArea(id, orcs, subAreaId, date) {
@@ -31,7 +32,7 @@ export class SubAreaService {
       errorSubject = 'sub-area';
       this.loggerService.debug(`Park GET: ${orcs} ${subAreaId}`);
       res = await firstValueFrom(
-        this.apiService.get('park', {orcs: orcs, subAreaId: subAreaId })
+        this.apiService.get('park', { orcs: orcs, subAreaId: subAreaId })
       );
       res = res.data[0];
       this.dataService.setItemValue(id, res);
@@ -44,7 +45,7 @@ export class SubAreaService {
           // ID = accordion-{activity}
           // eg. 'accordion-Day use'
           // This may change depending on how we want to handle accordion data
-          this.fetchActivityDetails(
+          this.activityService.fetchActivityDetails(
             `accordion-${activity}`,
             orcs,
             subAreaId,
@@ -53,47 +54,6 @@ export class SubAreaService {
           );
         }
       }
-    } catch (e) {
-      this.loggerService.error(`${e}`);
-      this.toastService.addMessage(
-        `Please refresh the page.`,
-        `Error getting ${errorSubject}`,
-        ToastTypes.ERROR
-      );
-      this.eventService.setError(
-        new EventObject(EventKeywords.ERROR, String(e), 'Sub-area Service')
-      );
-      // TODO: We may want to change this.
-      this.dataService.setItemValue(id, 'error');
-    }
-    this.loadingService.removeToFetchList(id);
-  }
-
-  //subarea?subAreaId=0001&activity=Day%20Use&date=202204
-  async fetchActivityDetails(id, orcs, subAreaId, activity, date) {
-    this.loadingService.addToFetchList(id);
-    let res;
-    let errorSubject = '';
-    try {
-      // we're getting a single item
-      errorSubject = 'sub-area-activity';
-      this.loggerService.debug(`Subarea GET: ${orcs} ${subAreaId} ${activity} ${date}`);
-
-      res = await firstValueFrom(
-        this.apiService.get('subarea', {
-          orcs: orcs,
-          subAreaId: subAreaId,
-          activity: activity,
-          date: date,
-        })
-      );
-
-      // Date for accordion
-      res.lastUpdatedAccordion = res.lastUpdated
-        ? moment(new Date(res.lastUpdated)).format('YYYY-MM-DD')
-        : 'Never';
-
-      this.dataService.setItemValue(id, res);
     } catch (e) {
       this.loggerService.error(`${e}`);
       this.toastService.addMessage(
