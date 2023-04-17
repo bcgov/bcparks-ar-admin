@@ -19,6 +19,9 @@ export class EnterDataComponent implements OnDestroy {
     parkName: '',
     subAreaName: '',
     date: '',
+    orcs: '',
+    subAreaId: '',
+    isLegacy: false,
   };
   public utils = new Utils();
 

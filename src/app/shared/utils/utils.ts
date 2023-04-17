@@ -4,14 +4,16 @@ import { Constants } from './constants';
 export class Utils {
   public convertArrayIntoObjForTypeAhead(
     array,
-    valueToUseAsKey,
     valueToUseForTypeAhead
   ) {
-    let obj = { typeAheadData: [] as any[] };
+    let obj: any[] = [];
     for (let i = 0; i < array.length; i++) {
       const element = array[i];
-      obj[element[valueToUseAsKey]] = element;
-      obj.typeAheadData.push(element[valueToUseForTypeAhead]);
+      obj.push({
+        display: element[valueToUseForTypeAhead],
+        value: element,
+        template: null // Stubbed for custom typeahead template
+      });
     }
     return obj;
   }
