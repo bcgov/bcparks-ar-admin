@@ -1,0 +1,14 @@
+.dropdown-menu { 
+  width: 100%;
+  max-width: 100%;
+}
+
+.clear-button {
+  color: #ced4da;
+  background-color: white;
+  border-left: none;
+  cursor: pointer;
+  &:hover {
+    color: #494949;
+  }
+}

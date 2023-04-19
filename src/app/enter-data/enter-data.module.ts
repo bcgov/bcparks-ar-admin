@@ -21,10 +21,12 @@ import { FrontcountryCampingModule } from '../forms/frontcountry-camping/frontco
 import { GroupCampingModule } from '../forms/group-camping/group-camping.module';
 import { FormService } from '../services/form.service';
 import { TextToLoadingSpinnerModule } from '../shared/components/text-to-loading-spinner/text-to-loading-spinner.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [EnterDataComponent, SubAreaSearchComponent],
   imports: [
+    NgbModule,
     CommonModule,
     TypeaheadModule,
     InfoTextModule,

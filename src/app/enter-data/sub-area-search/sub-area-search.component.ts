@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
@@ -7,7 +7,7 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from 'src/app/shared/utils/utils';
 import { FormService } from 'src/app/services/form.service';
-import { ChangeDetectorRef } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-sub-area-search',
@@ -15,25 +15,33 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./sub-area-search.component.scss'],
 })
 export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
-  @ViewChild(TypeaheadComponent) typeAhead: TypeaheadComponent;
+  @ViewChild('parkTypeAhead') parkTypeAhead: TypeaheadComponent;
+  @ViewChild('subAreaTypeAhead') subAreaTypeAhead: TypeaheadComponent;
+  @ViewChild('historicalPill') legacyTypeAheadTemplate: TemplateRef<any>;
 
   private subscriptions = new Subscription();
   private utils = new Utils();
   private dataPreloaded = false;
   private previousDateChosen;
 
-  public parks = { typeAheadData: [] as any[] };
-  public subAreas = { selectData: [] as any[] };
-  public typeAheadDisabled = true;
+  public parks;
+  public subAreas;
+  public parkDisabled = true;
   public subAreaDisabled = true;
   public continueDisabled = true;
 
   public selectedPark;
   public selectedSubArea;
 
-  public modelDate = '';
-  public modelPark = '';
+  public modelDate;
+  public modelPark = null;
   public modelSubArea = null;
+  public formDisplayValues = {};
+
+  // The root BaseFormComponent is outdated in A&R and is not generic enough to be used here.
+  public form: UntypedFormGroup;
+  public fields: any = {};
+  public searchParams: any = {};
 
   public maxDate = new Date();
 
@@ -45,89 +53,208 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private formService: FormService,
-    private cRef: ChangeDetectorRef
   ) {
     this.subscriptions.add(
       dataService
         .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
         .subscribe((res) => {
-          if (res && res.typeAheadData?.length > 0) {
-            this.parks = res;
+          if (res && res.length) {
+            this.parks = this.utils.convertArrayIntoObjForTypeAhead(res, 'parkName');
+            this.formatLegacyTypeaheadLabel(this.parks);
             if (
               !this.dataPreloaded &&
               Object.keys(activatedRoute.snapshot.queryParams).length !== 0
             ) {
-              this.presetUI(activatedRoute.snapshot.queryParams);
+              this.searchParams = activatedRoute.snapshot.queryParams;
             }
+            this.setForm();
           }
         })
     );
   }
 
   ngAfterViewInit() {
-    this.cRef.detectChanges();
+    // Sometimes the historical field template has not yet been intialized when the typeahead is rendered.
+    if (this.parks) {
+      this.formatLegacyTypeaheadLabel(this.parks);
+    }
   }
 
-  datePickerOutput(event) {
-    // Safety check for dates.
+  setForm() {
+    let initPark = this.parks?.find((park) => park.value.orcs === this.searchParams.orcs);
+    let initSubArea;
+    if (initPark?.value?.subAreas) {
+      this.subAreas = this.utils.convertArrayIntoObjForTypeAhead(initPark.value.subAreas, 'name');
+      this.formatLegacyTypeaheadLabel(this.subAreas);
+      initSubArea = this.subAreas?.find((subArea) => subArea.value.id === this.searchParams.subAreaId);
+    }
+    this.form = new UntypedFormGroup({
+      park: new UntypedFormControl(initPark || null),
+      subArea: new UntypedFormControl(initSubArea || null),
+    });
+    for (const key in this.form.controls) {
+      this.fields[key] = this.form.controls[key];
+      this.subscriptions.add(
+        this.fields[key].valueChanges.subscribe((value) => {
+          this.onFormChange(key, value);
+        }
+        ));
+    }
+    this.presetUI();
+    this.setFormParams();
+  }
+
+  onFormChange(field, value) {
+    switch (field) {
+      case 'park':
+        this.parkChange(value)
+        break;
+      case 'subArea':
+        this.subAreaChange(value)
+        break;
+    }
+  }
+
+  presetUI() {
+    if (this.searchParams?.date) {
+      this.setDate(this.searchParams.date);
+      if (this.searchParams?.orcs) {
+        this.setPark(this.searchParams.orcs);
+        if (this.searchParams?.subAreaId) {
+          this.setSubArea(this.searchParams.subAreaId);
+        }
+      }
+    }
+  }
+
+  formatLegacyTypeaheadLabel(list) {
+    for (const item of list) {
+      if (item.value.isLegacy) {
+        item.template = this.legacyTypeAheadTemplate;
+      }
+    }
+  }
+
+  dateChange(event) {
+    this.setDate(this.utils.convertJSDateToYYYYMM(event))
+  }
+
+  setDate(YYYYMM) {
+    this.modelDate = this.utils.convertYYYYMMToJSDate(YYYYMM);
     if (new Date(this.modelDate) <= this.maxDate) {
-      this.setButtonState('date');
-
-      // Store this new date as the last successful date.
       this.previousDateChosen = this.modelDate;
-
-      this.router.navigate([], {
-        relativeTo: this.activatedRoute,
-        queryParams: {
-          date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
-        },
-      });
+      this.setURL(YYYYMM);
     } else {
       const self = this;
       setTimeout(() => {
         this.modelDate = this.previousDateChosen;
       }, 50);
     }
+    this.setFormState('date');
   }
 
-  parkTypeaheadOutput(event) {
-    this.setButtonState('park');
-    this.selectedPark = this.parks[event];
-    for (let i = 0; i < this.selectedPark.subAreas?.length; i++) {
-      this.subAreas.selectData.push({
-        id: this.selectedPark.subAreas[i].id,
-        label: this.selectedPark.subAreas[i].name,
-      });
+  parkChange(event) {
+    if (event) {
+      this.setPark(event.value.orcs);
+    } else {
+      this.setPark(null);
+    }
+  }
+
+  setPark(orcs) {
+    if (orcs) {
+      this.selectedPark = this.parks.find((park) => park.value.orcs === orcs);
+      this.subAreas = this.utils.convertArrayIntoObjForTypeAhead(this.selectedPark.value.subAreas, 'name');
+      this.formatLegacyTypeaheadLabel(this.subAreas);
+      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark.value);
+      this.setFormState('park');
+    } else {
+      this.fields.subArea.setValue(null);
+      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate));
+      this.setFormState('date');
+    }
+  }
+
+  subAreaChange(event) {
+    if (event) {
+      this.setSubArea(event.value.id);
+    } else {
+      this.setSubArea(null);
+    }
+  }
+
+  setSubArea(subAreaId) {
+    if (subAreaId) {
+      this.selectedSubArea = this.subAreas.find((subArea) => subArea.value.id === subAreaId);
+      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark.value, this.selectedSubArea.value);
+      this.setFormState('subArea');
+    } else {
+      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark.value);
+      this.setFormState('park');
+    }
+  }
+
+  setFormState(state) {
+    switch (state) {
+      case 'none':
+        this.parkDisabled = true;
+        this.subAreaDisabled = true;
+        this.continueDisabled = true;
+        break;
+      case 'date':
+        this.parkDisabled = false;
+        this.subAreaDisabled = true;
+        this.continueDisabled = true;
+        break;
+      case 'park':
+        this.parkDisabled = false;
+        this.subAreaDisabled = false;
+        this.continueDisabled = true;
+        break;
+      case 'subArea':
+        this.parkDisabled = false;
+        this.subAreaDisabled = false;
+        this.continueDisabled = false;
+        break;
+    }
+  }
+
+  setURL(date, parkValue?, subAreaValue?) {
+    let queryParams = {
+      date: date
+    }
+    if (parkValue) {
+      queryParams['orcs'] = parkValue.orcs;
+      queryParams['parkName'] = parkValue.parkName;
+    }
+    if (subAreaValue) {
+      queryParams['subAreaId'] = subAreaValue.id;
+      queryParams['subAreaName'] = subAreaValue.name
     }
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
-      queryParams: {
-        date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
-        orcs: this.selectedPark.sk,
-        parkName: this.selectedPark.parkName,
-      },
+      queryParams: queryParams
     });
-    if (this.selectedSubArea) {
-      this.subAreaOutput(this.selectedSubArea.id);
-    }
   }
 
-  subAreaOutput(event) {
-    this.setButtonState('subArea');
-    // we can get subarea name and id from the park object.
-    let subAreaFilter = this.subAreas.selectData.filter(
-      (subArea) => subArea.id === event
+  search() {
+    this.setFormParams();
+    this.subAreaService.fetchSubArea(
+      Constants.dataIds.ENTER_DATA_SUB_AREA,
+      this.fields.park.value?.value?.orcs,
+      this.fields.subArea.value?.value?.id,
+      this.utils.convertJSDateToYYYYMM(new Date(this.modelDate))
     );
-    this.selectedSubArea = subAreaFilter[0];
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: {
-        date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
-        orcs: this.selectedPark.sk,
-        parkName: this.selectedPark.parkName,
-        subAreaId: this.selectedSubArea.id,
-        subAreaName: this.selectedSubArea.label,
-      },
+  }
+
+  setFormParams() {
+    this.formService.setFormParams({
+      date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
+      parkName: this.fields.park.value?.value?.parkName,
+      subAreaId: this.fields.subArea.value?.value?.id,
+      subAreaName: this.fields.subArea.value?.value?.name,
+      orcs: this.fields.park.value?.value?.orcs,
+      isLegacy: this.fields.subArea.value?.value?.isLegacy
     });
   }
 
@@ -138,97 +265,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
     container.setViewMode('month');
   }
 
-  search() {
-    this.setFormParams();
-    this.subAreaService.fetchSubArea(
-      Constants.dataIds.ENTER_DATA_SUB_AREA,
-      this.selectedPark.sk,
-      this.selectedSubArea.id,
-      this.utils.convertJSDateToYYYYMM(new Date(this.modelDate))
-    );
-  }
-
-  setFormParams() {
-    this.formService.setFormParams({
-      date: this.utils.convertJSDateToYYYYMM(new Date(this.modelDate)),
-      parkName: this.selectedPark.parkName,
-      subAreaId: this.selectedSubArea.id,
-      subAreaName: this.selectedSubArea.label,
-      orcs: this.selectedPark.sk,
-    });
-  }
-
-  setButtonState(state) {
-    switch (state) {
-      case 'none':
-        this.typeAheadDisabled = true;
-        this.subAreaDisabled = true;
-        this.continueDisabled = true;
-
-        this.subAreas.selectData = [];
-        break;
-      case 'date':
-        this.typeAheadDisabled = false;
-        this.subAreaDisabled = true;
-        this.continueDisabled = true;
-
-        this.typeAhead?.reset();
-        this.subAreas.selectData = [];
-        break;
-      case 'park':
-        this.typeAheadDisabled = false;
-        this.subAreaDisabled = false;
-        this.continueDisabled = true;
-
-        this.subAreas.selectData = [];
-        break;
-      case 'subArea':
-        this.typeAheadDisabled = false;
-        this.subAreaDisabled = false;
-        this.continueDisabled = false;
-        break;
-      default:
-        break;
-    }
-  }
-
-  presetUI(params) {
-    let date = params['date'];
-    const orcs = params['orcs'];
-    const parkName = params['parkName'];
-    const subAreaId = params['subAreaId'];
-
-    if (date) {
-      date = this.utils.convertYYYYMMToJSDate(date);
-      // Don't allow future dates.
-      const now = new Date();
-      if (now < date) {
-        date = now;
-      }
-    }
-
-    let state = 'none';
-    if (date) {
-      state = 'date';
-      // Store the incoming date
-      this.previousDateChosen = this.modelDate = date;
-      this.datePickerOutput(null);
-    }
-    if (date && orcs) {
-      state = 'park';
-      this.modelPark = parkName;
-      this.parkTypeaheadOutput(parkName);
-    }
-    if (date && orcs && subAreaId) {
-      state = 'subArea';
-      this.modelSubArea = subAreaId;
-      this.subAreaOutput(subAreaId);
-      this.setFormParams();
-    }
-    this.dataPreloaded = true;
-  }
-
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 }

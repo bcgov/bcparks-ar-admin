@@ -24,9 +24,11 @@ describe('ParkService', () => {
     }
   }
 
-  let mockApiServiceNoData = {
+  let mockApiServiceThrowError = {
     get: () => {
-      return of(null)
+      return () => {
+        throw new Error('error');
+      }
     }
   }
 
@@ -70,7 +72,7 @@ describe('ParkService', () => {
   });
 
   it('it throws an error inside the fetch function', async () => {
-    TestBed.overrideProvider(ApiService, { useValue: mockApiServiceNoData });
+    TestBed.overrideProvider(ApiService, { useValue: mockApiServiceThrowError });
     service = TestBed.inject(ParkService);
     loadingServiceSpy = spyOn(service['loadingService'], 'addToFetchList');
     let loggerServiceSpy = spyOn(service['loggerService'], 'error');

@@ -2,10 +2,15 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
+  OnDestroy,
   Output,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { merge } from 'rxjs/internal/observable/merge';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
@@ -19,14 +24,18 @@ import { OperatorFunction } from 'rxjs/internal/types';
   selector: 'app-typeahead',
   templateUrl: './typeahead.component.html',
   styleUrls: ['./typeahead.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class TypeaheadComponent {
+export class TypeaheadComponent implements OnInit, OnDestroy {
   @Input() data: any[] = [];
+  @Input() control: UntypedFormControl = new UntypedFormControl();
   @Input() placeholder = '';
   @Input() label: String = '';
   @Input() id: String = 'typeahead-focus';
   @Input() disabled: boolean = false;
-  @Input() model;
+
+  protected model;
+  private subscriptions = new Subscription();
 
   @Output() output: EventEmitter<any> = new EventEmitter();
 
@@ -34,7 +43,16 @@ export class TypeaheadComponent {
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
 
-  search: OperatorFunction<string, readonly string[]> = (
+  ngOnInit() {
+    this.model = this.control?.value || null;
+    this.subscriptions.add(
+      this.control.valueChanges.subscribe((value) => {
+        this.model = value;
+      })
+    );
+  }
+
+  search: OperatorFunction<string, readonly { display; value; template }[]> = (
     text$: Observable<string>
   ) => {
     const debouncedText$ = text$.pipe(
@@ -48,21 +66,29 @@ export class TypeaheadComponent {
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map((term) =>
-        (term === ''
-          ? this.data
-          : this.data.filter(
-              (v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1
-            )
+      (term === ''
+        ? this.data
+        : this.data.filter(
+          (v) => v.display.toLowerCase().indexOf(term.toLowerCase()) > -1
         )
+      )
       )
     );
   };
 
-  emit(event) {
-    this.output.emit(event.item);
+  formatter = (x: { display; value; template }) => x.display;
+
+  setControlValue(event) {
+    if (event?.item) {
+      this.control.setValue(event.item);
+      this.model = event.item;
+    } else {
+      this.control.setValue(null);
+      this.model = null;
+    }
   }
 
-  reset() {
-    this.model = null;
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

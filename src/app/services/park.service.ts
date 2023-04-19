@@ -30,16 +30,10 @@ export class ParkService {
     try {
       // we're getting a single item
       errorSubject = 'park';
-
-      // TODO: Enable this when our endpoint is ready
       this.loggerService.debug(`Park GET`);
       res = await firstValueFrom(this.apiService.get('park'));
-      let dataObj = this.utils.convertArrayIntoObjForTypeAhead(
-        res,
-        'parkName',
-        'parkName'
-      );
-      this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_PARK, dataObj);
+      // We shouldn't be converting to typeahead here.
+      this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_PARK, res);
     } catch (e) {
       this.loggerService.error(`${e}`);
       this.toastService.addMessage(

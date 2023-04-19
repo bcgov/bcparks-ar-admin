@@ -12,29 +12,31 @@
         [maxDate]="maxDate"
         [bsConfig]="{ dateInputFormat: 'MM/YYYY' }"
         (onShown)="onOpenCalendar($event)"
-        (ngModelChange)="datePickerOutput($event)"
+        (ngModelChange)="dateChange($event)"
       />
     </div>
     <div class="col-sm-12 col-md-6 col-lg-3">
-      <app-typeahead
+      <!-- wait for controls to load before rendering typeaheads -->
+      <app-typeahead *ngIf="fields.park"
+        #parkTypeAhead
+        [control]="fields.park"
         [id]="'park-typeahead'"
-        [data]="parks['typeAheadData']"
+        [data]="parks"
         [label]="'Park'"
-        [placeholder]="'Search by park name'"
-        [disabled]="typeAheadDisabled"
-        [model]="modelPark"
-        (output)="parkTypeaheadOutput($event)"
+        [placeholder]="parkDisabled ? 'Select a date to see parks' : 'Search by park name'"
+        [disabled]="parkDisabled"
       ></app-typeahead>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-3">
-      <app-select
-        [id]="'sub-area-select'"
-        [data]="subAreas.selectData"
-        [model]="modelSubArea"
-        [label]="'Sub-areas'"
+      <app-typeahead *ngIf="fields.subArea"
+        #subAreaTypeAhead
+        [control]="fields.subArea"
+        [id]="'subareas-typeahead'"
+        [data]="subAreas"
+        [label]="'Subarea'"
+        [placeholder]="subAreaDisabled ? 'Select a park to see subareas' : 'Search by subarea name'"
         [disabled]="subAreaDisabled"
-        (output)="subAreaOutput($event)"
-      ></app-select>
+      ></app-typeahead>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-3 align-self-end">
       <button
@@ -51,3 +53,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #historicalPill let-r="result" let-t="term">
+  <ngb-highlight [result]="r.display" [term]="t"></ngb-highlight>
+  <div class="mx-2 badge bg-primary historical-pill">historical</div>
+</ng-template>
+

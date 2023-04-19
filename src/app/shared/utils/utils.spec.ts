@@ -3,8 +3,8 @@ import { Utils } from './utils';
 describe('Utils Testing', async () => {
   it('Should convert JS Date to NGBDate', async () => {
     let utils = new Utils();
-    let typeAheadObj = utils.convertArrayIntoObjForTypeAhead([{'key':'value'}], 'key', 'typeahead');
-    expect(typeAheadObj.typeAheadData.length).toEqual(1);
+    let typeAheadObj = utils.convertArrayIntoObjForTypeAhead([{'key':'value'}], 'key');
+    expect(typeAheadObj.length).toEqual(1);
     let selectObj = utils.convertArrayIntoObjForSelect([{'key':{'selectId': 'someId', 'selectLabel': 'someLabel'}}], 'key', 'selectId', 'selectLabel');
     expect(selectObj.selectData.length).toEqual(1);
 
