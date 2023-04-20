@@ -9,6 +9,8 @@ export class Constants {
     ACCORDION_BOATING: 'accordion-Boating',
     ACCORDION_BACKCOUNTRY_CAMPING: 'accordion-Backcountry Camping',
     ACCORDION_BACKCOUNTRY_CABINS: 'accordion-Backcountry Cabins',
+    ACCORDION_LEGACY_DATA: 'accordion-Legacy Data',
+    ACCORDION_ALL_AVAILABLE_RECORDS_LIST: 'accordion-All Available Records List',
     ENTER_DATA_URL_PARAMS: 'enter-data-url-params',
     EXPORT_ALL_POLLING_DATA: 'export-all-polling-data',
     LOCK_RECORDS_FISCAL_YEARS_DATA: 'lock-records-fiscal-years-data',
@@ -17,6 +19,16 @@ export class Constants {
   public static readonly ApplicationRoles: any = {
     ADMIN: 'sysadmin',
   };
+
+  public static readonly ActivityTypes: any = [
+    'Frontcountry Camping',
+    'Frontcountry Cabins',
+    'Day Use',
+    'Group Camping',
+    'Boating',
+    'Backcountry Camping',
+    'Backcountry Cabins'
+  ]
 
   // March
   public static readonly FiscalYearFinalMonth: number = 3;

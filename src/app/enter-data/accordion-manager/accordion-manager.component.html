@@ -21,3 +21,5 @@
     <app-boating-accordion (click)="accordionToggle('collapseboating')"></app-boating-accordion>
   </div>
 </div>
+
+<app-centered-text-block *ngIf="noAccordions()" [text]="'No data available for this subarea on this month.'"></app-centered-text-block>

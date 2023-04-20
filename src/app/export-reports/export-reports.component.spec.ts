@@ -12,7 +12,7 @@ describe('ExportReportsComponent', () => {
   let fixture: ComponentFixture<ExportReportsComponent>;
 
   const mockDataService = {
-    getItemValue: (item) => {
+    watchItem: (item) => {
       return of({
         jobObj: {
           id: '123',

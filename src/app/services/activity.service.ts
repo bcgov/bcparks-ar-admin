@@ -49,6 +49,23 @@ export class ActivityService {
         })
       );
 
+      // If a record exists but the config doesn't contain that activity (ie, the activity was removed or is legacy)
+      // then we still need the accordion for that activity to show up to hold the record data.
+      // If a record does not exist, res will not contain a pk.
+      if (res?.pk) {
+        // We have to add the activity to the accordion list
+        const accordionListId = Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST
+        let activityList = this.dataService.getItemValue(accordionListId);
+        if (!activityList) {
+          this.dataService.setItemValue(accordionListId, [activity]);
+        } else {
+          if (!activityList.includes(activity)) {
+            activityList.push(activity);
+            this.dataService.setItemValue(accordionListId, activityList);
+          }
+        }
+      }
+
       // Date for accordion
       res.lastUpdatedAccordion = res.lastUpdated
         ? moment(new Date(res.lastUpdated)).format('YYYY-MM-DD')

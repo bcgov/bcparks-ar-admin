@@ -23,7 +23,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING)
+        .watchItem(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING)
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -34,6 +34,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
   buildAccordion() {
     this.summaries = [
       {
+        isLegacy: this.data?.isLegacy || false,
         title: 'Camping party nights',
         attendanceLabel: 'Total attendance',
         attendanceItems: [
@@ -54,27 +55,34 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.campingPartyNightsAttendanceLongStay,
           },
         ],
-        attendanceTotal: this.formulaService.frontcountryCampingPartyAttendance(
-          [
-            this.data?.campingPartyNightsAttendanceStandard,
-            this.data?.campingPartyNightsAttendanceSenior,
-            this.data?.campingPartyNightsAttendanceSocial,
-            this.data?.campingPartyNightsAttendanceLongStay,
-          ],
-          this.data?.config?.attendanceModifier
-        ),
+        attendanceTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyAttendance(this.data?.legacyData?.legacy_frontcountryCampingTotalCampingParties) :
+          this.formulaService.frontcountryCampingPartyAttendance(
+            [
+              this.data?.campingPartyNightsAttendanceStandard,
+              this.data?.campingPartyNightsAttendanceSenior,
+              this.data?.campingPartyNightsAttendanceSocial,
+              this.data?.campingPartyNightsAttendanceLongStay,
+            ],
+            this.data?.config?.attendanceModifier
+          ),
         revenueLabel: 'Net revenue',
         revenueItems: [
           {
             itemName: 'Gross camping revenue',
-            value: this.data?.campingPartyNightsRevenueGross,
+            value: this.data?.isLegacy ?
+              this.data?.legacyData?.legacy_frontcountryCampingTotalCampingGrossRevenue :
+              this.data?.campingPartyNightsRevenueGross,
           },
         ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.campingPartyNightsRevenueGross,
-        ]),
+        revenueTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_frontcountryCampingTotalCampingNetRevenue) :
+          this.formulaService.basicNetRevenue([
+            this.data?.campingPartyNightsRevenueGross,
+          ]),
       },
       {
+        isLegacy: this.data?.isLegacy || false,
         title: 'Second cars / additional vehicles',
         attendanceLabel: 'Total second cars',
         attendanceItems: [
@@ -91,7 +99,8 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.secondCarsAttendanceSocial,
           },
         ],
-        attendanceTotal:
+        attendanceTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyAttendance(this.data?.legacyData?.legacy_frontcountryCampingTotalSecondCarsAttendance) :
           this.formulaService.frontcountryCampingSecondCarAttendance([
             this.data?.secondCarsAttendanceStandard,
             this.data?.secondCarsAttendanceSenior,
@@ -104,11 +113,55 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.secondCarsRevenueGross,
           },
         ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.secondCarsRevenueGross,
-        ]),
+        revenueTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_frontcountryCampingSecondCarsNetRevenue) :
+          this.formulaService.basicNetRevenue([
+            this.data?.secondCarsRevenueGross,
+          ]),
+      },
+      ...this.formatOtherFrontcountryRevenue(),
+    ];
+  }
+
+  // this section is vastly different between legacy and non-legacy
+  formatOtherFrontcountryRevenue() {
+    if (this.data?.isLegacy) {
+      return [{
+        isLegacy: true,
+        title: 'Other frontcountry camping revenue',
+        revenueLabel: 'Net revenue',
+        revenueItems: [
+          {
+            itemName: 'Gross sani revenue',
+            value: this.data?.otherRevenueGrossSani,
+          }
+        ],
+        revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_dayUseMiscSaniStationNetRevenue),
       },
       {
+        isLegacy: true,
+        revenueLabel: 'Net revenue',
+        revenueItems: [
+          {
+            itemName: 'Gross shower revenue',
+            value: this.data?.otherRevenueShower,
+          }
+        ],
+        revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_dayUseMiscShowerNetRevenue),
+      },
+      {
+        isLegacy: true,
+        revenueItems: [
+          {
+            itemName: 'Gross electrical fee revenue',
+            value: this.data?.otherRevenueElectrical,
+          }
+        ],
+      },
+      ]
+    } else {
+      return [{
+        isLegacy: false,
         title: 'Other frontcountry camping revenue',
         revenueLabel: 'Net revenue',
         revenueItems: [
@@ -130,8 +183,8 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
           this.data?.otherRevenueElectrical,
           this.data?.otherRevenueShower,
         ]),
-      },
-    ];
+      }]
+    }
   }
 
   ngOnDestroy() {

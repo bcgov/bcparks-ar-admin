@@ -51,7 +51,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
     this.form = this.bFormBuilder.group({});
     this.subscriptions.add(
       this.bDataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
+        .watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .subscribe((res) => {
           if (res) {
             this.postObj['date'] = res.date;

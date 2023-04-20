@@ -23,7 +23,7 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS)
+        .watchItem(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS)
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -32,31 +32,52 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
   }
 
   buildAccordion() {
-    this.summaries = [
-      {
-        attendanceLabel: 'Total attendance',
-        attendanceItems: [
-          {
-            itemName: 'Parties',
-            value: this.data?.totalAttendanceParties,
-          },
-        ],
-        attendanceTotal: this.formulaService.frontcountryCabinsAttendance(
-          [this.data?.totalAttendanceParties],
-          this.data?.config?.attendanceModifier
-        ),
-        revenueLabel: 'Net revenue',
-        revenueItems: [
-          {
-            itemName: 'Gross camping revenue',
-            value: this.data?.revenueGrossCamping,
-          },
-        ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.revenueGrossCamping,
-        ]),
-      },
-    ];
+    if (this.data?.isLegacy) {
+      this.summaries = [
+        {
+          isLegacy: true,
+          attendanceItems: [
+            {
+              itemName: 'Parties',
+              value: this.data?.totalAttendanceParties,
+            },
+          ],
+          revenueItems: [
+            {
+              itemName: 'Gross camping revenue',
+              value: this.data?.revenueGrossCamping,
+            },
+          ],
+        },
+      ];
+
+    } else {
+      this.summaries = [
+        {
+          attendanceLabel: 'Total attendance',
+          attendanceItems: [
+            {
+              itemName: 'Parties',
+              value: this.data?.totalAttendanceParties,
+            },
+          ],
+          attendanceTotal: this.formulaService.frontcountryCabinsAttendance(
+            [this.data?.totalAttendanceParties],
+            this.data?.config?.attendanceModifier
+          ),
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross camping revenue',
+              value: this.data?.revenueGrossCamping,
+            },
+          ],
+          revenueTotal: this.formulaService.basicNetRevenue([
+            this.data?.revenueGrossCamping,
+          ]),
+        },
+      ];
+    }
   }
 
   ngOnDestroy() {

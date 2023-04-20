@@ -46,7 +46,7 @@ export class FrontcountryCabinsComponent extends BaseFormComponent {
     // push existing form data to parent subscriptions
     this.subscriptions.add(
       this.dataService
-        .getItemValue(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS)
+        .watchItem(Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS)
         .subscribe((res) => {
           if (res) {
             this.data = res;

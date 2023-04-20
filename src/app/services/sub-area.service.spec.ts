@@ -10,6 +10,7 @@ import { ToastService } from './toast.service';
 import { LoggerService } from './logger.service';
 import { ApiService } from './api.service';
 import { ActivityService } from './activity.service';
+import { BehaviorSubject } from 'rxjs';
 
 describe('SubAreaService', () => {
   let dataServiceSpy;
@@ -54,7 +55,6 @@ describe('SubAreaService', () => {
     );
     loggerServiceDebugSpy = spyOn(subareaService['loggerService'], 'debug');
     loggerServiceErrorSpy = spyOn(subareaService['loggerService'], 'error');
-    apiServiceSpy = spyOn(subareaService['apiService'], 'get');
   });
 
   it('should be created', () => {
@@ -62,6 +62,7 @@ describe('SubAreaService', () => {
   });
 
   it('fetches subarea details', async () => {
+    apiServiceSpy = spyOn(subareaService['apiService'], 'get');
     await subareaService.fetchSubArea(2, 22, 222, null);
 
     expect(loadingServiceAddSpy).toHaveBeenCalledWith(2);
@@ -74,6 +75,15 @@ describe('SubAreaService', () => {
       subAreaId: 222,
     });
   });
+
+  it('fetches subarea activity', async () => {
+    apiServiceSpy = spyOn(subareaService['apiService'], 'get').and.returnValue(new BehaviorSubject({data:['valid_Data']}));
+    const fetchActivityDetailsSpy = spyOn(subareaService['activityService'], 'fetchActivityDetails');
+    await subareaService.fetchSubArea(2, 22, 222, 2222);
+    // Call once for every activity when searching
+    expect(fetchActivityDetailsSpy).toHaveBeenCalledTimes(Constants.ActivityTypes.length);
+  });
+
 
   it('clears accordion cache', async () => {
     subareaService.clearAccordionCache();

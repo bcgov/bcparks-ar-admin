@@ -23,7 +23,7 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ACCORDION_BACKCOUNTRY_CABINS)
+        .watchItem(Constants.dataIds.ACCORDION_BACKCOUNTRY_CABINS)
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -34,6 +34,7 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
   buildAccordion() {
     this.summaries = [
       {
+        isLegacy: this.data?.isLegacy,
         attendanceLabel: 'Total People',
         attendanceItems: [
           {
@@ -49,23 +50,48 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
             value: this.data?.peopleFamily,
           },
         ],
-        attendanceTotal: this.formulaService.backcountryCabinsAttendance(
-          [this.data?.peopleAdult, this.data?.peopleChild],
-          [this.data?.peopleFamily],
-          this.data?.config?.attendanceModifier
-        ),
+        attendanceTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyAttendance(this.data?.legacyData?.legacy_backcountryCabinsTotalAttendancePeople) :
+          this.formulaService.backcountryCabinsAttendance(
+            [this.data?.peopleAdult, this.data?.peopleChild],
+            [this.data?.peopleFamily],
+            this.data?.config?.attendanceModifier
+          ),
+      },
+      ...this.formatBackcountryCabinRevenue(),
+    ];
+  }
+
+  formatBackcountryCabinRevenue() {
+    if (this.data?.isLegacy) {
+      return [{
+        isLegacy: true,
         revenueLabel: 'Net revenue',
         revenueItems: [
           {
-            itemName: 'Family',
+            itemName: 'Gross cabin revenue',
             value: this.data?.revenueFamily,
           },
         ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.revenueFamily,
-        ]),
-      },
-    ];
+        revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_backcountryCabinsNetRevenue
+        )
+      }]
+    } else {
+      return [
+        {
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Family',
+              value: this.data?.revenueFamily,
+            },
+          ],
+          revenueTotal: this.formulaService.basicNetRevenue([
+            this.data?.revenueFamily,
+          ]),
+        },
+      ]
+    }
   }
 
   ngOnDestroy() {

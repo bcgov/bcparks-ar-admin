@@ -307,4 +307,28 @@ export class FormulaService {
       formula: formula,
     };
   }
+
+  /**
+   * Formats legacy attendance values.
+   * @param value value to format
+   * @returns `formulaResult` object
+   */
+  formatLegacyAttendance(value: number): formulaResult {
+    return {
+      result: this.formatDecimal(value),
+      formula: '',
+    };
+  }
+
+  /**
+   * Formats legacy revenue values.
+   * @param value value to format
+   * @returns `formulaResult` object
+   */
+  formatLegacyRevenue(value: number): formulaResult {
+    return {
+      result: this.formatMoney(value),
+      formula: '',
+    };
+  }
 }

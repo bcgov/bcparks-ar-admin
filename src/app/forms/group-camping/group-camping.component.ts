@@ -52,7 +52,7 @@ export class GroupCampingComponent extends BaseFormComponent {
     // push existing form data to parent subscriptions
     this.subscriptions.add(
       this.dataService
-        .getItemValue(Constants.dataIds.ACCORDION_GROUP_CAMPING)
+        .watchItem(Constants.dataIds.ACCORDION_GROUP_CAMPING)
         .subscribe((res) => {
           if (res) {
             this.data = res;

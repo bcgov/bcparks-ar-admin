@@ -32,7 +32,7 @@ export class EnterDataComponent implements OnDestroy {
   constructor(protected dataService: DataService, protected router: Router) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
+        .watchItem(Constants.dataIds.ENTER_DATA_SUB_AREA)
         .subscribe((res) => {
           this.subAreaData = res;
         })
@@ -49,7 +49,7 @@ export class EnterDataComponent implements OnDestroy {
 
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
+        .watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .subscribe((res) => {
           if (res) {
             this.formParams = res;

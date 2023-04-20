@@ -27,7 +27,7 @@ describe('AccordionManagerComponent', () => {
     ]
   };
   const mockDataService = {
-    getItemValue: (item) => {
+    watchItem: (item) => {
       return of(subarea)
     }
   }

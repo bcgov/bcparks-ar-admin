@@ -16,6 +16,9 @@ export class DayUseAccordionComponent implements OnDestroy {
   public icons = Constants.iconUrls;
   public data;
   public summaries: summarySection[] = [];
+  public newSummaries: summarySection[] = [];
+  public miscSummaries: summarySection[] = [];
+  public legacyNotes = '';
 
   constructor(
     private formulaService: FormulaService,
@@ -23,7 +26,7 @@ export class DayUseAccordionComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ACCORDION_DAY_USE)
+        .watchItem(Constants.dataIds.ACCORDION_DAY_USE)
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -34,6 +37,7 @@ export class DayUseAccordionComponent implements OnDestroy {
   buildAccordion() {
     this.summaries = [
       {
+        isLegacy: this.data?.isLegacy,
         title: 'People and vehicles',
         attendanceLabel: 'Total attendance',
         attendanceItems: [
@@ -50,15 +54,18 @@ export class DayUseAccordionComponent implements OnDestroy {
             value: this.data?.peopleAndVehiclesTrail,
           },
         ],
-        attendanceTotal: this.formulaService.dayUseVehicleAttendance(
-          [this.data?.peopleAndVehiclesTrail],
-          [this.data?.peopleAndVehiclesVehicle],
-          [this.data?.peopleAndVehiclesBus],
-          this.data?.config?.attendanceVehiclesModifier,
-          this.data?.config?.attendanceBusModifier
-        ),
+        attendanceTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyAttendance(this.data?.legacyData?.legacy_dayUseTotalPeopleAndVehiclesAttendancePeople) :
+          this.formulaService.dayUseVehicleAttendance(
+            [this.data?.peopleAndVehiclesTrail],
+            [this.data?.peopleAndVehiclesVehicle],
+            [this.data?.peopleAndVehiclesBus],
+            this.data?.config?.attendanceVehiclesModifier,
+            this.data?.config?.attendanceBusModifier
+          ),
       },
       {
+        isLegacy: this.data?.isLegacy,
         title: 'Picnic shelters',
         attendanceItems: [
           {
@@ -77,11 +84,18 @@ export class DayUseAccordionComponent implements OnDestroy {
             value: this.data?.picnicRevenueGross,
           },
         ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.picnicRevenueGross,
-        ]),
+        revenueTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_dayUsePicnicShelterNetRevenue
+          ) :
+          this.formulaService.basicNetRevenue([
+            this.data?.picnicRevenueGross,
+          ]),
       },
-      {
+    ];
+
+    // if not legacy, add hot springs items
+    if (!this.data?.isLegacy) {
+      this.newSummaries = [{
         title: 'Hot springs',
         attendanceItems: [
           {
@@ -99,10 +113,32 @@ export class DayUseAccordionComponent implements OnDestroy {
         revenueTotal: this.formulaService.basicNetRevenue([
           this.data?.otherDayUseRevenueHotSprings,
         ]),
-      },
-    ];
-  }
+      }];
+    }
 
+    // if legacy, add legacy notes for picnic shelters
+    // if legacy, add items for miscellaneous day use
+    if (this.data?.isLegacy) {
+      this.legacyNotes = this.data?.legacyData?.legacy_dayUsePicnicShelterVarianceNote;
+      this.miscSummaries = [
+        {
+          isLegacy: true,
+          title: 'Miscellaneous Day Use',
+          revenueItems: [
+            {
+              itemName: 'Gross misc revenue',
+              value: this.data?.legacyData?.legacy_dayUseMiscGrossRevenue
+            }
+          ],
+          revenueLabel: 'Net revenue',
+          revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_dayUseMiscNetRevenue
+          ),
+        }
+      ]
+    }
+
+  }
+  
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }

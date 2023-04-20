@@ -23,7 +23,7 @@ export class BoatingAccordionComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ACCORDION_BOATING)
+        .watchItem(Constants.dataIds.ACCORDION_BOATING)
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -49,14 +49,16 @@ export class BoatingAccordionComponent implements OnDestroy {
             value: this.data?.boatAttendanceMiscellaneous,
           },
         ],
-        attendanceTotal: this.formulaService.boatingAttendance(
-          [
-            this.data?.boatAttendanceNightsOnDock,
-            this.data?.boatAttendanceNightsOnBouys,
-            this.data?.boatAttendanceMiscellaneous,
-          ],
-          this.data?.config?.attendanceModifier
-        ),
+        attendanceTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyAttendance(this.data?.legacyData?.legacy_boatingTotalAttendancePeople) :
+          this.formulaService.boatingAttendance(
+            [
+              this.data?.boatAttendanceNightsOnDock,
+              this.data?.boatAttendanceNightsOnBouys,
+              this.data?.boatAttendanceMiscellaneous,
+            ],
+            this.data?.config?.attendanceModifier
+          ),
         revenueLabel: 'Net revenue',
         revenueItems: [
           {
@@ -64,9 +66,11 @@ export class BoatingAccordionComponent implements OnDestroy {
             value: this.data?.boatRevenueGross,
           },
         ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.boatRevenueGross,
-        ]),
+        revenueTotal: this.data?.isLegacy ?
+          this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_boatingTotalNetRevenue) :
+          this.formulaService.basicNetRevenue([
+            this.data?.boatRevenueGross,
+          ]),
       },
     ];
   }

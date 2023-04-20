@@ -3,9 +3,10 @@
   [icon]="icons.backcountryCamping"
   [id]="'backcountryCamping'"
   [secondaryText]="'Last updated: ' + data?.lastUpdatedAccordion"
-  [notes]="data?.notes"
-  [summaries]="summaries"
   [editLink]="'backcountry-camping'"
   [recordLock]="data?.isLocked"
+  [isLegacy]="data?.isLegacy"
 >
+<app-accordion-summaries [summaries]="summaries"></app-accordion-summaries>
+<app-accordion-notes [notes]="data?.notes"></app-accordion-notes>
 </app-accordion>

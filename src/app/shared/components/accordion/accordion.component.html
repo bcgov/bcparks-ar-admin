@@ -40,7 +40,10 @@
               />
               <div class="h3 mb-0 pb-0">
                 {{ title }}
-              </div>
+              </div> 
+              <h3 *ngIf="isLegacy" >
+                <span class="badge ms-3 mt-3 bg-primary historical-pill">historical</span>
+              </h3>
             </div>
           </div>
           <div class="col justify-content-end mx-3 d-none d-lg-flex">
@@ -81,18 +84,7 @@
       aria-labelledby="title"
     >
       <div class="accordion-body border-top-0">
-        <div *ngIf="summaries">
-          <div *ngFor="let item of summaries">
-            <div class="mb-5 mt-3">
-              <app-summary-section [section]="item"></app-summary-section>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="notes">
-          <h3>Variance notes</h3>
-          <div class="mb-5">{{ notes }}</div>
-        </div>
-      </div>
+        <ng-content></ng-content>
     </div>
   </div>
 </div>

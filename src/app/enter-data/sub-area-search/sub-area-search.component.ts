@@ -32,6 +32,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
 
   public selectedPark;
   public selectedSubArea;
+  public loadingUI = false;
 
   public modelDate;
   public modelPark = null;
@@ -56,7 +57,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_PARK)
+        .watchItem(Constants.dataIds.ENTER_DATA_PARK)
         .subscribe((res) => {
           if (res && res.length) {
             this.parks = this.utils.convertArrayIntoObjForTypeAhead(res, 'parkName');
@@ -116,6 +117,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   }
 
   presetUI() {
+    this.loadingUI = true;
     if (this.searchParams?.date) {
       this.setDate(this.searchParams.date);
       if (this.searchParams?.orcs) {
@@ -125,6 +127,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
         }
       }
     }
+    this.loadingUI = false;
   }
 
   formatLegacyTypeaheadLabel(list) {
@@ -150,7 +153,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
         this.modelDate = this.previousDateChosen;
       }, 50);
     }
-    this.setFormState('date');
+    this.updateFormState();
   }
 
   parkChange(event) {
@@ -162,16 +165,18 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   }
 
   setPark(orcs) {
+    if (!this.loadingUI) {
+      this.fields.subArea.setValue(null);
+    }
     if (orcs) {
-      this.selectedPark = this.parks.find((park) => park.value.orcs === orcs);
-      this.subAreas = this.utils.convertArrayIntoObjForTypeAhead(this.selectedPark.value.subAreas, 'name');
+      this.selectedPark = this.parks.find((park) => park?.value?.orcs === orcs);
+      this.subAreas = this.utils.convertArrayIntoObjForTypeAhead(this.selectedPark?.value?.subAreas, 'name');
       this.formatLegacyTypeaheadLabel(this.subAreas);
       this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark.value);
-      this.setFormState('park');
+      this.updateFormState();
     } else {
-      this.fields.subArea.setValue(null);
       this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate));
-      this.setFormState('date');
+      this.updateFormState();
     }
   }
 
@@ -186,36 +191,31 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   setSubArea(subAreaId) {
     if (subAreaId) {
       this.selectedSubArea = this.subAreas.find((subArea) => subArea.value.id === subAreaId);
-      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark.value, this.selectedSubArea.value);
-      this.setFormState('subArea');
+      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark?.value, this.selectedSubArea.value);
+      this.updateFormState();
     } else {
-      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark.value);
-      this.setFormState('park');
+      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark?.value);
+      this.updateFormState();
     }
   }
 
-  setFormState(state) {
-    switch (state) {
-      case 'none':
-        this.parkDisabled = true;
-        this.subAreaDisabled = true;
-        this.continueDisabled = true;
-        break;
-      case 'date':
-        this.parkDisabled = false;
-        this.subAreaDisabled = true;
-        this.continueDisabled = true;
-        break;
-      case 'park':
-        this.parkDisabled = false;
-        this.subAreaDisabled = false;
-        this.continueDisabled = true;
-        break;
-      case 'subArea':
-        this.parkDisabled = false;
-        this.subAreaDisabled = false;
-        this.continueDisabled = false;
-        break;
+  updateFormState() {
+    if (!this.modelDate) {
+      this.parkDisabled = true;
+      this.subAreaDisabled = true;
+      this.continueDisabled = true;
+    } else if (!this.fields.park.value) {
+      this.parkDisabled = false;
+      this.subAreaDisabled = true;
+      this.continueDisabled = true;
+    } else if (!this.fields.subArea.value) {
+      this.parkDisabled = false;
+      this.subAreaDisabled = false;
+      this.continueDisabled = true;
+    } else {
+      this.parkDisabled = false;
+      this.subAreaDisabled = false;
+      this.continueDisabled = false;
     }
   }
 
@@ -235,6 +235,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
       relativeTo: this.activatedRoute,
       queryParams: queryParams
     });
+    this.searchParams = this.activatedRoute.snapshot.queryParams;
   }
 
   search() {

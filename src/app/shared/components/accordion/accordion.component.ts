@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from '../../utils/utils';
@@ -16,7 +17,7 @@ import { summarySection } from './summary-section/summary-section.component';
   templateUrl: './accordion.component.html',
   styleUrls: ['./accordion.component.scss'],
 })
-export class AccordionComponent implements OnDestroy {
+export class AccordionComponent implements OnInit, OnDestroy {
   @Input() title: string = '';
   @Input() icon: string = '';
   @Input() id: string = '';
@@ -25,6 +26,7 @@ export class AccordionComponent implements OnDestroy {
   @Input() summaries: Array<summarySection> = [];
   @Input() editLink: string = '';
   @Input() recordLock;
+  @Input() isLegacy = false;
 
   private subscriptions = new Subscription();
   private formParams;
@@ -41,7 +43,7 @@ export class AccordionComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
+        .watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .subscribe((res) => {
           if (res) {
             this.formParams = res;
@@ -49,6 +51,12 @@ export class AccordionComponent implements OnDestroy {
           }
         })
     );
+  }
+
+  ngOnInit() {
+    if (this.isLegacy) {
+      this.isLocked = true;
+    }
   }
 
   async setFiscalLockVar() {

@@ -9,7 +9,7 @@ describe('FiscalYearLockTableComponent', () => {
   let dataService: DataService;
 
   const mockDataService = {
-    getItemValue: () => {
+    watchItem: () => {
       return of([
         {
             isLocked: true

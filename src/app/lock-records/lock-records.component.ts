@@ -29,7 +29,7 @@ export class LockRecordsComponent implements OnInit {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.LOCK_RECORDS_FISCAL_YEARS_DATA)
+        .watchItem(Constants.dataIds.LOCK_RECORDS_FISCAL_YEARS_DATA)
         .subscribe((res) => {
           this.fiscalYearsList = res;
         })

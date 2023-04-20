@@ -23,7 +23,7 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING)
+        .watchItem(Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING)
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -32,26 +32,38 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
   }
 
   buildAccordion() {
-    this.summaries = [
-      {
+    // legacy data is vastly different
+    if (this.data?.isLegacy) {
+      this.summaries = [{
         attendanceItems: [
           {
             itemName: 'People',
             value: this.data?.people,
-          },
-        ],
-        revenueLabel: 'Net revenue',
-        revenueItems: [
-          {
-            itemName: 'Gross camping revenue',
-            value: this.data?.grossCampingRevenue,
-          },
-        ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.grossCampingRevenue,
-        ]),
-      },
-    ];
+          }
+        ]
+      }]
+    } else {
+      this.summaries = [
+        {
+          attendanceItems: [
+            {
+              itemName: 'People',
+              value: this.data?.people,
+            },
+          ],
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross camping revenue',
+              value: this.data?.grossCampingRevenue,
+            },
+          ],
+          revenueTotal: this.formulaService.basicNetRevenue([
+            this.data?.grossCampingRevenue,
+          ]),
+        },
+      ];
+    }
   }
 
   ngOnDestroy() {

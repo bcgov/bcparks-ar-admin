@@ -13,6 +13,7 @@ export class AccordionManagerComponent implements OnDestroy {
 
   private subscriptions = new Subscription();
   public subAreaData;
+  public unlistedActivityData;
 
   private mappedAccordionItems = {
     collapsefrontcountryCamping: 'frontcountryCamping',
@@ -37,9 +38,17 @@ export class AccordionManagerComponent implements OnDestroy {
   constructor(protected dataService: DataService) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA)
+        .watchItem(Constants.dataIds.ENTER_DATA_SUB_AREA)
         .subscribe((res) => {
           this.subAreaData = res;
+          this.buildAccordions();
+        })
+    );
+    this.subscriptions.add(
+      dataService
+        .watchItem(Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST)
+        .subscribe((res) => {
+          this.unlistedActivityData = res;
           this.buildAccordions();
         })
     );
@@ -103,8 +112,16 @@ export class AccordionManagerComponent implements OnDestroy {
 
   buildAccordions() {
     this.resetAccordions();
-    if (this.subAreaData?.activities) {
-      for (let activity of this.subAreaData.activities) {
+    if (this.subAreaData?.activities && !this.subAreaData.isLegacy) {
+      this.showAccordions(this.subAreaData.activities);
+    }
+    // No matter what, we must do an additional check for legacy data.
+    this.showAccordions(this.unlistedActivityData);
+  }
+
+  showAccordions(activities) {
+    if (activities?.length) {
+      for (const activity of activities) {
         switch (activity) {
           case 'Frontcountry Camping':
             this.accordions.frontcountryCamping = true;
@@ -130,6 +147,20 @@ export class AccordionManagerComponent implements OnDestroy {
         }
       }
     }
+  }
+
+  noAccordions() {
+    if (!this.subAreaData) {
+      return false;
+    }
+    let noAccordions = true;
+    for (const accordion in this.accordions) {
+      if (this.accordions[accordion]) {
+        noAccordions = false;
+        break;
+      }
+    }
+    return noAccordions;
   }
 
   ngOnDestroy() {

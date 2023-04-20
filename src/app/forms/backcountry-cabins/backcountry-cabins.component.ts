@@ -47,7 +47,7 @@ export class BackcountryCabinsComponent extends BaseFormComponent {
     // push existing form data to parent subscriptions
     this.subscriptions.add(
       this.dataService
-        .getItemValue(Constants.dataIds.ACCORDION_BACKCOUNTRY_CABINS)
+        .watchItem(Constants.dataIds.ACCORDION_BACKCOUNTRY_CABINS)
         .subscribe((res) => {
           if (res) {
             this.data = res;
