@@ -3,9 +3,13 @@
   [icon]="icons.dayUse"
   [id]="'dayuse'"
   [secondaryText]="'Last updated: ' + data?.lastUpdatedAccordion"
-  [notes]="data?.notes"
-  [summaries]="summaries"
   [editLink]="'day-use'"
   [recordLock]="data?.isLocked"
+  [isLegacy]="data?.isLegacy"
 >
+<app-accordion-summaries [summaries]="summaries"></app-accordion-summaries>
+<app-accordion-summaries [summaries]="newSummaries"></app-accordion-summaries>
+<app-accordion-notes *ngIf="data?.isLegacy" [notes]="legacyNotes" [label]="'Picnic variance notes'"></app-accordion-notes>
+<app-accordion-summaries *ngIf="data?.isLegacy" [summaries]="miscSummaries"></app-accordion-summaries>
+<app-accordion-notes [notes]="data?.notes"></app-accordion-notes>
 </app-accordion>

@@ -20,7 +20,7 @@ export class ParkHeaderComponent implements OnDestroy {
   constructor(protected dataService: DataService) {
     this.subscriptions.add(
       this.dataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
+        .watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .subscribe((res) => {
           if (res) {
             this.parkName = res.parkName;

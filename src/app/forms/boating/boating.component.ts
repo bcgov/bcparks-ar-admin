@@ -50,7 +50,7 @@ export class BoatingComponent extends BaseFormComponent {
     // push existing form data to parent subscriptions
     this.subscriptions.add(
       this.dataService
-        .getItemValue(Constants.dataIds.ACCORDION_BOATING)
+        .watchItem(Constants.dataIds.ACCORDION_BOATING)
         .subscribe((res) => {
           if (res) {
             this.data = res;

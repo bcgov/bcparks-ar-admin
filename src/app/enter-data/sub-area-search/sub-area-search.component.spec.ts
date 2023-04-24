@@ -9,12 +9,15 @@ import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 
 import { SubAreaSearchComponent } from './sub-area-search.component';
+import { Utils } from 'src/app/shared/utils/utils';
+import { MockData } from 'src/app/shared/utils/mock.data';
 
 describe('SubAreaSearchComponent', () => {
   let component: SubAreaSearchComponent;
   let fixture: ComponentFixture<SubAreaSearchComponent>;
   let router;
   let subAreaService;
+  let utils = new Utils();
 
   const routeValue = {
     snapshot: { queryParams: { id: 123 } }
@@ -44,7 +47,7 @@ describe('SubAreaSearchComponent', () => {
   ];
 
   const mockDataService = {
-    getItemValue: (item) => {
+    watchItem: (item) => {
       return of(
         typeaheadData
       )
@@ -245,22 +248,31 @@ describe('SubAreaSearchComponent', () => {
 
     expect(serviceSpy).toHaveBeenCalled();
 
-    await component.setFormState('none');
+    component.parks = utils.convertArrayIntoObjForTypeAhead([MockData.mockPark_1, MockData.mockPark_2, MockData.mockLegacyPark], 'parkName');
+    component.formatLegacyTypeaheadLabel(component.parks);
+
+    component.modelDate = null;
+    component.fields.park.setValue(null)
+    component.fields.subArea.setValue(null)
+    component.updateFormState();
     expect(component.parkDisabled).toBe(true);
     expect(component.subAreaDisabled).toBe(true);
     expect(component.continueDisabled).toBe(true);
 
-    await component.setFormState('date');
+    component.modelDate = '202201';
+    component.updateFormState();
     expect(component.parkDisabled).toBe(false);
     expect(component.subAreaDisabled).toBe(true);
     expect(component.continueDisabled).toBe(true);
 
-    await component.setFormState('park');
+    component.fields.park.setValue({value: MockData.mockPark_1})
+    await component.updateFormState();
     expect(component.parkDisabled).toBe(false);
     expect(component.subAreaDisabled).toBe(false);
     expect(component.continueDisabled).toBe(true);
 
-    await component.setFormState('subArea');
+    component.fields.subArea.setValue({value: MockData.mockSubArea_1})
+    await component.updateFormState();
     expect(component.parkDisabled).toBe(false);
     expect(component.subAreaDisabled).toBe(false);
     expect(component.continueDisabled).toBe(false);

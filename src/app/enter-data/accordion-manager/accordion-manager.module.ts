@@ -9,6 +9,7 @@ import { BackcountryCampingAccordionComponent } from './backcountry-camping-acco
 import { GroupCampingAccordionComponent } from './group-camping-accordion/group-camping-accordion.component';
 import { BoatingAccordionComponent } from './boating-accordion/boating-accordion.component';
 import { BackcountryCabinsAccordionComponent } from './backcountry-cabins-accordion/backcountry-cabins-accordion.component';
+import { CenteredTextBlockModule } from 'src/app/shared/components/centered-text-block/centered-text-block.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { BackcountryCabinsAccordionComponent } from './backcountry-cabins-accord
     BoatingAccordionComponent,
     BackcountryCabinsAccordionComponent,
   ],
-  imports: [CommonModule, AccordionModule],
+  imports: [CommonModule, AccordionModule, CenteredTextBlockModule],
   exports: [AccordionManagerComponent],
 })
 export class AccordionManagerModule {}

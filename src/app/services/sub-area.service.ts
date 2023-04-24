@@ -22,7 +22,7 @@ export class SubAreaService {
     private loggerService: LoggerService,
     private loadingService: LoadingService,
     private activityService: ActivityService
-  ) {}
+  ) { }
 
   async fetchSubArea(id, orcs, subAreaId, date) {
     this.loadingService.addToFetchList(id);
@@ -34,13 +34,18 @@ export class SubAreaService {
       res = await firstValueFrom(
         this.apiService.get('park', { orcs: orcs, subAreaId: subAreaId })
       );
-      res = res.data[0];
+      res = res.data[0] || null;
       this.dataService.setItemValue(id, res);
 
       // If we are given a date, we want to get activity details
-      if (date && res.activities.length > 0) {
-        for (let i = 0; i < res.activities.length; i++) {
-          const activity = res.activities[i];
+      if (date) {
+        // Now that we have historical records in the system,
+        // We can't assume that a subarea only has records for the activities it has
+        // So we must query for all possible activities.
+        let activitiesList = Constants.ActivityTypes;
+        this.dataService.clearItemValue(Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST);
+        for (let i = 0; i < activitiesList.length; i++) {
+          const activity = activitiesList[i];
 
           // ID = accordion-{activity}
           // eg. 'accordion-Day use'

@@ -32,7 +32,7 @@ describe('CancelButtonComponent', () => {
   ];
 
   const mockDataService = {
-    getItemValue: (item) => {
+    watchItem: (item) => {
       return of({
         date: new Date(),
         parkName: 'Park Name',

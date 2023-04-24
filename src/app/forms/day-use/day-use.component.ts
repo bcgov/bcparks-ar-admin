@@ -51,7 +51,7 @@ export class DayUseComponent extends BaseFormComponent {
     // push existing form data to parent subscriptions
     this.subscriptions.add(
       this.dataService
-        .getItemValue(Constants.dataIds.ACCORDION_DAY_USE)
+        .watchItem(Constants.dataIds.ACCORDION_DAY_USE)
         .subscribe((res) => {
           if (res) {
             this.data = res;

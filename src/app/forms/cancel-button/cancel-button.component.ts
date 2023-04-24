@@ -25,7 +25,7 @@ export class CancelButtonComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       this.dataService
-        .getItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS)
+        .watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)
         .subscribe((res) => {
           if (res) {
             this.navParams['date'] = res.date;

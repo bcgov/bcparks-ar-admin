@@ -20,7 +20,7 @@ export class FiscalYearLockTableComponent implements OnInit {
   constructor(protected dataService: DataService) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.LOCK_RECORDS_FISCAL_YEARS_DATA)
+        .watchItem(Constants.dataIds.LOCK_RECORDS_FISCAL_YEARS_DATA)
         .subscribe((res) => {
           if (res && res.length) {
             this.tableRows = this.filterLockedYears(res);

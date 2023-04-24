@@ -43,7 +43,7 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
   ) {
     this.subscriptions.add(
       this.dataService
-        .getItemValue(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
+        .watchItem(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
         .subscribe((res) => {
           if (res) {
             this.initialLoad = false;

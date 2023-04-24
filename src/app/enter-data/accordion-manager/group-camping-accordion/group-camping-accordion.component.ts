@@ -23,7 +23,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
   ) {
     this.subscriptions.add(
       dataService
-        .getItemValue(Constants.dataIds.ACCORDION_GROUP_CAMPING)
+        .watchItem(Constants.dataIds.ACCORDION_GROUP_CAMPING)
         .subscribe((res) => {
           this.data = res;
           this.buildAccordion();
@@ -32,69 +32,122 @@ export class GroupCampingAccordionComponent implements OnDestroy {
   }
 
   buildAccordion() {
-    this.summaries = [
-      {
-        title: 'Standard rate groups',
-        attendanceLabel: 'Total People',
-        attendanceItems: [
-          {
-            itemName: 'Standard group nights',
-            value: this.data?.standardRateGroupsTotalPeopleStandard,
-          },
-          {
-            itemName: 'Adults (16+)',
-            value: this.data?.standardRateGroupsTotalPeopleAdults,
-          },
-          {
-            itemName: 'Youths (6-15)',
-            value: this.data?.standardRateGroupsTotalPeopleYouth,
-          },
-          {
-            itemName: 'Kids (0-5)',
-            value: this.data?.standardRateGroupsTotalPeopleKids,
-          },
-        ],
-        attendanceTotal: this.formulaService.groupCampingStandardAttendance([
-          this.data?.standardRateGroupsTotalPeopleAdults,
-          this.data?.standardRateGroupsTotalPeopleYouth,
-          this.data?.standardRateGroupsTotalPeopleKids,
-        ]),
-        revenueLabel: 'Net revenue',
-        revenueItems: [
-          {
-            itemName: 'Gross standard group revenue',
-            value: this.data?.standardRateGroupsRevenueGross,
-          },
-        ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.standardRateGroupsRevenueGross,
-        ]),
-      },
-      {
-        title: 'Youth rate groups',
-        attendanceLabel: 'Total attendance',
-        attendanceItems: [
-          {
-            itemName: 'Youth group nights',
-            value: this.data?.youthRateGroupsAttendanceGroupNights,
-          },
-          {
-            itemName: 'People',
-            value: this.data?.youthRateGroupsAttendancePeople,
-          },
-        ],
-        revenueLabel: 'Net revenue',
-        revenueItems: [
-          {
-            itemName: 'Gross youth group revenue',
-            value: this.data?.youthRateGroupsRevenueGross,
-          },
-        ],
-        revenueTotal: this.formulaService.basicNetRevenue([
-          this.data?.youthRateGroupsRevenueGross,
-        ]),
-      },
-    ];
+    // legacy and non-legacy layouts are vastly different
+    if (this.data?.isLegacy) {
+      this.summaries = [
+        {
+          isLegacy: true,
+          title: 'Standard rate groups',
+          attendanceItems: [
+            {
+              itemName: 'Standard group nights',
+              value: this.data?.standardRateGroupsTotalPeopleStandard,
+            },
+            {
+              itemName: 'Adults (16+)',
+              value: this.data?.standardRateGroupsTotalPeopleAdults,
+            },
+            {
+              itemName: 'Youths (6-15)',
+              value: this.data?.standardRateGroupsTotalPeopleYouth,
+            },
+            {
+              itemName: 'Kids (0-5)',
+              value: this.data?.standardRateGroupsTotalPeopleKids,
+            },
+          ],
+        },
+        {
+          isLegacy: true,
+          title: 'Youth rate groups',
+          attendanceLabel: 'Total people',
+          attendanceItems: [
+            {
+              itemName: 'Group nights',
+              value: this.data?.youthRateGroupsAttendanceGroupNights,
+            },
+            {
+              itemName: 'People',
+              value: this.data?.youthRateGroupsAttendancePeople,
+            },
+          ],
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross standard group revenue',
+              value: this.data?.legacyData?.legacy_groupCampingTotalGrossRevenue
+            },
+          ],
+          revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_groupCampingTotalNetRevenue),
+        }
+      ];
+    } else {
+      this.summaries = [
+        {
+          title: 'Standard rate groups',
+          attendanceLabel: 'Total People',
+          attendanceItems: [
+            {
+              itemName: 'Standard group nights',
+              value: this.data?.standardRateGroupsTotalPeopleStandard,
+            },
+            {
+              itemName: 'Adults (16+)',
+              value: this.data?.standardRateGroupsTotalPeopleAdults,
+            },
+            {
+              itemName: 'Youths (6-15)',
+              value: this.data?.standardRateGroupsTotalPeopleYouth,
+            },
+            {
+              itemName: 'Kids (0-5)',
+              value: this.data?.standardRateGroupsTotalPeopleKids,
+            },
+          ],
+          attendanceTotal: this.formulaService.groupCampingStandardAttendance([
+            this.data?.standardRateGroupsTotalPeopleAdults,
+            this.data?.standardRateGroupsTotalPeopleYouth,
+            this.data?.standardRateGroupsTotalPeopleKids,
+          ]),
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross standard group revenue',
+              value: this.data?.isLegacy ?
+                this.data?.legacyData?.legacy_groupCampingTotalGrossRevenue :
+                this.data?.standardRateGroupsRevenueGross,
+            },
+          ],
+          revenueTotal: this.formulaService.basicNetRevenue([
+            this.data?.standardRateGroupsRevenueGross,
+          ]),
+        },
+        {
+          title: 'Youth rate groups',
+          attendanceLabel: 'Total attendance',
+          attendanceItems: [
+            {
+              itemName: 'Youth group nights',
+              value: this.data?.youthRateGroupsAttendanceGroupNights,
+            },
+            {
+              itemName: 'People',
+              value: this.data?.youthRateGroupsAttendancePeople,
+            },
+          ],
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross youth group revenue',
+              value: this.data?.youthRateGroupsRevenueGross,
+            },
+          ],
+          revenueTotal: this.formulaService.basicNetRevenue([
+            this.data?.youthRateGroupsRevenueGross,
+          ]),
+        }
+      ];
+    }
   }
 
   ngOnDestroy() {

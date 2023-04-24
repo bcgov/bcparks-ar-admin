@@ -9,7 +9,7 @@ describe('ParkHeaderComponent', () => {
   let fixture: ComponentFixture<ParkHeaderComponent>;
   let dataService;
   const mockDataService = {
-    getItemValue: (item) => {
+    watchItem: (item) => {
       return of({
         date: new Date(),
         parkName: 'Park Name',
@@ -19,7 +19,7 @@ describe('ParkHeaderComponent', () => {
     }
   }
   const mockDataServiceNoDate = {
-    getItemValue: (item) => {
+    watchItem: (item) => {
       return of({
         parkName: 'Park Name',
         subAreaId: 'SubArea Id',
