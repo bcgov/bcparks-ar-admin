@@ -1266,13 +1266,13 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@digitalspace/bcparks-bootstrap-theme@^1.2.33":
-  version "1.2.33"
-  resolved "https://registry.yarnpkg.com/@digitalspace/bcparks-bootstrap-theme/-/bcparks-bootstrap-theme-1.2.33.tgz#ffacb88d3a577bd6e7dfb0acaba2c2e1b83dace2"
-  integrity sha512-8szQPrufi8hgV1Dx7DtQYSEh5pM+xnju7Z4UtJkOXdmNpvx1HBC9WqOoV4ob8JW6RKmXAlkl3XxKCxh772SZUw==
+"@digitalspace/bcparks-bootstrap-theme@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@digitalspace/bcparks-bootstrap-theme/-/bcparks-bootstrap-theme-1.3.0.tgz#8f3d3127d428f9affe46e46e9390f9ff4ad4b45b"
+  integrity sha512-k6fNvGWMYAxpO0AC1SvYEbmnN/xOloEn2rhIXDXj+wQxJAPFUtQyxPAXQQ2mVchBCIeFm63jPzUbtnY20sbNPg==
   dependencies:
     "@popperjs/core" "^2.10.2"
-    bootstrap "^5.1.2"
+    bootstrap "^5.2.3"
     jquery "^3.6.0"
 
 "@discoveryjs/json-ext@0.5.7":
@@ -2476,7 +2476,7 @@ bootstrap-icons@^1.10.5:
   resolved "https://registry.yarnpkg.com/bootstrap-icons/-/bootstrap-icons-1.10.5.tgz#5a1bbb1bb2212397d416587db1d422cc9501847c"
   integrity sha512-oSX26F37V7QV7NCE53PPEL45d7EGXmBgHG3pDpZvcRaKVzWMqIRL9wcqJUyEha1esFtM3NJzvmxFXDxjJYD0jQ==
 
-bootstrap@^5.1.2, bootstrap@^5.2.3:
+bootstrap@^5.2.3:
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.2.3.tgz#54739f4414de121b9785c5da3c87b37ff008322b"
   integrity sha512-cEKPM+fwb3cT8NzQZYEu4HilJ3anCrWqh3CHAok1p9jXqMPsPTBhU25fBckEJHJ/p+tTxTFTsFQGM+gaHpi3QQ==
