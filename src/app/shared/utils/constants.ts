@@ -10,7 +10,8 @@ export class Constants {
     ACCORDION_BACKCOUNTRY_CAMPING: 'accordion-Backcountry Camping',
     ACCORDION_BACKCOUNTRY_CABINS: 'accordion-Backcountry Cabins',
     ACCORDION_LEGACY_DATA: 'accordion-Legacy Data',
-    ACCORDION_ALL_AVAILABLE_RECORDS_LIST: 'accordion-All Available Records List',
+    ACCORDION_ALL_AVAILABLE_RECORDS_LIST:
+      'accordion-All Available Records List',
     ENTER_DATA_URL_PARAMS: 'enter-data-url-params',
     EXPORT_ALL_POLLING_DATA: 'export-all-polling-data',
     LOCK_RECORDS_FISCAL_YEARS_DATA: 'lock-records-fiscal-years-data',
@@ -27,8 +28,8 @@ export class Constants {
     'Group Camping',
     'Boating',
     'Backcountry Camping',
-    'Backcountry Cabins'
-  ]
+    'Backcountry Cabins',
+  ];
 
   // March
   public static readonly FiscalYearFinalMonth: number = 3;
@@ -48,5 +49,63 @@ export class Constants {
     WARNING: 1,
     INFO: 2,
     ERROR: 3,
+  };
+
+  // TODO: Retreive this from config service
+  public static readonly varianceConfig = {
+    backCountryCabins: {
+      peopleAdult: 0.2,
+      peopleChild: 0.2,
+      peopleFamily: 0.2,
+      revenueFamily: 0.2,
+    },
+    backcountryCampings: {
+      people: 0.2,
+      grossCampingRevenue: 0.2,
+    },
+    boating: {
+      boatAttendanceNightsOnDock: 0.2,
+      boatAttendanceNightsOnBouys: 0.2,
+      boatAttendanceMiscellaneous: 0.2,
+      boatRevenueGross: 0.2,
+    },
+    dayUse: {
+      peopleAndVehiclesTrail: 0.2,
+      peopleAndVehiclesVehicle: 0.2,
+      peopleAndVehiclesBus: 0.2,
+      picnicRevenueShelter: 0.2,
+      picnicShelterPeople: 0.2,
+      picnicRevenueGross: 0.2,
+      otherDayUsePeopleHotSprings: 0.2,
+      otherDayUseRevenueHotSprings: 0.2,
+    },
+    frontCountryCabins: {
+      totalAttendanceParties: 0.2,
+      revenueGrossCamping: 0.2,
+    },
+    frontCountryCamping: {
+      campingPartyNightsAttendanceStandard: 0.2,
+      campingPartyNightsAttendanceSenior: 0.2,
+      campingPartyNightsAttendanceSocial: 0.2,
+      campingPartyNightsAttendanceLongStay: 0.2,
+      campingPartyNightsRevenueGross: 0.2,
+      secondCarsAttendanceStandard: 0.2,
+      secondCarsAttendanceSenior: 0.2,
+      secondCarsAttendanceSocial: 0.2,
+      secondCarsRevenueGross: 0.2,
+      otherRevenueGrossSani: 0.2,
+      otherRevenueElectrical: 0.2,
+      otherRevenueShower: 0.2,
+    },
+    groupCamping: {
+      standardRateGroupsTotalPeopleStandard: 0.2,
+      standardRateGroupsTotalPeopleAdults: 0.2,
+      standardRateGroupsTotalPeopleYouth: 0.2,
+      standardRateGroupsTotalPeopleKids: 0.2,
+      standardRateGroupsRevenueGross: 0.2,
+      youthRateGroupsAttendanceGroupNights: 0.2,
+      youthRateGroupsAttendancePeople: 0.2,
+      youthRateGroupsRevenueGross: 0.2,
+    },
   };
 }
