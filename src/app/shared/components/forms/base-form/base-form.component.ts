@@ -57,6 +57,7 @@ export class BaseFormComponent implements AfterViewChecked, OnDestroy {
             this.postObj['date'] = res.date;
             this.postObj['parkName'] = res.parkName;
             this.postObj['subAreaId'] = res.subAreaId;
+            this.postObj['subAreaName'] = res.subAreaName;
             this.postObj['orcs'] = res.orcs;
           }
         })
