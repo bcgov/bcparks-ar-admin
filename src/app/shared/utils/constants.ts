@@ -59,7 +59,7 @@ export class Constants {
       peopleFamily: 0.2,
       revenueFamily: 0.2,
     },
-    backcountryCampings: {
+    backcountryCamping: {
       people: 0.2,
       grossCampingRevenue: 0.2,
     },
