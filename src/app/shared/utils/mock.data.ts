@@ -382,4 +382,31 @@ export class MockData {
       legacy_groupCampingTotalGrossRevenue: 9.99,
     }
   }
+
+  public static readonly mockVarianceRecord_1 = {
+    activity: 'Day Use',
+    date: '202306',
+    fields: ['peopleAndVehiclesVehicle'],
+    orcs: 'MOC1',
+    parkName: 'Mock Park 1',
+    pk: 'variance::MOC1::Day Use',
+    sk: '202306',
+    resolved: false,
+    subAreaId: 'MOC1',
+    subAreaName: 'Mock SubArea 1',
+  }
+
+  public static readonly mockVarianceRecord_2 = {
+    activity: 'Frontcountry Camping',
+    date: '202306',
+    fields: ['campingPartyNightsRevenueGross'],
+    orcs: 'MOC1',
+    parkName: 'Mock Park 1',
+    pk: 'variance::MOC1::Frontcountry Camping',
+    sk: '202306',
+    resolved: true,
+    subAreaId: 'MOC1',
+    subAreaName: 'Mock SubArea 1',
+  }
+
 }

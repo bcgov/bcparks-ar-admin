@@ -18,6 +18,7 @@ import { FormResolver } from './resolvers/form.resolver';
 import { SubAreaResolver } from './resolvers/sub-area.resolver';
 import { LockRecordsComponent } from './lock-records/lock-records.component';
 import { LockRecordsResolver } from './resolvers/lock-records.resolver';
+import { VarianceSearchComponent } from './variance-search/variance-search.component';
 
 const routes: Routes = [
   {
@@ -137,6 +138,16 @@ const routes: Routes = [
       breadcrumb: 'Lock Records',
     },
     resolve: [LockRecordsResolver],
+  },
+  {
+    path: 'review-data',
+    component: VarianceSearchComponent,
+    canActivate: [AuthGuard],
+    data: {
+      label: 'Review Data',
+      breadcrumb: 'Review Data',
+    },
+    resolve: [SubAreaResolver],
   },
   {
     path: 'unauthorized',

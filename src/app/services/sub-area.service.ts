@@ -75,6 +75,30 @@ export class SubAreaService {
     this.loadingService.removeToFetchList(id);
   }
 
+  async fetchSubareasByOrcs(orcs) {
+    // return all subareas belonging to the given orcs.
+    let res;
+    let errorSubject = '';
+    this.loadingService.addToFetchList(Constants.dataIds.CURRENT_SUBAREA_LIST);
+    try {
+      this.loggerService.debug(`${orcs} - subareas GET: ${orcs}`);
+      res = await firstValueFrom(this.apiService.get('park', { orcs: orcs }));
+      this.dataService.setItemValue(Constants.dataIds.CURRENT_SUBAREA_LIST, res.data);
+    } catch (error) {
+      this.loggerService.error(`${error}`);
+      this.toastService.addMessage(
+        `Please refresh the page.`,
+        `Error getting ${errorSubject}`,
+        ToastTypes.ERROR
+      );
+      this.eventService.setError(
+        new EventObject(EventKeywords.ERROR, String(error), 'Sub-area Service')
+      );
+    }
+    this.loadingService.removeToFetchList(Constants.dataIds.CURRENT_SUBAREA_LIST);
+    return res;
+  }
+
   public clearAccordionCache() {
     this.dataService.clearItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA);
     this.dataService.clearItemValue(

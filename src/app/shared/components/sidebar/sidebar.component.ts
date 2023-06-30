@@ -31,6 +31,8 @@ export class SidebarComponent implements OnDestroy {
         return keyCloakService.isAllowed('export-reports');
       } else if (obj.path === 'lock-records') {
         return keyCloakService.isAllowed('lock-records');
+      } else if (obj.path === 'review-data') {
+        return keyCloakService.isAllowed('review-data');
       } else if (obj.path === 'login') {
         return keyCloakService.isAuthenticated() ? false : true;
       } else {

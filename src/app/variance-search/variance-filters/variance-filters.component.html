@@ -1,0 +1,33 @@
+<div class="bg-filter p-3">
+  <section>
+    <div class="row">
+      <!-- wait for controls to load before rendering typeaheads -->
+      <div class="col-sm-12 col-md-6 col-lg">
+        <app-typeahead *ngIf="fields.park" [control]="fields.park" [id]="'park-typeahead'" [data]="parks"
+          [label]="'Park'" (cleared)="parkCleared()" required></app-typeahead>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg">
+        <app-typeahead *ngIf="fields.subarea" [control]="fields.subarea" [id]="'subareas-typeahead'" [data]="subAreas" (cleared)="parkCleared()"
+          [disabled]="!fields.park.value" [label]="'Subarea'"></app-typeahead>
+      </div>
+      <div *ngIf="activityOptions" class="col-sm-12 col-md-6 col-lg">
+        <app-picklist [control]="fields?.activity" [label]="'Activity'" [options]="activityOptions" [disabled]="!fields.subarea.value">
+        </app-picklist>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg">
+        <label class="fw-bold">Date</label>
+        <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date" placeholder="Select date"
+          bsDatepicker [maxDate]="maxDate" [bsConfig]="{ dateInputFormat: 'MM/YYYY' }"
+          (onShown)="onOpenCalendar($event)" (ngModelChange)="dateChange($event)" />
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg">
+        <!-- Empty column to enforce correct spacing -->
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg">
+        <div class="btn btn-primary w-100 mt-4" (click)="submit()" disabled="form.invalid">Filter</div>
+      </div>
+    </div>
+  </section>
+</div>

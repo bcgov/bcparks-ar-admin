@@ -1,6 +1,6 @@
 import { VarianceUtils } from './variance-utils';
 
-fdescribe('Variance Util Tests', () => {
+describe('Variance Util Tests', () => {
   it('should trigger variance', async () => {
     const value = VarianceUtils.calculateVariance(8, 8, 8, 10, 0.2);
     expect(value).toEqual({
