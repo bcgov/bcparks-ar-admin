@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VarianceSearchComponent } from './variance-search.component';
 import { VarianceFiltersComponent } from './variance-filters/variance-filters.component';
-import { TempComponent } from './temp/temp.component';
 import { TypeaheadModule } from '../shared/components/typeahead/typeahead.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -14,7 +13,6 @@ import { VarianceAccordionComponent } from './variance-list/variance-accordion/v
   declarations: [
     VarianceSearchComponent,
     VarianceFiltersComponent,
-    TempComponent,
     VarianceListComponent,
     VarianceAccordionComponent,
   ],
