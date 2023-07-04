@@ -44,7 +44,7 @@ describe('SubAreaService', () => {
     loadingService = TestBed.inject(LoadingService);
     loggerService = TestBed.inject(LoggerService);
     apiService = TestBed.inject(ApiService);
-    dataServiceSpy = spyOn(subareaService['dataService'], 'clearItemValue');
+    dataServiceSpy;
     loadingServiceAddSpy = spyOn(
       subareaService['loadingService'],
       'addToFetchList'
@@ -84,32 +84,41 @@ describe('SubAreaService', () => {
     expect(fetchActivityDetailsSpy).toHaveBeenCalledTimes(Constants.ActivityTypes.length);
   });
 
+  it('fetches subareas by orcs', async () => {
+    let setDataServiceSpy = spyOn(subareaService['dataService'], 'setItemValue');
+    apiServiceSpy = spyOn(subareaService['apiService'], 'get').and.returnValue(new BehaviorSubject({data:['valid_Data']}));
+    let res = await subareaService.fetchSubareasByOrcs('0001');
+    expect(res).toEqual({data: ['valid_Data']});
+    expect(setDataServiceSpy).toHaveBeenCalledTimes(1);
+  
+  })
 
   it('clears accordion cache', async () => {
+    let clearDataServiceSpy = spyOn(subareaService['dataService'], 'clearItemValue');
     subareaService.clearAccordionCache();
-    expect(dataServiceSpy).toHaveBeenCalledTimes(8);
-    expect(dataServiceSpy).toHaveBeenCalledWith(
+    expect(clearDataServiceSpy).toHaveBeenCalledTimes(8);
+    expect(clearDataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.ENTER_DATA_SUB_AREA
     );
-    expect(dataServiceSpy).toHaveBeenCalledWith(
+    expect(clearDataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.ACCORDION_BACKCOUNTRY_CABINS
     );
-    expect(dataServiceSpy).toHaveBeenCalledWith(
+    expect(clearDataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING
     );
-    expect(dataServiceSpy).toHaveBeenCalledWith(
+    expect(clearDataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.ACCORDION_BOATING
     );
-    expect(dataServiceSpy).toHaveBeenCalledWith(
+    expect(clearDataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.ACCORDION_DAY_USE
     );
-    expect(dataServiceSpy).toHaveBeenCalledWith(
+    expect(clearDataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.ACCORDION_FRONTCOUNTRY_CABINS
     );
-    expect(dataServiceSpy).toHaveBeenCalledWith(
+    expect(clearDataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING
     );
-    expect(dataServiceSpy).toHaveBeenCalledWith(
+    expect(clearDataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.ACCORDION_GROUP_CAMPING
     );
   });

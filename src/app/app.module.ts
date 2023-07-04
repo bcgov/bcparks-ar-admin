@@ -29,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoadingService } from './services/loading.service';
 import { LockRecordsModule } from './lock-records/lock-records.module';
+import { VarianceSearchModule } from './variance-search/variance-search.module';
 
 export function initConfig(
   configService: ConfigService,
@@ -65,6 +66,7 @@ export function initConfig(
     InfiniteLoadingBarModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    VarianceSearchModule
   ],
   providers: [
     {

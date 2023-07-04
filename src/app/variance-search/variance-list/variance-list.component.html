@@ -1,0 +1,25 @@
+<!-- Results table -->
+<div id='variance-list' class="m-4">
+  <div class="d-flex row">
+    <app-variance-accordion [rowSchema]="rowSchema" [isHeader]="true"></app-variance-accordion>
+  </div>
+  <div *ngIf="!loading">
+    <div *ngIf="!variances || variances?.length === 0"
+      class="bg-light d-flex flex-column h-100 justify-content-center align-items-center p-3 text-center">
+      No variance records to display.
+    </div>
+    <div *ngFor="let rowData of variances">
+      <app-variance-accordion [rowData]="rowData" [rowSchema]="rowSchema" [resolvedStatusTemplate]="resolvedStatusTemplate"></app-variance-accordion>
+    </div>
+  </div>
+  <div *ngIf="loading"
+    class="bg-light d-flex flex-column h-100 justify-content-center align-items-center p-3 text-center">
+    <span class="spinner-border text-secondary"></span>
+  </div>
+</div>
+
+<ng-template #viewButton let-rowData="rowData">
+  <div class="cursor-pointer text-primary text-center" (click)="viewRecord(rowData)">
+      <strong><i class="bi bi-eye me-2"></i>View</strong>
+  </div>
+</ng-template>

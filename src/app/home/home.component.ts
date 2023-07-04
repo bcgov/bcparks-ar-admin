@@ -34,6 +34,14 @@ export class HomeComponent {
         navigation: 'lock-records',
       });
     }
+    if (keyCloakService.isAllowed('review-data')) {
+      this.cardConfig.push({
+        cardHeader: 'Review Data',
+        cardTitle: 'Review variances in data',
+        cardText: 'Use this section to review variance records.',
+        navigation: 'review-data',
+      });
+    }
 
   }
 }

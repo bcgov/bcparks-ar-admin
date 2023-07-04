@@ -67,6 +67,10 @@ export class AuthGuard implements CanActivate {
       return this.router.parseUrl('/');
     }
 
+    if (!this.keycloakService.isAllowed('review-data') && state.url === '/review-data') {
+      return this.router.parseUrl('/');
+    }
+
     // Show the requested page.
     return true;
   }

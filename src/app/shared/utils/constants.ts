@@ -2,6 +2,7 @@ export class Constants {
   public static readonly dataIds = {
     ENTER_DATA_PARK: 'enterDataPark',
     ENTER_DATA_SUB_AREA: 'enterDataSubArea',
+    CURRENT_SUBAREA_LIST: 'current-subarea-list',
     ACCORDION_FRONTCOUNTRY_CAMPING: 'accordion-Frontcountry Camping',
     ACCORDION_FRONTCOUNTRY_CABINS: 'accordion-Frontcountry Cabins',
     ACCORDION_DAY_USE: 'accordion-Day Use',
@@ -15,6 +16,8 @@ export class Constants {
     ENTER_DATA_URL_PARAMS: 'enter-data-url-params',
     EXPORT_ALL_POLLING_DATA: 'export-all-polling-data',
     LOCK_RECORDS_FISCAL_YEARS_DATA: 'lock-records-fiscal-years-data',
+    VARIANCE_FILTERS: 'variance-filters',
+    VARIANCE_LIST: 'variance-list',
   };
 
   public static readonly ApplicationRoles: any = {
