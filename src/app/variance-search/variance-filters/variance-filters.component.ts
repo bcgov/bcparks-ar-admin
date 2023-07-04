@@ -159,7 +159,7 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
         display: subarea.subAreaName
       })
     }
-    // this.fields?.subarea?.setValue(this.subAreas[0] || { value: null, display: null });
+    this.cd.detectChanges();
   }
 
 
@@ -173,6 +173,7 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
         display: activity
       })
     }
+    this.cd.detectChanges();
   }
 
   parkCleared() {

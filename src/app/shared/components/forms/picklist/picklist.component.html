@@ -1,5 +1,5 @@
 <label *ngIf="label" for="{{ id }}" class="fw-bold">{{ label
-  }}<span *ngIf="required" class="text-danger">&nbsp;*</span></label>
+  }}<span *ngIf="isRequired()" class="text-danger">&nbsp;*</span></label>
 
 <div class="input-group mb-3">
   <span *ngIf="icon" class="input-group-text" [ngClass]="icon"><i class="bi"></i></span>
