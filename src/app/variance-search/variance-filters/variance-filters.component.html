@@ -26,7 +26,7 @@
         <!-- Empty column to enforce correct spacing -->
       </div>
       <div class="col-sm-12 col-md-6 col-lg">
-        <div class="btn btn-primary w-100 mt-4" (click)="submit()" disabled="form.invalid">Filter</div>
+        <button class="btn btn-primary w-100 mt-4" (click)="submit()" [disabled]="form.invalid">Filter</button>
       </div>
     </div>
   </section>
