@@ -1,4 +1,6 @@
-<label for="{{ id }}" class="fw-bold">{{ label }}</label>
+<label for="{{ id }}" class="fw-bold">{{ label }}
+  <span class="text-danger" *ngIf="isRequired()">*</span>
+</label>
 <div class="input-group">
   <input
   id="{{ id }}"
@@ -15,7 +17,7 @@
   [disabled]="disabled ? true : false"
   [resultTemplate]="rt"
   />
-  <span class="input-group-text border-start-0 clear-button" [ngStyle]="{'background-color': disabled ? '#e9ecef' : 'white'}" (click)="setControlValue(null)" type="button">
+  <span class="input-group-text border-start-0 clear-button" [ngStyle]="{'background-color': disabled ? '#e9ecef' : 'white'}" (click)="clear()" type="button">
       <i class="bi bi-x-lg"></i>
   </span>
 </div>

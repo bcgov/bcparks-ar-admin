@@ -8,9 +8,9 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { merge } from 'rxjs/internal/observable/merge';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
@@ -27,15 +27,30 @@ import { OperatorFunction } from 'rxjs/internal/types';
   encapsulation: ViewEncapsulation.None,
 })
 export class TypeaheadComponent implements OnInit, OnDestroy {
-  @Input() data: any[] = [];
   @Input() control: UntypedFormControl = new UntypedFormControl();
+  @Input() set data (value: any[]) {
+    if (this.control){
+      this.setControlValue(null);
+    }
+    this._data.next(value);
+    if (this.control){
+      this.setControlValue(this.data[0]);
+    }
+  }
+  public get data() {
+    return this._data.value;
+  }
   @Input() placeholder = '';
   @Input() label: String = '';
   @Input() id: String = 'typeahead-focus';
   @Input() disabled: boolean = false;
 
+  @Output() cleared: EventEmitter<any> = new EventEmitter();
+
   protected model;
   private subscriptions = new Subscription();
+
+  public _data = new BehaviorSubject<any>({value: null, display: null})
 
   @Output() output: EventEmitter<any> = new EventEmitter();
 
@@ -50,6 +65,10 @@ export class TypeaheadComponent implements OnInit, OnDestroy {
         this.model = value;
       })
     );
+  }
+
+  isRequired(): boolean {
+    return this.control.hasValidator(Validators.required);
   }
 
   search: OperatorFunction<string, readonly { display; value; template }[]> = (
@@ -77,6 +96,11 @@ export class TypeaheadComponent implements OnInit, OnDestroy {
   };
 
   formatter = (x: { display; value; template }) => x.display;
+
+  clear() {
+    this.setControlValue(null);
+    this.cleared.emit();
+  }
 
   setControlValue(event) {
     if (event?.item) {
