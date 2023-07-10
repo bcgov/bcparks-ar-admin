@@ -153,9 +153,15 @@ export class KeycloakService {
    * @memberof KeycloakService
    */
   isAllowed(service): boolean {
-    if (service !== 'lock-records') {
+    // admin only routes
+    let adminOnlyRoutes = [
+      'lock-records',
+      'review-data',
+    ]
+    if (!adminOnlyRoutes.find(route => route === service)) {
       return true;
     }
+
     const token = this.getToken();
 
     if (!token) {

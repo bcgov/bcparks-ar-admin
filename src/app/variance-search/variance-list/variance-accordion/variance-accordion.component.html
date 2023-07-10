@@ -1,0 +1,74 @@
+<div class="mx-2 row">
+  <div class="col">
+    <!-- Hide header on small screens -->
+    <div class="d-none d-md-block">
+      <div *ngIf="isHeader" class="d-flex row text-nowrap border border-2 border-white">
+        <div class="fw-bold px-3 pb-1 accordion-header overflow-hidden {{col?.columnClasses}}"
+          *ngFor="let col of rowSchema" [attr.id]="col?.id">
+          <div *ngIf="col?.displayHeader">
+            {{col?.displayHeader}}
+          </div>
+          <!-- <div class="col-1 col-md-2 col-sm-4 col-xs-6" id="resolvedStatusButton">
+          Empty col for resolved status button header
+        </div> -->
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isHeader" class="d-flex row mt-2 text-nowrap justify-content-between">
+      <!-- Hide accordion on small screens -->
+      <div class="col d-none d-md-block">
+        <div class="row d-flex border border-1 rounded accordion-item align-items-center border-primary">
+          <div *ngFor="let col of rowSchema" class="p-3 overflow-hidden {{col?.columnClasses}}"
+            [ngClass]="col?.divider ? 'border-start border-primary' : ''" [attr.id]="col?.id" data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#p' + rowData?.sk">
+            <div *ngIf="col?.display">
+              <strong class="text-primary">{{col?.display(rowData)}}</strong>
+            </div>
+            <div *ngIf="col?.template">
+              <ng-container [ngTemplateOutlet]="col.template" [ngTemplateOutletContext]="{rowData: rowData}">
+              </ng-container>
+            </div>
+            <div *ngIf="!col?.display && !col?.template">
+              <strong class="text-primary">{{rowData[col?.key]}}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Show block view on small screens -->
+  <div class="col-12 d-md-none">
+    <div *ngIf="!isHeader"
+      class="d-flex row mt-2 text-nowrap justify-content-between border border-1 rounded accordion-item align-items-center border-primary">
+      <div class="col border-end border-primary p-2 overflow-hidden">
+        <div *ngFor="let col of rowSchema">
+          <div *ngIf="col?.display">
+            <strong class="text-primary">{{col?.display(rowData)}}</strong>
+          </div>
+          <div *ngIf="!col?.display && !col?.template">
+            <strong class="text-primary">{{rowData[col?.key]}}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div *ngFor="let col of rowSchema">
+          <div *ngIf="col?.template">
+            <ng-container [ngTemplateOutlet]="col.template" [ngTemplateOutletContext]="{rowData: rowData}">
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-md-auto d-grid align-items-stretch text-nowrap" id="resolvedStatusButton">
+    <button *ngIf="rowData?.resolved && !isHeader" class="btn btn-success mt-2 overflow-hidden">
+      <i class="bi bi-check-all"></i>
+      Resolved
+    </button>
+    <button *ngIf="!rowData?.resolved && !isHeader" class="btn btn-outline-success mt-2 overflow-hidden">
+      <i class="bi bi-exclamation-circle"></i>
+      Needs Review
+    </button>
+  </div>
+  <hr class="d-md-none mt-4">
+</div>
