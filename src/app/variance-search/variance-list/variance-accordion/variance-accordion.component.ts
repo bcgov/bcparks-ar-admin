@@ -1,4 +1,7 @@
 import { Component, Input, TemplateRef } from '@angular/core';
+import { KeycloakService } from 'src/app/services/keycloak.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { VarianceService } from 'src/app/services/variance.service';
 
 
 @Component({
@@ -12,5 +15,25 @@ export class VarianceAccordionComponent {
   @Input() resolvedStatusTemplate: TemplateRef<any>;
   @Input() rowData: any;
   @Input() isHeader: boolean = false;
+
+  constructor(
+    private varianceService: VarianceService,
+    protected loadingService: LoadingService,
+    private keycloakService: KeycloakService
+  ) { }
+
+  isAdmin() {
+    return this.keycloakService.isAdmin();
+  }
+
+  resolveVariance(resolve = true) {
+    this.varianceService.resolveVariance(
+      this.rowData.orcs,
+      this.rowData.date,
+      this.rowData.subAreaId,
+      this.rowData.activity,
+      resolve
+    );
+  }
 
 }

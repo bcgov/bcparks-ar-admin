@@ -37,7 +37,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
 
   private utils = new Utils();
 
-  constructor(private _changeDetectionRef: ChangeDetectorRef) {}
+  constructor(private _changeDetectionRef: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['minDate'] && changes['minDate'].currentValue) {

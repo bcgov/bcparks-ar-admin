@@ -60,14 +60,14 @@
       </div>
     </div>
   </div>
-  <div class="col col-md-auto d-grid align-items-stretch text-nowrap" id="resolvedStatusButton">
-    <button *ngIf="rowData?.resolved && !isHeader" class="btn btn-success mt-2 overflow-hidden">
+  <div *ngIf="isAdmin()" class="col col-md-auto d-grid align-items-stretch text-nowrap" id="resolvedStatusButton">
+    <button *ngIf="rowData?.resolved && !isHeader" class="btn btn-success mt-2 overflow-hidden" (click)="resolveVariance(false)" [disabled]="loadingService?.loading?.value">
       <i class="bi bi-check-all"></i>
       Resolved
     </button>
-    <button *ngIf="!rowData?.resolved && !isHeader" class="btn btn-outline-success mt-2 overflow-hidden">
-      <i class="bi bi-exclamation-circle"></i>
-      Needs Review
+    <button *ngIf="!rowData?.resolved && !isHeader" class="btn btn-outline-success mt-2 overflow-hidden" (click)="resolveVariance()" [disabled]="loadingService?.loading?.value">
+      <i class="bi bi-check-all"></i>
+      Resolve
     </button>
   </div>
   <hr class="d-md-none mt-4">

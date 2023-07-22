@@ -18,6 +18,7 @@ export class Constants {
     LOCK_RECORDS_FISCAL_YEARS_DATA: 'lock-records-fiscal-years-data',
     VARIANCE_FILTERS: 'variance-filters',
     VARIANCE_LIST: 'variance-list',
+    VARIANCE_LAST_EVALUATED_KEY: 'variance-last-evaluated-key'
   };
 
   public static readonly ApplicationRoles: any = {

@@ -35,6 +35,11 @@ export class ApiService {
     return this.http.get<any>(`${this.apiPath}/${pk}?${queryString}`);
   }
 
+  put(pk, obj, queryParamsObject = null as any) {
+    let queryString = this.generateQueryString(queryParamsObject);
+    return this.http.put<any>(`${this.apiPath}/${pk}?${queryString}`, obj);
+  }
+
   // delete(pk, queryParamsObject = null): Promise<any> {
   //   let queryString = this.generateQueryString(queryParamsObject);
   //   return this.http.delete<any>(`${this.apiPath}/${pk}?${queryString}`, {}).toPromise();

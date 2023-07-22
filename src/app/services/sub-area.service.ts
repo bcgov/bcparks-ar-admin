@@ -83,7 +83,7 @@ export class SubAreaService {
     try {
       this.loggerService.debug(`${orcs} - subareas GET: ${orcs}`);
       res = await firstValueFrom(this.apiService.get('park', { orcs: orcs }));
-      this.dataService.setItemValue(Constants.dataIds.CURRENT_SUBAREA_LIST, res.data);
+      this.dataService.setItemValue(Constants.dataIds.CURRENT_SUBAREA_LIST, res);
     } catch (error) {
       this.loggerService.error(`${error}`);
       this.toastService.addMessage(
