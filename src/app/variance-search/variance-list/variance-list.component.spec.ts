@@ -52,7 +52,7 @@ describe('VarianceListComponent', () => {
 
   it('navigates to the records url', async () => {
     let routerSpy = spyOn(component['router'], 'navigate');
-    let record = mockVarianceRecords[0];
+    let record = MockData.mockVarianceRecord_1;
     let route = component.formatActivityForUrl(record.activity);
     component.viewRecord(record);
     component.viewRecord(mockVarianceRecords[0]);
