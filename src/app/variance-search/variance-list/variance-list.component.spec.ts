@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VarianceListComponent } from './variance-list.component';
 import { MockData } from 'src/app/shared/utils/mock.data';
+import { ConfigService } from 'src/app/services/config.service';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('VarianceListComponent', () => {
   let component: VarianceListComponent;
@@ -11,7 +13,12 @@ describe('VarianceListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [VarianceListComponent]
+      declarations: [VarianceListComponent],
+      providers: [
+        ConfigService,
+        HttpClient,
+        HttpHandler
+      ]
     })
       .compileComponents();
 
@@ -30,8 +37,8 @@ describe('VarianceListComponent', () => {
     let records = [...mockVarianceRecords];
     component.createTableRows(records);
     for (const record of records) {
-      expect(record.subAreaId).toEqual(record.pk.split('::')[1]);
-      expect(record.activity).toEqual(record.pk.split('::')[2]);
+      expect(record.orcs).toEqual(record.pk.split('::')[1]);
+      expect(record.date).toEqual(record.pk.split('::')[2]);
     }
   })
 
@@ -45,7 +52,7 @@ describe('VarianceListComponent', () => {
 
   it('navigates to the records url', async () => {
     let routerSpy = spyOn(component['router'], 'navigate');
-    let record = mockVarianceRecords[0];
+    let record = MockData.mockVarianceRecord_1;
     let route = component.formatActivityForUrl(record.activity);
     component.viewRecord(record);
     component.viewRecord(mockVarianceRecords[0]);

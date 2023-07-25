@@ -34,7 +34,7 @@ export class SubAreaService {
       res = await firstValueFrom(
         this.apiService.get('park', { orcs: orcs, subAreaId: subAreaId })
       );
-      res = res.data[0] || null;
+      res = res[0] || null;
       this.dataService.setItemValue(id, res);
 
       // If we are given a date, we want to get activity details
@@ -83,7 +83,7 @@ export class SubAreaService {
     try {
       this.loggerService.debug(`${orcs} - subareas GET: ${orcs}`);
       res = await firstValueFrom(this.apiService.get('park', { orcs: orcs }));
-      this.dataService.setItemValue(Constants.dataIds.CURRENT_SUBAREA_LIST, res.data);
+      this.dataService.setItemValue(Constants.dataIds.CURRENT_SUBAREA_LIST, res);
     } catch (error) {
       this.loggerService.error(`${error}`);
       this.toastService.addMessage(

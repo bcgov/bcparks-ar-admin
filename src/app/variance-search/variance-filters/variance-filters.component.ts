@@ -1,12 +1,11 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Utils } from 'src/app/shared/utils/utils';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { VarianceService } from 'src/app/services/variance.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-variance-filters',
@@ -28,6 +27,23 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
   public parks: any[] = [];;
   public subAreas: any[] = [];;
   public activityOptions: any[] = [];
+  public statusOptions: any[] = [
+    {
+      key: 'any',
+      value: undefined,
+      display: 'Any'
+    },
+    {
+      key: 'unresolved',
+      value: false,
+      display: 'Unresolved'
+    },
+    {
+      key: 'resolved',
+      value: true,
+      display: 'Resolved'
+    },
+  ];
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -96,13 +112,14 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
     let controls = [
       {
         key: 'date',
-        default: null
-      },
-      {
-        key: 'activity',
+        default: null,
         validators: [
           Validators.required
         ]
+      },
+      {
+        key: 'activity',
+        default: null,
       },
       {
         key: 'park',
@@ -114,9 +131,10 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
       {
         key: 'subarea',
         default: null,
-        validators: [
-          Validators.required
-        ]
+      },
+      {
+        key: 'resolved',
+        default: null,
       }
     ];
     for (const control of controls) {
@@ -164,7 +182,11 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
 
 
   buildActivityOptions(subarea) {
-    this.activityOptions = [];
+    this.activityOptions = [{
+      key: 'all',
+      value: 'all',
+      display: 'All'
+    }];
     for (const activity of subarea.value?.activities) {
       let activityKey = activity.replace(/ /g, '');
       this.activityOptions.push({
@@ -184,8 +206,14 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
   submit() {
     // collect form values
     let queryParams = this.collect();
-    // You currently need date, activity, and subareaid to do a variance search.
-    queryParams.subAreaId = queryParams.subarea?.sk;
+    // You currently need date and orcs to do a variance search.
+    queryParams.subAreaId = queryParams.subarea?.value?.sk;
+    if (queryParams.activity === 'all') {
+      delete queryParams.activity;
+    }
+    if (queryParams.resolved === null) {
+      delete queryParams.resolved;
+    }
     this.varianceService.fetchVariance(queryParams);
   }
 
@@ -194,9 +222,21 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
     let formValues = this.form.value;
     return {
       ...formValues,
-      park: formValues.park?.value,
-      subarea: formValues.subarea?.value,
+      orcs: formValues.park?.value?.sk,
+      subAreaId: formValues.subarea?.value?.sk
     }
+  }
+
+  clearFilters() {
+    this.modelDate = [null, null];
+    this.form.reset();
+  }
+
+  isFormInvalid() {
+    if (this.form.valid && this.form.controls.date.value !== null) {
+      return false;
+    }
+    return true;
   }
 
   ngOnDestroy() {

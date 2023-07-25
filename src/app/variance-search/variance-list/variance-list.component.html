@@ -20,6 +20,10 @@
 
 <ng-template #viewButton let-rowData="rowData">
   <div class="cursor-pointer text-primary text-center" (click)="viewRecord(rowData)">
-      <strong><i class="bi bi-eye me-2"></i>View</strong>
+      <strong><i class="bi bi-eye me-2"></i>View/Edit</strong>
   </div>
 </ng-template>
+
+<div *ngIf="variances && lastEvaluatedKey" class="d-flex justify-content-center">
+  <button class="btn btn-outline-secondary" (click)="loadMore()">Load more</button>
+</div>

@@ -147,21 +147,29 @@ export class KeycloakService {
   }
 
   /**
-   * Returns whether or not the user has sysadmin role
+   * Returns whether or not the user has access to a route
    *
-   * @returns {boolean} User is a sysadmin.
+   * @returns {boolean} User user has access to route
    * @memberof KeycloakService
    */
   isAllowed(service): boolean {
     // admin only routes
     let adminOnlyRoutes = [
       'lock-records',
-      'review-data',
     ]
     if (!adminOnlyRoutes.find(route => route === service)) {
       return true;
     }
 
+    return this.isAdmin();
+  }
+
+  /**
+   * Returns whether or not the user has admin priviledges
+   * @returns  {boolean} User is sysadmin
+   * @memberof KeycloakService
+   */
+  isAdmin(): boolean {
     const token = this.getToken();
 
     if (!token) {

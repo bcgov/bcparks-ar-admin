@@ -35,10 +35,10 @@ describe('VarianceFiltersComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(Object.keys(component.form.controls).length).toEqual(4);
-    expect(Object.keys(component.fields).length).toEqual(4);
+    expect(Object.keys(component.form.controls).length).toEqual(5);
+    expect(Object.keys(component.fields).length).toEqual(5);
     for (const field in component.fields) {
-      if (field !== 'date') {
+      if (field === 'park' || field === 'date') {
         expect(component.form.controls[field].hasValidator(Validators.required)).toEqual(true);
       }
       expect(component.form.controls[field].value).toEqual(null);
@@ -81,7 +81,8 @@ describe('VarianceFiltersComponent', () => {
 
   it('builds activity options', async () => {
     component.buildActivityOptions({value: MockData.mockSubArea_1});
-    expect(component.activityOptions.length).toEqual(MockData.mockSubArea_1.activities.length)
+    // +1 for 'all' activities
+    expect(component.activityOptions.length).toEqual(MockData.mockSubArea_1.activities.length + 1)
   })
 
   it('clears fields', async () => {
@@ -94,15 +95,16 @@ describe('VarianceFiltersComponent', () => {
 
   it('submits the form', async () => {
     let varianceSpy = spyOn(component['varianceService'], 'fetchVariance');
-    component.fields.subarea.setValue({value: MockData.mockSubArea_1});
-    component.fields.activity.setValue('mockActivity_1');
+    component.fields.park.setValue({value: MockData.mockPark_1});
+    component.fields.date.setValue('202307');
     component.submit();
     expect(varianceSpy).toHaveBeenCalledOnceWith({
-      subarea: MockData.mockSubArea_1,
-      subAreaId: MockData.mockSubArea_1.sk,
-      activity: 'mockActivity_1',
-      date: null,
-      park: undefined
+      orcs: 'MOC1',
+      park: {value: MockData.mockPark_1},
+      date: '202307',
+      subarea: null,
+      activity: null,
+      subAreaId: undefined
     });
   })
 });

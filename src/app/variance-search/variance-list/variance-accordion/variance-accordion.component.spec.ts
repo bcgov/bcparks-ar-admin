@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VarianceAccordionComponent } from './variance-accordion.component';
+import { ConfigService } from 'src/app/services/config.service';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { KeycloakService } from 'src/app/services/keycloak.service';
 
 describe('VarianceAccordionComponent', () => {
   let component: VarianceAccordionComponent;
@@ -8,7 +11,13 @@ describe('VarianceAccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VarianceAccordionComponent ]
+      declarations: [ VarianceAccordionComponent ],
+      providers: [
+        ConfigService,
+        HttpClient,
+        HttpHandler,
+        KeycloakService 
+      ]
     })
     .compileComponents();
 

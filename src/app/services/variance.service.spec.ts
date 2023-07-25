@@ -10,6 +10,13 @@ import { BehaviorSubject } from 'rxjs';
 describe('VarianceService', () => {
   let service: VarianceService;
 
+  const goodParams = {
+    orcs: '0000',
+    subAreaId: '1111',
+    activity: 'activity',
+    date: '202306',
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -34,17 +41,22 @@ describe('VarianceService', () => {
     await service.fetchVariance(badParams);
     expect(dataServiceSpy).not.toHaveBeenCalled();
     // call with parameters
-    const goodParams = {
-      subAreaId: '1111',
-      activity: 'activity',
-      date: '202306',
-      lastEvaluatedKey: '12345'
-    }
     await service.fetchVariance(goodParams);
     expect(apiServiceSpy).toHaveBeenCalledOnceWith('variance', goodParams);
-    expect(dataServiceSpy).toHaveBeenCalledOnceWith(
+    // variance filters
+    expect(dataServiceSpy).toHaveBeenCalledWith(
+      Constants.dataIds.VARIANCE_FILTERS,
+      goodParams
+    );
+    // variance list
+    expect(dataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.VARIANCE_LIST,
       'success'
+    );
+    // variance lastEvaluatedKey
+    expect(dataServiceSpy).toHaveBeenCalledWith(
+      Constants.dataIds.VARIANCE_LAST_EVALUATED_KEY,
+      null
     );
   })
 
@@ -53,11 +65,29 @@ describe('VarianceService', () => {
     let errorThrower = spyOn(service['apiService'], 'get').and.callFake(() => {
       throw new Error('error');
     });
-    await service.fetchVariance({ subAreaId: '1111', activity: 'activity', date: '202306' })
+    await service.fetchVariance({ subAreaId: '1111', activity: 'activity', date: '202306', orcs: '0000' })
     expect(errorThrower).toHaveBeenCalledTimes(1);
-    expect(dataServiceSpy).toHaveBeenCalledOnceWith(
+    expect(dataServiceSpy).toHaveBeenCalledWith(
       Constants.dataIds.VARIANCE_LIST,
       'error'
     );
+  });
+
+  it ('should toggle variance resolve', async() => {
+    const varianceFetchSpy = spyOn(service, 'fetchVariance');
+    const dataServiceSpy = spyOn(service['dataService'], 'getItemValue').and.returnValue(new BehaviorSubject(goodParams));
+    const apiServiceSpy = spyOn(service['apiService'], 'put').and.returnValue(new BehaviorSubject('success'));
+    await service.resolveVariance('0000', '202307', '1111', 'activity');
+    expect(varianceFetchSpy).toHaveBeenCalledTimes(1);
+    expect(dataServiceSpy).toHaveBeenCalledWith(
+      Constants.dataIds.VARIANCE_FILTERS
+    );
+    expect(apiServiceSpy).toHaveBeenCalledWith('variance', {
+      orcs: '0000',
+      subAreaId: '1111',
+      activity: 'activity',
+      date: '202307',
+      resolved: true
+    });
   });
 });

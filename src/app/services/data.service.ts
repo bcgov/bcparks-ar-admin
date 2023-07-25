@@ -31,6 +31,18 @@ export class DataService {
     return this.data[id].value;
   }
 
+  // concatenate new value to existing array value of dataid
+  public appendItemValue(id, value) {
+    this.checkIfDataExists(id) ? null : this.initItem(id);
+    if (!this.getItemValue(id)) {
+      this.setItemValue(id, value);
+    } else {
+      const appendObj = this.getItemValue(id).concat(value)
+      this.data[id].next(appendObj);
+    }
+    return this.getItemValue(id);
+  }
+
   clearItemValue(id): void {
     this.setItemValue(id, null);
   }
