@@ -132,7 +132,7 @@ export class VarianceListComponent implements AfterViewInit, AfterViewChecked, O
   }
 
   formatActivityForUrl(activity) {
-    return activity.replace(/\s/g, '-').toLowerCase();
+    return activity?.replace(/\s/g, '-').toLowerCase();
   }
 
   viewRecord(record) {

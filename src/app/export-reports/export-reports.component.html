@@ -1,36 +1,56 @@
 <div class="container mt-5">
   <div class="card">
-    <div class="card-body">
-      <div>
-        <h3 class="card-title">Export all</h3>
-        <p class="card-text text-muted">
-          Generate a full report with no filters.
-        </p>
-      </div>
+    <div class="card-body m-3">
+      <h1>Export Report</h1>
+      <ngds-tab-row defaultActiveTabId="standard" tabRowClass="mb-4" (tabChange)="changeActiveTab($event)">
+        <ngds-tab id="standard" title="Standard">
+          <div>
+            <h3 class="card-title">Export all</h3>
+            <p class="card-text text-muted">
+              Generate a full report with no filters.
+            </p>
+          </div>
 
-      <hr />
+          <hr />
+        </ngds-tab>
+        <ngds-tab id="variance" title="Variance">
+          <div>
+            <h3 class="card-title">Export variance data</h3>
+            <p class="card-text text-muted">
+              Generate a report of variance records.
+            </p>
 
-      <div class="pb-2">
+            <hr />
+
+            <label class="fw-bold mb-2">Fiscal Year</label>
+            <div class="row mb-3">
+              <div class="col-md-12 col-lg-4">
+                <button (click)="dp.toggle()" class="form-control">
+                  <span autocomplete="off" bsDatepicker #dp="bsDatepicker" minMode="year" [maxDate]="maxDate"
+                    (onShown)="onOpenCalendar($event)" (bsValueChange)="datePickerOutput($event)">
+                  </span>
+                  <div class="text-muted d-flex justify-content-left">
+                    <i class="bi-calendar me-2 text-muted"></i>
+                    {{ fiscalYearRangeString }}
+                  </div>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </ngds-tab>
+      </ngds-tab-row>
+      <div class="mt-5 pb-2">
         <label class="card-text fw-bold">Exporter status:</label>
         <div>{{ status }}</div>
         <p class="card-text mt-2">
-          <ngb-progressbar
-            type="{{ progressBarColour }}"
-            [value]="percentageComplete"
-            [striped]="true"
-            [animated]="animated"
-            ><i>{{
+          <ngb-progressbar type="{{ progressBarColour }}" [value]="percentageComplete" [striped]="true"
+            [animated]="animated"><i>{{
               progressBarTextOverride || percentageComplete + "%"
-            }}</i></ngb-progressbar
-          >
+              }}</i></ngb-progressbar>
         </p>
         <div class="mt-4">
-          <button
-            type="button"
-            class="btn btn-primary"
-            [disabled]="disableGenerate"
-            (click)="generateReport()"
-          >
+          <button type="button" class="btn btn-primary" [disabled]="disableGenerateButton()" (click)="generateReport()">
             Generate Report
           </button>
         </div>
@@ -40,19 +60,9 @@
 
       <div class="pb-2">
         <label class="card-text fw-bold">Download Report:</label>
-        <!-- <div *ngIf="initialLoad && !dateGenerated">Last export: -</div>
-        <div *ngIf="!initialLoad && !dateGenerated">
-          No previous report found. Click generate report.
-        </div>
-        <div *ngIf="dateGenerated">Last export: {{ dateGenerated }}</div> -->
         <div>{{ exportMessage }}</div>
         <div class="mt-3">
-          <button
-            type="button"
-            class="btn btn-primary"
-            [disabled]="!dateGenerated"
-            (click)="downloadReport()"
-          >
+          <button type="button" class="btn btn-primary" [disabled]="!dateGenerated" (click)="downloadReport()">
             Download Report
           </button>
         </div>

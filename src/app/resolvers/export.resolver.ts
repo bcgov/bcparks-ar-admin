@@ -9,6 +9,6 @@ import { Constants } from '../shared/utils/constants';
 export class ExportResolver implements Resolve<void> {
   constructor(private exportService: ExportService) {}
   resolve() {
-    this.exportService.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA);
+    this.exportService.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
   }
 }

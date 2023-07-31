@@ -15,6 +15,7 @@ export class Constants {
       'accordion-All Available Records List',
     ENTER_DATA_URL_PARAMS: 'enter-data-url-params',
     EXPORT_ALL_POLLING_DATA: 'export-all-polling-data',
+    EXPORT_VARIANCE_POLLING_DATA: 'export-variance-polling-data',
     LOCK_RECORDS_FISCAL_YEARS_DATA: 'lock-records-fiscal-years-data',
     VARIANCE_FILTERS: 'variance-filters',
     VARIANCE_LIST: 'variance-list',
