@@ -99,7 +99,7 @@ export class VarianceListComponent implements AfterViewInit, AfterViewChecked, O
       {
         id: 'viewButton',
         dropdown: 0,
-        columnClasses: 'col-1',
+        columnClasses: 'col-auto',
         template: this.viewButton,
         divider: true
       }
