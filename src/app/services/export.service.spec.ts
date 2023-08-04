@@ -49,8 +49,8 @@ describe('ExportService', () => {
     expect(service).toBeTruthy();
     dataServiceSpy = spyOn(service['dataService'], 'setItemValue');
 
-    await service.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA);
-    await service.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, {
+    await service.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
+    await service.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard', {
       key: 'value'
     });
 
@@ -72,7 +72,7 @@ describe('ExportService', () => {
     TestBed.overrideProvider(ApiService, { useValue: mockApiService });
     service = TestBed.inject(ExportService);
     dataServiceSpy = spyOn(service['dataService'], 'setItemValue');
-    await service.generateReport(Constants.dataIds.EXPORT_ALL_POLLING_DATA);
+    await service.generateReport(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
 
     expect(dataServiceSpy).toHaveBeenCalledTimes(1);
   });
@@ -81,7 +81,7 @@ describe('ExportService', () => {
     TestBed.overrideProvider(ApiService, { useValue: mockApiServiceNoDataThrow });
     service = TestBed.inject(ExportService);
     let loggerServiceSpy = spyOn(service['loggerService'], 'error');
-    await service.generateReport(Constants.dataIds.EXPORT_ALL_POLLING_DATA);
+    await service.generateReport(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
 
     expect(loggerServiceSpy).toHaveBeenCalledTimes(1);
   });

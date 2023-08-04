@@ -1275,6 +1275,13 @@
     bootstrap "^5.2.3"
     jquery "^3.6.0"
 
+"@digitalspace/ngds-toolkit@^0.0.58":
+  version "0.0.58"
+  resolved "https://registry.yarnpkg.com/@digitalspace/ngds-toolkit/-/ngds-toolkit-0.0.58.tgz#bc4b756f087f91f69a6ce35a2e07df19c07828a5"
+  integrity sha512-vl4+beEHIR2Dok/hy8RZeAJyHqkdLynVbLREWedKDo2lMlnxiuzX6N/15naht3nLWQh35PoUYA297yOoemQ4Tw==
+  dependencies:
+    tslib "^2.3.0"
+
 "@discoveryjs/json-ext@0.5.7":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"

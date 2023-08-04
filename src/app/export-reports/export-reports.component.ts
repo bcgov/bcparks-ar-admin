@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { ExportService } from '../services/export.service';
@@ -11,7 +11,7 @@ import { Constants } from '../shared/utils/constants';
 })
 
 // TODO: Make a component for exporter cards
-export class ExportReportsComponent implements OnInit, OnDestroy {
+export class ExportReportsComponent implements OnDestroy {
   private subscriptions = new Subscription();
 
   public stateDictionary = {
@@ -32,6 +32,13 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
   public progressBarColour = 'secondary';
   public dateGenerated;
   public signedURL;
+  public fiscalYearStartMonth = 'April';
+  public fiscalYearEndMonth = 'March';
+  public maxDate = new Date();
+  public defaultRangeString = 'Select fiscal year end';
+  public fiscalYearRangeString = this.defaultRangeString;
+  public modelDate = NaN;
+  public activeTab = '';
 
   public exportMessage = 'Last export: -';
 
@@ -42,49 +49,75 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
     private dataService: DataService
   ) {
     this.subscriptions.add(
+      this.dataService.watchItem(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA).subscribe(res => {
+        this.jobUpdate(res);
+      })
+    )
+    this.subscriptions.add(
       this.dataService
         .watchItem(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
         .subscribe((res) => {
-          if (res) {
-            this.initialLoad = false;
-            if (res.error) {
-              if (res.error.state === 'retrying') {
-                this.setState(this.stateDictionary.RETRYING);
-              } else {
-                this.setState(this.stateDictionary.ERROR);
-                this.setExportMessage(res);
-              }
-              this.status = res.error.msg;
-            } else {
-              if (this.currentState !== 0) {
-                if (res.jobObj.progressState === 'complete') {
-                  this.setState(this.stateDictionary.READY_TO_DOWNLOAD);
-                } else {
-                  this.setState(this.stateDictionary.GENERATING);
-                }
-                this.percentageComplete = res.jobObj.progressPercentage;
-                this.status = res.jobObj.progressDescription;
-              }
-
-              this.setExportMessage(res);
-            }
-
-            this.signedURL = res?.['signedURL']
-              ? res?.['signedURL']
-              : undefined;
-          }
-        })
-    );
+          this.jobUpdate(res);
+        }
+        ));
   }
 
-  ngOnInit(): void {}
+  jobUpdate(res) {
+    if (res) {
+      this.initialLoad = false;
+      if (res.error) {
+        if (res.error.state === 'retrying') {
+          this.setState(this.stateDictionary.RETRYING);
+        } else {
+          this.setState(this.stateDictionary.ERROR);
+          this.setExportMessage(res);
+        }
+        this.status = res.error.msg;
+      } else {
+        if (this.currentState !== 0) {
+          if (res.jobObj.progressState === 'complete') {
+            this.setState(this.stateDictionary.READY_TO_DOWNLOAD);
+          } else {
+            this.setState(this.stateDictionary.GENERATING);
+          }
+          this.percentageComplete = res.jobObj.progressPercentage;
+          this.status = res.jobObj.progressDescription;
+        }
+        this.setExportMessage(res);
+      }
+
+      this.signedURL = res?.['signedURL']
+        ? res?.['signedURL']
+        : undefined;
+    }
+  }
+
+  onOpenCalendar(container) {
+    container.setViewMode('year');
+  }
+
+  datePickerOutput(event) {
+    const selectedYear = new Date(event).getFullYear();
+    this.modelDate = selectedYear;
+    const startDate = this.fiscalYearStartMonth + ' ' + (selectedYear - 1);
+    const endDate = this.fiscalYearEndMonth + ' ' + selectedYear;
+    const displayRange = `${startDate}–${endDate}`;
+    this.fiscalYearRangeString = displayRange;
+    this.changeActiveTab('variance');
+  }
 
   async generateReport() {
     this.setState(this.stateDictionary.GENERATING);
     this.setExportMessage(null);
-    this.exportService.generateReport(
-      Constants.dataIds.EXPORT_ALL_POLLING_DATA
-    );
+    if (this.activeTab === 'variance') {
+      this.exportService.generateReport(
+        Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA, 'variance', { fiscalYearEnd: this.modelDate }
+      );
+    } else {
+      this.exportService.generateReport(
+        Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard'
+      );
+    }
   }
 
   setState(state) {
@@ -94,7 +127,7 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
         this.status = 'Standing by';
         this.percentageComplete = 0;
         this.progressBarTextOverride = undefined;
-        this.disableGenerate = false;
+        this.disableGenerate = this.disableGenerateButton();
         this.disableDownload = true;
         this.currentState = 0;
         this.progressBarColour = 'secondary';
@@ -149,6 +182,19 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
     }
   }
 
+  changeActiveTab(tabId) {
+    this.setState(0);
+    this.activeTab = tabId;
+    this.setExportMessage(null);
+    if (this.activeTab === 'variance') {
+      if (this.modelDate) {
+        this.exportService.checkForReports(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA, 'variance', { fiscalYearEnd: this.modelDate });
+      }
+      return;
+    }
+    this.exportService.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
+  }
+
   setExportMessage(res) {
     if (
       res &&
@@ -170,9 +216,23 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
       }
     } else {
       this.dateGenerated = undefined;
-      this.exportMessage = 'Exporter running.';
+      if (this.currentState !== 0 && this.currentState !== 2) {
+        this.exportMessage = 'Exporter running.';
+      } else {
+        this.exportMessage = 'No previous report found. Click generate report.';
+      }
     }
   }
+
+  disableGenerateButton() {
+    if (this.activeTab === 'variance' && isNaN(this.modelDate)) {
+      return true;
+    }
+    if (![0, 2, 99].includes(this.currentState)) {
+      return true;
+    }
+    return false;
+  } s
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

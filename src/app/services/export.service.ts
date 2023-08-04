@@ -17,36 +17,53 @@ export class ExportService {
     private apiService: ApiService,
     private dataService: DataService,
     private loggerService: LoggerService
-  ) {}
+  ) { }
 
-  async checkForReports(dataId, errorObj = {}) {
+  async checkForReports(dataId, dataType, params:any = {}, errorObj = {}) {
     let res;
     try {
       this.loggerService.debug(`Export GET job`);
-      res = await firstValueFrom(
-        this.apiService.get('export', { getJob: true })
+      if (dataType === 'variance') {
+        res = await firstValueFrom(
+          this.apiService.get('export-variance', { getJob: true, fiscalYearEnd: params.fiscalYearEnd })
         );
-        if (Object.keys(errorObj).length > 0) {
-          res.error = errorObj;
-        }
+      } else {
+        res = await firstValueFrom(
+          this.apiService.get('export', { getJob: true })
+        );
+      }
+      if (Object.keys(errorObj).length > 0) {
+        res.error = errorObj;
+      }
       this.dataService.setItemValue(dataId, res);
     } catch (error) {
       this.dataService.setItemValue(dataId, null);
     }
   }
 
-  async generateReport(dataId) {
+  async generateReport(dataId, dataType, params: any = {}) {
+    let res;
     try {
       this.loggerService.debug(`Export GET`);
-      const res = await firstValueFrom(this.apiService.get('export'));
+      if (dataType === 'variance') {
+        if (params?.fiscalYearEnd) {
+          res = await firstValueFrom(
+            this.apiService.get('export-variance', { fiscalYearEnd: params.fiscalYearEnd })
+          );
+        } else {
+          throw 'Missing fiscal year end property';
+        }
+      } else {
+        res = await firstValueFrom(this.apiService.get('export'));
+      }
       if (res.error) {
         throw res.error;
       }
-      this.pollReportStatus(dataId);
+      this.pollReportStatus(dataId, dataType, params);
       return res;
     } catch (error) {
       this.loggerService.error(`${error}`);
-      this.checkForReports(dataId, {
+      this.checkForReports(dataId, dataType, params, {
         state: 'error',
         msg: 'Unable to create job. Please try again.'
       })
@@ -54,7 +71,7 @@ export class ExportService {
     }
   }
 
-  async pollReportStatus(dataId) {
+  async pollReportStatus(dataId, dataType, params: any = {}) {
     const maxAttempts = this.retryTimeout / this.pollingRate;
     let attempts = 0;
     let pollObj = {
@@ -67,27 +84,33 @@ export class ExportService {
       attempts += 1;
       // If result is taking too long, stop polling.
       if (attempts >= maxAttempts) {
-        this.checkForReports(pollObj.dataId, {
+        this.checkForReports(pollObj.dataId, dataType, params, {
           state: 'error',
           msg: 'Function timeout. Please try again.',
         });
         break;
       }
-      pollObj = await this.pollTick(pollObj);
+      pollObj = await this.pollTick(pollObj, dataType, params);
     } while (pollObj.state !== 'finished');
     return;
   }
 
-  async pollTick(pollObj) {
+  async pollTick(pollObj, dataType, params: any = {}) {
     let tickObj = pollObj;
     let res;
     try {
       // Check for existing job status.
       this.loggerService.debug(`Export GET job pollTick`);
-      res = await firstValueFrom(
-        this.apiService.get('export', { getJob: true })
-      );
-      if (res.error || res.jobObj.progressState === 'error') {
+      if (dataType === 'variance') {
+        res = await firstValueFrom(
+          this.apiService.get('export-variance', { fiscalYearEnd: params?.fiscalYearEnd,getJob: true })
+        );
+      } else {
+        res = await firstValueFrom(
+          this.apiService.get('export', { getJob: true })
+          );
+        }
+      if (res.error || res.jobObj?.progressState === 'error') {
         throw 'error';
       }
     } catch (error) {
@@ -104,9 +127,13 @@ export class ExportService {
         });
         await this.delay(this.retryPollingRate);
         // If report generation error, attempt to regenerate.
-        if (res.jobObj.progressState === 'error') {
+        if (res.jobObj?.progressState === 'error') {
           this.dataService.setItemValue(pollObj.dataId, null);
-          await firstValueFrom(this.apiService.get('export'));
+          if (dataType === 'variance') {
+            await firstValueFrom(this.apiService.get('export-variance', { fiscalYearEnd: params?.fiscalYearEnd }));
+          } else {
+            await firstValueFrom(this.apiService.get('export'));
+          }
         }
         tickObj.retryCount = retries;
         tickObj.state = 'retrying';
@@ -114,7 +141,7 @@ export class ExportService {
       }
       // Max retries exceeded. Stop polling.
       // Check for previously generated reports so user can still access them.
-      this.checkForReports(tickObj.dataId, {
+      this.checkForReports(tickObj.dataId, dataType, params, {
         state: 'error',
         msg: 'Unable to get job information. Please try again.',
       });
@@ -123,7 +150,7 @@ export class ExportService {
     }
     // Every time we poll, we update the data service.
     this.dataService.setItemValue(pollObj.dataId, res);
-    if (res.jobObj && res.jobObj.progressState !== 'complete') {
+    if (res.jobObj && res.jobObj?.progressState !== 'complete') {
       await this.delay(this.pollingRate);
       return tickObj;
     }

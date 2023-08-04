@@ -6,8 +6,9 @@ import { ConfigService } from '../services/config.service';
 import { DataService } from '../services/data.service';
 
 import { ExportReportsComponent } from './export-reports.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-describe('ExportReportsComponent', () => {
+fdescribe('ExportReportsComponent', () => {
   let component: ExportReportsComponent;
   let fixture: ComponentFixture<ExportReportsComponent>;
 
@@ -27,7 +28,7 @@ describe('ExportReportsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgbModule],
+      imports: [NgbModule, BsDatepickerModule.forRoot(),],
       declarations: [ExportReportsComponent],
       providers: [
         HttpClient,
