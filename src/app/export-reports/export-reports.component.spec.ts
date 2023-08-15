@@ -8,7 +8,7 @@ import { DataService } from '../services/data.service';
 import { ExportReportsComponent } from './export-reports.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-fdescribe('ExportReportsComponent', () => {
+describe('ExportReportsComponent', () => {
   let component: ExportReportsComponent;
   let fixture: ComponentFixture<ExportReportsComponent>;
 
