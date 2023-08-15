@@ -1,8 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { ExportService } from '../services/export.service';
 import { Constants } from '../shared/utils/constants';
+import { DateTime } from 'luxon'
 
 @Component({
   selector: 'app-export-reports',
@@ -46,8 +47,10 @@ export class ExportReportsComponent implements OnDestroy {
 
   constructor(
     private exportService: ExportService,
-    private dataService: DataService
+    private dataService: DataService,
+    private cd: ChangeDetectorRef
   ) {
+    this.setMaxDate();
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA).subscribe(res => {
         this.jobUpdate(res);
@@ -62,11 +65,21 @@ export class ExportReportsComponent implements OnDestroy {
         ));
   }
 
+  setMaxDate() {
+    // get current fiscal year
+    const currentDT = DateTime.now();
+    let year = currentDT.year;
+    if (currentDT.month > 3){
+      year += 1;
+    }
+    this.maxDate = new Date(year, 2, 31);
+  }
+
   jobUpdate(res) {
     if (res) {
       this.initialLoad = false;
-      if (res.error) {
-        if (res.error.state === 'retrying') {
+      if (res?.error) {
+        if (res?.error?.state === 'retrying') {
           this.setState(this.stateDictionary.RETRYING);
         } else {
           this.setState(this.stateDictionary.ERROR);
@@ -75,13 +88,13 @@ export class ExportReportsComponent implements OnDestroy {
         this.status = res.error.msg;
       } else {
         if (this.currentState !== 0) {
-          if (res.jobObj.progressState === 'complete') {
+          if (res?.jobObj?.progressState === 'complete') {
             this.setState(this.stateDictionary.READY_TO_DOWNLOAD);
           } else {
             this.setState(this.stateDictionary.GENERATING);
           }
-          this.percentageComplete = res.jobObj.progressPercentage;
-          this.status = res.jobObj.progressDescription;
+          this.percentageComplete = res?.jobObj?.progressPercentage;
+          this.status = res?.jobObj?.progressDescription;
         }
         this.setExportMessage(res);
       }
@@ -191,8 +204,10 @@ export class ExportReportsComponent implements OnDestroy {
         this.exportService.checkForReports(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA, 'variance', { fiscalYearEnd: this.modelDate });
       }
       return;
+    } else {
+      this.exportService.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
     }
-    this.exportService.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
+    return;
   }
 
   setExportMessage(res) {
@@ -222,6 +237,7 @@ export class ExportReportsComponent implements OnDestroy {
         this.exportMessage = 'No previous report found. Click generate report.';
       }
     }
+    this.cd.detectChanges();
   }
 
   disableGenerateButton() {
