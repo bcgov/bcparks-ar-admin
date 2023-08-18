@@ -16,6 +16,7 @@ export class FormResolver implements Resolve<void> {
   ) {}
   async resolve(route: ActivatedRouteSnapshot) {
     const activity = route.data['activity'];
+    this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS, route.queryParams);
     if (
       !this.dataService.checkIfDataExists('accordion-' + activity) &&
       route.queryParams['date'] &&
