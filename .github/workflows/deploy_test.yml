@@ -25,22 +25,36 @@ jobs:
     environment: test
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # Get build from cache
-      - name: Restore cached build
-        uses: actions/cache/restore@v3
+      ### Install if no cache exists ###
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+      - run: yarn install --silent --frozen-lockfile
+
+      ### Build if no cache exists ###
+      - name: Cache Build
+        id: cache-build
+        uses: actions/cache@v3
         with:
           path: |
             **/dist
           key: ${{ github.sha }}-dist
+      - name: Run Build
+        if: steps.cache-build.outputs.cache-hit != 'true'
+        run: |
+          sed 's@localConfigEndpoint@'true'@g' src/env.js.template > src/env.js
+          yarn build
 
       ### Get environment variables from AWS Parameter Store ###
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ vars.AWS_ROLE_ARN_TO_USE }}
