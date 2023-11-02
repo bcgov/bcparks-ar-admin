@@ -129,10 +129,14 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
     }
     this.loadingUI = false;
   }
-
+  //If the item has an ORC it is a park. 
+  //Skiping parks to remove historical bubble from frontend. 
   formatLegacyTypeaheadLabel(list) {
     for (const item of list) {
       if (item.value.isLegacy) {
+        if(item.value.orcs){
+          continue
+        }
         item.template = this.legacyTypeAheadTemplate;
       }
     }
