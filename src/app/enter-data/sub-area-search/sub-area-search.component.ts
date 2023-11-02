@@ -134,8 +134,8 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   formatLegacyTypeaheadLabel(list) {
     for (const item of list) {
       if (item.value.isLegacy) {
-        if(item.value.orcs){
-          continue
+        if (item.value.orcs) {
+          continue;
         }
         item.template = this.legacyTypeAheadTemplate;
       }
