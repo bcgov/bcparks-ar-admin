@@ -36,7 +36,7 @@ export class ExportReportsComponent implements OnDestroy {
   public fiscalYearStartMonth = 'April';
   public fiscalYearEndMonth = 'March';
   public maxDate = new Date();
-  public defaultRangeString = 'Select fiscal year end';
+  public defaultRangeString = 'Select fiscal year';
   public fiscalYearRangeString = this.defaultRangeString;
   public modelDate = NaN;
   public activeTab = '';
