@@ -20,7 +20,7 @@ export class LockRecordsComponent implements OnInit {
   public modelDate = NaN;
   public maxDate = new Date();
   private utils = new Utils();
-  public defaultRangeString = 'Select fiscal year end';
+  public defaultRangeString = 'Select fiscal year';
   public fiscalYearRangeString = this.defaultRangeString;
 
   constructor(

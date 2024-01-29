@@ -82,7 +82,7 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
           revenueLabel: 'Net revenue',
           revenueItems: [
             {
-              itemName: 'Gross',
+              itemName: 'Gross Backcountry Cabin Revenue',
               value: this.data?.revenueFamily,
             },
           ],
