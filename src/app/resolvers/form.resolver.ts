@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { SubAreaService } from '../services/sub-area.service';
 import { DataService } from '../services/data.service';
 import { Constants } from '../shared/utils/constants';
@@ -8,7 +8,7 @@ import { FormService } from '../services/form.service';
 @Injectable({
   providedIn: 'root',
 })
-export class FormResolver implements Resolve<void> {
+export class FormResolver  {
   constructor(
     protected subAreaService: SubAreaService,
     protected dataService: DataService,
