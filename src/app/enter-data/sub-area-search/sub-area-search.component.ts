@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
@@ -54,23 +54,19 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private formService: FormService,
+    private cdr: ChangeDetectorRef
   ) {
     this.subscriptions.add(
-      dataService
-        .watchItem(Constants.dataIds.ENTER_DATA_PARK)
-        .subscribe((res) => {
-          if (res && res.length) {
-            this.parks = this.utils.convertArrayIntoObjForTypeAhead(res, 'parkName');
-            this.formatLegacyTypeaheadLabel(this.parks);
-            if (
-              !this.dataPreloaded &&
-              Object.keys(activatedRoute.snapshot.queryParams).length !== 0
-            ) {
-              this.searchParams = activatedRoute.snapshot.queryParams;
-            }
-            this.setForm();
+      dataService.watchItem(Constants.dataIds.ENTER_DATA_PARK).subscribe((res) => {
+        if (res && res.length) {
+          this.parks = this.utils.convertArrayIntoObjForTypeAhead(res, 'parkName');
+          this.formatLegacyTypeaheadLabel(this.parks);
+          if (!this.dataPreloaded && Object.keys(activatedRoute.snapshot.queryParams).length !== 0) {
+            this.searchParams = activatedRoute.snapshot.queryParams;
           }
-        })
+          this.setForm();
+        }
+      })
     );
   }
 
@@ -79,6 +75,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
     if (this.parks) {
       this.formatLegacyTypeaheadLabel(this.parks);
     }
+    this.cdr.detectChanges();
   }
 
   setForm() {
@@ -98,8 +95,8 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
       this.subscriptions.add(
         this.fields[key].valueChanges.subscribe((value) => {
           this.onFormChange(key, value);
-        }
-        ));
+        })
+      );
     }
     this.presetUI();
     this.setFormParams();
@@ -108,10 +105,10 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   onFormChange(field, value) {
     switch (field) {
       case 'park':
-        this.parkChange(value)
+        this.parkChange(value);
         break;
       case 'subArea':
-        this.subAreaChange(value)
+        this.subAreaChange(value);
         break;
     }
   }
@@ -129,8 +126,8 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
     }
     this.loadingUI = false;
   }
-  //If the item has an ORC it is a park. 
-  //Skiping parks to remove historical bubble from frontend. 
+  //If the item has an ORC it is a park.
+  //Skiping parks to remove historical bubble from frontend.
   formatLegacyTypeaheadLabel(list) {
     for (const item of list) {
       if (item.value.isLegacy) {
@@ -143,7 +140,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   }
 
   dateChange(event) {
-    this.setDate(this.utils.convertJSDateToYYYYMM(event))
+    this.setDate(this.utils.convertJSDateToYYYYMM(event));
   }
 
   setDate(YYYYMM) {
@@ -195,7 +192,11 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
   setSubArea(subAreaId) {
     if (subAreaId) {
       this.selectedSubArea = this.subAreas.find((subArea) => subArea.value.id === subAreaId);
-      this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark?.value, this.selectedSubArea.value);
+      this.setURL(
+        this.utils.convertJSDateToYYYYMM(this.modelDate),
+        this.selectedPark?.value,
+        this.selectedSubArea.value
+      );
       this.updateFormState();
     } else {
       this.setURL(this.utils.convertJSDateToYYYYMM(this.modelDate), this.selectedPark?.value);
@@ -225,19 +226,19 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
 
   setURL(date, parkValue?, subAreaValue?) {
     let queryParams = {
-      date: date
-    }
+      date: date,
+    };
     if (parkValue) {
       queryParams['orcs'] = parkValue.orcs;
       queryParams['parkName'] = parkValue.parkName;
     }
     if (subAreaValue) {
       queryParams['subAreaId'] = subAreaValue.id;
-      queryParams['subAreaName'] = subAreaValue.name
+      queryParams['subAreaName'] = subAreaValue.name;
     }
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
-      queryParams: queryParams
+      queryParams: queryParams,
     });
     this.searchParams = this.activatedRoute.snapshot.queryParams;
   }
@@ -259,7 +260,7 @@ export class SubAreaSearchComponent implements OnDestroy, AfterViewInit {
       subAreaId: this.fields.subArea.value?.value?.id,
       subAreaName: this.fields.subArea.value?.value?.name,
       orcs: this.fields.park.value?.value?.orcs,
-      isLegacy: this.fields.subArea.value?.value?.isLegacy
+      isLegacy: this.fields.subArea.value?.value?.isLegacy,
     });
   }
 

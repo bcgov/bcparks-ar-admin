@@ -28,13 +28,13 @@ import { OperatorFunction } from 'rxjs/internal/types';
 })
 export class TypeaheadComponent implements OnInit, OnDestroy {
   @Input() control: UntypedFormControl = new UntypedFormControl();
-  @Input() set data (value: any[]) {
-    if (this.control){
+  @Input() set data(value: any[]) {
+    if (this.control) {
       this.setControlValue(null);
     }
     this._data.next(value);
-    if (this.control){
-      this.setControlValue(this.data[0]);
+    if (this.control) {
+      this.setControlValue(this.data ? this.data[0] : null);
     }
   }
   public get data() {
@@ -50,7 +50,7 @@ export class TypeaheadComponent implements OnInit, OnDestroy {
   protected model;
   private subscriptions = new Subscription();
 
-  public _data = new BehaviorSubject<any>({value: null, display: null})
+  public _data = new BehaviorSubject<any>({ value: null, display: null });
 
   @Output() output: EventEmitter<any> = new EventEmitter();
 
@@ -85,12 +85,11 @@ export class TypeaheadComponent implements OnInit, OnDestroy {
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map((term) =>
-      (term === ''
-        ? this.data
-        : this.data.filter(
-          (v) => v.display.toLowerCase().indexOf(term.toLowerCase()) > -1
-        )
-      )
+        term === ''
+          ? this.data
+          : this.data.filter(
+              (v) => v.display.toLowerCase().indexOf(term.toLowerCase()) > -1
+            )
       )
     );
   };

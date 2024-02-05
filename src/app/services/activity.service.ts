@@ -54,7 +54,8 @@ export class ActivityService {
       // If a record does not exist, res will not contain a pk.
       if (res?.pk) {
         // We have to add the activity to the accordion list
-        const accordionListId = Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST
+        const accordionListId =
+          Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST;
         let activityList = this.dataService.getItemValue(accordionListId);
         if (!activityList) {
           this.dataService.setItemValue(accordionListId, [activity]);
