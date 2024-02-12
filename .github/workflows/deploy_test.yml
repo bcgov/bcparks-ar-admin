@@ -104,6 +104,12 @@ jobs:
           origin_id_assets: ${{ env.ORIGIN_ID_ASSETS }}
         run: terragrunt apply -auto-approve --terragrunt-non-interactive -var target_aws_account_id=${{ vars.ACCOUNT_ID }} -var target_env=test
 
+      - name: Invalidate CloudFront
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
+          PATHS: "/*"
+
   alert-if-failure:
     if: ${{ always() && (needs.deploy.result=='failure')}}
     runs-on: ubuntu-latest
