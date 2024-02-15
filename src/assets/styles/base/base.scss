@@ -1,3 +1,6 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "src/assets/themes/variables";
 @import "src/assets/styles/abstracts/mixins.scss";
 
 html,
@@ -67,8 +70,8 @@ body {
 .car-icon {
   background-image: url('/assets/images/car.svg');
   background-position: center center;
-  background-size: 26px auto;
-  height: auto;
+  background-size: 24px;
+  height: 100%;
   line-height: 1.6;
   width: 40px;
   background-repeat: no-repeat;
@@ -77,8 +80,8 @@ body {
 .bus-icon {
   background-image: url('/assets/images/bus.svg');
   background-position: center center;
-  background-size: 24px auto;
-  height: auto;
+  background-size: 24px;
+  height: 100%;
   line-height: 1.6;
   width: 40px;
   background-repeat: no-repeat;
@@ -87,8 +90,8 @@ body {
 .boat-icon {
   background-image: url('/assets/images/boat.svg');
   background-position: center center;
-  background-size: 24px auto;
-  height: auto;
+  background-size: 24px;
+  height: 100%;
   line-height: 1.6;
   width: 40px;
   background-repeat: no-repeat;
@@ -97,9 +100,35 @@ body {
 .picnic-icon {
   background-image: url('/assets/images/picnic.svg');
   background-position: center center;
-  background-size: 24px auto;
-  height: auto;
+  background-size: 24px;
+  height: 100%;
   line-height: 1.6;
   width: 40px;
   background-repeat: no-repeat;
+}
+
+.input-box {
+  width: 100%;
+  min-height: 100px;
+  @media screen and (min-width: map-get($grid-breakpoints, "sm")) {
+    width: 180px;
+  }
+}
+
+.dropdown-menu {
+  min-width: 100% !important;
+}
+
+typeahead-container {
+  width: 100% !important;
+}
+
+.tooltip-inner {
+  border: 1px solid var(--bs-gray-200) !important;
+  background-color: white !important;
+  color: var(--bs-secondary) !important;
+}
+
+.bs-tooltip-bottom .arrow::before {
+  border-bottom-color: var(--bs-gray-200) !important;
 }

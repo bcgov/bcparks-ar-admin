@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
@@ -39,7 +40,8 @@ export class AccordionComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fiscalYearLockService: FiscalYearLockService,
-    protected dataService: DataService
+    protected dataService: DataService,
+    private cd: ChangeDetectorRef
   ) {
     this.subscriptions.add(
       dataService
@@ -64,7 +66,8 @@ export class AccordionComponent implements OnInit, OnDestroy {
       // extract year from form params
       const year = this.utils.getFiscalYearFromYYYYMM(this.formParams.date);
       const fiscalLock = await this.fiscalYearLockService.fetchFiscalYear(year);
-      this.isFiscalYearLocked = fiscalLock.isLocked ?? false; 
+      this.isFiscalYearLocked = fiscalLock.isLocked ?? false;
+      this.cd.detectChanges(); 
     }
   }
 

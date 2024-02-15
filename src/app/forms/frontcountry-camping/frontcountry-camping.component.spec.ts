@@ -5,7 +5,7 @@ import { ConfigService } from 'src/app/services/config.service';
 import { ParkHeaderModule } from '../park-header/park-header.module';
 
 import { FrontcountryCampingComponent } from './frontcountry-camping.component';
-import { FrontcountryCampingModule } from './frontcountry-camping.module';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 describe('FrontcountryCampingComponent', () => {
   let component: FrontcountryCampingComponent;
@@ -15,11 +15,10 @@ describe('FrontcountryCampingComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [FrontcountryCampingComponent],
       imports: [
-        FrontcountryCampingModule,
         RouterTestingModule,
         ParkHeaderModule,
       ],
-      providers: [HttpClient, HttpHandler, ConfigService],
+      providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
     }).compileComponents();
   });
 

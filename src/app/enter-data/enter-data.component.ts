@@ -43,9 +43,9 @@ export class EnterDataComponent implements OnDestroy {
         .pipe(filter((event) => event instanceof NavigationEnd))
         .subscribe((event: any) => {
           this.onChildRoute =
-            event.url.split('?')[0] !== '/enter-data' ? true : false;
+          event.url.split('?')[0] !== '/enter-data' ? true : false;
         })
-    );
+        );
 
     this.subscriptions.add(
       dataService

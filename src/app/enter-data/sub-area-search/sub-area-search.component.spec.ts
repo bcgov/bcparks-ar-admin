@@ -7,17 +7,17 @@ import { ConfigService } from 'src/app/services/config.service';
 import { DataService } from 'src/app/services/data.service';
 import { FormService } from 'src/app/services/form.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
+import { DateTime } from 'luxon';
 
 import { SubAreaSearchComponent } from './sub-area-search.component';
-import { Utils } from 'src/app/shared/utils/utils';
-import { MockData } from 'src/app/shared/utils/mock.data';
+import { UrlService } from 'src/app/services/url.service';
+import { Constants } from 'src/app/shared/utils/constants';
 
 describe('SubAreaSearchComponent', () => {
   let component: SubAreaSearchComponent;
   let fixture: ComponentFixture<SubAreaSearchComponent>;
   let router;
   let subAreaService;
-  let utils = new Utils();
 
   const routeValue = {
     snapshot: { queryParams: { id: 123 } }
@@ -51,25 +51,22 @@ describe('SubAreaSearchComponent', () => {
       return of(
         typeaheadData
       )
+    },
+    setItemValue: (item, value) => {
+      return;
     }
   }
 
-  const mockContainer = {
-    monthSelectedHandler: (event) => {
-
+  const mockUrlService = {
+    getQueryParams: () => {
+      return of({
+        subAreaId: '0001',
+        orcs: '0001',
+        date: '202402'
+      });
     },
-    _store: {
-      dispatch: () => {
-
-      }
-    },
-    _actions: {
-      select: (aDate) => {
-
-      }
-    },
-    setViewMode: (data) => {
-
+    setQueryParams: () => {
+      return;
     }
   }
 
@@ -102,6 +99,10 @@ describe('SubAreaSearchComponent', () => {
         SubAreaService,
         {
           provide: FormService, useValue: mockFormService
+        },
+        UrlService,
+        {
+          provide: UrlService, useValue: mockUrlService
         }
       ],
     }).compileComponents();
@@ -113,31 +114,27 @@ describe('SubAreaSearchComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SubAreaSearchComponent);
     component = fixture.componentInstance;
-    component.selectedPark = {
-      parkName: 'Park Name',
-      sk: 'sk',
-      subAreas: [{
-        id: 'SubArea Id',
-        label: 'SubArea Label'
-      }]
-    };
-    component.selectedSubArea = {
-      id: 'SubArea Id',
-      label: 'SubArea Label'
-    };
   });
 
   it('should create and subscribe to the typeahead data', async () => {
     expect(component).toBeTruthy();
-    const typeaheadFormatSpy = spyOn(component, 'formatLegacyTypeaheadLabel');
     await fixture.isStable();
     await fixture.detectChanges();
-    expect(typeaheadFormatSpy).toHaveBeenCalledTimes(1);
-    expect(component.parks).toEqual([
+    expect(component._parks.value).toEqual([
       {
         display: mockPark.parkName,
         value: mockPark,
-        template: null
+      }
+    ]);
+    component.parkChange(mockPark);
+    expect(component._subAreas.value).toEqual([
+      {
+        display: mockSubArea.name,
+        value: mockSubArea
+      },
+      {
+        display: mockLegacySubArea.name,
+        value: mockLegacySubArea
       }
     ]);
   });
@@ -147,138 +144,80 @@ describe('SubAreaSearchComponent', () => {
     const navigateSpy = spyOn(router, 'navigate');
 
     await fixture.isStable();
-
-    await component.dateChange('Park');
     await fixture.detectChanges();
 
     // NB: We're not testing utils date fn
     expect(navigateSpy).toHaveBeenCalledTimes(0);
   });
 
-  it('should open the calendar', async () => {
-    expect(component).toBeTruthy();
+  it('should set the date from the url', async () => {
+    component.maxDate = DateTime.fromFormat('2024-02-14', 'yyyy-LL-dd').toUTC();
     await fixture.isStable();
-    const containerSpy = spyOn(mockContainer, 'setViewMode');
-
-    component.onOpenCalendar(mockContainer);
-    expect(containerSpy).toHaveBeenCalledTimes(1);
+    expect(component.isPageLoaded).toBe(true);
   });
 
-  it('should navigate to the new route', async () => {
-    expect(component).toBeTruthy();
-    const navigateSpy = spyOn(router, 'navigate');
-    await fixture.isStable();
-    await component.dateChange('202201');
-    await fixture.detectChanges();
+  it('should clear the accordions when the form value changes', async () => {
+    const dataSpy = spyOn(mockDataService, 'setItemValue');
+    component.isPageLoaded = true;
+    component.form.reset();
+    expect(dataSpy).toHaveBeenCalledWith(
+      Constants.dataIds.ENTER_DATA_SUB_AREA,
+      null
+    )
+    expect(dataSpy).toHaveBeenCalledWith(
+      Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST,
+      null
+    )
+  })
 
-    // NB: We're not testing utils date fn
-    expect(navigateSpy).toHaveBeenCalledTimes(1);
+  it('should set subarea typeahead output', async () => {
+    await fixture.isStable();
+    await fixture.detectChanges();
+    const typeaheadSpy = spyOn(component, 'createTypeaheadObj');
+    component.parkChange(mockPark)
+    expect(typeaheadSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should set park typeahead output', async () => {
-    expect(component).toBeTruthy();
-
-    const navigateSpy = spyOn(router, 'navigate');
-
-    await fixture.isStable();
-
-    await component.dateChange('202201');
-    await fixture.detectChanges();
-
-    expect(navigateSpy).toHaveBeenCalledWith([], {
-      relativeTo: {
-        snapshot: {
-          queryParams: {
-            id: 123
-          }
-        }
+  it('should update subareas when park changes', async () => {
+    component.form.reset();
+    expect(component.form.controls['park'].value).toBe(null);
+    expect(component.form.controls['subArea'].value).toBe(null);
+    component.form.controls['park'].setValue(mockPark);
+    expect(component._subAreas.value).toEqual([
+      {
+        display: mockSubArea.name,
+        value: mockSubArea
       },
-      queryParams: {
-        date: '202201',
-      }
-    });
-
-    await component.parkChange({ value: mockPark });
-    await fixture.detectChanges();
-
-    expect(navigateSpy).toHaveBeenCalledWith([], {
-      relativeTo: {
-        snapshot: {
-          queryParams: {
-            id: 123
-          }
-        }
+      {
+        display: mockLegacySubArea.name,
+        value: mockLegacySubArea
       },
-      queryParams: {
-        date: '202201',
-        orcs: 'orcs',
-        parkName: 'Park Name',
-      }
-    });
+    ])
+  })
 
-    await component.subAreaChange({ value: mockLegacySubArea });
-    await fixture.detectChanges();
+  it('should update the url when the form changes', async () => {
+    const urlUpdateSpy = spyOn(component, 'updateUrl');
+    component.form.controls['date'].setValue('202402');
+    expect(urlUpdateSpy).toHaveBeenCalledTimes(1);
+  })
+  
+  it('should highlight typeahead properly', async() => {
+    expect(component.getHighlightedMatch({value:'string'}, ['str'])).toEqual([
+      `<span></span>`,
+      `<span>str</span>`,
+      `<span>ing</span>`,
+    ])
+  })
 
-    expect(navigateSpy).toHaveBeenCalledWith([], {
-      relativeTo: {
-        snapshot: {
-          queryParams: {
-            id: 123
-          }
-        }
-      },
-      queryParams: {
-        date: '202201',
-        orcs: 'orcs',
-        parkName: 'Park Name',
-        subAreaId: '0002',
-        subAreaName: 'Legacy SubArea name',
-      }
-    });
-  });
+  it('gets local storage park by park orcs', async () => {
+    expect(component.getLocalStorageParkById(mockPark.orcs)).toEqual(mockPark);
+  })
 
-  it('should search and set form states properly', async () => {
-    expect(component).toBeTruthy();
-    const serviceSpy = spyOn(SubAreaService.prototype, "fetchSubArea").and.returnValue(Promise.resolve({}) as any)
-
-    await fixture.isStable();
-    await fixture.detectChanges();
-
-    await component.search();
-
-    expect(serviceSpy).toHaveBeenCalled();
-
-    component.parks = utils.convertArrayIntoObjForTypeAhead([MockData.mockPark_1, MockData.mockPark_2, MockData.mockLegacyPark], 'parkName');
-    component.formatLegacyTypeaheadLabel(component.parks);
-
-    component.modelDate = null;
-    component.fields.park.setValue(null)
-    component.fields.subArea.setValue(null)
-    component.updateFormState();
-    expect(component.parkDisabled).toBe(true);
-    expect(component.subAreaDisabled).toBe(true);
-    expect(component.continueDisabled).toBe(true);
-
-    component.modelDate = '202201';
-    component.updateFormState();
-    expect(component.parkDisabled).toBe(false);
-    expect(component.subAreaDisabled).toBe(true);
-    expect(component.continueDisabled).toBe(true);
-
-    component.fields.park.setValue({value: MockData.mockPark_1})
-    await component.updateFormState();
-    expect(component.parkDisabled).toBe(false);
-    expect(component.subAreaDisabled).toBe(false);
-    expect(component.continueDisabled).toBe(true);
-
-    component.fields.subArea.setValue({value: MockData.mockSubArea_1})
-    await component.updateFormState();
-    expect(component.parkDisabled).toBe(false);
-    expect(component.subAreaDisabled).toBe(false);
-    expect(component.continueDisabled).toBe(false);
-
-    const subSpy = spyOn<any>(component['subscriptions'], 'unsubscribe');
-    await component.ngOnDestroy();
-    expect(subSpy).toHaveBeenCalledTimes(1);
-  });
+  it('gets local storage subarea by subarea id', async () => {
+    component._subAreas.next(component.createTypeaheadObj([
+      mockSubArea,
+      mockLegacySubArea
+    ], 'name'));
+    expect(component.getLocalStorageSubAreaById(mockSubArea.id)).toEqual(mockSubArea);
+  })
 });

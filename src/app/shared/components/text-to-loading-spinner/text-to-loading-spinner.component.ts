@@ -1,11 +1,13 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnDestroy,
+  OnInit,
   Output,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
@@ -13,19 +15,30 @@ import { LoadingService } from 'src/app/services/loading.service';
   templateUrl: './text-to-loading-spinner.component.html',
   styleUrls: ['./text-to-loading-spinner.component.scss'],
 })
-export class TextToLoadingSpinnerComponent implements OnDestroy {
+export class TextToLoadingSpinnerComponent implements OnInit, OnDestroy {
   @Input() text;
   @Output() loadingStatus: EventEmitter<boolean> = new EventEmitter();
 
   private subscriptions = new Subscription();
 
-  public loading = false;
+  public _loading = new BehaviorSubject<boolean>(false);
 
-  constructor(protected loadingService: LoadingService) {
+  get loading() {
+    return this._loading.value
+  }
+  set loading(value) {
+    this._loading.next(value);
+  }
+
+  constructor(protected loadingService: LoadingService, protected cdr: ChangeDetectorRef) {
+  }
+
+  ngOnInit(): void {
     this.subscriptions.add(
-      loadingService.getLoadingStatus().subscribe((res) => {
+      this.loadingService.getLoadingStatus().subscribe((res) => {
         this.loading = res;
         this.loadingStatus.emit(res);
+        this.cdr.detectChanges();
       })
     );
   }

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { AccordionComponent } from './accordion.component';
 import { SummarySectionComponent } from './summary-section/summary-section.component';
 import { CalculationDisplayModule } from '../forms/calculation-display/calculation-display.module';
-import { TextAreaModule } from '../forms/text-area/text-area.module';
 import { AccordionSummariesComponent } from './accordion-summaries/accordion-summaries.component';
 import { AccordionNotesComponent } from './accordion-notes/accordion-notes.component';
 
@@ -19,7 +18,6 @@ import { AccordionNotesComponent } from './accordion-notes/accordion-notes.compo
   imports: [
     CommonModule,
     CalculationDisplayModule,
-    TextAreaModule
   ],
   exports: [
     AccordionComponent,

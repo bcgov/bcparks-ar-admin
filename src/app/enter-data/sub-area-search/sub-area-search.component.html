@@ -1,61 +1,46 @@
 <div class="p-4 bg-info">
   <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-3">
-      <label class="fw-bold">Date</label>
-      <input
-        [(ngModel)]="modelDate"
-        autocomplete="off"
-        class="form-control"
-        name="date"
-        placeholder="Select date"
-        bsDatepicker
-        [maxDate]="maxDate"
-        [bsConfig]="{ dateInputFormat: 'MM/YYYY' }"
-        (onShown)="onOpenCalendar($event)"
-        (ngModelChange)="dateChange($event)"
-      />
+    <div class="col-12 col-md-11">
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <ngds-date-input [control]="form?.controls?.['date']" [label]="'Date'" [minMode]="1" [resetButton]="true"
+            [maxDate]="maxDate" [timezone]="tz" [dateFormat]="'yyyyMM'" [dateDisplayFormat]="'yyyy-MM'"
+            [placeholder]="'Select Date'">
+            <div ngdsInputPrepend class="bi bi-calendar px-2"></div>
+          </ngds-date-input>
+        </div>
+        <div class="col-12 col-md-4">
+          <ngds-typeahead-input [control]="form?.controls?.['park']" [label]="'Park'" [selectionListItems]="_parks?.value"
+            [resetButton]="true" [placeholder]="'Search by park name'" [disabled]="getValue('date')">
+          </ngds-typeahead-input>
+        </div>
+        <div class="col-12 col-md-4">
+          <ngds-typeahead-input [control]="form?.controls?.['subArea']" [label]="'Subarea'"
+            [selectionListItems]="_subAreas?.value" [resetButton]="true" [placeholder]="'Search by subarea name'"
+            [disabled]="getValue('park')" [selectionListTemplate]="historicalPill"
+            [adaptivePosition]="false">
+          </ngds-typeahead-input>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-3">
-      <!-- wait for controls to load before rendering typeaheads -->
-      <app-typeahead *ngIf="fields.park"
-        #parkTypeAhead
-        [control]="fields.park"
-        [id]="'park-typeahead'"
-        [data]="parks"
-        [label]="'Park'"
-        [placeholder]="parkDisabled ? 'Select a date to see parks' : 'Search by park name'"
-        [disabled]="parkDisabled"
-      ></app-typeahead>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-3">
-      <app-typeahead *ngIf="fields.subArea"
-        #subAreaTypeAhead
-        [control]="fields.subArea"
-        [id]="'subareas-typeahead'"
-        [data]="subAreas"
-        [label]="'Subarea'"
-        [placeholder]="subAreaDisabled ? 'Select a park to see subareas' : 'Search by subarea name'"
-        [disabled]="subAreaDisabled"
-      ></app-typeahead>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-3 align-self-end">
-      <button
-        class="btn btn-primary w-50"
-        type="button"
-        [disabled]="continueDisabled || loading"
-        (click)="search()"
-      >
-        <app-text-to-loading-spinner
-          [text]="'Go'"
-          (loadingStatus)="loading = $event"
-        ></app-text-to-loading-spinner>
-      </button>
+    <div class="col-12 col-md-1 d-flex align-items-end">
+        <button class="btn btn-primary w-100 mb-0 mt-3" type="button" [disabled]="loading || !form?.controls?.['subArea']?.value" (click)="search()">
+          <app-text-to-loading-spinner [text]="'Go'" (loadingStatus)="loading = $event"></app-text-to-loading-spinner>
+        </button>
     </div>
   </div>
 </div>
 
-<ng-template #historicalPill let-r="result" let-t="term">
-  <ngb-highlight [result]="r.display" [term]="t"></ngb-highlight>
-  <div class="mx-2 badge bg-primary historical-pill">historical</div>
+<ng-template #historicalPill let-matches="matches" let-query="query" let-typeaheadTemplateMethods>
+  <ul class="custom-list-group">
+    <li class="custom-list-group-item" *ngFor="let match of matches"
+      [class.active]="typeaheadTemplateMethods.isActive(match)"
+      (click)="typeaheadTemplateMethods.selectMatch(match, $event)"
+      (mouseenter)="typeaheadTemplateMethods.selectActive(match)">
+      <span [innerHtml]="getHighlightedMatch(match, query)[0]"></span>
+      <span class="custom-highlight" [innerHtml]="getHighlightedMatch(match, query)[1]"></span>
+      <span [innerHtml]="getHighlightedMatch(match, query)[2]"></span>
+      <div *ngIf="match?.item?.value?.isLegacy" class="mx-2 badge bg-primary historical-pill">historical</div>
+    </li>
+  </ul>
 </ng-template>
-

@@ -1,184 +1,68 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
-import { FormService } from 'src/app/services/form.service';
-import { SubAreaService } from 'src/app/services/sub-area.service';
-import {
-  formulaResult,
-  FormulaService,
-} from 'src/app/services/formula.service';
-import { BaseFormComponent } from 'src/app/shared/components/forms/base-form/base-form.component';
-import { Constants } from 'src/app/shared/utils/constants';
+import { FormulaService, formulaResult } from 'src/app/services/formula.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { ValidationService } from 'src/app/services/validation.service';
 import { ActivityService } from 'src/app/services/activity.service';
+import { RootFormComponent } from '../root-form/root-form.component';
+import { UrlService } from 'src/app/services/url.service';
+import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
   selector: 'app-group-camping',
   templateUrl: './group-camping.component.html',
   styleUrls: ['./group-camping.component.scss'],
 })
-export class GroupCampingComponent extends BaseFormComponent {
-  public attendanceTotal: formulaResult = { result: null, formula: '' };
+export class GroupCampingComponent extends RootFormComponent {
+
   public standardRevenueTotal: formulaResult = { result: null, formula: '' };
   public youthRevenueTotal: formulaResult = { result: null, formula: '' };
 
-  constructor(
-    protected formBuilder: UntypedFormBuilder,
-    protected formService: FormService,
-    protected dataService: DataService,
-    protected router: Router,
-    protected activityService: ActivityService,
-    protected formulaService: FormulaService,
-    protected loadingService: LoadingService,
-    protected validationService: ValidationService,
-    protected changeDetectior: ChangeDetectorRef
-  ) {
+  constructor() {
     super(
-      formBuilder,
-      formService,
-      router,
-      dataService,
-      activityService,
-      formulaService,
-      loadingService,
-      changeDetectior
+      inject(DataService),
+      inject(UrlService),
+      inject(ActivityService),
+      inject(LoadingService),
+      inject(FormulaService),
+      inject(Router),
     );
-    // push existing form data to parent subscriptions
-    this.subscriptions.add(
-      this.dataService
-        .watchItem(Constants.dataIds.ACCORDION_GROUP_CAMPING)
-        .subscribe((res) => {
-          if (res) {
-            this.data = res;
-            this.setForm();
-          }
-        })
-    );
-    this.setForm();
-  }
-
-  setForm() {
     // declare activity type
-    (this.postObj['activity'] = 'Group Camping'),
-      // initialize the form and populate with values if they exist.
-      (this.form = new UntypedFormGroup({
-        standardRateGroupsTotalPeopleStandardControl: new UntypedFormControl(
-          {
-            value: this.data.standardRateGroupsTotalPeopleStandard,
-            disabled: this.loading,
-          },
-          this.validationService.counterFieldValidator()
-        ),
-        standardRateGroupsTotalPeopleAdultsControl: new UntypedFormControl(
-          {
-            value: this.data.standardRateGroupsTotalPeopleAdults,
-            disabled: this.loading,
-          },
-          this.validationService.counterFieldValidator()
-        ),
-        standardRateGroupsTotalPeopleYouthControl: new UntypedFormControl(
-          {
-            value: this.data.standardRateGroupsTotalPeopleYouth,
-            disabled: this.loading,
-          },
-          this.validationService.counterFieldValidator()
-        ),
-        standardRateGroupsTotalPeopleKidsControl: new UntypedFormControl(
-          {
-            value: this.data.standardRateGroupsTotalPeopleKids,
-            disabled: this.loading,
-          },
-          this.validationService.counterFieldValidator()
-        ),
-        standardRateGroupsRevenueGrossControl: new UntypedFormControl(
-          {
-            value: this.data.standardRateGroupsRevenueGross,
-            disabled: this.loading,
-          },
-          this.validationService.moneyFieldValidator()
-        ),
-        youthRateGroupsAttendanceGroupNightsControl: new UntypedFormControl(
-          {
-            value: this.data.youthRateGroupsAttendanceGroupNights,
-            disabled: this.loading,
-          },
-          this.validationService.counterFieldValidator()
-        ),
-        youthRateGroupsAttendancePeopleControl: new UntypedFormControl(
-          {
-            value: this.data.youthRateGroupsAttendancePeople,
-            disabled: this.loading,
-          },
-          this.validationService.counterFieldValidator()
-        ),
-        youthRateGroupsRevenueGrossControl: new UntypedFormControl(
-          {
-            value: this.data.youthRateGroupsRevenueGross,
-            disabled: this.loading,
-          },
-          this.validationService.moneyFieldValidator()
-        ),
-        varianceNotesControl: new UntypedFormControl({
-          value: this.data.notes,
-          disabled: this.loading,
-        }),
-      })),
-      // link form controls to the object fields they represent
-      (this.fields = {
-        standardRateGroupsTotalPeopleStandard: this.form.get(
-          'standardRateGroupsTotalPeopleStandardControl'
-        ),
-        standardRateGroupsTotalPeopleAdults: this.form.get(
-          'standardRateGroupsTotalPeopleAdultsControl'
-        ),
-        standardRateGroupsTotalPeopleYouth: this.form.get(
-          'standardRateGroupsTotalPeopleYouthControl'
-        ),
-        standardRateGroupsTotalPeopleKids: this.form.get(
-          'standardRateGroupsTotalPeopleKidsControl'
-        ),
-        standardRateGroupsRevenueGross: this.form.get(
-          'standardRateGroupsRevenueGrossControl'
-        ),
-        youthRateGroupsAttendanceGroupNights: this.form.get(
-          'youthRateGroupsAttendanceGroupNightsControl'
-        ),
-        youthRateGroupsAttendancePeople: this.form.get(
-          'youthRateGroupsAttendancePeopleControl'
-        ),
-        youthRateGroupsRevenueGross: this.form.get(
-          'youthRateGroupsRevenueGrossControl'
-        ),
-        notes: this.form.get('varianceNotesControl'),
-      });
-
-    this.calculateTotals();
-    super.subscribeToChanges(() => {
-      this.calculateTotals();
+    this.activityType = 'Group Camping';
+    this.accordionType = Constants.dataIds.ACCORDION_GROUP_CAMPING;
+    this.form = new UntypedFormGroup({
+      standardRateGroupsTotalPeopleAdults: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('standardRateGroupsTotalPeopleAdults')] }),
+      standardRateGroupsTotalPeopleKids: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('standardRateGroupsTotalPeopleKids')] }),
+      standardRateGroupsTotalPeopleStandard: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('standardRateGroupsTotalPeopleStandard')] }),
+      standardRateGroupsTotalPeopleYouth: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('standardRateGroupsTotalPeopleYouth')] }),
+      youthRateGroupsAttendanceGroupNights: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsAttendanceGroupNights')] }),
+      youthRateGroupsAttendancePeople: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsAttendancePeople')] }),
+      standardRateGroupsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('standardRateGroupsRevenueGross')] }),
+      youthRateGroupsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsRevenueGross')] }),
+      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(100)] }),
     });
+    this.calculateTotals();
+    this.form?.valueChanges.subscribe(() => {
+      this.calculateTotals();
+    })
   }
 
   calculateTotals() {
     this.attendanceTotal = this.formulaService.groupCampingStandardAttendance([
-      this.fields.standardRateGroupsTotalPeopleAdults.value,
-      this.fields.standardRateGroupsTotalPeopleYouth.value,
-      this.fields.standardRateGroupsTotalPeopleKids.value,
+      this.form.controls['standardRateGroupsTotalPeopleAdults'].value,
+      this.form.controls['standardRateGroupsTotalPeopleYouth'].value,
+      this.form.controls['standardRateGroupsTotalPeopleKids'].value,
     ]);
     this.standardRevenueTotal = this.formulaService.basicNetRevenue([
-      this.fields.standardRateGroupsRevenueGross.value,
+      this.form.controls['standardRateGroupsRevenueGross'].value
     ]);
     this.youthRevenueTotal = this.formulaService.basicNetRevenue([
-      this.fields.youthRateGroupsRevenueGross.value,
+      this.form.controls['youthRateGroupsRevenueGross'].value
     ]);
   }
 
   async onSubmit() {
-    await super.submit();
+    await this.submit(true);
   }
 }
