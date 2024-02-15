@@ -8,36 +8,179 @@
   </p>
 </div>
 
-<form [formGroup]="form">
+<form>
   <div class="form-section">
-    <app-backcountry-cabins-section
-      [adultAttendance]="fields?.peopleAdult"
-      [childAttendance]="fields?.peopleChild"
-      [familyAttendance]="fields?.peopleFamily"
-      [grossBackcountryCabinsRevenue]="fields?.revenueFamily"
-      [attendanceTotal]="attendanceTotal"
-      [revenueTotal]="revenueTotal"
-    ></app-backcountry-cabins-section>
+    <div class="row">
+      <!-- Attendance -->
+      <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="row">
+          <!-- Adults -->
+          <div
+            class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('peopleAdult') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('peopleAdult')}"
+            placement="bottom"
+            triggers="mouseenter:mouseleave"
+          >
+            <ngds-number-input
+              [control]="form?.controls?.['peopleAdult']"
+              [decimalPlaces]="0"
+              [justify]="'end'"
+              [invalidConfig]="invalidConfig"
+              [allowNegative]="false"
+              [label]="'Adults (16+)'"
+              [placeholder]="'No data'"
+              [loadWhile]="loading"
+            >
+              <i
+                ngdsInputPrepend
+                class="bi bi-person-fill px-2"
+              ></i>
+            </ngds-number-input>
+          </div>
+          <!-- Children -->
+          <div
+            class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('peopleChild') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('peopleChild')}"
+            placement="bottom"
+            triggers="mouseenter:mouseleave"
+          >
+            <ngds-number-input
+              [control]="form?.controls?.['peopleChild']"
+              [decimalPlaces]="0"
+              [justify]="'end'"
+              [invalidConfig]="invalidConfig"
+              [allowNegative]="false"
+              [label]="'Youths (6-15)'"
+              [placeholder]="'No data'"
+              [loadWhile]="loading"
+            >
+              <i
+                ngdsInputPrepend
+                class="bi bi-person-fill px-2"
+              ></i>
+            </ngds-number-input>
+          </div>
+          <!-- Families -->
+          <div
+            class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('peopleFamily') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('peopleFamily')}"
+            placement="bottom"
+            triggers="mouseenter:mouseleave"
+          >
+            <ngds-number-input
+              [control]="form?.controls?.['peopleFamily']"
+              [decimalPlaces]="0"
+              [justify]="'end'"
+              [invalidConfig]="invalidConfig"
+              [allowNegative]="false"
+              [label]="'Family'"
+              [placeholder]="'No data'"
+              [loadWhile]="loading"
+            >
+              <i
+                ngdsInputPrepend
+                class="bi bi-person-fill px-2"
+              ></i>
+            </ngds-number-input>
+          </div>
+        </div>
+        <!-- Attendance Summary -->
+        <div class="mb-2">
+          <app-calculation-display
+            [label]="'TOTAL PEOPLE'"
+            [subtext]="attendanceTotal?.formula"
+            [value]="attendanceTotal?.result"
+          ></app-calculation-display>
+        </div>
+      </div>
+      <!-- Revenue -->
+      <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="row">
+          <!-- Family revenue -->
+          <div
+            class="input-box mb-2"
+            [popover]="getPopoverData('revenueFamily') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('revenueFamily', true)}"
+            placement="bottom"
+            triggers="mouseenter:mouseleave"
+          >
+            <ngds-number-input
+              [control]="form?.controls?.['revenueFamily']"
+              [decimalPlaces]="2"
+              [justify]="'end'"
+              [invalidConfig]="invalidConfig"
+              [padDecimals]="true"
+              [label]="'Gross cabin revenue'"
+              [placeholder]="'No data'"
+              [loadWhile]="loading"
+            >
+              <i
+                ngdsInputPrepend
+                class="bi bi-currency-dollar px-2"
+              ></i>
+            </ngds-number-input>
+          </div>
+        </div>
+        <!-- Revenue summary -->
+        <div class="mb-2">
+          <app-calculation-display
+            [colorClass]="'green'"
+            [label]="'NET REVENUE'"
+            [subtext]="revenueTotal?.formula"
+            [value]="revenueTotal?.result"
+          ></app-calculation-display>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- Variance notes -->
   <div class="form-section">
     <h2>Variance notes</h2>
-    <app-text-area
-      [charCap]="100"
-      [control]="fields?.notes"
-      [label]="
-        'If any data entered above varies widely from the expected counts, briefly explain the variance.'
-      "
-      [id]="'variance-notes'"
-    ></app-text-area>
+    <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
+    <ngds-text-input
+      [control]="form?.controls?.['notes']"
+      [showCharacterCount]="true"
+      [multiline]="true"
+      [loadWhile]="loading"
+    >
+    </ngds-text-input>
   </div>
 </form>
+
+<!-- Cancel and Submit buttons -->
 <div class="form-footer d-flex justify-content-between">
   <app-cancel-button [disabled]="loading"></app-cancel-button>
-  <button
-    class="btn btn-primary px-5"
-    [disabled]="loading"
-    (click)="onSubmit()"
-  >
-    <app-text-to-loading-spinner [text]="'Save'"></app-text-to-loading-spinner>
-  </button>
+  <app-submit-button
+    [disabled]="isSubmitButtonDisabled()"
+    (clicked)="submit(true)"
+  ></app-submit-button>
 </div>
+<div *ngIf="showVarianceModal">
+  <app-variance-warning-modal
+    (accept)="submit()"
+    (decline)="hideModal()"
+  ></app-variance-warning-modal>
+</div>
+
+<!-- Variance warning popover template -->
+<ng-template
+  #popover
+  let-variance="variance"
+>
+  <div
+    class="text-secondary"
+    *ngIf="variance"
+  >
+    Average: {{variance?.historicalAverage}}
+    <div class="d-flex">
+      <div *ngFor="let year of getYearlyAverages(variance)">
+        <div>
+          {{ year.year }}: {{ year. value}}{{ year.hasOwnProperty('last') ? '' : ',&nbsp;'}}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

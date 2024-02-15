@@ -1,58 +1,203 @@
 <app-park-header></app-park-header>
 
 <div class="form-header">
-  <h1>Day Use</h1>
+  <h1>Backcountry Cabins</h1>
   <p>
-    Not all items shown below will apply to all Day Use areas. Leave fields
-    blank if they are not relevant to the sub-area.
+    Not all items shown below will apply to all Day Use areas. Leave fields blank if they are not relevant to the
+    sub-area.
   </p>
 </div>
-<form [formGroup]="form">
+
+<form>
+  <!-- People and vehicles -->
   <div class="form-section">
     <h2>People and vehicles</h2>
-    <app-people-and-vehicles
-      [peopleAndVehiclesTrailField]="fields?.peopleAndVehiclesTrail"
-      [peopleAndVehiclesVehicleField]="fields?.peopleAndVehiclesVehicle"
-      [peopleAndVehiclesBusField]="fields?.peopleAndVehiclesBus"
-      [attendanceTotal]="attendanceTotal"
-    ></app-people-and-vehicles>
+    <!-- Attendance -->
+    <div class="row">
+      <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="row">
+          <!-- Vehicles -->
+          <div class="input-box mb-2 d-flex align-items-end"
+             [popover]="getPopoverData('peopleAndVehiclesVehicle') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('peopleAndVehiclesVehicle')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['peopleAndVehiclesVehicle']" [decimalPlaces]="0"
+              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Vehicle count'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Buses -->
+          <div class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('peopleAndVehiclesBus') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('peopleAndVehiclesBus')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['peopleAndVehiclesBus']" [decimalPlaces]="0"
+              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Bus count'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="bus-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Trail -->
+          <div class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('peopleAndVehiclesTrail') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('peopleAndVehiclesTrail')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['peopleAndVehiclesTrail']" [decimalPlaces]="0"
+              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Trail count'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+            </ngds-number-input>
+          </div>
+        </div>
+        <!-- Attendance info -->
+        <div class="row mt-3">
+          <app-info-text class="text-block"
+            [text]="'If counters capture camping, bus, or Park Operator traffic, subtract those
+          counts before entering data. If counters capture 2-way traffic, divide the total by 2 before entering.'"></app-info-text>
+        </div>
+        <!-- Attendance summary -->
+        <div class="mb-2">
+          <app-calculation-display [label]="'TOTAL ATTENDANCE'" [subtext]="attendanceTotal?.formula"
+            [value]="attendanceTotal?.result"></app-calculation-display>
+        </div>
+      </div>
+      <!-- Revenue  -->
+      <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="row">
+          <!-- Revenue info -->
+          <app-info-text class="text-block"
+            [text]="'There are no revenue items to record in Day Use, People and vehicles.'"></app-info-text>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- Picnic Shelters -->
   <div class="form-section">
     <h2>Picnic shelters</h2>
-    <app-picnic-shelters
-      [picnicShelterPeopleControl]="fields?.picnicShelterPeople"
-      [picnicRevenueShelterControl]="fields?.picnicRevenueShelter"
-      [picnicRevenueGrossControl]="fields?.picnicRevenueGross"
-      [revenueTotal]="picnicRevenueTotal"
-    ></app-picnic-shelters>
+    <div class="row">
+      <!-- Attendance -->
+      <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="row">
+          <!-- Shelter Rentals -->
+          <div class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('picnicRevenueShelter') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('picnicRevenueShelter')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['picnicRevenueShelter']" [decimalPlaces]="0"
+              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+              [label]="'Picnic shelter rentals'" [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="picnic-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Shelter People -->
+          <div class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('picnicShelterPeople') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('picnicShelterPeople')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['picnicShelterPeople']" [decimalPlaces]="0" [justify]="'end'"
+              [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Picnic shelter people'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+            </ngds-number-input>
+          </div>
+        </div>
+      </div>
+      <!-- Revenue -->
+      <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="mb-auto">
+          <!-- Picnic revenue -->
+          <div class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('picnicRevenueGross') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('picnicRevenueGross', true)}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['picnicRevenueGross']" [decimalPlaces]="2" [justify]="'end'"
+              [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross picnic revenue'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
+            </ngds-number-input>
+          </div>
+        </div>
+        <!-- Revenue summary -->
+        <div class="mb-2">
+          <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'"
+            [subtext]="picnicRevenueTotal?.formula" [value]="picnicRevenueTotal?.result"></app-calculation-display>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- Hot springs -->
   <div class="form-section">
     <h2>Hot springs</h2>
-    <app-other-day-use
-      [otherDayUsePeopleHotSpringsField]="fields?.otherDayUsePeopleHotSprings"
-      [otherDayUseRevenueHotSpringsField]="fields?.otherDayUseRevenueHotSprings"
-      [revenueTotal]="otherRevenueTotal"
-    ></app-other-day-use>
+    <div class="row">
+      <!-- Attendance -->
+      <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="row">
+          <!-- Hot springs people -->
+          <div class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('otherDayUsePeopleHotSprings') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('otherDayUsePeopleHotSprings')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['otherDayUsePeopleHotSprings']" [decimalPlaces]="0"
+              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Hot springs people'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+            </ngds-number-input>
+          </div>
+        </div>
+      </div>
+      <!-- Revenue -->
+      <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="mb-auto">
+          <!-- Hot springs revenue -->
+          <div class="input-box mb-2 d-flex align-items-end"
+            [popover]="getPopoverData('otherDayUseRevenueHotSprings') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('otherDayUseRevenueHotSprings', true)}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['otherDayUseRevenueHotSprings']" [decimalPlaces]="2"
+              [justify]="'end'" [invalidConfig]="invalidConfig" [padDecimals]="true"
+              [label]="'Gross hot springs revenue'" [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
+            </ngds-number-input>
+          </div>
+        </div>
+        <!-- Revenue summary -->
+        <div class="mb-2">
+          <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'" [subtext]="otherRevenueTotal?.formula"
+            [value]="otherRevenueTotal?.result"></app-calculation-display>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- Variance notes -->
   <div class="form-section">
     <h2>Variance notes</h2>
-    <app-text-area
-      [charCap]="100"
-      [control]="fields?.notes"
-      [label]="
-        'If any data entered above varies widely from the expected counts, briefly explain the variance.'
-      "
-      [id]="'variance-notes'"
-    ></app-text-area>
+    <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
+    <ngds-text-input [control]="form?.controls?.['notes']" [showCharacterCount]="true" [multiline]="true"
+      [loadWhile]="loading">
+    </ngds-text-input>
   </div>
 </form>
+
+<!-- Cancel and submit buttons -->
 <div class="form-footer d-flex justify-content-between">
   <app-cancel-button [disabled]="loading"></app-cancel-button>
-  <button
-    class="btn btn-primary px-5"
-    [disabled]="loading"
-    (click)="onSubmit()"
-  >
-    <app-text-to-loading-spinner [text]="'Save'"></app-text-to-loading-spinner>
-  </button>
+  <app-submit-button [disabled]="isSubmitButtonDisabled()" (clicked)="submit(true)"></app-submit-button>
 </div>
+<div *ngIf="showVarianceModal">
+  <app-variance-warning-modal (accept)="submit()" (decline)="hideModal()"></app-variance-warning-modal>
+</div>
+
+<!-- Variance warning popover template -->
+<ng-template #popover let-variance="variance">
+  <div class="text-secondary" *ngIf="variance">
+    Average: {{variance?.historicalAverage}}
+    <div class="d-flex">
+      <div *ngFor="let year of getYearlyAverages(variance)">
+        <div>
+          {{ year.year }}: {{ year. value}}{{ year.hasOwnProperty('last') ? '' : ',&nbsp;'}}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

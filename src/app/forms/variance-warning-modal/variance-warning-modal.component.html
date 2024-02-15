@@ -1,0 +1,30 @@
+<ng-template #varianceModal>
+  <div class="modal-border">
+    <div class="modal-header d-flex justify-content-between p-3">
+      <h2>This form contains variance values</h2>
+      <button
+        type="button"
+        class="btn-close close pull-right"
+        aria-label="Close"
+        (click)="declineClicked()"
+      ><span
+          aria-hidden="true"
+          class="visually-hidden"
+        >&times;</span>
+      </button>
+    </div>
+    <div class="p-3">
+      <p>Do you want to add a variance note or review values entered?</p>
+    </div>
+    <div class="modal-footer d-flex justify-content-between p-3">
+      <button
+        class="btn btn-outline-primary"
+        (click)="confirmClicked()"
+      >Save and exit</button>
+      <button
+        class="btn btn-primary"
+        (click)="declineClicked()"
+      >Continue editing</button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,14 @@
+@import "src/assets/themes/variables";
+
+.modal-header {
+  border-bottom: 0;
+}
+
+.modal-footer {
+  border-top: 0;
+}
+
+.modal-border {
+  border-left: solid 10px $warning !important;
+  border-radius: 5px;
+}

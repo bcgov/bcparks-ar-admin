@@ -24,7 +24,7 @@ export class ActivityService {
     private loggerService: LoggerService,
     private loadingService: LoadingService,
     private router: Router
-  ) {}
+  ) { }
 
   private utils = new Utils();
 
@@ -54,7 +54,7 @@ export class ActivityService {
       // If a record does not exist, res will not contain a pk.
       if (res?.pk) {
         // We have to add the activity to the accordion list
-        const accordionListId = Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST
+        const accordionListId = Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST;
         let activityList = this.dataService.getItemValue(accordionListId);
         if (!activityList) {
           this.dataService.setItemValue(accordionListId, [activity]);
@@ -88,20 +88,31 @@ export class ActivityService {
     this.loadingService.removeToFetchList(id);
   }
 
-  async postActivity(obj) {
+  async postActivity(obj, warn = false) {
     let res;
     try {
       // We require queryParam type = activity
       // In obj we need subAreaId, activity and date
       if (obj.subAreaId && obj.activity && obj.date) {
+        let params = {
+          type: 'activity'
+        };
+        if (warn) {
+          params['warn'] = true;
+        }
         res = await firstValueFrom(
-          this.apiService.post('activity', obj, { type: 'activity' })
+          this.apiService.post('activity', obj, params)
         );
-        this.toastService.addMessage(
-          `${obj.activity} - ${this.utils.convertYYYYMMToMMMMYYYY(obj.date)}`,
-          `Report Updated`,
-          Constants.ToastTypes.SUCCESS
-        );
+        if (!res?.saved && res?.fields) {
+          this.loggerService.debug('Variance triggered, record not saved.');
+          this.dataService.setItemValue(Constants.dataIds.VARIANCE_WARNING_TRIGGERED_FIELDS, res.fields);
+        } else {
+          this.toastService.addMessage(
+            `${obj.activity} - ${this.utils.convertYYYYMMToMMMMYYYY(obj.date)}`,
+            `Report Updated`,
+            Constants.ToastTypes.SUCCESS
+          );
+        }
         return res;
       }
     } catch (e) {

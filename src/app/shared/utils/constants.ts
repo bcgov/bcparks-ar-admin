@@ -19,12 +19,15 @@ export class Constants {
     LOCK_RECORDS_FISCAL_YEARS_DATA: 'lock-records-fiscal-years-data',
     VARIANCE_FILTERS: 'variance-filters',
     VARIANCE_LIST: 'variance-list',
-    VARIANCE_LAST_EVALUATED_KEY: 'variance-last-evaluated-key'
+    VARIANCE_LAST_EVALUATED_KEY: 'variance-last-evaluated-key',
+    VARIANCE_WARNING_TRIGGERED_FIELDS: 'variance-warning-triggered-fields'
   };
 
   public static readonly ApplicationRoles: any = {
     ADMIN: 'sysadmin',
   };
+
+  public static readonly timezone: string = 'America/Vancouver'
 
   public static readonly ActivityTypes: any = [
     'Frontcountry Camping',

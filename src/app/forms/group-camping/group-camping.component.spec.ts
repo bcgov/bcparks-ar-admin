@@ -5,7 +5,7 @@ import { ConfigService } from 'src/app/services/config.service';
 import { ParkHeaderModule } from '../park-header/park-header.module';
 
 import { GroupCampingComponent } from './group-camping.component';
-import { GroupCampingModule } from './group-camping.module';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 describe('GroupCampingComponent', () => {
   let component: GroupCampingComponent;
@@ -14,8 +14,8 @@ describe('GroupCampingComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GroupCampingComponent],
-      imports: [GroupCampingModule, RouterTestingModule, ParkHeaderModule],
-      providers: [HttpClient, HttpHandler, ConfigService],
+      imports: [RouterTestingModule, ParkHeaderModule],
+      providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
     }).compileComponents();
   });
 
