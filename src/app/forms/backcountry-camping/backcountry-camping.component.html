@@ -16,20 +16,35 @@
         <div class="row d-flex">
           <div class="col-12 col-lg-auto">
             <!-- People -->
-            <div class="input-box mb-2 d-flex align-items-end" [popover]="getPopoverData('people') ? popover : null"
-              [popoverContext]="{variance: getPopoverData('people')}" placement="bottom"
-              triggers="mouseenter:mouseleave">
-              <ngds-number-input [control]="form?.controls?.['people']" [decimalPlaces]="0" [justify]="'end'"
-                [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'People'" [placeholder]="'No data'"
-                [loadWhile]="loading">
-                <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+            <div
+              class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('people') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('people')}"
+              placement="bottom"
+              triggers="mouseenter:mouseleave"
+            >
+              <ngds-number-input
+                [control]="form?.controls?.['people']"
+                [decimalPlaces]="0"
+                [justify]="'end'"
+                [invalidConfig]="invalidConfig"
+                [allowNegative]="false"
+                [label]="'People'"
+                [placeholder]="'No data'"
+                [loadWhile]="loading"
+              >
+                <i
+                  ngdsInputPrepend
+                  class="bi bi-person-fill px-2"
+                ></i>
               </ngds-number-input>
             </div>
           </div>
           <div class="d-flex align-items-end col-12 col-lg mb-3">
-            <app-info-text class="text-block"
-            [text]="'Enter the number of people counted or observed.'"
-          ></app-info-text>
+            <app-info-text
+              class="text-block"
+              [text]="'Enter the number of people counted or observed.'"
+            ></app-info-text>
           </div>
         </div>
       </div>
@@ -39,19 +54,35 @@
           <!-- Gross revenue -->
           <div class="input-box mb-2 d-flex align-items-end"
             [popover]="getPopoverData('grossCampingRevenue') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('grossCampingRevenue', true)}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['grossCampingRevenue']" [decimalPlaces]="2" [justify]="'end'"
-              [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross camping revenue'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
+            [popoverContext]="{variance: getPopoverData('grossCampingRevenue', true)}"
+            placement="bottom"
+            triggers="mouseenter:mouseleave"
+          >
+            <ngds-number-input
+              [control]="form?.controls?.['grossCampingRevenue']"
+              [decimalPlaces]="2"
+              [justify]="'end'"
+              [invalidConfig]="invalidConfig"
+              [padDecimals]="true"
+              [label]="'Gross camping revenue'"
+              [placeholder]="'No data'"
+              [loadWhile]="loading"
+            >
+              <i
+                ngdsInputPrepend
+                class="bi bi-currency-dollar px-2"
+              ></i>
             </ngds-number-input>
           </div>
         </div>
         <!-- Revenue Summary -->
         <div class="mb-2">
-          <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'" [subtext]="revenueTotal?.formula"
-            [value]="revenueTotal?.result"></app-calculation-display>
+          <app-calculation-display
+            [colorClass]="'green'"
+            [label]="'NET REVENUE'"
+            [subtext]="revenueTotal?.formula"
+            [value]="revenueTotal?.result"
+          ></app-calculation-display>
         </div>
       </div>
     </div>
@@ -60,8 +91,12 @@
   <div class="form-section">
     <h2>Variance notes</h2>
     <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
-    <ngds-text-input [control]="form?.controls?.['notes']" [showCharacterCount]="true" [multiline]="true"
-      [loadWhile]="loading">
+    <ngds-text-input
+      [control]="form?.controls?.['notes']"
+      [showCharacterCount]="true"
+      [multiline]="true"
+      [loadWhile]="loading"
+    >
     </ngds-text-input>
   </div>
 </form>
@@ -69,15 +104,27 @@
 <!-- Cancel and submit buttons -->
 <div class="form-footer d-flex justify-content-between">
   <app-cancel-button [disabled]="loading"></app-cancel-button>
-  <app-submit-button [disabled]="isSubmitButtonDisabled()" (clicked)="submit(true)"></app-submit-button>
+  <app-submit-button
+    [disabled]="isSubmitButtonDisabled()"
+    (clicked)="submit(true)"
+  ></app-submit-button>
 </div>
 <div *ngIf="showVarianceModal">
-  <app-variance-warning-modal (accept)="submit()" (decline)="hideModal()"></app-variance-warning-modal>
+  <app-variance-warning-modal
+    (accept)="submit()"
+    (decline)="hideModal()"
+  ></app-variance-warning-modal>
 </div>
 
 <!-- Variance warning popover template -->
-<ng-template #popover let-variance="variance">
-  <div class="text-secondary" *ngIf="variance">
+<ng-template
+  #popover
+  let-variance="variance"
+>
+  <div
+    class="text-secondary"
+    *ngIf="variance"
+  >
     Average: {{variance?.historicalAverage}}
     <div class="d-flex">
       <div *ngFor="let year of getYearlyAverages(variance)">

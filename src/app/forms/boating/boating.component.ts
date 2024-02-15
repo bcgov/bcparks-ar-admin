@@ -38,7 +38,7 @@ export class BoatingComponent extends RootFormComponent {
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
       this.calculateTotals();
-    })
+    });
   }
 
   calculateTotals() {
@@ -46,12 +46,12 @@ export class BoatingComponent extends RootFormComponent {
       [
         this.form.controls['boatAttendanceNightsOnDock'].value,
         this.form.controls['boatAttendanceNightsOnBouys'].value,
-        this.form.controls['boatAttendanceMiscellaneous'].value,
+        this.form.controls['boatAttendanceMiscellaneous'].value
       ],
       this.data?.config?.attendanceModifier
-    )
+    );
     this.revenueTotal = this.formulaService.basicNetRevenue([
-      this.form.controls['boatRevenueGross'].value,
+      this.form.controls['boatRevenueGross'].value
     ]);
   }
 

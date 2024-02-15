@@ -45,7 +45,7 @@ export class GroupCampingComponent extends RootFormComponent {
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
       this.calculateTotals();
-    })
+    });
   }
 
   calculateTotals() {

@@ -200,7 +200,7 @@ describe('SubAreaSearchComponent', () => {
     component.form.controls['date'].setValue('202402');
     expect(urlUpdateSpy).toHaveBeenCalledTimes(1);
   })
-  
+
   it('should highlight typeahead properly', async() => {
     expect(component.getHighlightedMatch({value:'string'}, ['str'])).toEqual([
       `<span></span>`,

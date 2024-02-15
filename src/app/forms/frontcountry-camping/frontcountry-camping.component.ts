@@ -51,7 +51,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
       this.calculateTotals();
-    })
+    });
   }
 
   calculateTotals() {
@@ -61,7 +61,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
           this.form.controls['campingPartyNightsAttendanceStandard'].value,
           this.form.controls['campingPartyNightsAttendanceSenior'].value,
           this.form.controls['campingPartyNightsAttendanceSocial'].value,
-          this.form.controls['campingPartyNightsAttendanceLongStay'].value,
+          this.form.controls['campingPartyNightsAttendanceLongStay'].value
         ],
         this.data?.config?.attendanceModifier
       );
@@ -69,18 +69,18 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       this.formulaService.frontcountryCampingSecondCarAttendance([
         this.form.controls['secondCarsAttendanceStandard'].value,
         this.form.controls['secondCarsAttendanceSenior'].value,
-        this.form.controls['secondCarsAttendanceSocial'].value,
+        this.form.controls['secondCarsAttendanceSocial'].value
       ]);
     this.partyRevenueTotal = this.formulaService.basicNetRevenue([
-      this.form.controls['campingPartyNightsRevenueGross'].value,
+      this.form.controls['campingPartyNightsRevenueGross'].value
     ]);
     this.vehicleRevenueTotal = this.formulaService.basicNetRevenue([
-      this.form.controls['secondCarsRevenueGross'].value,
+      this.form.controls['secondCarsRevenueGross'].value
     ]);
     this.otherRevenueTotal = this.formulaService.basicNetRevenue([
       this.form.controls['otherRevenueGrossSani'].value,
       this.form.controls['otherRevenueElectrical'].value,
-      this.form.controls['otherRevenueShower'].value,
+      this.form.controls['otherRevenueShower'].value
     ]);
   }
 

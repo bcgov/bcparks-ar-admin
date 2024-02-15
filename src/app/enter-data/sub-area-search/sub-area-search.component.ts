@@ -1,5 +1,5 @@
 import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { BehaviorSubject, Subscription, first} from 'rxjs';
+import { BehaviorSubject, Subscription, first } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { TypeaheadComponent } from 'src/app/shared/components/typeahead/typeahead.component';
@@ -32,7 +32,7 @@ export class SubAreaSearchComponent implements OnDestroy {
     date: new UntypedFormControl(null),
     park: new UntypedFormControl(null),
     subArea: new UntypedFormControl(null),
-  })
+  });
 
   constructor(
     protected dataService: DataService,
@@ -55,7 +55,7 @@ export class SubAreaSearchComponent implements OnDestroy {
       this.loadingService.getLoadingStatus().subscribe((res) => {
         this.loading = res;
       })
-    )
+    );
     // Watch changes to the park field so we can populate the subarea field
     this.subscriptions.add(
       this.form.controls['park'].valueChanges.subscribe((res) => {
@@ -64,7 +64,7 @@ export class SubAreaSearchComponent implements OnDestroy {
           this.parkChange(res);
         }
       })
-    )
+    );
     // Update the url to match the form when it changes
     this.subscriptions.add(
       this.form.valueChanges.subscribe((res) => {
@@ -77,7 +77,7 @@ export class SubAreaSearchComponent implements OnDestroy {
           }
         }
       })
-    )
+    );
     // set the date
     this.setDate();
     const keys = this.urlService.getQueryParams();
@@ -94,7 +94,7 @@ export class SubAreaSearchComponent implements OnDestroy {
                 // set subarea
                 setTimeout(() => {
                   this.form.controls['subArea'].setValue(this.getLocalStorageSubAreaById(keys.subAreaId));
-                }, 0)
+                }, 0);
                 // Autosearch
                 this.isPageLoaded = true;
                 this.search();
@@ -102,18 +102,18 @@ export class SubAreaSearchComponent implements OnDestroy {
                 this.isPageLoaded = true;
               }
             })
-          )
+          );
           // set park
           setTimeout(() => {
-          this.form.controls['park'].setValue(this.getLocalStorageParkById(keys.orcs));
-          }, 0)
+            this.form.controls['park'].setValue(this.getLocalStorageParkById(keys.orcs));
+          }, 0);
         } else {
           this.isPageLoaded = true;
         }
       })
-    )
+    );
 
-   }
+  }
 
   // Update the url from the form values
   updateUrl() {
@@ -147,7 +147,7 @@ export class SubAreaSearchComponent implements OnDestroy {
 
   setDate() {
     let params = this.urlService.getQueryParams();
-    const format = 'yyyyLL'
+    const format = 'yyyyLL';
     let setDate = DateTime.fromFormat(params?.date || '', format);
     if (setDate > this.maxDate || setDate.invalid) {
       setDate = this.maxDate;
@@ -174,7 +174,7 @@ export class SubAreaSearchComponent implements OnDestroy {
       list.push({
         value: item,
         display: item[display]
-      })
+      });
     }
     return list;
   }
@@ -190,20 +190,20 @@ export class SubAreaSearchComponent implements OnDestroy {
     let display = item.value;
     if (display.toLocaleLowerCase().indexOf(query) > -1) {
       const left_str = display.substring(0, display.toLocaleLowerCase().indexOf(query));
-      const highlight_str = display.substring(display.toLocaleLowerCase().indexOf(query), display.toLocaleLowerCase().indexOf(query) + query.length)
+      const highlight_str = display.substring(display.toLocaleLowerCase().indexOf(query), display.toLocaleLowerCase().indexOf(query) + query.length);
       const right_str = display.substring(display.toLocaleLowerCase().indexOf(query) + query.length);
       return [
         '<span>' + left_str + '</span>',
         '<span>' + highlight_str + '</span>',
         '<span>' + right_str + '</span>',
-      ]
+      ];
     }
     else
       return [
         '<span>' + display + '</span>',
         '',
         '',
-      ]
+      ];
   }
 
   // Perform search
@@ -217,7 +217,7 @@ export class SubAreaSearchComponent implements OnDestroy {
       orcs: params?.orcs || '',
       subAreaId: params?.subAreaId || '',
       isLegacy: this.form.controls?.['subarea']?.value?.value?.isLegacy || false,
-    })
+    });
     this.subAreaService.fetchSubArea(
       Constants.dataIds.ENTER_DATA_SUB_AREA,
       params?.orcs,

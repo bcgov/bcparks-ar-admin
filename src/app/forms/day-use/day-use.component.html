@@ -18,7 +18,7 @@
         <div class="row">
           <!-- Vehicles -->
           <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('peopleAndVehiclesVehicle') ? popover : null"
+             [popover]="getPopoverData('peopleAndVehiclesVehicle') ? popover : null"
             [popoverContext]="{variance: getPopoverData('peopleAndVehiclesVehicle')}" placement="bottom"
             triggers="mouseenter:mouseleave">
             <ngds-number-input [control]="form?.controls?.['peopleAndVehiclesVehicle']" [decimalPlaces]="0"

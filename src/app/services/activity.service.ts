@@ -54,7 +54,7 @@ export class ActivityService {
       // If a record does not exist, res will not contain a pk.
       if (res?.pk) {
         // We have to add the activity to the accordion list
-        const accordionListId = Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST
+        const accordionListId = Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST;
         let activityList = this.dataService.getItemValue(accordionListId);
         if (!activityList) {
           this.dataService.setItemValue(accordionListId, [activity]);
@@ -96,7 +96,7 @@ export class ActivityService {
       if (obj.subAreaId && obj.activity && obj.date) {
         let params = {
           type: 'activity'
-        }
+        };
         if (warn) {
           params['warn'] = true;
         }
@@ -105,7 +105,7 @@ export class ActivityService {
         );
         if (!res?.saved && res?.fields) {
           this.loggerService.debug('Variance triggered, record not saved.');
-          this.dataService.setItemValue(Constants.dataIds.VARIANCE_WARNING_TRIGGERED_FIELDS, res.fields)
+          this.dataService.setItemValue(Constants.dataIds.VARIANCE_WARNING_TRIGGERED_FIELDS, res.fields);
         } else {
           this.toastService.addMessage(
             `${obj.activity} - ${this.utils.convertYYYYMMToMMMMYYYY(obj.date)}`,

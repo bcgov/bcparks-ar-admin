@@ -6,14 +6,14 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './variance-warning-modal.component.html',
   styleUrls: ['./variance-warning-modal.component.scss']
 })
-export class VarianceWarningModalComponent implements AfterViewInit{
+export class VarianceWarningModalComponent implements AfterViewInit {
   @ViewChild('varianceModal') varianceModal: TemplateRef<any>;
   @Output() accept = new EventEmitter;
   @Output() decline = new EventEmitter;
 
   public modalRef: BsModalRef;
 
-  constructor(private modalService: BsModalService) {}
+  constructor(private modalService: BsModalService) { }
 
   ngAfterViewInit() {
     this.modalRef = this.modalService.show(this.varianceModal, {
@@ -24,7 +24,7 @@ export class VarianceWarningModalComponent implements AfterViewInit{
       if (reason === 'backdrop-click') {
         this.decline.emit();
       }
-    })
+    });
   }
 
   confirmClicked() {

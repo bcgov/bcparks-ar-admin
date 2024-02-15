@@ -14,7 +14,7 @@ export class UrlService implements OnDestroy {
   ) {
     this.route.queryParams.subscribe((changes) => {
       this.queryParams.next(changes);
-    }) 
+    });
   }
 
   /**
@@ -56,10 +56,10 @@ export class UrlService implements OnDestroy {
       relativeTo: this.route,
       queryParams: params,
       replaceUrl: true
-    })
+    });
 
   }
-  
+
   ngOnDestroy() {
     this.queryParams.next(null);
     this.queryParams.complete();

@@ -1,3 +1,7 @@
-<button class="btn btn-primary px-5" [disabled]="disabled" (click)="clicked.emit()">
+<button
+  class="btn btn-primary px-5"
+  [disabled]="disabled"
+  (click)="clicked.emit()"
+>
   <app-text-to-loading-spinner [text]="'Save'"></app-text-to-loading-spinner>
 </button>

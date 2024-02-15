@@ -36,12 +36,12 @@ export class BackcountryCampingComponent extends RootFormComponent {
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
       this.calculateTotals();
-    })
+    });
   }
 
   calculateTotals() {
     this.revenueTotal = this.formulaService.basicNetRevenue([
-      this.form.controls['grossCampingRevenue'].value,
+      this.form.controls['grossCampingRevenue'].value
     ]);
   }
 

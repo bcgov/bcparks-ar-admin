@@ -45,7 +45,7 @@ export class DayUseComponent extends RootFormComponent {
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
       this.calculateTotals();
-    })
+    });
   }
 
   calculateTotals() {
@@ -57,10 +57,10 @@ export class DayUseComponent extends RootFormComponent {
       this.data?.config?.attendanceBusModifier
     );
     this.picnicRevenueTotal = this.formulaService.basicNetRevenue([
-      this.form.controls['picnicRevenueGross'].value,
+      this.form.controls['picnicRevenueGross'].value
     ]);
     this.otherRevenueTotal = this.formulaService.basicNetRevenue([
-      this.form.controls['otherDayUseRevenueHotSprings'].value,
+      this.form.controls['otherDayUseRevenueHotSprings'].value
     ]);
   }
 

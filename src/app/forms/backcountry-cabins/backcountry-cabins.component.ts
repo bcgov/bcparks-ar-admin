@@ -38,7 +38,7 @@ export class BackcountryCabinsComponent extends RootFormComponent {
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
       this.calculateTotals();
-    })
+    });
   }
 
   calculateTotals() {
@@ -48,7 +48,7 @@ export class BackcountryCabinsComponent extends RootFormComponent {
       this.data?.config?.attendanceModifier
     );
     this.revenueTotal = this.formulaService.basicNetRevenue([
-      this.form.controls['revenueFamily'].value,
+      this.form.controls['revenueFamily'].value
     ]);
   }
 
