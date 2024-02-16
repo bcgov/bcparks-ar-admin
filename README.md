@@ -3,7 +3,12 @@
 
 # Introduction
 
-This repository consists of the front end code for the BC Parks Attendance & Revenue system (A&R). A&R helps Park Operators, BC Parks, and the BC Government track important statistical information to help guide budget allowances and any maintenance that needs to be done to the park.
+This repository consists of the front end code for the BC Parks Attendance & Revenue system (A&R). A&R helps Park Operators, BC Parks, and the BC Government track important statistical information to help guide budget all
+
+
+
+
+owances and any maintenance that needs to be done to the park.
 
 Associated Repositories:
 
