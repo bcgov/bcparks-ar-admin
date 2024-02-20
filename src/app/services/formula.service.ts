@@ -222,7 +222,7 @@ export class FormulaService {
     vehicles: any[],
     buses: any[],
     vehicleMod?: number,
-    busMod?: number
+    busMod?: number,
   ): formulaResult {
     let trailCountTotal = this.totalWithModifier(trailCount);
     let vehicleTotal = this.totalWithModifier(vehicles, vehicleMod);
@@ -241,7 +241,7 @@ export class FormulaService {
         busTotal,
         trailCountTotal,
       ]),
-      formula: `Vehicle attendance = ${vehicleFormula} + ${busFormula} + Trail count`,
+      formula: `Total Attendance (People), ${vehicleFormula} + ${busFormula} + Trail count`,
     };
   }
 

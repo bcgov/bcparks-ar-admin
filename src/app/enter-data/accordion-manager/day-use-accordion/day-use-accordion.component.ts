@@ -39,7 +39,7 @@ export class DayUseAccordionComponent implements OnDestroy {
       {
         isLegacy: this.data?.isLegacy,
         title: 'People and vehicles',
-        attendanceLabel: 'Total attendance',
+        attendanceLabel: 'Total attendance (People)',
         attendanceItems: [
           {
             itemName: 'Vehicle count',
@@ -138,7 +138,7 @@ export class DayUseAccordionComponent implements OnDestroy {
     }
 
   }
-  
+
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
