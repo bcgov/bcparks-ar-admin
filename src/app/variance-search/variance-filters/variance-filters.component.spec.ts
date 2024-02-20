@@ -4,7 +4,6 @@ import { VarianceFiltersComponent } from './variance-filters.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ConfigService } from 'src/app/services/config.service';
-import { MockData } from 'src/app/shared/utils/mock.data';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Constants } from 'src/app/shared/utils/constants';
