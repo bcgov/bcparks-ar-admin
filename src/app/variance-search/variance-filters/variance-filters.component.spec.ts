@@ -16,11 +16,6 @@ describe('VarianceFiltersComponent', () => {
   let component: VarianceFiltersComponent;
   let fixture: ComponentFixture<VarianceFiltersComponent>;
 
-  let subareas = [
-    MockData.mockSubArea_1,
-    MockData.mockSubArea_2
-  ];
-
   let mockParkSA = {
     id: '0001',
     name: 'SubArea name'
