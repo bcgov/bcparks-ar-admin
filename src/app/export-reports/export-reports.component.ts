@@ -3,7 +3,8 @@ import { Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { ExportService } from '../services/export.service';
 import { Constants } from '../shared/utils/constants';
-import { DateTime } from 'luxon'
+import { DateTime, Duration } from 'luxon'
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-export-reports',
@@ -35,11 +36,20 @@ export class ExportReportsComponent implements OnDestroy {
   public signedURL;
   public fiscalYearStartMonth = 'April';
   public fiscalYearEndMonth = 'March';
-  public maxDate = new Date();
   public defaultRangeString = 'Select fiscal year';
   public fiscalYearRangeString = this.defaultRangeString;
   public modelDate = NaN;
   public activeTab = '';
+
+  public tz = Constants.timezone;
+  public maxDate = DateTime.now().setZone(this.tz);
+  // negate duration so we can pick the end date first
+  public duration = Duration.fromObject({years: 1}).negate();
+  public dateFormat = 'yyyy-LL';
+
+  public form = new UntypedFormGroup({
+    year: new UntypedFormControl(null)
+  })
 
   public exportMessage = 'Last export: -';
 
@@ -50,10 +60,22 @@ export class ExportReportsComponent implements OnDestroy {
     private dataService: DataService,
     private cd: ChangeDetectorRef
   ) {
-    this.setMaxDate();
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA).subscribe(res => {
         this.jobUpdate(res);
+      })
+    )
+    this.subscriptions.add(
+      this.form.controls['year'].valueChanges.subscribe((changes) => {
+          const startDate = DateTime.fromFormat(changes[1], this.dateFormat).plus({months: 2});
+          const endDate = DateTime.fromFormat(changes[0], this.dateFormat).plus({months: 3});
+          this.form.controls['year'].setValue([
+            startDate.toFormat(this.dateFormat),
+            endDate.toFormat(this.dateFormat),
+          ],
+          {
+            emitEvent: false
+          })
       })
     )
     this.subscriptions.add(
@@ -65,15 +87,15 @@ export class ExportReportsComponent implements OnDestroy {
         ));
   }
 
-  setMaxDate() {
-    // get current fiscal year
-    const currentDT = DateTime.now();
-    let year = currentDT.year;
-    if (currentDT.month > 3){
-      year += 1;
-    }
-    this.maxDate = new Date(year, 2, 31);
-  }
+  // setMaxDate() {
+  //   // get current fiscal year
+  //   const currentDT = DateTime.now();
+  //   let year = currentDT.year;
+  //   if (currentDT.month > 3){
+  //     year += 1;
+  //   }
+  //   this.maxDate = new Date(year, 2, 31);
+  // }
 
   jobUpdate(res) {
     if (res) {
@@ -123,8 +145,9 @@ export class ExportReportsComponent implements OnDestroy {
     this.setState(this.stateDictionary.GENERATING);
     this.setExportMessage(null);
     if (this.activeTab === 'variance') {
+      const year = this.form.controls['year'].value[1].slice(0,4);
       this.exportService.generateReport(
-        Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA, 'variance', { fiscalYearEnd: this.modelDate }
+        Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA, 'variance', { fiscalYearEnd: year }
       );
     } else {
       this.exportService.generateReport(
@@ -241,7 +264,7 @@ export class ExportReportsComponent implements OnDestroy {
   }
 
   disableGenerateButton() {
-    if (this.activeTab === 'variance' && isNaN(this.modelDate)) {
+    if (this.activeTab === 'variance' && !this.form?.controls?.['year'].value) {
       return true;
     }
     if (![0, 2, 99].includes(this.currentState)) {

@@ -44,6 +44,8 @@ export class VarianceListComponent implements AfterViewInit, AfterViewChecked, O
         if (res) {
           this.variances = res;
           this.createTableRows(this.variances);
+        } else {
+          this.variances = null;
         }
       })
     )

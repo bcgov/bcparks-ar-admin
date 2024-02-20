@@ -2,7 +2,6 @@ import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { BehaviorSubject, Subscription, first } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
-import { TypeaheadComponent } from 'src/app/shared/components/typeahead/typeahead.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { DateTime } from 'luxon';
@@ -15,8 +14,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./sub-area-search.component.scss'],
 })
 export class SubAreaSearchComponent implements OnDestroy {
-  @ViewChild('parkTypeAhead') parkTypeAhead: TypeaheadComponent;
-  @ViewChild('subAreaTypeAhead') subAreaTypeAhead: TypeaheadComponent;
   @ViewChild('historicalPill') legacyTypeAheadTemplate: TemplateRef<any>;
 
   private subscriptions = new Subscription();

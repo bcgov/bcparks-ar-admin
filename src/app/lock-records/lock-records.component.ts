@@ -1,27 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { Utils } from '../shared/utils/utils';
+import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { FiscalYearLockService } from '../services/fiscal-year-lock.service';
 import { Constants } from '../shared/utils/constants';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { DateTime, Duration } from 'luxon';
 
 @Component({
   selector: 'app-lock-records',
   templateUrl: './lock-records.component.html',
   styleUrls: ['./lock-records.component.scss'],
 })
-export class LockRecordsComponent implements OnInit {
-  
+export class LockRecordsComponent {
+
   private subscriptions = new Subscription();
-  public fiscalYearStartMonth = 'April';
-  public fiscalYearEndMonth = 'March';
   public loading = true;
   public fiscalYearsList: any[] = [];
-  public modelDate = NaN;
-  public maxDate = new Date();
-  private utils = new Utils();
-  public defaultRangeString = 'Select fiscal year';
-  public fiscalYearRangeString = this.defaultRangeString;
+  public tz = Constants.timezone;
+  public maxDate = DateTime.now().setZone(this.tz);
+
+  public form = new UntypedFormGroup({
+    year: new UntypedFormControl(null)
+  })
+
+  // negate duration so we can pick the end date first
+  public duration = Duration.fromObject({years: 1}).negate();
+  public dateFormat = 'yyyy-LL';
 
   constructor(
     protected dataService: DataService,
@@ -34,29 +38,23 @@ export class LockRecordsComponent implements OnInit {
           this.fiscalYearsList = res;
         })
     );
-  }
-
-  ngOnInit(): void {
-    this.maxDate = this.utils.getLatestLockableFiscalYear(new Date());
-    this.fiscalYearLockService.fetchFiscalYear();
-  }
-
-  onOpenCalendar(container) {
-    container.setViewMode('year');
-  }
-
-  datePickerOutput(event) {
-    const selectedYear = new Date(event).getFullYear();
-    this.modelDate = selectedYear;
-    const startDate = this.fiscalYearStartMonth + ' ' + (selectedYear - 1);
-    const endDate = this.fiscalYearEndMonth + ' ' + selectedYear;
-    const displayRange = `${startDate}–${endDate}`;
-    this.fiscalYearRangeString = displayRange;
+    this.subscriptions.add(
+      this.form.controls['year'].valueChanges.subscribe((changes) => {
+          const startDate = DateTime.fromFormat(changes[1], this.dateFormat).plus({months: 2});
+          const endDate = DateTime.fromFormat(changes[0], this.dateFormat).plus({months: 3});
+          this.form.controls['year'].setValue([
+            startDate.toFormat(this.dateFormat),
+            endDate.toFormat(this.dateFormat),
+          ],
+          {
+            emitEvent: false
+          })
+      })
+    )
   }
 
   submit() {
-    this.fiscalYearLockService.lockUnlockFiscalYear(this.modelDate, true);
-    this.modelDate = NaN;
-    this.fiscalYearRangeString = this.defaultRangeString;
+    const year = this.form.controls['year'].value[1].slice(0,4);
+    this.fiscalYearLockService.lockUnlockFiscalYear(year, true);
   }
 }

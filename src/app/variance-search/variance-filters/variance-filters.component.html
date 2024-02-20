@@ -1,7 +1,84 @@
 <div class="bg-filter p-3">
   <section>
     <div class="row">
-      <!-- wait for controls to load before rendering typeaheads -->
+      <div class="col-sm-12 col-md-6 col-lg">
+        <ngds-typeahead-input
+          [control]="form?.controls?.['park']"
+          [label]="'Park'"
+          [selectionListItems]="_parks?.value"
+          [resetButton]="true"
+          [hideInvalidState]="true"
+        >
+        </ngds-typeahead-input>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg">
+        <ngds-typeahead-input
+          [control]="form?.controls?.['subArea']"
+          [label]="'Subarea'"
+          [selectionListItems]="_subAreas?.value"
+          [resetButton]="true"
+          [disabled]="getValue('park')"
+        >
+        </ngds-typeahead-input>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg">
+        <ngds-typeahead-input
+          [control]="form?.controls?.['activity']"
+          [label]="'Activity'"
+          [selectionListItems]="_activities?.value"
+          [resetButton]="true"
+          [disabled]="getValue('subArea')"
+        >
+        </ngds-typeahead-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg">
+        <ngds-date-input
+          [control]="form?.controls?.['date']"
+          [label]="'Date'"
+          [resetButton]="true"
+          [hideInvalidState]="true"
+          [maxDate]="maxDate"
+          [timezone]="tz"
+          [dateFormat]="'yyyyMM'"
+          [dateDisplayFormat]="'yyyy-MM'"
+          [minMode]="1"
+        >
+        </ngds-date-input>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg">
+        <ngds-picklist-input
+          [control]="form?.controls?.['resolved']"
+          [label]="'Status'"
+          [selectionListItems]="statusOptions"
+          [resetButton]="true"
+        >
+        </ngds-picklist-input>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg mt-auto">
+        <div class="row">
+          <div class="col-6">
+            <button
+              class="btn btn-secondary w-100 mt-4"
+              (click)="form.reset()"
+            >Clear</button>
+          </div>
+          <div class="col-6">
+            <button
+              class="btn btn-primary w-100 mt-4"
+              (click)="submit()"
+            >Filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- <div class="bg-filter p-3">
+  <section>
+    <div class="row">
       <div class="col-sm-12 col-md-6 col-lg">
         <app-typeahead *ngIf="fields.park" [control]="fields.park" [id]="'park-typeahead'" [data]="parks"
           [label]="'Park'" (cleared)="parkCleared()" required></app-typeahead>
@@ -39,4 +116,4 @@
       </div>
     </div>
   </section>
-</div>
+</div> -->

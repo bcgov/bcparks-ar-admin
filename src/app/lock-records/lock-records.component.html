@@ -13,22 +13,23 @@
     </div>
     <div class="row mb-3">
       <div class="col-md-12 col-lg-4">
-        <button (click)="dp.toggle()" class="form-control">
-          <span
-            autocomplete="off"
-            bsDatepicker
-            #dp="bsDatepicker"
-            minMode="year"
-            [maxDate]="maxDate"
-            (onShown)="onOpenCalendar($event)"
-            (bsValueChange)="datePickerOutput($event)"
-          >
-          </span>
-          <div class="text-muted d-flex justify-content-left">
-            <i class="bi-calendar me-2 text-muted"></i>
-            {{ fiscalYearRangeString }}
-          </div>
-        </button>
+        <ngds-date-input
+          [control]="form?.controls?.['year']"
+          [dateRange]="true"
+          [hideSecondCalendar]="true"
+          [fixedRangeSize]="duration"
+          [minMode]="2"
+          [rangeSeparator]="'-'"
+          [dateFormat]="dateFormat"
+          [dateDisplayFormat]="'LLLL yyyy'"
+          [placeholder]="'Select fiscal year'"
+          [maxDate]="maxDate"
+        >
+          <div
+            ngdsInputPrepend
+            class="bi bi-calendar px-2"
+          ></div>
+        </ngds-date-input>
       </div>
     </div>
   </div>
@@ -38,7 +39,7 @@
         class="btn btn-primary w-100"
         type="button"
         (click)="submit()"
-        [disabled]="!modelDate"
+        [disabled]="!form?.controls?.['year'].value"
       >
         <app-text-to-loading-spinner
           [text]="'Lock Records '"
@@ -49,7 +50,5 @@
   </div>
 </section>
 <section class="container mt-5">
-  <app-fiscal-year-lock-table
-    [data]="fiscalYearsList"
-  ></app-fiscal-year-lock-table>
+  <app-fiscal-year-lock-table [data]="fiscalYearsList"></app-fiscal-year-lock-table>
 </section>
