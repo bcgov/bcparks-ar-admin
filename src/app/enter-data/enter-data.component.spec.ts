@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DataService } from '../services/data.service';
 import { InfoTextModule } from '../shared/components/info-text/info-text.module';
 import { SelectModule } from '../shared/components/select/select.module';
-import { TypeaheadModule } from '../shared/components/typeahead/typeahead.module';
 
 import { EnterDataComponent } from './enter-data.component';
 
@@ -14,7 +13,6 @@ describe('EnterDataComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        TypeaheadModule,
         InfoTextModule,
         SelectModule,
         RouterTestingModule,

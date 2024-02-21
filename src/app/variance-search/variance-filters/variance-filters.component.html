@@ -1,39 +1,74 @@
 <div class="bg-filter p-3">
   <section>
     <div class="row">
-      <!-- wait for controls to load before rendering typeaheads -->
       <div class="col-sm-12 col-md-6 col-lg">
-        <app-typeahead *ngIf="fields.park" [control]="fields.park" [id]="'park-typeahead'" [data]="parks"
-          [label]="'Park'" (cleared)="parkCleared()" required></app-typeahead>
+        <ngds-typeahead-input
+          [control]="form?.controls?.['park']"
+          [label]="'Park'"
+          [selectionListItems]="_parks?.value"
+          [resetButton]="true"
+          [hideInvalidState]="true"
+        >
+        </ngds-typeahead-input>
       </div>
       <div class="col-sm-12 col-md-6 col-lg">
-        <app-typeahead *ngIf="fields.subarea" [control]="fields.subarea" [id]="'subareas-typeahead'" [data]="subAreas"
-          (cleared)="parkCleared()" [disabled]="!fields.park.value" [label]="'Subarea'"></app-typeahead>
+        <ngds-typeahead-input
+          [control]="form?.controls?.['subArea']"
+          [label]="'Subarea'"
+          [selectionListItems]="_subAreas?.value"
+          [resetButton]="true"
+          [disabled]="getValue('park')"
+        >
+        </ngds-typeahead-input>
       </div>
-      <div *ngIf="activityOptions" class="col-sm-12 col-md-6 col-lg">
-        <app-picklist [control]="fields?.activity" [label]="'Activity'" [options]="activityOptions"
-          [disabled]="!fields.subarea.value">
-        </app-picklist>
+      <div class="col-sm-12 col-md-6 col-lg">
+        <ngds-typeahead-input
+          [control]="form?.controls?.['activity']"
+          [label]="'Activity'"
+          [selectionListItems]="_activities?.value"
+          [resetButton]="true"
+          [disabled]="getValue('subArea')"
+        >
+        </ngds-typeahead-input>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg">
-        <label class="fw-bold">Date <span class="text-danger">*</span></label>
-        <input [(ngModel)]="modelDate" autocomplete="off" class="form-control" name="date" placeholder="Select date"
-          bsDatepicker [maxDate]="maxDate" [bsConfig]="{ dateInputFormat: 'YYYY/MM' }"
-          (onShown)="onOpenCalendar($event)" (ngModelChange)="dateChange($event)" />
+        <ngds-date-input
+          [control]="form?.controls?.['date']"
+          [label]="'Date'"
+          [resetButton]="true"
+          [hideInvalidState]="true"
+          [maxDate]="maxDate"
+          [timezone]="tz"
+          [dateFormat]="'yyyyMM'"
+          [dateDisplayFormat]="'yyyy-MM'"
+          [minMode]="1"
+        >
+        </ngds-date-input>
       </div>
       <div class="col-sm-12 col-md-6 col-lg">
-        <app-picklist [control]="fields?.resolved" [label]="'Status'" [options]="statusOptions">
-        </app-picklist>
+        <ngds-picklist-input
+          [control]="form?.controls?.['resolved']"
+          [label]="'Status'"
+          [selectionListItems]="statusOptions"
+          [resetButton]="true"
+        >
+        </ngds-picklist-input>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg">
+      <div class="col-sm-12 col-md-6 col-lg mt-auto">
         <div class="row">
           <div class="col-6">
-            <button class="btn btn-secondary w-100 mt-4" (click)="clearFilters()">Clear</button>
+            <button
+              class="btn btn-secondary w-100 mt-4"
+              (click)="form.reset()"
+            >Clear</button>
           </div>
           <div class="col-6">
-            <button class="btn btn-primary w-100 mt-4" (click)="submit()" [disabled]="isFormInvalid()">Filter</button>
+            <button
+              class="btn btn-primary w-100 mt-4"
+              (click)="submit()"
+            >Filter</button>
           </div>
         </div>
       </div>

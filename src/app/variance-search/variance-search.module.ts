@@ -2,12 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VarianceSearchComponent } from './variance-search.component';
 import { VarianceFiltersComponent } from './variance-filters/variance-filters.component';
-import { TypeaheadModule } from '../shared/components/typeahead/typeahead.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { PicklistModule } from '../shared/components/forms/picklist/picklist.module';
 import { VarianceListComponent } from './variance-list/variance-list.component';
 import { VarianceAccordionComponent } from './variance-list/variance-accordion/variance-accordion.component';
+import { NgdsFormsModule } from '@digitalspace/ngds-forms'
 
 @NgModule({
   declarations: [
@@ -19,10 +17,8 @@ import { VarianceAccordionComponent } from './variance-list/variance-accordion/v
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    TypeaheadModule,
     CommonModule,
-    BsDatepickerModule,
-    PicklistModule
+    NgdsFormsModule
   ],
   exports: [
     VarianceSearchComponent

@@ -1,69 +1,150 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
-import { Utils } from 'src/app/shared/utils/utils';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, Subscription, first } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { VarianceService } from 'src/app/services/variance.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { UrlService } from 'src/app/services/url.service';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-variance-filters',
   templateUrl: './variance-filters.component.html',
   styleUrls: ['./variance-filters.component.scss']
 })
-export class VarianceFiltersComponent implements OnInit, OnDestroy {
-  public form;
-  public fields: any = {};
+export class VarianceFiltersComponent implements OnDestroy {
+
+  public _parks = new BehaviorSubject(null);
+  public _subAreas = new BehaviorSubject(null);
+  public _activities = new BehaviorSubject(null);
+
+  public form = new UntypedFormGroup({
+    date: new UntypedFormControl(null, [Validators.required]),
+    park: new UntypedFormControl(null, [Validators.required]),
+    subArea: new UntypedFormControl(null),
+    activity: new UntypedFormControl(null),
+    resolved: new UntypedFormControl(null),
+  });
+  public _isPageLoaded = new BehaviorSubject(false);
+  public loading = false;
   public subscriptions = new Subscription();
-
-  private utils = new Utils();
-
-  public urlParams;
-  public modelDate;
-  public maxDate = new Date();
-  public previousDateChosen;
+  public tz = Constants.timezone;
+  public maxDate = DateTime.now().setZone(this.tz);
   public lastEvaluatedKey = null;
-  public parks: any[] = [];;
-  public subAreas: any[] = [];;
-  public activityOptions: any[] = [];
-  public statusOptions: any[] = [
-    {
-      key: 'any',
-      value: undefined,
-      display: 'Any'
-    },
-    {
-      key: 'unresolved',
-      value: false,
-      display: 'Unresolved'
-    },
-    {
-      key: 'resolved',
-      value: true,
-      display: 'Resolved'
-    },
-  ];
+  public statusOptions: any[] = ['Any', 'Unresolved', 'Resolved'];
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
     private dataService: DataService,
     private subareaService: SubAreaService,
-    private varianceService: VarianceService,
-    private cd: ChangeDetectorRef
+    private loadingService: LoadingService,
+    private urlService: UrlService,
+    private varianceService: VarianceService
   ) {
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.ENTER_DATA_PARK).subscribe((res) => {
         if (res) {
-          this.parks = this.utils.convertArrayIntoObjForTypeAhead(res, 'parkName');
+          this._parks.next(this.createTypeaheadObj(res, 'parkName'));
         }
       })
-    )
-    
+    );
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.CURRENT_SUBAREA_LIST).subscribe((res) => {
         if (res) {
-          this.buildSubareaOptions(res);
+          this._subAreas.next(this.createTypeaheadObj(res, 'subAreaName'));
+        }
+      })
+    );
+    // Wait for data to load
+    this.subscriptions.add(
+      this._isPageLoaded.pipe(first((res) => res === true)).subscribe(() => {
+        if (this.form.controls['park'].value && this.form.controls['date'].value) {
+          this.submit();
+        }
+      })
+    );
+    // Watch loading status
+    this.subscriptions.add(
+      this.loadingService.getLoadingStatus().subscribe((res) => {
+        this.loading = res;
+      })
+    );
+    // Watch changes to the park field so we can populate the subarea field
+    this.subscriptions.add(
+      this.form.controls['park'].valueChanges.subscribe((res) => {
+        this.form?.controls?.['subArea']?.reset();
+        if (res) {
+          this.parkChange(res);
+        }
+      })
+    );
+    // Watch changes to the subarea field so we can populate the activities field
+    this.subscriptions.add(
+      this.form.controls['subArea'].valueChanges.subscribe((res) => {
+        this.form?.controls?.['activity']?.reset();
+        if (res) {
+          this.subAreaChange(res);
+        }
+      })
+    );
+    // Update the url to match the form when it changes
+    this.subscriptions.add(
+      this.form.valueChanges.subscribe((res) => {
+        if (this._isPageLoaded.value && res) {
+          this.dataService.setItemValue(Constants.dataIds.VARIANCE_LIST, null);
+          this.updateUrl();
+        }
+      })
+    );
+    // set the date
+    this.setDate();
+    // set the status
+    const keys = this.urlService.getQueryParams();
+
+    if (keys.resolved) {
+      this.form.controls['resolved'].setValue(keys.resolved);
+    }
+    // Wait for parks to load
+    this.subscriptions.add(
+      this._parks.pipe(first((res) => res?.length > 0)).subscribe(() => {
+        // If park provided in url
+        if (keys.orcs) {
+          // If subarea provided in url
+          if (keys.subAreaId) {
+            this.subscriptions.add(
+              this._subAreas.pipe(first((res) => res?.length)).subscribe(() => {
+                if (keys.activity) {
+                  // wait for activity load
+                  this.subscriptions.add(
+                    this._activities.pipe(first((res) => res?.length)).subscribe(() => {
+                      setTimeout(() => {
+                        this.form.controls['activity'].setValue(keys.activity);
+                        this._isPageLoaded.next(true);
+                      }, 0);
+                    })
+                  );
+                }
+                // set subarea
+                setTimeout(() => {
+                  this.form.controls['subArea'].setValue(this.getLocalStorageSubAreaById(keys.subAreaId));
+                  if (!keys.activity) {
+                    this._isPageLoaded.next(true);
+                  }
+                }, 0);
+              })
+            );
+          }
+          // set park
+          setTimeout(() => {
+            this.form.controls['park'].setValue(this.getLocalStorageParkById(keys.orcs));
+            this.form.controls['park'].markAsDirty();
+            if (!keys.subAreaId) {
+              this._isPageLoaded.next(true);
+            }
+          }, 0);
+        } else {
+          this._isPageLoaded.next(true);
         }
       })
     );
@@ -78,165 +159,114 @@ export class VarianceFiltersComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit() {
-    
-    // build form
-    this.form = this.formBuilder.group({});
-
-    // build controls
-    this.buildFormControls();
-
-    // build fields object
-    for (const control in this.form.controls) {
-      this.fields[control] = this.form.controls[control];
+  // Check if field true or false
+  getValue(field) {
+    if (!this.form.controls[field]?.value) {
+      return true;
     }
-
-    // watch for park change to populate subarea field
-    this.fields.park.valueChanges.subscribe((park) => {
-      if (park) {
-        this.subareaService.fetchSubareasByOrcs(park.value.orcs);
-      }
-    })
-
-    // watch for subarea change to populate the subarea field
-    this.fields.subarea.valueChanges.subscribe((subarea) => {
-      if (subarea) {
-        this.buildActivityOptions(subarea);
-      }
-    })
-
-    this.cd.detectChanges();
+    return false;
   }
 
-  buildFormControls() {
-    let controls = [
-      {
-        key: 'date',
-        default: null,
-        validators: [
-          Validators.required
-        ]
-      },
-      {
-        key: 'activity',
-        default: null,
-      },
-      {
-        key: 'park',
-        default: null,
-        validators: [
-          Validators.required
-        ]
-      },
-      {
-        key: 'subarea',
-        default: null,
-      },
-      {
-        key: 'resolved',
-        default: null,
-      }
-    ];
-    for (const control of controls) {
-      this.form.addControl(control.key, new UntypedFormControl(control?.default || null));
-      if (control.validators) {
-        this.form.controls[control.key].setValidators(control.validators);
+  // create typeahead object
+  createTypeaheadObj(items, display = null) {
+    let list = [];
+    for (const item of items) {
+      if (display) {
+        list.push({
+          value: item,
+          display: item[display]
+        });
+      } else {
+        list.push(item);
       }
     }
+    return list;
   }
 
-  onOpenCalendar(container) {
-    container.monthSelectHandler = (event: any): void => {
-      container._store.dispatch(container._actions.select(event.date));
-    };
-    container.setViewMode('month');
+  // Build subarea list. Fired when park changes
+  async parkChange(parkSelection) {
+    const subareas = await this.subareaService.fetchSubareasByOrcs(parkSelection.orcs);
+    this._subAreas.next(this.createTypeaheadObj(subareas, 'subAreaName'));
   }
 
-  dateChange(event) {
-    this.setDate(this.utils.convertJSDateToYYYYMM(event))
+  // Build activity list. Fired when subarea changes
+  subAreaChange(subAreaSelection) {
+    this._activities.next(this.createTypeaheadObj(subAreaSelection.activities));
   }
 
-  setDate(YYYYMM) {
-    this.modelDate = this.utils.convertYYYYMMToJSDate(YYYYMM);
-    if (new Date(this.modelDate) <= this.maxDate) {
-      this.previousDateChosen = this.modelDate;
-      this.form.controls.date.setValue(YYYYMM);
-    } else {
-      setTimeout(() => {
-        this.modelDate = this.previousDateChosen;
-      }, 50);
+  setDate() {
+    let params = this.urlService.getQueryParams();
+    const format = 'yyyyLL';
+    let setDate = DateTime.fromFormat(params?.date || '', format);
+    if (setDate > this.maxDate || setDate.invalid) {
+      setDate = this.maxDate;
     }
+    this.form.controls['date'].setValue(setDate.toFormat(format) || null);
   }
 
-  buildSubareaOptions(subareas) {
-    this.subAreas = [];
-    for (const subarea of subareas) {
-      this.subAreas.push({
-        key: subarea.sk,
-        value: subarea,
-        display: subarea.subAreaName
-      })
+
+  // Get park object by orcs
+  getLocalStorageParkById(orcs) {
+    let park = this._parks?.value?.find((p) => p?.value?.orcs === orcs);
+    return park?.value || null;
+  }
+
+  // Get subarea object by subarea id
+  getLocalStorageSubAreaById(id) {
+    let subarea = this._subAreas?.value.find((s) => s?.value?.sk === id);
+    return subarea?.value || null;
+  }
+
+  // Update the url from the form values
+  updateUrl() {
+    let value = this.form?.value;
+    let params = {};
+    if (value?.date) {
+      params['date'] = value.date;
     }
-    this.cd.detectChanges();
-  }
-
-
-  buildActivityOptions(subarea) {
-    this.activityOptions = [{
-      key: 'all',
-      value: 'all',
-      display: 'All'
-    }];
-    for (const activity of subarea.value?.activities) {
-      let activityKey = activity.replace(/ /g, '');
-      this.activityOptions.push({
-        key: activityKey.toLowerCase(),
-        value: activity,
-        display: activity
-      })
+    if (value?.park?.parkName) {
+      params['parkName'] = value.park.parkName;
     }
-    this.cd.detectChanges();
-  }
-
-  parkCleared() {
-    this.fields?.subarea?.setValue(null);
-    this.fields?.activity?.setValue(null);
+    if (value?.park?.orcs) {
+      params['orcs'] = value.park.orcs;
+    }
+    if (value?.subArea?.subAreaName) {
+      params['subAreaName'] = value.subArea.subAreaName;
+    }
+    if (value?.subArea?.sk) {
+      params['subAreaId'] = value.subArea.sk;
+    }
+    if (value?.activity) {
+      params['activity'] = value.activity;
+    }
+    if (value?.resolved !== null) {
+      params['resolved'] = String(value.resolved);
+    }
+    this.urlService.setQueryParams(params);
   }
 
   submit() {
     // collect form values
     let queryParams = this.collect();
-    // You currently need date and orcs to do a variance search.
-    queryParams.subAreaId = queryParams.subarea?.value?.sk;
-    if (queryParams.activity === 'all') {
-      delete queryParams.activity;
-    }
-    if (queryParams.resolved === null) {
-      delete queryParams.resolved;
-    }
     this.varianceService.fetchVariance(queryParams);
   }
 
   collect() {
     // collect form values
     let formValues = this.form.value;
+    if (!formValues?.resolved || formValues.resolved === 'Any') {
+      delete formValues.resolved;
+    } else if (formValues.resolved === 'Unresolved') {
+      formValues.resolved = false;
+    } else if (formValues.resolved === 'Resolved') {
+      formValues.resolved = true;
+    }
+    formValues.lastEvaluatedKey = this.lastEvaluatedKey;
     return {
       ...formValues,
-      orcs: formValues.park?.value?.sk,
-      subAreaId: formValues.subarea?.value?.sk
-    }
-  }
-
-  clearFilters() {
-    this.modelDate = [null, null];
-    this.form.reset();
-  }
-
-  isFormInvalid() {
-    if (this.form.valid && this.form.controls.date.value !== null) {
-      return false;
-    }
-    return true;
+      orcs: formValues.park?.sk,
+      subAreaId: formValues.subArea?.sk
+    };
   }
 
   ngOnDestroy() {

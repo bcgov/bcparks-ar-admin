@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ConfigService } from '../services/config.service';
-import { DatePickerModule } from '../shared/components/date-picker/date-picker.module';
 
 import { LockRecordsComponent } from './lock-records.component';
 
@@ -14,7 +13,6 @@ describe('LockRecordsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        DatePickerModule,
         BsDatepickerModule.forRoot(),
       ],
       declarations: [LockRecordsComponent],
