@@ -69,6 +69,10 @@ export class SubAreaSearchComponent implements OnDestroy {
           this.updateUrl();
           this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_SUB_AREA, null);
           this.dataService.setItemValue(Constants.dataIds.ACCORDION_ALL_AVAILABLE_RECORDS_LIST, null);
+          // reset all variances
+          for (const activity of Constants.ActivityTypes) {
+            this.dataService.setItemValue(`variance-${activity}`, null);
+          }
           for (const activity of Constants.ActivityTypes) {
             this.dataService.setItemValue(`accordion-${activity}`, null);
           }

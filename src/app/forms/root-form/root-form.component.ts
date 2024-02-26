@@ -7,6 +7,7 @@ import { DataService } from 'src/app/services/data.service';
 import { FormulaService, formulaResult } from 'src/app/services/formula.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UrlService } from 'src/app/services/url.service';
+import { VarianceService } from 'src/app/services/variance.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
@@ -25,7 +26,7 @@ export class RootFormComponent implements OnInit, OnDestroy {
   public accordionType;
   public invalidConfig = {
     showMessage: false
-  }
+  };
   public fields: any = {};
   public urlParams: any = {};
   public data: any;
@@ -40,18 +41,19 @@ export class RootFormComponent implements OnInit, OnDestroy {
     public activityService: ActivityService,
     public loadingService: LoadingService,
     public formulaService: FormulaService,
+    public varianceService: VarianceService,
     public router: Router,
   ) {
     this.subscriptions.add(
       this.loadingService.getLoadingStatus().subscribe((res) => {
         this.loading = res;
       })
-    )
+    );
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.VARIANCE_WARNING_TRIGGERED_FIELDS).subscribe((res) => {
         this.varianceData = res;
       })
-    )
+    );
 
   }
 
@@ -63,9 +65,27 @@ export class RootFormComponent implements OnInit, OnDestroy {
       this.dataService.watchItem(this.accordionType).subscribe((res) => {
         if (res) {
           this.data = res;
+          this.getExistingVariance(this.activityType);
         }
       })
     );
+  }
+
+  getExistingVariance(activity) {
+    let params = { ...this.urlService.getQueryParams() };
+    params['activity'] = activity;
+    this.subscriptions.add(
+      this.dataService.watchItem(`variance-${activity}`).subscribe((res) => {
+        if (!res?.resolved && !res?.notes && res?.fields) {
+          this.varianceData = res.fields;
+          // touch all fields to trigger invalid state
+          for (const field in this.form?.controls) {
+            this.form?.controls[field].markAsTouched();
+          }
+        }
+      })
+    );
+    this.varianceService.fetchVariance(params);
   }
 
   getPopoverData(controlName, money = false) {
@@ -116,7 +136,7 @@ export class RootFormComponent implements OnInit, OnDestroy {
       this.urlParams?.orcs,
       this.urlParams?.subAreaId,
       this.activityType,
-      this.urlParams?.date)
+      this.urlParams?.date);
   }
 
   afterOnInit() {
@@ -124,7 +144,7 @@ export class RootFormComponent implements OnInit, OnDestroy {
   }
 
   hideModal() {
-    this.showVarianceModal = false
+    this.showVarianceModal = false;
   }
 
   async submit(warn = false) {
@@ -151,7 +171,7 @@ export class RootFormComponent implements OnInit, OnDestroy {
           subAreaId: this.urlParams.subAreaId,
           subAreaName: this.urlParams.subAreaName
         }
-      })
+      });
       this.dataService.setItemValue(this.accordionType, null);
     } else {
       this.router.navigate(['/']);
@@ -168,7 +188,7 @@ export class RootFormComponent implements OnInit, OnDestroy {
       parkName: this.urlParams.parkName,
       subAreaName: this.urlParams.subAreaName,
       activity: this.activityType
-    }
+    };
     const fields = this.trimNullFields(this.form?.value);
     for (const field in fields) {
       if (field !== 'notes') {
@@ -193,10 +213,10 @@ export class RootFormComponent implements OnInit, OnDestroy {
     return (control: AbstractControl): ValidationErrors | null => {
       const isInvalid = this.varianceData?.find((e) => e.key === controlName);
       if (isInvalid) {
-        return { varianceTrigger: '' }
+        return { varianceTrigger: '' };
       }
-      return null
-    }
+      return null;
+    };
   }
 
   isSubmitButtonDisabled() {

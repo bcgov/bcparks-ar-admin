@@ -8,6 +8,7 @@ import { ActivityService } from 'src/app/services/activity.service';
 import { RootFormComponent } from '../root-form/root-form.component';
 import { UrlService } from 'src/app/services/url.service';
 import { Constants } from 'src/app/shared/utils/constants';
+import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
   selector: 'app-group-camping',
@@ -26,6 +27,7 @@ export class GroupCampingComponent extends RootFormComponent {
       inject(ActivityService),
       inject(LoadingService),
       inject(FormulaService),
+      inject(VarianceService),
       inject(Router),
     );
     // declare activity type

@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FrontcountryCabinsAccordionComponent } from './frontcountry-cabins-accordion.component';
 import { MockData } from 'src/app/shared/utils/mock.data';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ConfigService } from 'src/app/services/config.service';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('FrontcountryCabinsAccordionComponent', () => {
   let component: FrontcountryCabinsAccordionComponent;
@@ -10,6 +13,12 @@ describe('FrontcountryCabinsAccordionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [FrontcountryCabinsAccordionComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        ConfigService,
+        HttpClient,
+        HttpHandler
+      ]
     }).compileComponents();
   });
 

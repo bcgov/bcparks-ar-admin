@@ -1,9 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormulaService } from 'src/app/services/formula.service';
+import { UrlService } from 'src/app/services/url.service';
+import { VarianceService } from 'src/app/services/variance.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
+import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-group-camping-accordion',
@@ -16,10 +19,15 @@ export class GroupCampingAccordionComponent implements OnDestroy {
   public icons = Constants.iconUrls;
   public data;
   public summaries: summarySection[] = [];
+  public activity = 'Group Camping';
+  public variance = new BehaviorSubject(null);
+  public utils = new Utils();
 
   constructor(
     protected dataService: DataService,
-    protected formulaService: FormulaService
+    protected formulaService: FormulaService,
+    protected urlService: UrlService,
+    protected varianceService: VarianceService
   ) {
     this.subscriptions.add(
       dataService
@@ -28,6 +36,23 @@ export class GroupCampingAccordionComponent implements OnDestroy {
           this.data = res;
           this.buildAccordion();
         })
+    );
+    let params = { ...this.urlService.getQueryParams() };
+    params['activity'] = this.activity;
+    this.varianceService.fetchVariance(params);
+    this.subscriptions.add(
+      this.dataService.watchItem(`variance-${this.activity}`).subscribe((res) => {
+        if (!res?.resolved && !res?.notes){
+          const fields = this.utils.formatVarianceList(res?.fields);
+          if (Object.keys(fields)?.length > 0) {
+            this.variance.next(fields);
+          } else {
+            this.variance.next(false);
+          }
+        } else {
+          this.variance.next(false);
+        }
+      })
     );
   }
 
@@ -42,18 +67,22 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             {
               itemName: 'Standard group nights',
               value: this.data?.standardRateGroupsTotalPeopleStandard,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleStandard')
             },
             {
               itemName: 'Adults (16+)',
               value: this.data?.standardRateGroupsTotalPeopleAdults,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleAdults')
             },
             {
               itemName: 'Youths (6-15)',
               value: this.data?.standardRateGroupsTotalPeopleYouth,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleYouth')
             },
             {
               itemName: 'Kids (0-5)',
               value: this.data?.standardRateGroupsTotalPeopleKids,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleKids')
             },
           ],
         },
@@ -65,17 +94,20 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             {
               itemName: 'Group nights',
               value: this.data?.youthRateGroupsAttendanceGroupNights,
+              variance: this.variance?.value?.hasOwnProperty('youthRateGroupsAttendanceGroupNights')
             },
             {
               itemName: 'People',
               value: this.data?.youthRateGroupsAttendancePeople,
+              variance: this.variance?.value?.hasOwnProperty('youthRateGroupsAttendancePeople')
             },
           ],
           revenueLabel: 'Net revenue',
           revenueItems: [
             {
               itemName: 'Gross standard group revenue',
-              value: this.data?.legacyData?.legacy_groupCampingTotalGrossRevenue
+              value: this.data?.legacyData?.legacy_groupCampingTotalGrossRevenue,
+              variance: this.variance?.value?.hasOwnProperty('legacy_groupCampingTotalGrossRevenue')
             },
           ],
           revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_groupCampingTotalNetRevenue),
@@ -90,18 +122,22 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             {
               itemName: 'Standard group nights',
               value: this.data?.standardRateGroupsTotalPeopleStandard,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleStandard')
             },
             {
               itemName: 'Adults (16+)',
               value: this.data?.standardRateGroupsTotalPeopleAdults,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleAdults')
             },
             {
               itemName: 'Youths (6-15)',
               value: this.data?.standardRateGroupsTotalPeopleYouth,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleYouth')
             },
             {
               itemName: 'Kids (0-5)',
               value: this.data?.standardRateGroupsTotalPeopleKids,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleKids')
             },
           ],
           attendanceTotal: this.formulaService.groupCampingStandardAttendance([
@@ -116,6 +152,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
               value: this.data?.isLegacy ?
                 this.data?.legacyData?.legacy_groupCampingTotalGrossRevenue :
                 this.data?.standardRateGroupsRevenueGross,
+              variance: this.variance?.value?.hasOwnProperty('standardRateGroupsRevenueGross')
             },
           ],
           revenueTotal: this.formulaService.basicNetRevenue([
@@ -129,10 +166,12 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             {
               itemName: 'Youth group nights',
               value: this.data?.youthRateGroupsAttendanceGroupNights,
+              variance: this.variance?.value?.hasOwnProperty('youthRateGroupsAttendanceGroupNights')
             },
             {
               itemName: 'People',
               value: this.data?.youthRateGroupsAttendancePeople,
+              variance: this.variance?.value?.hasOwnProperty('youthRateGroupsAttendancePeople')
             },
           ],
           revenueLabel: 'Net revenue',
@@ -140,6 +179,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             {
               itemName: 'Gross youth group revenue',
               value: this.data?.youthRateGroupsRevenueGross,
+              variance: this.variance?.value?.hasOwnProperty('youthRateGroupsRevenueGross')
             },
           ],
           revenueTotal: this.formulaService.basicNetRevenue([

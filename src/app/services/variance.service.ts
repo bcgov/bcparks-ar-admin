@@ -75,6 +75,10 @@ export class VarianceService {
           // else remove lastEvaluatedKey
           this.dataService.setItemValue(Constants.dataIds.VARIANCE_LAST_EVALUATED_KEY, null);
         }
+        // if activity is provided, set the specific dataService item for that Activity (will be at most 1 record)
+        if (res?.data?.length && params?.activity) {
+          this.dataService.setItemValue(`variance-${params.activity}`, res.data[0]);
+        }
       } catch (error) {
         this.loggerService.error(`Error fetching ${errorSubject}: ${error}`);
         this.toastService.addMessage(

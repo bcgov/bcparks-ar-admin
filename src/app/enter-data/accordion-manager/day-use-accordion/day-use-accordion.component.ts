@@ -1,9 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormulaService } from 'src/app/services/formula.service';
+import { UrlService } from 'src/app/services/url.service';
+import { VarianceService } from 'src/app/services/variance.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
+import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-day-use-accordion',
@@ -19,10 +22,15 @@ export class DayUseAccordionComponent implements OnDestroy {
   public newSummaries: summarySection[] = [];
   public miscSummaries: summarySection[] = [];
   public legacyNotes = '';
+  public activity = 'Day Use';
+  public variance = new BehaviorSubject(null);
+  public utils = new Utils();
 
   constructor(
     private formulaService: FormulaService,
-    protected dataService: DataService
+    protected dataService: DataService,
+    protected urlService: UrlService,
+    protected varianceService: VarianceService
   ) {
     this.subscriptions.add(
       dataService
@@ -31,6 +39,23 @@ export class DayUseAccordionComponent implements OnDestroy {
           this.data = res;
           this.buildAccordion();
         })
+    );
+    let params = { ...this.urlService.getQueryParams() };
+    params['activity'] = this.activity;
+    this.varianceService.fetchVariance(params);
+    this.subscriptions.add(
+      this.dataService.watchItem(`variance-${this.activity}`).subscribe((res) => {
+        if (!res?.resolved && !res?.notes){
+          const fields = this.utils.formatVarianceList(res?.fields);
+          if (Object.keys(fields)?.length > 0) {
+            this.variance.next(fields);
+          } else {
+            this.variance.next(false);
+          }
+        } else {
+          this.variance.next(false);
+        }
+      })
     );
   }
 
@@ -44,14 +69,17 @@ export class DayUseAccordionComponent implements OnDestroy {
           {
             itemName: 'Vehicle count',
             value: this.data?.peopleAndVehiclesVehicle,
+            variance: this.variance?.value?.hasOwnProperty('peopleAndVehiclesVehicle')
           },
           {
             itemName: 'Bus count',
             value: this.data?.peopleAndVehiclesBus,
+            variance: this.variance?.value?.hasOwnProperty('peopleAndVehiclesBus')
           },
           {
             itemName: 'Trail count',
             value: this.data?.peopleAndVehiclesTrail,
+            variance: this.variance?.value?.hasOwnProperty('peopleAndVehiclesTrail')
           },
         ],
         attendanceTotal: this.data?.isLegacy ?
@@ -71,10 +99,12 @@ export class DayUseAccordionComponent implements OnDestroy {
           {
             itemName: 'Picnic shelter rentals',
             value: this.data?.picnicRevenueShelter,
+            variance: this.variance?.value?.hasOwnProperty('picnicRevenueShelter')
           },
           {
             itemName: 'Picnic shelter people',
             value: this.data?.picnicShelterPeople,
+            variance: this.variance?.value?.hasOwnProperty('picnicShelterPeople')
           },
         ],
         revenueLabel: 'Net revenue',
@@ -82,6 +112,7 @@ export class DayUseAccordionComponent implements OnDestroy {
           {
             itemName: 'Gross picnic revenue',
             value: this.data?.picnicRevenueGross,
+            variance: this.variance?.value?.hasOwnProperty('picnicRevenueGross')
           },
         ],
         revenueTotal: this.data?.isLegacy ?
@@ -101,6 +132,7 @@ export class DayUseAccordionComponent implements OnDestroy {
           {
             itemName: 'Hot springs people',
             value: this.data?.otherDayUsePeopleHotSprings,
+            variance: this.variance?.value?.hasOwnProperty('otherDayUsePeopleHotSprings')
           },
         ],
         revenueLabel: 'Net revenue',
@@ -108,6 +140,7 @@ export class DayUseAccordionComponent implements OnDestroy {
           {
             itemName: 'Gross hot springs revenue',
             value: this.data?.otherDayUseRevenueHotSprings,
+            variance: this.variance?.value?.hasOwnProperty('otherDayUseRevenueHotSprings')
           },
         ],
         revenueTotal: this.formulaService.basicNetRevenue([
@@ -127,7 +160,8 @@ export class DayUseAccordionComponent implements OnDestroy {
           revenueItems: [
             {
               itemName: 'Gross misc revenue',
-              value: this.data?.legacyData?.legacy_dayUseMiscGrossRevenue
+              value: this.data?.legacyData?.legacy_dayUseMiscGrossRevenue,
+              variance: this.variance?.value?.hasOwnProperty('legacy_dayUseMiscGrossRevenue')
             }
           ],
           revenueLabel: 'Net revenue',
