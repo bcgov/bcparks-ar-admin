@@ -81,7 +81,7 @@ export class Utils {
 
   public formatVarianceList(fields) {
     let list = {};
-    if (fields && fields.length) {
+    if (fields?.length) {
       for (const field of fields) {
         list[field.key] = true;
       }
