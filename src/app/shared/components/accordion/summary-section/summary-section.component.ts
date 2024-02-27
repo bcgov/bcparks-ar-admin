@@ -7,6 +7,7 @@ import {
 export interface summaryLineItem {
   itemName: string;
   value?: number;
+  variance?: boolean
 }
 
 export interface summarySection {

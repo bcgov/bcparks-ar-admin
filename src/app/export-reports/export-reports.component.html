@@ -32,12 +32,12 @@
 
             <hr />
 
-            <label class="fw-bold mb-2">Fiscal year</label>
             <div class="row mb-3">
               <div class="col-md-12 col-lg-4">
                 <ngds-date-input
                   [control]="form?.controls?.['year']"
                   [dateRange]="true"
+                  [label]="'Fiscal year'"
                   [hideSecondCalendar]="true"
                   [fixedRangeSize]="duration"
                   [minMode]="2"
@@ -59,7 +59,7 @@
         </ngds-tab>
       </ngds-tab-row>
       <div class="mt-5 pb-2">
-        <label class="card-text fw-bold">Exporter status:</label>
+        <div class="card-text fw-bold">Exporter status:</div>
         <div>{{ status }}</div>
         <p class="card-text mt-2">
           <ngb-progressbar
@@ -86,7 +86,7 @@
       <hr />
 
       <div class="pb-2">
-        <label class="card-text fw-bold">Download Report:</label>
+        <div class="card-text fw-bold">Download Report:</div>
         <div>{{ exportMessage }}</div>
         <div class="mt-3">
           <button

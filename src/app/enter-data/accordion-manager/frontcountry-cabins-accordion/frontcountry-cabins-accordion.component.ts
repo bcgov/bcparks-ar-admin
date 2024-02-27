@@ -1,9 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormulaService } from 'src/app/services/formula.service';
+import { UrlService } from 'src/app/services/url.service';
+import { VarianceService } from 'src/app/services/variance.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
+import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-frontcountry-cabins-accordion',
@@ -16,10 +19,15 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
   public icons = Constants.iconUrls;
   public data;
   public summaries: summarySection[] = [];
+  public activity = 'Frontcountry Cabins';
+  public variance = new BehaviorSubject(null);
+  public utils = new Utils();
 
   constructor(
     protected dataService: DataService,
-    protected formulaService: FormulaService
+    protected formulaService: FormulaService,
+    protected urlService: UrlService,
+    protected varianceService: VarianceService
   ) {
     this.subscriptions.add(
       dataService
@@ -28,6 +36,23 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
           this.data = res;
           this.buildAccordion();
         })
+    );
+    let params = { ...this.urlService.getQueryParams() };
+    params['activity'] = this.activity;
+    this.varianceService.fetchVariance(params);
+    this.subscriptions.add(
+      this.dataService.watchItem(`variance-${this.activity}`).subscribe((res) => {
+        if (!res?.resolved && !res?.notes){
+          const fields = this.utils.formatVarianceList(res?.fields);
+          if (Object.keys(fields)?.length > 0) {
+            this.variance.next(fields);
+          } else {
+            this.variance.next(false);
+          }
+        } else {
+          this.variance.next(false);
+        }
+      })
     );
   }
 
@@ -40,12 +65,14 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
             {
               itemName: 'Parties',
               value: this.data?.totalAttendanceParties,
+              variance: this.variance?.value?.hasOwnProperty('totalAttendanceParties')
             },
           ],
           revenueItems: [
             {
               itemName: 'Gross camping revenue',
               value: this.data?.revenueGrossCamping,
+              variance: this.variance?.value?.hasOwnProperty('revenueGrossCamping')
             },
           ],
         },
@@ -59,6 +86,7 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
             {
               itemName: 'Parties',
               value: this.data?.totalAttendanceParties,
+              variance: this.variance?.value?.hasOwnProperty('totalAttendanceParties')
             },
           ],
           attendanceTotal: this.formulaService.frontcountryCabinsAttendance(
@@ -70,6 +98,7 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
             {
               itemName: 'Gross camping revenue',
               value: this.data?.revenueGrossCamping,
+              variance: this.variance?.value?.hasOwnProperty('revenueGrossCamping')
             },
           ],
           revenueTotal: this.formulaService.basicNetRevenue([

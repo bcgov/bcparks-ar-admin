@@ -40,9 +40,12 @@
               />
               <div class="h3 mb-0 pb-0">
                 {{ title }}
-              </div> 
+              </div>
               <h3 *ngIf="isLegacy" >
                 <span class="badge ms-3 mt-3 bg-primary historical-pill">historical</span>
+              </h3>
+              <h3 *ngIf="variance" >
+                <span class="badge ms-3 mt-3 bg-danger historical-pill">variance</span>
               </h3>
             </div>
           </div>

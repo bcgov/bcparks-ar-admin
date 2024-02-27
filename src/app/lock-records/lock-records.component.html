@@ -6,7 +6,6 @@
 </section>
 <section class="container mt-3">
   <div>
-    <label class="fw-bold mb-2">Fiscal Year</label>
     <div class="text-muted mb-3">
       To lock a fiscal year, select the year that the fiscal year ends.<br>
       <em>e.g.</em> To lock April 2021&ndash;March 2022, select 2022.
@@ -16,6 +15,7 @@
         <ngds-date-input
           [control]="form?.controls?.['year']"
           [dateRange]="true"
+          [label]="'Fiscal Year'"
           [hideSecondCalendar]="true"
           [fixedRangeSize]="duration"
           [minMode]="2"

@@ -58,9 +58,9 @@ export class Utils {
   }
 
   public getLatestLockableFiscalYear(dateObj) {
-    let year = dateObj.getFullYear()-1;
+    let year = dateObj.getFullYear() - 1;
     // JS months are 0-indexed.
-    let month = dateObj.getMonth()+1;
+    let month = dateObj.getMonth() + 1;
     let endYear = this.getFiscalYearFromYYYYMM(`${year}${month}`);
     return new Date(endYear, Constants.FiscalYearFinalMonth, 0, 23, 59, 59, 999);
   }
@@ -78,4 +78,15 @@ export class Utils {
       'MMMM YYYY'
     );
   }
+
+  public formatVarianceList(fields) {
+    let list = {};
+    if (fields?.length) {
+      for (const field of fields) {
+        list[field.key] = true;
+      }
+    }
+    return list;
+  }
+
 }

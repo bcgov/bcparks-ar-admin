@@ -28,6 +28,7 @@ export class AccordionComponent implements OnInit, OnDestroy {
   @Input() editLink: string = '';
   @Input() recordLock;
   @Input() isLegacy = false;
+  @Input() variance: boolean = false
 
   private subscriptions = new Subscription();
   private formParams;
@@ -67,7 +68,7 @@ export class AccordionComponent implements OnInit, OnDestroy {
       const year = this.utils.getFiscalYearFromYYYYMM(this.formParams.date);
       const fiscalLock = await this.fiscalYearLockService.fetchFiscalYear(year);
       this.isFiscalYearLocked = fiscalLock.isLocked ?? false;
-      this.cd.detectChanges(); 
+      this.cd.detectChanges();
     }
   }
 
