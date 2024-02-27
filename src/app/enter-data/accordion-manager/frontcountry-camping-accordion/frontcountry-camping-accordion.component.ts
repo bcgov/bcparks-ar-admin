@@ -57,7 +57,6 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
   }
 
   buildAccordion() {
-    console.log('this.data.legacyData:', this.data.legacyData);
     this.summaries = [
       {
         isLegacy: this.data?.isLegacy || false,
