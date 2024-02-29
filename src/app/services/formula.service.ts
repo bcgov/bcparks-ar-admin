@@ -193,6 +193,20 @@ export class FormulaService {
   }
 
   /**
+   * Calculates total camping nights for frontcountry camping - this is the same as the attendance but it is not multiplied by 3.2.
+   * @function
+   * @param {any[]} attendances Array of attendance numbers
+   * @memberof FormulaService
+   * @returns `formulaResult` object
+   */
+  frontcountryCampingPartyNightsAttendance(attendances: any[]): formulaResult {
+    return {
+      result: attendances.reduce((a, b) => a + b, 0),
+      formula: '' // None, this formula isnt shown
+    }
+  }
+
+  /**
    * Calculates total attendance for group camping - standard attendance section.
    * @function
    * @param {any[]} attendances Array of attendance numbers
@@ -306,6 +320,19 @@ export class FormulaService {
       result: this.formatTotalWithModifier(attendances, modifier),
       formula: formula,
     };
+  }
+
+  /**
+   * Formats legacy frontcountry camping total attendance values, specifcally.
+   * See PDR-256 https://github.com/bcgov/bcparks-ar-admin/issues/256
+   * @param value value to format
+   * @returns `formulaResult` object
+   */
+  formatLegacyFrontcountryCampingTotalAttendance(value: number): formulaResult {
+    return {
+      result: this.formatDecimal(value*3.2),
+      formula: ''
+    }
   }
 
   /**
