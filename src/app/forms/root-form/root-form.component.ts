@@ -49,6 +49,8 @@ export class RootFormComponent implements OnInit, OnDestroy {
         this.loading = res;
       })
     );
+    // Clear variance fields before subscribing.
+    this.dataService.setItemValue(Constants.dataIds.VARIANCE_WARNING_TRIGGERED_FIELDS, null);
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.VARIANCE_WARNING_TRIGGERED_FIELDS).subscribe((res) => {
         this.varianceData = res;
