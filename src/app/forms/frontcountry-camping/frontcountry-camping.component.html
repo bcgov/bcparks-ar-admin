@@ -92,6 +92,8 @@
               <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
             </ngds-number-input>
           </div>
+          <app-info-text class="text-block"
+          [text]="'Camping fee revenue only. Do not include sani, shower, electrical, or second car revenue. Subtract onsite refunds before entering.'"></app-info-text>
         </div>
         <!-- Revenue summary -->
         <div class="mb-2 mt-auto">
@@ -144,7 +146,7 @@
           </div>
         </div>
         <!-- Attendance Summary -->
-        <div class="mb-2">
+        <div class="mb-2 mt-auto">
           <app-calculation-display [label]="'TOTAL SECOND CARS'" [subtext]="vehicleAttendanceTotal?.formula"
             [value]="vehicleAttendanceTotal?.result"></app-calculation-display>
         </div>
@@ -163,6 +165,8 @@
               <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
             </ngds-number-input>
           </div>
+          <app-info-text class="text-block"
+          [text]="'Subtract onsite refunds before entering.'"></app-info-text>
         </div>
         <!-- Revenue summary -->
         <div class="mb-2 mt-auto">
