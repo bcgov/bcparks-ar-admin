@@ -201,7 +201,7 @@ export class FormulaService {
    */
   frontcountryCampingPartyNightsAttendance(attendances: any[]): formulaResult {
     return {
-      result: attendances.reduce((a, b) => a + b, 0),
+      result: this.formatTotalWithModifier(attendances),
       formula: '' // None, this formula isnt shown
     }
   }
