@@ -19,9 +19,9 @@
     >
       <div class="container-fluid">
         <h1 class="header-text">
-          {{ formParams.parkName }} - {{ formParams.subAreaName }}
+          {{ urlParams?.parkName }} - {{ urlParams?.subAreaName }}
         </h1>
-        <h2>{{ utils.convertYYYYMMToMMMMYYYY(formParams.date) }}</h2>
+        <h2>{{ formatDate(urlParams?.date) }}</h2>
         <hr />
       </div>
     </section>
