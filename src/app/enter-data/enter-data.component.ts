@@ -41,14 +41,25 @@ export class EnterDataComponent implements OnInit, OnDestroy {
             event.url.split('?')[0] !== '/enter-data' ? true : false;
         })
     );
+    this.subscriptions.add(
+      this.dataService.watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)
+        .subscribe((res) => {
+          if (res) {
+            this.urlParams = res;
+          }
+        })
+    );
   }
 
   ngOnInit(): void {
-    this.urlParams = this.urlService.getQueryParams();
+    this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS, this.urlService.getQueryParams());
   }
 
   formatDate(date): string {
-    return DateTime.fromFormat(date, 'yyyyLL').toFormat('LLLL yyyy');
+    if (date) {
+      return DateTime.fromFormat(date, 'yyyyLL').toFormat('LLLL yyyy');
+    }
+    return '-';
   }
 
   ngOnDestroy() {
