@@ -30,6 +30,7 @@ export class CancelButtonComponent implements OnDestroy {
           if (res) {
             this.navParams['date'] = res.date;
             this.navParams['parkName'] = res.parkName;
+            this.navParams['subAreaName'] = res.subAreaName;
             this.navParams['subAreaId'] = res.subAreaId;
             this.navParams['orcs'] = res.orcs;
           }
