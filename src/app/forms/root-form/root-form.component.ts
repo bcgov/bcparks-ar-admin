@@ -92,6 +92,9 @@ export class RootFormComponent implements OnInit, OnDestroy {
 
   getPopoverData(controlName, money = false) {
     let variance = this.varianceData?.find((e) => e.key === controlName);
+    if (!variance?.historicalAverage) {
+      return null;
+    }
     if (money && variance) {
       variance['money'] = true;
       if (variance?.historicalAverage && typeof variance?.historicalAverage == 'number') {
