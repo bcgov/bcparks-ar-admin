@@ -14,21 +14,25 @@ export class HistoricalPillComponent {
   getHighlightedMatch(item, query) {
     query = query.join(' ');
     let display = item.value;
+    let result = {
+      left: '',
+      highlight: '',
+      right: '',
+    }
+
     if (display.toLocaleLowerCase().indexOf(query) > -1) {
       const left_str = display.substring(0, display.toLocaleLowerCase().indexOf(query));
       const highlight_str = display.substring(display.toLocaleLowerCase().indexOf(query), display.toLocaleLowerCase().indexOf(query) + query.length);
       const right_str = display.substring(display.toLocaleLowerCase().indexOf(query) + query.length);
-      return [
-        '<span>' + left_str + '</span>',
-        '<span>' + highlight_str + '</span>',
-        '<span>' + right_str + '</span>',
-      ];
+      return {
+        left: '<span>' + left_str + '</span>',
+        highlight: '<span>' + highlight_str + '</span>',
+        right: '<span>' + right_str + '</span>'
+      };
+    } else {
+      result.left = '<span>' + display + '</span>'
     }
-    else
-      return [
-        '<span>' + display + '</span>',
-        '',
-        '',
-      ];
+
+    return result;
   }
 }

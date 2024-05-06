@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HistoricalPillComponent } from './historical-pill.component';
 
 describe('HistoricalPillComponent', () => {
@@ -16,11 +15,11 @@ describe('HistoricalPillComponent', () => {
   });
 
   it('should highlight typeahead properly', async() => {
-    expect(component.getHighlightedMatch({value:'string'}, ['str'])).toEqual([
-      `<span></span>`,
-      `<span>str</span>`,
-      `<span>ing</span>`,
-    ])
+    expect(component.getHighlightedMatch({value:'string'}, ['str'])).toEqual({
+      left: '<span></span>',
+      highlight: '<span>str</span>',
+      right: '<span>ing</span>'}
+    )
   })
 
   it('should create', () => {
