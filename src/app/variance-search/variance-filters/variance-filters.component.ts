@@ -202,6 +202,7 @@ export class VarianceFiltersComponent implements OnDestroy {
       setDate = this.maxDate;
     }
     this.form.controls['date'].setValue(setDate.toFormat(format) || null);
+    this.form.controls['date'].markAsDirty();
   }
 
 
