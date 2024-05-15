@@ -18,6 +18,7 @@
           [selectionListItems]="_subAreas?.value"
           [resetButton]="true"
           [disabled]="getValue('park')"
+          [selectionListTemplate]="historicalPill"
         >
         </ngds-typeahead-input>
       </div>
@@ -75,3 +76,16 @@
     </div>
   </section>
 </div>
+
+<ng-template
+  #historicalPill
+  let-matches="matches"
+  let-query="query"
+  let-typeaheadTemplateMethods
+  >
+  <app-historical-pill
+    [matches]="matches"
+    [query]="query"
+    [typeaheadTemplateMethods]="typeaheadTemplateMethods"
+  ></app-historical-pill>
+</ng-template>

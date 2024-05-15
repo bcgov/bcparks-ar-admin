@@ -5,17 +5,19 @@ import { TextToLoadingSpinnerModule } from 'src/app/shared/components/text-to-lo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgdsFormsModule } from '@digitalspace/ngds-forms'
+import { HistoricalPillModule } from "../../shared/components/historical-pill/historical-pill.module";
 
 @NgModule({
-  declarations: [SubAreaSearchComponent],
-  imports: [
-    CommonModule,
-    NgbModule,
-    TextToLoadingSpinnerModule,
-    NgdsFormsModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  exports: [SubAreaSearchComponent]
+    declarations: [SubAreaSearchComponent],
+    exports: [SubAreaSearchComponent],
+    imports: [
+        CommonModule,
+        NgbModule,
+        TextToLoadingSpinnerModule,
+        NgdsFormsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HistoricalPillModule
+    ]
 })
 export class SubAreaSearchModule { }
