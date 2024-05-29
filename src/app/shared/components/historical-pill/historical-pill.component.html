@@ -1,0 +1,20 @@
+<ul class="custom-list-group">
+  <li
+    class="custom-list-group-item"
+    *ngFor="let match of matches"
+    [class.active]="typeaheadTemplateMethods.isActive(match)"
+    (click)="typeaheadTemplateMethods.selectMatch(match, $event)"
+    (mouseenter)="typeaheadTemplateMethods.selectActive(match)"
+  >
+    <span [innerHtml]="getHighlightedMatch(match, query).left"></span>
+    <span
+      class="custom-highlight"
+      [innerHtml]="getHighlightedMatch(match, query).highlight"
+    ></span>
+    <span [innerHtml]="getHighlightedMatch(match, query).right"></span>
+    <div
+      *ngIf="match?.item?.value?.isLegacy"
+      class="mx-2 badge bg-primary historical-pill"
+    >historical</div>
+  </li>
+</ul>
