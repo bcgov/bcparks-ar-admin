@@ -2,7 +2,7 @@
 name: Recreation Services Feature Request
 about: A feature that is being proposed by the Rec Services Team - for A&R
 title: "[A&R Feature Request] "
-labels: ''
+labels: A&R
 assignees: ''
 
 ---
