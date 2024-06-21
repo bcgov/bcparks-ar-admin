@@ -1,6 +1,9 @@
 @import "src/assets/themes/variables";
-@import "~bootstrap-icons/font/bootstrap-icons.css";
 @import "/src/assets/styles/base/base.scss";
+
+@import "@digitalspace/bcparks-bootstrap-theme/dist/scss/bootstrap-theme.scss";
+
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";

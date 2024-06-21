@@ -24,12 +24,11 @@
     "@angular/platform-browser-dynamic": "^16.2.12",
     "@angular/router": "^16.2.12",
     "@babel/traverse": "7.23.2",
-    "@digitalspace/bcparks-bootstrap-theme": "^1.3.6",
+    "@digitalspace/bcparks-bootstrap-theme": "^1.4.4",
     "@digitalspace/ngds-forms": "^0.0.109",
     "@digitalspace/ngds-toolkit": "^0.0.92",
     "@ng-bootstrap/ng-bootstrap": "^15.1.2",
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.3.0",
     "guid-typescript": "^1.0.9",
@@ -66,6 +65,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "4.9.3"
+    "typescript": "4.9.3",
+    "bootstrap": "^5.3.3"
   }
 }
