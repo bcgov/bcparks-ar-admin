@@ -1,11 +1,8 @@
 @import "@digitalspace/bcparks-bootstrap-theme/dist/scss/variables";
 
-$white: #fff;
 $lightblue: #ecf6ff;
-$secondary-nav: #38598a;
-$primary-blue: #036;
 $calc-blue: #C7E3FD;
 $calc-grey: #e4e4e4;
 $calc-green: #AEE5BA;
 $form-grey: #F2F2F2;
-$form-invalid: #d8292f;
+$form-invalid: $danger;

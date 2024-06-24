@@ -1,7 +1,4 @@
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/variables";
-@import "src/assets/themes/variables";
-@import "src/assets/styles/abstracts/mixins.scss";
+@import "@digitalspace/bcparks-bootstrap-theme/dist/scss/bootstrap-theme.scss";
 
 html,
 body {
@@ -33,7 +30,7 @@ body {
 
 .accordion {
   .accordion-button {
-    color: $primary-blue;
+    color: $primary;
     background-color: white;
     box-shadow: none;
   }

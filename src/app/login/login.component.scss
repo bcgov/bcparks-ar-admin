@@ -6,13 +6,13 @@ h1 {
 }
 
 .login-container {
-  background-color: $white;
+  background-color: white;
   min-height: 100%;
   padding: 1.4rem 0.6rem;
 }
 
 .login-form {
-  background: $white;
+  background: white;
   max-width: 50rem;
   height: fit-content;
 }
@@ -30,7 +30,7 @@ h1 {
 
 .btn-login {
   background: $primary;
-  color: $white;
+  color: white;
   margin-top: 0.75rem;
 
   &:hover {
