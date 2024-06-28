@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^16.2.12",
     "@angular/router": "^16.2.12",
     "@babel/traverse": "7.23.2",
-    "@digitalspace/bcparks-bootstrap-theme": "^1.4.4",
+    "@digitalspace/bcparks-bootstrap-theme": "^1.4.6",
     "@digitalspace/ngds-forms": "^0.0.109",
     "@digitalspace/ngds-toolkit": "^0.0.92",
     "@ng-bootstrap/ng-bootstrap": "^15.1.2",
