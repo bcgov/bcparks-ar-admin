@@ -21,7 +21,7 @@ export class EnterDataComponent implements OnInit, OnDestroy {
   public utils = new Utils();
 
   public text = `Select the data and location above for the Attendance and Revenue data you
-  want to enter. If you want to view past enteries, you can do that by selecting
+  want to enter. If you want to view past entries, you can do that by selecting
   the date and location you want to view.`;
 
   constructor(protected dataService: DataService, protected router: Router, protected urlService: UrlService) {
