@@ -1,5 +1,4 @@
 @import "src/assets/themes/variables";
-@import "/src/assets/styles/base/base.scss";
 
 @import "@digitalspace/bcparks-bootstrap-theme/dist/scss/bootstrap-theme.scss";
 
@@ -23,5 +22,7 @@
 .bs-datepicker-body table td.active-week span:hover {
   background-color: $secondary-nav !important;
 }
+
+@import "/src/assets/styles/base/base.scss";
 
 @import "node_modules/ngx-toastr/toastr";

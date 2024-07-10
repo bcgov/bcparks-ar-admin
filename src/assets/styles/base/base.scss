@@ -31,8 +31,14 @@ body {
 .accordion {
   .accordion-button {
     color: $primary;
-    background-color: white;
+  }
+
+  .accordion-button:focus {
     box-shadow: none;
+  }
+
+  .accordion-button:not(.collapsed) {
+    background-color: white;
   }
 
   .accordion-item {
@@ -107,6 +113,7 @@ body {
 .input-box {
   width: 100%;
   min-height: 100px;
+
   @media screen and (min-width: map-get($grid-breakpoints, "sm")) {
     width: 180px;
   }
