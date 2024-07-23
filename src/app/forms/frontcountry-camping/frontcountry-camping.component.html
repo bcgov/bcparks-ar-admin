@@ -3,7 +3,8 @@
 <div class="form-header">
   <h1>Frontcountry Camping</h1>
   <p>
-    This section is for frontcountry camping, including both reserved and first come, first served. It should not be used for cabins or group camping.
+    This section is for frontcountry camping, including both reserved and first come, first served. It should not be
+    used for cabins or group camping.
   </p>
 </div>
 
@@ -93,7 +94,7 @@
             </ngds-number-input>
           </div>
           <app-info-text class="text-block"
-          [text]="'Camping fee revenue only. Do not include sani, shower, electrical, or second car revenue. Subtract onsite refunds before entering.'"></app-info-text>
+            [text]="'Camping fee revenue only. Do not include sani, shower, electrical, or second car revenue. Subtract onsite refunds before entering.'"></app-info-text>
         </div>
         <!-- Revenue summary -->
         <div class="mb-2 mt-auto">
@@ -166,7 +167,7 @@
             </ngds-number-input>
           </div>
           <app-info-text class="text-block"
-          [text]="'Subtract onsite refunds before entering.'"></app-info-text>
+            [text]="'Subtract onsite refunds before entering.'"></app-info-text>
         </div>
         <!-- Revenue summary -->
         <div class="mb-2 mt-auto">
@@ -209,7 +210,8 @@
             [popoverContext]="{variance: getPopoverData('otherRevenueElectrical', true)}" placement="bottom"
             triggers="mouseenter:mouseleave">
             <ngds-number-input [control]="form?.controls?.['otherRevenueElectrical']" [decimalPlaces]="2"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross electrical fee revenue'"
+              [justify]="'end'" [invalidConfig]="invalidConfig" [padDecimals]="true"
+              [label]="'Gross electrical fee revenue'"
               [placeholder]="'No data'" [loadWhile]="loading">
               <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
             </ngds-number-input>
