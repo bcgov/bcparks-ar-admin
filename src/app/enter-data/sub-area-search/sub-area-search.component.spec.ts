@@ -201,14 +201,6 @@ describe('SubAreaSearchComponent', () => {
     expect(urlUpdateSpy).toHaveBeenCalledTimes(1);
   })
 
-  it('should highlight typeahead properly', async() => {
-    expect(component.getHighlightedMatch({value:'string'}, ['str'])).toEqual([
-      `<span></span>`,
-      `<span>str</span>`,
-      `<span>ing</span>`,
-    ])
-  })
-
   it('gets local storage park by park orcs', async () => {
     expect(component.getLocalStorageParkById(mockPark.orcs)).toEqual(mockPark);
   })

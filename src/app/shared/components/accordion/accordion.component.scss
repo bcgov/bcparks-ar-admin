@@ -8,18 +8,18 @@ $border-width: 2px;
 $border-radius: 4px;
 
 .accordion-header-row {
-  border: $border-width solid $primary-blue;
+  border: $border-width solid $primary;
   border-radius: $border-radius;
 
   @media screen and (min-width: map-get($grid-breakpoints, "md")) {
     .accordion-header {
       flex: 1;
-      border-right: $border-width solid $primary-blue;
+      border-right: $border-width solid $primary;
     }
   }
 
   .edit-row {
-    border-bottom: $border-width solid $primary-blue;
+    border-bottom: $border-width solid $primary;
   }
 
   .edit-column {
@@ -29,10 +29,10 @@ $border-radius: 4px;
   .edit-row,
   .edit-column {
     button.btn {
-      color: $primary-blue;
+      color: $primary;
 
       i {
-        border-bottom: 2px solid $primary-blue;
+        border-bottom: 2px solid $primary;
         margin-right: 0.4em;
         font-size: 1.05em;
         -webkit-text-stroke-width: 1px;
@@ -46,7 +46,7 @@ $border-radius: 4px;
     width: calc(100% - $edit-col-width);
   }
 
-  border: $border-width solid $primary-blue;
+  border: $border-width solid $primary;
   border-radius: $border-radius;
 
   // use a negative margin and solid background to overlap the
@@ -56,7 +56,7 @@ $border-radius: 4px;
   border-top-right-radius: 0;
   margin-top: -$margin-overlap;
   padding-top: $margin-overlap;
-  background-color: $white;
+  background-color: white;
 }
 
 .accordion-collapse.collapsing {
@@ -64,7 +64,7 @@ $border-radius: 4px;
   padding-top: $margin-overlap;
 
   & ~ .accordion-header-row > .accordion-header-edit-button {
-    border: $border-width solid $primary-blue;
+    border: $border-width solid $primary;
     border-bottom-right-radius: $border-radius;
   }
 }

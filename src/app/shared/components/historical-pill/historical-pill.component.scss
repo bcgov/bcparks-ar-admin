@@ -1,0 +1,27 @@
+.historical-pill {
+  background-color: #2464A4 !important;
+}
+
+.custom-list-group {
+  max-height: 300px;
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.custom-list-group-item {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+
+  &:hover {
+    background-color: var(--bs-gray-200);
+  }
+}
+
+.custom-highlight {
+  font-weight: bold;
+}
