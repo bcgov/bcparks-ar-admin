@@ -61,7 +61,8 @@ export class ExportReportsComponent implements OnDestroy {
     private cd: ChangeDetectorRef
   ) {
     this.subscriptions.add(
-      this.dataService.watchItem(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA).subscribe(res => {
+      this.dataService.watchItem(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA)
+      .subscribe((res) => {
         this.jobUpdate(res);
       })
     )
@@ -79,12 +80,11 @@ export class ExportReportsComponent implements OnDestroy {
       })
     )
     this.subscriptions.add(
-      this.dataService
-        .watchItem(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
+      this.dataService.watchItem(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
         .subscribe((res) => {
           this.jobUpdate(res);
         }
-        ));
+      ));
   }
 
   // setMaxDate() {
@@ -154,6 +154,7 @@ export class ExportReportsComponent implements OnDestroy {
         Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard'
       );
     }
+    this.cd.detectChanges();
   }
 
   setState(state) {
@@ -230,6 +231,7 @@ export class ExportReportsComponent implements OnDestroy {
     } else {
       this.exportService.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
     }
+    this.cd.detectChanges();
     return;
   }
 
@@ -260,7 +262,6 @@ export class ExportReportsComponent implements OnDestroy {
         this.exportMessage = 'No previous report found. Click generate report.';
       }
     }
-    this.cd.detectChanges();
   }
 
   disableGenerateButton() {
