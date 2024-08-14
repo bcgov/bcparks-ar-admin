@@ -5,12 +5,10 @@
       <ngds-tab-row
         defaultActiveTabId="standard"
         tabRowClass="mb-4"
-        (tabChange)="changeActiveTab($event)"
-      >
+        (tabChange)="changeActiveTab($event)">
         <ngds-tab
           id="standard"
-          title="Standard"
-        >
+          title="Standard">
           <div>
             <h3 class="card-title">Export all</h3>
             <p class="card-text text-muted">
@@ -22,8 +20,7 @@
         </ngds-tab>
         <ngds-tab
           id="variance"
-          title="Variance"
-        >
+          title="Variance">
           <div>
             <h3 class="card-title">Export variance data</h3>
             <p class="card-text text-muted">
@@ -45,12 +42,10 @@
                   [dateFormat]="dateFormat"
                   [dateDisplayFormat]="'LLLL yyyy'"
                   [placeholder]="'Select fiscal year'"
-                  [maxDate]="maxDate"
-                >
+                  [maxDate]="maxDate">
                   <div
                     ngdsInputPrepend
-                    class="bi bi-calendar px-2"
-                  ></div>
+                    class="bi bi-calendar px-2"></div>
                 </ngds-date-input>
               </div>
             </div>
@@ -66,8 +61,7 @@
             type="{{ progressBarColour }}"
             [value]="percentageComplete"
             [striped]="true"
-            [animated]="animated"
-          ><i>{{
+            [animated]="animated"><i>{{
               progressBarTextOverride || percentageComplete + "%"
               }}</i></ngb-progressbar>
         </p>
@@ -76,8 +70,7 @@
             type="button"
             class="btn btn-primary"
             [disabled]="disableGenerateButton()"
-            (click)="generateReport()"
-          >
+            (click)="generateReport()">
             Generate Report
           </button>
         </div>
@@ -93,8 +86,7 @@
             type="button"
             class="btn btn-primary"
             [disabled]="!dateGenerated"
-            (click)="downloadReport()"
-          >
+            (click)="downloadReport()">
             Download Report
           </button>
         </div>
