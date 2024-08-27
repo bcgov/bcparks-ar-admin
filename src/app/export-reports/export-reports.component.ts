@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { ExportService } from '../services/export.service';
 import { Constants } from '../shared/utils/constants';
-import { DateTime, Duration } from 'luxon'
+import { DateTime, Duration } from 'luxon';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
@@ -44,12 +44,12 @@ export class ExportReportsComponent implements OnDestroy {
   public tz = Constants.timezone;
   public maxDate = DateTime.now().setZone(this.tz);
   // negate duration so we can pick the end date first
-  public duration = Duration.fromObject({years: 1}).negate();
+  public duration = Duration.fromObject({ years: 1 }).negate();
   public dateFormat = 'yyyy-LL';
 
   public form = new UntypedFormGroup({
-    year: new UntypedFormControl(null)
-  })
+    year: new UntypedFormControl(null),
+  });
 
   public exportMessage = 'Last export: -';
 
@@ -58,44 +58,52 @@ export class ExportReportsComponent implements OnDestroy {
   constructor(
     private exportService: ExportService,
     private dataService: DataService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {
     this.subscriptions.add(
-      this.dataService.watchItem(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA)
-      .subscribe((res) => {
-        this.jobUpdate(res);
-      })
-    )
+      this.dataService
+        .watchItem(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA)
+        .subscribe((res) => {
+          this.jobUpdate(res);
+        }),
+    );
     this.subscriptions.add(
       this.form.controls['year'].valueChanges.subscribe((changes) => {
-          const startDate = DateTime.fromFormat(changes[1], this.dateFormat).plus({months: 2});
-          const endDate = DateTime.fromFormat(changes[0], this.dateFormat).plus({months: 3});
-          this.form.controls['year'].setValue([
+        const startDate = DateTime.fromFormat(changes[1], this.dateFormat).plus(
+          { months: 2 },
+        );
+        const endDate = DateTime.fromFormat(changes[0], this.dateFormat).plus({
+          months: 3,
+        });
+        this.form.controls['year'].setValue(
+          [
             startDate.toFormat(this.dateFormat),
             endDate.toFormat(this.dateFormat),
           ],
           {
-            emitEvent: false
-          })
-      })
-    )
+            emitEvent: false,
+          },
+        );
+      }),
+    );
     this.subscriptions.add(
-      this.dataService.watchItem(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
+      this.dataService
+        .watchItem(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
         .subscribe((res) => {
           this.jobUpdate(res);
-        }
-      ));
+        }),
+    );
   }
 
-  // setMaxDate() {
-  //   // get current fiscal year
-  //   const currentDT = DateTime.now();
-  //   let year = currentDT.year;
-  //   if (currentDT.month > 3){
-  //     year += 1;
-  //   }
-  //   this.maxDate = new Date(year, 2, 31);
-  // }
+  setMaxDate() {
+    // get current fiscal year
+    const currentDT = DateTime.now();
+    let year = currentDT.year;
+    if (currentDT.month > 3) {
+      year += 1;
+    }
+    this.maxDate = DateTime.local(year);
+  }
 
   jobUpdate(res) {
     if (res) {
@@ -121,9 +129,7 @@ export class ExportReportsComponent implements OnDestroy {
         this.setExportMessage(res);
       }
 
-      this.signedURL = res?.['signedURL']
-        ? res?.['signedURL']
-        : undefined;
+      this.signedURL = res?.['signedURL'] ? res?.['signedURL'] : undefined;
     }
   }
 
@@ -145,13 +151,16 @@ export class ExportReportsComponent implements OnDestroy {
     this.setState(this.stateDictionary.GENERATING);
     this.setExportMessage(null);
     if (this.activeTab === 'variance') {
-      const year = this.form.controls['year'].value[1].slice(0,4);
+      const year = this.form.controls['year'].value[1].slice(0, 4);
       this.exportService.generateReport(
-        Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA, 'variance', { fiscalYearEnd: year }
+        Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA,
+        'variance',
+        { fiscalYearEnd: year },
       );
     } else {
       this.exportService.generateReport(
-        Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard'
+        Constants.dataIds.EXPORT_ALL_POLLING_DATA,
+        'standard',
       );
     }
     this.cd.detectChanges();
@@ -225,11 +234,18 @@ export class ExportReportsComponent implements OnDestroy {
     this.setExportMessage(null);
     if (this.activeTab === 'variance') {
       if (this.modelDate) {
-        this.exportService.checkForReports(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA, 'variance', { fiscalYearEnd: this.modelDate });
+        this.exportService.checkForReports(
+          Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA,
+          'variance',
+          { fiscalYearEnd: this.modelDate },
+        );
       }
       return;
     } else {
-      this.exportService.checkForReports(Constants.dataIds.EXPORT_ALL_POLLING_DATA, 'standard');
+      this.exportService.checkForReports(
+        Constants.dataIds.EXPORT_ALL_POLLING_DATA,
+        'standard',
+      );
     }
     this.cd.detectChanges();
     return;
@@ -244,7 +260,8 @@ export class ExportReportsComponent implements OnDestroy {
     ) {
       if (res?.jobObj?.dateGenerated) {
         if (res.jobObj.progressState === 'error') {
-          this.dateGenerated = new Date(res.jobObj.lastSuccessfulJob?.dateGenerated) || undefined;
+          this.dateGenerated =
+            new Date(res.jobObj.lastSuccessfulJob?.dateGenerated) || undefined;
         } else {
           this.dateGenerated = new Date(res.jobObj.dateGenerated);
         }
@@ -272,7 +289,11 @@ export class ExportReportsComponent implements OnDestroy {
       return true;
     }
     return false;
-  } s
+  }
+
+  ngOnInit() {
+    this.setMaxDate();
+  }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
