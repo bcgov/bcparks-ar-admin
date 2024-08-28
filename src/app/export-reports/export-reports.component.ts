@@ -55,6 +55,7 @@ export class ExportReportsComponent implements OnDestroy {
 
   public form = new UntypedFormGroup({
     year: new UntypedFormControl(null),
+    park: new UntypedFormControl(null),
   });
 
   public exportMessage = 'Last export: -';
@@ -138,6 +139,30 @@ export class ExportReportsComponent implements OnDestroy {
     this.maxDate = DateTime.local(year);
   }
 
+  // Get park object by orcs
+  getLocalStorageParkById(orcs) {
+    let park = this._parks?.value?.find((p) => p?.value?.orcs === orcs);
+    return park?.value || null;
+  }
+
+  // create typeahead object
+  createTypeaheadObj(items, display) {
+    let list = [];
+    for (const item of items) {
+      list.push({
+        value: item,
+        display: item[display],
+      });
+    }
+    return list;
+  }
+
+  toggleExportAllCheck() {
+    this.exportAllCheck = !this.exportAllCheck;
+    // Remove any park that was selected
+    this.form.controls['park'].setValue('');
+  }
+
   jobUpdate(res) {
     if (res) {
       this.initialLoad = false;
@@ -207,7 +232,6 @@ export class ExportReportsComponent implements OnDestroy {
         'standard',
       );
     }
-    this.cd.detectChanges();
   }
 
   setState(state) {
@@ -300,7 +324,6 @@ export class ExportReportsComponent implements OnDestroy {
         'standard',
       );
     }
-    this.cd.detectChanges();
     return;
   }
 
@@ -332,6 +355,7 @@ export class ExportReportsComponent implements OnDestroy {
         this.exportMessage = 'No previous report found. Click generate report.';
       }
     }
+    this.cd.detectChanges();
   }
 
   disableGenerateButton() {
