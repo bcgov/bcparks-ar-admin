@@ -1,10 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { Subscription, BehaviorSubject, debounceTime } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { ExportService } from '../services/export.service';
 import { Constants } from '../shared/utils/constants';
 import { DateTime, Duration } from 'luxon';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  FormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-export-reports',
@@ -24,6 +28,7 @@ export class ExportReportsComponent implements OnDestroy {
     ERROR: 99,
   };
 
+  public _parks = new BehaviorSubject(null);
   public status = 'Standing by';
   public percentageComplete = 0;
   public progressBarTextOverride;
@@ -40,6 +45,7 @@ export class ExportReportsComponent implements OnDestroy {
   public fiscalYearRangeString = this.defaultRangeString;
   public modelDate = NaN;
   public activeTab = '';
+  public exportAllCheck = false;
 
   public tz = Constants.timezone;
   public maxDate = DateTime.now().setZone(this.tz);
@@ -89,6 +95,33 @@ export class ExportReportsComponent implements OnDestroy {
     this.subscriptions.add(
       this.dataService
         .watchItem(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
+        .subscribe((res) => {
+          this.jobUpdate(res);
+        }),
+    );
+    this.subscriptions.add(
+      dataService
+        .watchItem(Constants.dataIds.ENTER_DATA_PARK)
+        .subscribe((res) => {
+          if (res && res.length) {
+            this._parks.next(this.createTypeaheadObj(res, 'parkName'));
+          }
+        }),
+    );
+    this.subscriptions.add(
+      this.form.controls['park'].valueChanges
+        .pipe(debounceTime(0))
+        .subscribe((changes) => {
+          if (changes) {
+            this.form.controls['park'].setValue(
+              this.getLocalStorageParkById(changes.orcs),
+            );
+          }
+        }),
+    );
+    this.subscriptions.add(
+      this.dataService
+        .watchItem(Constants.dataIds.EXPORT_MISSING_POLLING_DATA)
         .subscribe((res) => {
           this.jobUpdate(res);
         }),
@@ -156,6 +189,17 @@ export class ExportReportsComponent implements OnDestroy {
         Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA,
         'variance',
         { fiscalYearEnd: year },
+      );
+    } else if (this.activeTab === 'missing') {
+      const year = this.form.controls['year'].value[1].slice(0, 4);
+      const orcs = this.form.controls['park'].value?.orcs || '';
+      this.exportService.generateReport(
+        Constants.dataIds.EXPORT_MISSING_POLLING_DATA,
+        'missing',
+        {
+          fiscalYearEnd: year,
+          orcs: orcs,
+        },
       );
     } else {
       this.exportService.generateReport(
@@ -241,6 +285,15 @@ export class ExportReportsComponent implements OnDestroy {
         );
       }
       return;
+    } else if (this.activeTab === 'missing') {
+      if (this.modelDate) {
+        this.exportService.checkForReports(
+          Constants.dataIds.EXPORT_MISSING_POLLING_DATA,
+          'missing',
+          { fiscalYearEnd: this.modelDate },
+        );
+      }
+      return;
     } else {
       this.exportService.checkForReports(
         Constants.dataIds.EXPORT_ALL_POLLING_DATA,
@@ -282,7 +335,10 @@ export class ExportReportsComponent implements OnDestroy {
   }
 
   disableGenerateButton() {
-    if (this.activeTab === 'variance' && !this.form?.controls?.['year'].value) {
+    if (
+      (this.activeTab === 'variance' || this.activeTab === 'missing') &&
+      !this.form?.controls?.['year'].value
+    ) {
       return true;
     }
     if (![0, 2, 99].includes(this.currentState)) {

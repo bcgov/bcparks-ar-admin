@@ -8,12 +8,17 @@
           <button class="nav-link active" id="standard-tab" data-bs-toggle="tab" data-bs-target="#standard"
             type="button"
             role="tab" aria-controls="standard" aria-selected="true"
-            onclick="changeActiveTab('standard')">Standard</button>
+            (click)="changeActiveTab('standard')">Standard</button>
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="variance-tab" data-bs-toggle="tab" data-bs-target="#variance" type="button"
             role="tab" aria-controls="variance" aria-selected="false"
-            onclick="changeActiveTab('variance')">Variance</button>
+            (click)="changeActiveTab('variance')">Variance</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="missing-tab" data-bs-toggle="tab" data-bs-target="#missing" type="button"
+            role="tab" aria-controls="missing" aria-selected="false"
+            (click)="changeActiveTab('missing')">Missing</button>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
@@ -59,8 +64,58 @@
 
           </div>
         </div>
-      </div>
 
+        <div class="tab-pane fade" id="missing" role="tabpanel" aria-labelledby="missing-tab">
+          <div>
+            <h3 class="card-title">Export missing data</h3>
+            <p class="card-text text-muted">
+              Generate a report of missing records.
+            </p>
+
+            <hr />
+
+            <div class="row mb-3">
+              <div class="col-md-12 col-lg-4">
+                <ngds-date-input
+                  [control]="form?.controls?.['year']"
+                  [dateRange]="true"
+                  [label]="'Fiscal year'"
+                  [hideSecondCalendar]="true"
+                  [fixedRangeSize]="duration"
+                  [minMode]="2"
+                  [rangeSeparator]="'-'"
+                  [dateFormat]="dateFormat"
+                  [dateDisplayFormat]="'LLLL yyyy'"
+                  [placeholder]="'Select fiscal year'"
+                  [maxDate]="maxDate">
+                  <div
+                    ngdsInputPrepend
+                    class="bi bi-calendar px-2"></div>
+                </ngds-date-input>
+
+                <div class="my-4 py-3">
+                  <label class="d-flex align-items-center">
+                    <input type="checkbox" [(ngModel)]="exportAllCheck" (click)="toggleExportAllCheck()"/>
+                    <div class="col-10 mx-2 card-text fs-6">Export all</div>
+                  </label>
+                </div>
+                <div class="col-md-12 col-lg-8">
+                  <ngds-typeahead-input
+                    [control]="form?.controls?.['park']"
+                    [label]="'Park'"
+                    [selectionListItems]="_parks?.value"
+                    [resetButton]="true"
+                    [placeholder]="'Search by park name'"
+                    [disabled]="exportAllCheck"
+                  >
+                  </ngds-typeahead-input>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
       <div class="mt-5 pb-2">
         <div class="card-text fw-bold">Exporter status:</div>
         <div>{{ status }}</div>

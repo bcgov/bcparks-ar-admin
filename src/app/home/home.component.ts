@@ -15,7 +15,7 @@ export class HomeComponent {
       cardText:
         'Use this section to enter attendance and revenue and send to BC Parks. You can also view and edit past enteries.',
       navigation: 'enter-data',
-    }
+    },
   ];
   constructor(protected keyCloakService: KeycloakService) {
     if (keyCloakService.isAllowed('export-reports')) {
@@ -30,7 +30,8 @@ export class HomeComponent {
       this.cardConfig.push({
         cardHeader: 'Lock/Unlock Records',
         cardTitle: 'Lock/Unlock by fiscal year',
-        cardText: 'Use this section to lock/unlock fiscal years (April-March) against editing.',
+        cardText:
+          'Use this section to lock/unlock fiscal years (April-March) against editing.',
         navigation: 'lock-records',
       });
     }
@@ -42,6 +43,5 @@ export class HomeComponent {
         navigation: 'review-data',
       });
     }
-
   }
 }
