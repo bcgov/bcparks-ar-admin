@@ -45,7 +45,7 @@ export class ExportReportsComponent implements OnDestroy {
   public fiscalYearRangeString = this.defaultRangeString;
   public modelDate = NaN;
   public activeTab = '';
-  public exportAllCheck = false;
+  public exportAllCheck = true;
 
   public tz = Constants.timezone;
   public maxDate = DateTime.now().setZone(this.tz);
