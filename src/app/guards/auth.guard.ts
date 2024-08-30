@@ -1,23 +1,28 @@
 import { Injectable } from '@angular/core';
-import { UrlTree, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import {
+  UrlTree,
+  Router,
+  RouterStateSnapshot,
+  ActivatedRouteSnapshot,
+} from '@angular/router';
 import { KeycloakService } from '../services/keycloak.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard  {
+export class AuthGuard {
   constructor(
     private readonly keycloakService: KeycloakService,
-    private readonly router: Router
+    private readonly router: Router,
   ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): boolean | UrlTree {
     // When a successful login occurs, we store the identity provider used in sessionStorage.
     const lastIdp = sessionStorage.getItem(
-      this.keycloakService.LAST_IDP_AUTHENTICATED
+      this.keycloakService.LAST_IDP_AUTHENTICATED,
     );
 
     // Not authenticated
@@ -48,7 +53,7 @@ export class AuthGuard  {
       if (idp !== '') {
         sessionStorage.setItem(
           this.keycloakService.LAST_IDP_AUTHENTICATED,
-          idp
+          idp,
         );
       }
     }
@@ -59,15 +64,24 @@ export class AuthGuard  {
       return this.router.parseUrl('/unauthorized');
     }
 
-    if (!this.keycloakService.isAllowed('export-reports') && state.url === '/export-reports') {
+    if (
+      !this.keycloakService.isAllowed('export-reports') &&
+      state.url === '/export-reports'
+    ) {
       return this.router.parseUrl('/');
     }
 
-    if (!this.keycloakService.isAllowed('lock-records') && state.url === '/lock-records') {
+    if (
+      !this.keycloakService.isAllowed('lock-records') &&
+      state.url === '/lock-records'
+    ) {
       return this.router.parseUrl('/');
     }
 
-    if (!this.keycloakService.isAllowed('review-data') && state.url === '/review-data') {
+    if (
+      !this.keycloakService.isAllowed('review-data') &&
+      state.url === '/review-data'
+    ) {
       return this.router.parseUrl('/');
     }
 

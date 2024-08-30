@@ -10,26 +10,37 @@ import { LoggerService } from './logger.service';
 export class ExportService {
   private pollingRate = 1000;
   private retryPollingRate = 10000;
-  private retryTimeout = 300000 // 5 minutes
+  private retryTimeout = 300000; // 5 minutes
   private numberOfRetrys = 5;
 
   constructor(
     private apiService: ApiService,
     private dataService: DataService,
-    private loggerService: LoggerService
-  ) { }
+    private loggerService: LoggerService,
+  ) {}
 
-  async checkForReports(dataId, dataType, params:any = {}, errorObj = {}) {
+  async checkForReports(dataId, dataType, params: any = {}, errorObj = {}) {
     let res;
     try {
       this.loggerService.debug(`Export GET job`);
       if (dataType === 'variance') {
         res = await firstValueFrom(
-          this.apiService.get('export-variance', { getJob: true, fiscalYearEnd: params.fiscalYearEnd })
+          this.apiService.get('expor-variance', {
+            getJob: true,
+            fiscalYearEnd: params.fiscalYearEnd,
+          }),
+        );
+      } else if (dataType === 'missing') {
+        res = await firstValueFrom(
+          this.apiService.get('export-missing', {
+            getJob: true,
+            fiscalYearEnd: params.fiscalYearEnd,
+            orcs: params.orcs,
+          }),
         );
       } else {
         res = await firstValueFrom(
-          this.apiService.get('export', { getJob: true })
+          this.apiService.get('export', { getJob: true }),
         );
       }
       if (Object.keys(errorObj).length > 0) {
@@ -48,7 +59,21 @@ export class ExportService {
       if (dataType === 'variance') {
         if (params?.fiscalYearEnd) {
           res = await firstValueFrom(
-            this.apiService.get('export-variance', { fiscalYearEnd: params.fiscalYearEnd })
+            this.apiService.get('export-variance', {
+              fiscalYearEnd: params.fiscalYearEnd,
+            }),
+          );
+        } else {
+          throw 'Missing fiscal year end property';
+        }
+      }
+      if (dataType === 'missing') {
+        if (params?.fiscalYearEnd) {
+          res = await firstValueFrom(
+            this.apiService.get('export-missing', {
+              fiscalYearEnd: params.fiscalYearEnd,
+              orcs: params.orcs,
+            }),
           );
         } else {
           throw 'Missing fiscal year end property';
@@ -65,8 +90,8 @@ export class ExportService {
       this.loggerService.error(`${error}`);
       this.checkForReports(dataId, dataType, params, {
         state: 'error',
-        msg: 'Unable to create job. Please try again.'
-      })
+        msg: 'Unable to create job. Please try again.',
+      });
       return error;
     }
   }
@@ -103,13 +128,24 @@ export class ExportService {
       this.loggerService.debug(`Export GET job pollTick`);
       if (dataType === 'variance') {
         res = await firstValueFrom(
-          this.apiService.get('export-variance', { fiscalYearEnd: params?.fiscalYearEnd,getJob: true })
+          this.apiService.get('export-variance', {
+            fiscalYearEnd: params?.fiscalYearEnd,
+            getJob: true,
+          }),
+        );
+      } else if (dataType === 'missing') {
+        res = await firstValueFrom(
+          this.apiService.get('export-missing', {
+            fiscalYearEnd: params?.fiscalYearEnd,
+            getJob: true,
+            orcs: params?.orcs,
+          }),
         );
       } else {
         res = await firstValueFrom(
-          this.apiService.get('export', { getJob: true })
-          );
-        }
+          this.apiService.get('export', { getJob: true }),
+        );
+      }
       if (res.error || res.jobObj?.progressState === 'error') {
         throw 'error';
       }
@@ -130,7 +166,17 @@ export class ExportService {
         if (res.jobObj?.progressState === 'error') {
           this.dataService.setItemValue(pollObj.dataId, null);
           if (dataType === 'variance') {
-            await firstValueFrom(this.apiService.get('export-variance', { fiscalYearEnd: params?.fiscalYearEnd }));
+            await firstValueFrom(
+              this.apiService.get('export-variance', {
+                fiscalYearEnd: params?.fiscalYearEnd,
+              }),
+            );
+          } else if (dataType === 'missing') {
+            await firstValueFrom(
+              this.apiService.get('export-missing', {
+                fiscalYearEnd: params?.fiscalYearEnd,
+              }),
+            );
           } else {
             await firstValueFrom(this.apiService.get('export'));
           }
