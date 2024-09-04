@@ -62,6 +62,8 @@ Resources:
             CookieBehavior: none
           EnableAcceptEncodingBrotli: false
           EnableAcceptEncodingGzip: false
+          HeadersConfig:
+            HeaderBehavior: none
           QueryStringsConfig:
             QueryStringBehavior: all
 
