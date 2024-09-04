@@ -22,7 +22,7 @@ jobs:
         node-version: [18.x]
     defaults:
       run:
-        working-directory: "./*"
+        working-directory: "*"
     steps:
       ### Checkout GitHub Repo
       - name: Checkout repo
