@@ -62,11 +62,6 @@ Resources:
             CookieBehavior: none
           EnableAcceptEncodingBrotli: false
           EnableAcceptEncodingGzip: false
-          HeadersConfig:
-            HeaderBehavior: whitelist
-            Headers:
-              - Authorization
-              - X-Api-Key
           QueryStringsConfig:
             QueryStringBehavior: all
 
