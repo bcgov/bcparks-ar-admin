@@ -20,7 +20,6 @@ Parameters:
     Description: AWS Region.
   BaseHref:
     Type: String
-    Default: /
     Description: Base href to use for cloudfront.
   DistOriginPath:
     Type: String

@@ -102,7 +102,7 @@ jobs:
           API_STAGE: ${{ vars.AR_API_STAGE }}
           DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
           AWS_CERTIFICATE_ARN: ${{ vars.AWS_CERTIFICATE_ARN }}
-          BASE_HREF: "/"
+          BASE_HREF: ""
         run: |
           sam deploy --stack-name $STACK_NAME --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides \
           "ProjectName=$PROJECT_NAME \
