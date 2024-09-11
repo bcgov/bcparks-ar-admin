@@ -20,6 +20,7 @@ Parameters:
     Description: AWS Region.
   BaseHref:
     Type: String
+    Default: "/"
     Description: Base href to use for cloudfront.
   DistOriginPath:
     Type: String
@@ -79,10 +80,10 @@ Resources:
         CustomErrorResponses:
           - ErrorCode: 404
             ResponseCode: 200
-            ResponsePagePath: !Sub /${BaseHref}index.html
+            ResponsePagePath: !Sub ${BaseHref}index.html
           - ErrorCode: 403
             ResponseCode: 200
-            ResponsePagePath: !Sub /${BaseHref}index.html
+            ResponsePagePath: !Sub ${BaseHref}index.html
         Aliases:
           - !Ref EnvDomainName
         ViewerCertificate:
@@ -90,7 +91,7 @@ Resources:
           SslSupportMethod: sni-only
           MinimumProtocolVersion: TLSv1
         Comment: !Sub "CloudFront distribution for ${AWS::StackName}"
-        DefaultRootObject: !Sub ${BaseHref}index.html
+        DefaultRootObject: !Sub index.html
         Enabled: true
         HttpVersion: http2
         # List of origins that Cloudfront will connect to
