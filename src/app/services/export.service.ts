@@ -196,10 +196,18 @@ export class ExportService {
     }
     // Every time we poll, we update the data service.
     this.dataService.setItemValue(pollObj.dataId, res);
+
+    // If no data, retun and stop polling
+    if (res.jobObj && res.jobObj?.progressState == 'no_data') {
+      tickObj.state = 'finished';
+      return tickObj;
+    }
+
     if (res.jobObj && res.jobObj?.progressState !== 'complete') {
       await this.delay(this.pollingRate);
       return tickObj;
     }
+
     tickObj.state = 'finished';
     return tickObj;
   }

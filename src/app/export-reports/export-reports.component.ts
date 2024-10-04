@@ -24,6 +24,7 @@ export class ExportReportsComponent implements OnDestroy {
     STANDBY: 0,
     GENERATING: 1,
     READY_TO_DOWNLOAD: 2,
+    NO_DATA: 3,
     RETRYING: 98,
     ERROR: 99,
   };
@@ -174,6 +175,11 @@ export class ExportReportsComponent implements OnDestroy {
           this.setExportMessage(res);
         }
         this.status = res.error.msg;
+      } else if (res?.jobObj?.progressState === 'no_data') {
+        this.setState(this.stateDictionary.NO_DATA);
+        this.percentageComplete = res?.jobObj?.progressPercentage;
+        this.status = res?.jobObj?.progressDescription;
+        this.setExportMessage(res);
       } else {
         if (this.currentState !== 0) {
           if (res?.jobObj?.progressState === 'complete') {
@@ -264,6 +270,14 @@ export class ExportReportsComponent implements OnDestroy {
         this.currentState = 2;
         this.progressBarColour = 'success';
         break;
+      case 3:
+        this.animated = false;
+        this.progressBarTextOverride = undefined;
+        this.disableGenerate = false;
+        this.disableDownload = true;
+        this.currentState = 3;
+        this.progressBarColour = 'info';
+        break;
       case 98:
         this.animated = true;
         this.status = 'Error, retrying.';
@@ -332,7 +346,7 @@ export class ExportReportsComponent implements OnDestroy {
       res &&
       (this.currentState === 0 ||
         this.currentState === 2 ||
-        this.percentageComplete === 100)
+        this.percentageComplete === 100 && this.currentState !== 3)
     ) {
       if (res?.jobObj?.dateGenerated) {
         if (res.jobObj.progressState === 'error') {
@@ -347,13 +361,9 @@ export class ExportReportsComponent implements OnDestroy {
       } else {
         this.exportMessage = 'No previous report found. Click generate report.';
       }
-    } else {
+    } else if (res && this.currentState === 3) {
       this.dateGenerated = undefined;
-      if (this.currentState !== 0 && this.currentState !== 2) {
-        this.exportMessage = 'Exporter running.';
-      } else {
-        this.exportMessage = 'No previous report found. Click generate report.';
-      }
+      this.exportMessage = 'No previous report found. Click generate report.';
     }
     this.cd.detectChanges();
   }
@@ -365,6 +375,11 @@ export class ExportReportsComponent implements OnDestroy {
     ) {
       return true;
     }
+
+    if (this.currentState === 3) {
+      return false;
+    }
+
     if (![0, 2, 99].includes(this.currentState)) {
       return true;
     }
