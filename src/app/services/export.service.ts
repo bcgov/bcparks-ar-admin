@@ -79,7 +79,12 @@ export class ExportService {
           throw 'Missing fiscal year end property';
         }
       } else {
-        res = await firstValueFrom(this.apiService.get('export'));
+        res = await firstValueFrom(
+          this.apiService.get('export', {
+            dateRangeStart: params?.dateRangeStart,
+            dateRangeEnd: params?.dateRangeEnd
+          })
+        );
       }
       if (res.error) {
         throw res.error;
