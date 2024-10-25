@@ -48,7 +48,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       otherRevenueGrossSani: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueGrossSani')] }),
       otherRevenueShower: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueShower')] }),
       secondCarsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('secondCarsRevenueGross')] }),
-      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(100)] }),
+      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
