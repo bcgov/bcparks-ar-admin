@@ -24,6 +24,7 @@ export class RootFormComponent implements OnInit, OnDestroy {
   public showVarianceModal: boolean = false;
   public activityType;
   public accordionType;
+  public maxVarianceNotesCharacters = 200;
   public invalidConfig = {
     showMessage: false
   };
