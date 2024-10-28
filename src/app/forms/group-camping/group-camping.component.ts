@@ -42,7 +42,7 @@ export class GroupCampingComponent extends RootFormComponent {
       youthRateGroupsAttendancePeople: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsAttendancePeople')] }),
       standardRateGroupsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('standardRateGroupsRevenueGross')] }),
       youthRateGroupsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsRevenueGross')] }),
-      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(100)] }),
+      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
