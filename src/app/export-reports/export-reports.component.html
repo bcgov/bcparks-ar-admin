@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
   <div class="card">
     <div class="card-body m-3">
       <h1>Export Report</h1>
@@ -26,12 +26,37 @@
           <div>
             <h3 class="card-title">Export all</h3>
             <p class="card-text text-muted">
-              Generate a full report with no filters.
+              Export all records or choose a date range.
             </p>
           </div>
 
           <hr />
+          <div class="my-4 py-3">
+            <ngds-toggle-input
+              [control]="form?.controls?.['exportAllCheck']"
+              [label]="'Export all'">
+            </ngds-toggle-input>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-12 col-lg-4">
+              <ngds-date-input
+                [control]="form?.controls?.['dateRange']"
+                [dateRange]="true"
+                [hideSecondCalendar]="true"
+                [minMode]="1"
+                [rangeSeparator]="'-'"
+                [dateFormat]="dateFormat"
+                [dateDisplayFormat]="'LLLL yyyy'"
+                [placeholder]="'Select date range'"
+                [maxDate]="maxDate">
+                <div
+                  ngdsInputPrepend
+                  class="bi bi-calendar px-2"></div>
+              </ngds-date-input>
+            </div>
+          </div>
         </div>
+
         <div class="tab-pane fade" id="variance" role="tabpanel" aria-labelledby="variance-tab">
           <div>
             <h3 class="card-title">Export variance data</h3>
@@ -94,19 +119,18 @@
                 </ngds-date-input>
 
                 <div class="my-4 py-3">
-                  <label class="d-flex align-items-center">
-                    <input type="checkbox" [(ngModel)]="exportAllCheck" (click)="toggleExportAllCheck()"/>
-                    <div class="col-10 mx-2 card-text fs-6">Export all</div>
-                  </label>
+                  <ngds-toggle-input
+                    [control]="form?.controls?.['exportAllCheckMissing']"
+                    [label]="'Export all'">
+                  </ngds-toggle-input>
                 </div>
-                <div class="col-md-12 col-lg-8">
+                <div class="col-12">
                   <ngds-typeahead-input
                     [control]="form?.controls?.['park']"
                     [label]="'Park'"
                     [selectionListItems]="_parks?.value"
                     [resetButton]="true"
                     [placeholder]="'Search by park name'"
-                    [disabled]="exportAllCheck"
                   >
                   </ngds-typeahead-input>
 

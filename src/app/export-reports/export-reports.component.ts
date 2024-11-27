@@ -9,6 +9,7 @@ import {
   UntypedFormGroup,
   FormsModule,
 } from '@angular/forms';
+import { end } from '@popperjs/core';
 
 @Component({
   selector: 'app-export-reports',
@@ -45,8 +46,7 @@ export class ExportReportsComponent implements OnDestroy {
   public defaultRangeString = 'Select fiscal year';
   public fiscalYearRangeString = this.defaultRangeString;
   public modelDate = NaN;
-  public activeTab = '';
-  public exportAllCheck = true;
+  public activeTab = 'standard';
 
   public tz = Constants.timezone;
   public maxDate = DateTime.now().setZone(this.tz);
@@ -57,6 +57,10 @@ export class ExportReportsComponent implements OnDestroy {
   public form = new UntypedFormGroup({
     year: new UntypedFormControl(null),
     park: new UntypedFormControl(null),
+    dateRange: new UntypedFormControl(null),
+    exportAllCheck: new UntypedFormControl(false),
+    exportAllCheckMissing: new UntypedFormControl(true),
+
   });
 
   public exportMessage = 'Last export: -';
@@ -95,6 +99,23 @@ export class ExportReportsComponent implements OnDestroy {
       }),
     );
     this.subscriptions.add(
+      this.form.controls['dateRange'].valueChanges.subscribe((changes) => {
+        if (changes) {
+          const startDate = DateTime.fromFormat(changes[0], 'yyyy-LL').startOf('day');
+          const endDate = DateTime.fromFormat(changes[1], 'yyyy-LL').startOf('day');
+          this.form.controls['dateRange'].setValue(
+            [
+              startDate.toFormat(this.dateFormat),
+              endDate.toFormat(this.dateFormat),
+            ],
+            {
+              emitEvent: false,
+            },
+          );
+        }
+      }),
+    );
+    this.subscriptions.add(
       this.dataService
         .watchItem(Constants.dataIds.EXPORT_ALL_POLLING_DATA)
         .subscribe((res) => {
@@ -128,6 +149,26 @@ export class ExportReportsComponent implements OnDestroy {
           this.jobUpdate(res);
         }),
     );
+    this.subscriptions.add(
+      this.form.get('exportAllCheck').valueChanges.subscribe(value => {
+        if (value) {
+          this.form.get('dateRange').disable();
+          this.form.controls['dateRange'].setValue(null);
+       } else {
+          this.form.get('dateRange').enable();
+       }
+      })
+    );
+    this.subscriptions.add(
+      this.form.get('exportAllCheckMissing').valueChanges.subscribe(value => {
+        if (value) {
+          this.form.get('park').disable();
+          this.form.controls['park'].setValue('');
+       } else {
+          this.form.get('park').enable();
+       }
+      })
+    );
   }
 
   setMaxDate() {
@@ -156,12 +197,6 @@ export class ExportReportsComponent implements OnDestroy {
       });
     }
     return list;
-  }
-
-  toggleExportAllCheck() {
-    this.exportAllCheck = !this.exportAllCheck;
-    // Remove any park that was selected
-    this.form.controls['park'].setValue('');
   }
 
   jobUpdate(res) {
@@ -233,9 +268,15 @@ export class ExportReportsComponent implements OnDestroy {
         },
       );
     } else {
+      const dateRangeStart = this.form.controls['dateRange'].value?.[0] || null ;
+      const dateRangeEnd = this.form.controls['dateRange'].value?.[1] || null ;
       this.exportService.generateReport(
         Constants.dataIds.EXPORT_ALL_POLLING_DATA,
         'standard',
+        {
+          dateRangeStart: dateRangeStart,
+          dateRangeEnd: dateRangeEnd,
+        },
       );
     }
   }
@@ -369,11 +410,27 @@ export class ExportReportsComponent implements OnDestroy {
   }
 
   disableGenerateButton() {
-    if (
-      (this.activeTab === 'variance' || this.activeTab === 'missing') &&
-      !this.form?.controls?.['year'].value
-    ) {
+    if (this.activeTab === 'variance' && !this.form?.controls?.['year'].value) {
       return true;
+    }
+
+    if (this.activeTab === 'missing') {
+      if (!this.form?.controls?.['year'].value) {
+        return true;
+      } else if (this.form.controls['exportAllCheckMissing'].value === true) {
+        return false;
+      } else if (!this.form?.controls?.['park'].value) {
+        return true;
+      }
+    }
+
+    if (this.activeTab === 'standard') {
+      if (this.form.controls['exportAllCheck'].value === true) {
+        return false;
+      }
+      if (!this.form?.controls?.['dateRange'].value) {
+        return true;
+      }
     }
 
     if (this.currentState === 3) {
@@ -388,6 +445,10 @@ export class ExportReportsComponent implements OnDestroy {
 
   ngOnInit() {
     this.setMaxDate();
+
+    if (this.form.controls['exportAllCheckMissing'].value) {
+      this.form.get('park').disable();
+    }
   }
 
   ngOnDestroy() {
