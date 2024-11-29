@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Subscription, BehaviorSubject, debounceTime } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { ExportService } from '../services/export.service';
@@ -15,6 +20,7 @@ import { end } from '@popperjs/core';
   selector: 'app-export-reports',
   templateUrl: './export-reports.component.html',
   styleUrls: ['./export-reports.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 // TODO: Make a component for exporter cards
