@@ -148,7 +148,11 @@ export class ExportService {
         );
       } else {
         res = await firstValueFrom(
-          this.apiService.get('export', { getJob: true }),
+          this.apiService.get('export', {
+            getJob: true,
+            dateRangeStart: params?.dateRangeStart,
+            dateRangeEnd: params?.dateRangeEnd,
+          }),
         );
       }
       if (res.error || res.jobObj?.progressState === 'error') {

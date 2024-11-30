@@ -38,20 +38,19 @@
             </ngds-toggle-input>
           </div>
           <div class="row mb-3">
-            <div class="col-md-12 col-lg-4">
+            <div>
               <ngds-date-input
                 [control]="form?.controls?.['dateRange']"
                 [dateRange]="true"
                 [hideSecondCalendar]="true"
                 [minMode]="1"
-                [rangeSeparator]="'-'"
+                [rangeSeparator]="'→'"
                 [dateFormat]="dateFormat"
                 [dateDisplayFormat]="'LLLL yyyy'"
                 [placeholder]="'Select date range'"
-                [maxDate]="maxDate">
-                <div
-                  ngdsInputPrepend
-                  class="bi bi-calendar px-2"></div>
+                [maxDate]="maxDate"
+              >
+                <div ngdsInputAppend class="bi bi-calendar2-check px-2"></div>
               </ngds-date-input>
             </div>
           </div>
@@ -67,7 +66,7 @@
             <hr />
 
             <div class="row mb-3">
-              <div class="col-md-12 col-lg-4">
+              <div>
                 <ngds-date-input
                   [control]="form?.controls?.['year']"
                   [dateRange]="true"
@@ -75,18 +74,16 @@
                   [hideSecondCalendar]="true"
                   [fixedRangeSize]="duration"
                   [minMode]="2"
-                  [rangeSeparator]="'-'"
+                  [rangeSeparator]="'→'"
                   [dateFormat]="dateFormat"
                   [dateDisplayFormat]="'LLLL yyyy'"
                   [placeholder]="'Select fiscal year'"
-                  [maxDate]="maxDate">
-                  <div
-                    ngdsInputPrepend
-                    class="bi bi-calendar px-2"></div>
+                  [maxDate]="maxDate"
+                >
+                  <div ngdsInputAppend class="bi bi-calendar2-check px-2"></div>
                 </ngds-date-input>
               </div>
             </div>
-
           </div>
         </div>
 
@@ -100,7 +97,7 @@
             <hr />
 
             <div class="row mb-3">
-              <div class="col-md-12 col-lg-4">
+              <div>
                 <ngds-date-input
                   [control]="form?.controls?.['year']"
                   [dateRange]="true"
@@ -108,14 +105,13 @@
                   [hideSecondCalendar]="true"
                   [fixedRangeSize]="duration"
                   [minMode]="2"
-                  [rangeSeparator]="'-'"
+                  [rangeSeparator]="'→'"
                   [dateFormat]="dateFormat"
                   [dateDisplayFormat]="'LLLL yyyy'"
                   [placeholder]="'Select fiscal year'"
-                  [maxDate]="maxDate">
-                  <div
-                    ngdsInputPrepend
-                    class="bi bi-calendar px-2"></div>
+                  [maxDate]="maxDate"
+                >
+                  <div ngdsInputAppend class="bi bi-calendar2-check px-2"></div>
                 </ngds-date-input>
 
                 <div class="my-4 py-3">
@@ -133,10 +129,9 @@
                     [placeholder]="'Search by park name'"
                   >
                   </ngds-typeahead-input>
-
+                </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
