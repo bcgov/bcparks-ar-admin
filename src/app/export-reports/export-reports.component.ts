@@ -218,7 +218,7 @@ export class ExportReportsComponent implements OnDestroy {
         this.status = res.error.msg;
       } else if (res?.jobObj?.progressState === 'no_data') {
         this.setState(this.stateDictionary.NO_DATA);
-        this.percentageComplete = res?.jobObj?.progressPercentage;
+        this.percentageComplete = Math.round(res?.jobObj?.progressPercentage);
         this.status = res?.jobObj?.progressDescription;
         this.setExportMessage(res);
       } else {
@@ -228,7 +228,7 @@ export class ExportReportsComponent implements OnDestroy {
           } else {
             this.setState(this.stateDictionary.GENERATING);
           }
-          this.percentageComplete = res?.jobObj?.progressPercentage;
+          this.percentageComplete = Math.round(res?.jobObj?.progressPercentage);
           this.status = res?.jobObj?.progressDescription;
         }
         this.setExportMessage(res);

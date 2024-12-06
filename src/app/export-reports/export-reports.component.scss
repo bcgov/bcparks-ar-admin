@@ -16,10 +16,7 @@ ngds-calendar > div {
 
 // make the date-input dynamic for differing text sizes
 ngds-date-input {
-  display: block !important;
-  width: fit-content;
   min-width: 250px;
-
   > div > div > button {
     height: auto !important;
   }
