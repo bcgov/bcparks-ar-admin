@@ -36,7 +36,7 @@ describe('FrontcountryCampingAccordionComponent', () => {
   it('builds accordion', async () => {
     component.data = MockData.mockFrontcountryCampingRecord_1;
     component.buildAccordion();
-    expect(component.summaries.length).toEqual(3);
+    expect(component.summaries.length).toEqual(4);
   });
 
   it('builds legacy accordion', async () => {

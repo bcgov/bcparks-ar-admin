@@ -9,6 +9,7 @@ import { RootFormComponent } from '../root-form/root-form.component';
 import { UrlService } from 'src/app/services/url.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
+import { WinterToggleService } from 'src/app/services/winter-toggle.service';
 @Component({
   selector: 'app-frontcountry-camping',
   templateUrl: './frontcountry-camping.component.html',
@@ -21,8 +22,11 @@ export class FrontcountryCampingComponent extends RootFormComponent {
   public partyRevenueTotal: formulaResult = { result: null, formula: '' };
   public vehicleRevenueTotal: formulaResult = { result: null, formula: '' };
   public otherRevenueTotal: formulaResult = { result: null, formula: '' };
+  public winter: boolean = false;
 
-  constructor() {
+  constructor(
+    public winterToggle: WinterToggleService
+  ) {
     super(
       inject(DataService),
       inject(UrlService),
@@ -36,6 +40,8 @@ export class FrontcountryCampingComponent extends RootFormComponent {
     this.activityType = 'Frontcountry Camping';
     this.accordionType = Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING;
     this.form = new UntypedFormGroup({
+      winterCampingPartyNightsAttendanceStandard: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('winterCampingPartyNightsAttendanceStandard')] }),
+      winterCampingPartyNightsAttendanceSocial: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('winterCampingPartyNightsAttendanceSocial')] }),
       campingPartyNightsAttendanceLongStay: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('campingPartyNightsAttendanceLongStay')] }),
       campingPartyNightsAttendanceSenior: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('campingPartyNightsAttendanceSenior')] }),
       campingPartyNightsAttendanceSocial: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('campingPartyNightsAttendanceSocial')] }),
@@ -54,12 +60,21 @@ export class FrontcountryCampingComponent extends RootFormComponent {
     this.form?.valueChanges.subscribe(() => {
       this.calculateTotals();
     });
+
+    // Check if winter is toggled for frontcountry camping, persist over user sessions
+    this.subscriptions.add(
+      this.winterToggle.getWinterToggle.subscribe((value) => {
+        this.winter = value;
+      })
+    );
   }
 
   calculateTotals() {
     this.partyAttendanceTotal =
       this.formulaService.frontcountryCampingPartyAttendance(
         [
+          this.form.controls['winterCampingPartyNightsAttendanceStandard'].value,
+          this.form.controls['winterCampingPartyNightsAttendanceSocial'].value,
           this.form.controls['campingPartyNightsAttendanceStandard'].value,
           this.form.controls['campingPartyNightsAttendanceSenior'].value,
           this.form.controls['campingPartyNightsAttendanceSocial'].value,
@@ -84,6 +99,11 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       this.form.controls['otherRevenueElectrical'].value,
       this.form.controls['otherRevenueShower'].value
     ]);
+  }
+
+  onWinterToggle() {
+    this.winter = !this.winter
+    this.winterToggle.setWinterToggle(this.winter);
   }
 
   async onSubmit() {

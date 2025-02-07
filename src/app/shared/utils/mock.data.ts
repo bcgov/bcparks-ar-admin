@@ -286,6 +286,8 @@ export class MockData {
     orcs: 'MOC1',
     lastUpdated: '2023-01-01T00:00:00.000Z',
     isLocked: false,
+    winterCampingPartyNightsAttendanceStandard: 1,
+    winterCampingPartyNightsAttendanceSocial: 1,
     campingPartyNightsAttendanceStandard: 1,
     campingPartyNightsAttendanceSenior: 1,
     campingPartyNightsAttendanceSocial: 1,
