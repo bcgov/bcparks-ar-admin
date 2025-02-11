@@ -93,6 +93,8 @@ export class Constants {
       revenueGrossCamping: 0.2,
     },
     frontCountryCamping: {
+      winterCampingPartyNightsAttendanceStandard: 0.2,
+      winterCampingPartyNightsAttendanceSocial: 0.2,
       campingPartyNightsAttendanceStandard: 0.2,
       campingPartyNightsAttendanceSenior: 0.2,
       campingPartyNightsAttendanceSocial: 0.2,

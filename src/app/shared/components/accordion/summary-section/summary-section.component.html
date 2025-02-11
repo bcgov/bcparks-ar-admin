@@ -1,5 +1,6 @@
 <div>
   <h3 *ngIf="section?.title">{{ section?.title }}</h3>
+  <h4 *ngIf="section?.subtitle" class="mt-4">{{ section?.subtitle }}</h4>
   <div
     class="mb-3"
     *ngIf="section.attendanceItems"
