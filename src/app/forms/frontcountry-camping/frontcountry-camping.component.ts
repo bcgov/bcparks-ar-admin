@@ -56,10 +56,17 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       secondCarsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('secondCarsRevenueGross')] }),
       notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
+    this.checkWinterData();
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
+      this.checkWinterData();
       this.calculateTotals();
     });
+  }
+
+  private checkWinterData(): void {
+    const winterStandard = this.form.controls['winterCampingPartyNightsAttendanceStandard'].value;
+    const winterSocial = this.form.controls['winterCampingPartyNightsAttendanceSocial'].value;
 
     // Check if winter is toggled for frontcountry camping, persist over user sessions
     this.subscriptions.add(
@@ -67,6 +74,12 @@ export class FrontcountryCampingComponent extends RootFormComponent {
         this.winter = value;
       })
     );
+
+    // Only set winter to true if there's data, then set true for the session
+    if (winterStandard || winterSocial) {
+      this.winter = true;
+      this.winterToggle.setWinterToggle(this.winter)
+    }
   }
 
   calculateTotals() {

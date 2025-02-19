@@ -168,7 +168,11 @@ export class FormulaService {
     attendances: any[],
     modifier?: number
   ): formulaResult {
-    let formula = `Total attendance = (Winter Standard + Winter SSCFE + Standard + Senior + SSCFE + Long stay)`;
+    let formula = `Total attendance = (Standard + Senior + SSCFE + Long stay)`;
+    // Flag if attendances has Winter data
+    if (attendances[0] || attendances[1]) {
+      formula = `Total attendance = (Winter Standard + Winter SSCFE + Standard + Senior + SSCFE + Long stay)`;
+    }
     if (modifier) {
       formula += ` x ${modifier}`;
     }
