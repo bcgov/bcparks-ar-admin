@@ -12,6 +12,7 @@ export interface summaryLineItem {
 
 export interface summarySection {
   title?: string;
+  subtitle?: string;
   isLegacy?: boolean;
   attendanceLabel?: string;
   attendanceTotal?: formulaResult;

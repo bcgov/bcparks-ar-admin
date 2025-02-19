@@ -99,7 +99,7 @@ describe('ExportReportsComponent', () => {
     expect(component.status).toEqual('Standing by');
     expect(component.percentageComplete).toEqual(0);
     expect(component.progressBarTextOverride).toEqual(undefined);
-    expect(component.disableGenerate).toEqual(false);
+    expect(component.disableGenerate).toEqual(true);
     expect(component.disableDownload).toEqual(true);
     expect(component.currentState).toEqual(0);
     expect(component.progressBarColour).toEqual('secondary');
