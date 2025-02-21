@@ -32,6 +32,7 @@
           </div>
           <!-- Winter Standard -->
           <div *ngIf="winter" class="row">
+            <h3 class="pt-3">Winter rate</h3>
             <div class="input-box mb-2 d-flex align-items-end"
               [popover]="getPopoverData('winterCampingPartyNightsAttendanceStandard') ? popover : null"
               [popoverContext]="{variance: getPopoverData('winterCampingPartyNightsAttendanceStandard')}" placement="bottom"
@@ -62,6 +63,7 @@
         </div>
       </div>
       <!-- Attendance -->
+      <h3 class="pt-3">Standard</h3>
       <div class="col-12 col-lg-6 d-flex flex-column">
         <div class="row">
           <!-- Standard -->
