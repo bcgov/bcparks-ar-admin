@@ -88,10 +88,10 @@ export class ExportReportsComponent implements OnDestroy {
     this.subscriptions.add(
       this.form.controls['year'].valueChanges.subscribe((changes) => {
         const startDate = DateTime.fromFormat(changes[1], this.dateFormat).plus(
-          { months: 2 },
+          { months: 3 },
         );
         const endDate = DateTime.fromFormat(changes[0], this.dateFormat).plus({
-          months: 3,
+          months: 2,
         });
         this.form.controls['year'].setValue(
           [
