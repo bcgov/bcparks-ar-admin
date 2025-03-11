@@ -1,0 +1,120 @@
+<div class="d-flex row mb-5">
+  <div class="col-12 col-sm-3">
+    <ngds-typeahead-input
+      [control]="form?.controls?.['orcs']"
+      [label]="'ORCS'"
+      [selectionListItems]="_parks?.value"
+      [resetButton]="true"
+      [hideInvalidState]="!submitted"
+      [disabled]="editMode"
+    >
+    </ngds-typeahead-input>
+  </div>
+  <div class="col-12 col-sm-9">
+    <ngds-typeahead-input
+      [control]="form?.controls?.['parkName']"
+      [label]="'Park name'"
+      [selectionListItems]="_parkNames?.value"
+      [disabled]="editMode"
+      [resetButton]="true"
+      [hideInvalidState]="!submitted"
+    >
+    </ngds-typeahead-input>
+  </div>
+</div>
+<!-- Gap -->
+<div class="d-flex row mb-1">
+  <ngds-typeahead-input
+    [control]="form?.controls?.['region']"
+    [label]="'Region'"
+    [resetButton]="true"
+    [hideInvalidState]="true"
+    [selectionListItems]="_regions.value"
+    [hideInvalidState]="!submitted"
+  >
+  </ngds-typeahead-input>
+</div>
+<div class="d-flex row mb-1">
+  <ngds-typeahead-input
+    [control]="form?.controls?.['section']"
+    [label]="'Section'"
+    [resetButton]="true"
+    [hideInvalidState]="true"
+    [selectionListItems]="_sections.value"
+    [disabled]="!form?.controls?.['region']?.value"
+    [hideInvalidState]="!submitted"
+  >
+  </ngds-typeahead-input>
+</div>
+<div class="d-flex row mb-1">
+  <ngds-typeahead-input
+    [control]="form?.controls?.['managementArea']"
+    [label]="'Management area'"
+    [resetButton]="true"
+    [hideInvalidState]="true"
+    [selectionListItems]="_managementAreas.value"
+    [disabled]="!form?.controls?.['section']?.value"
+    [hideInvalidState]="!submitted"
+  >
+  </ngds-typeahead-input>
+</div>
+<div class="d-flex row mb-5">
+  <ngds-typeahead-input
+    [control]="form?.controls?.['bundle']"
+    [label]="'Bundle'"
+    [resetButton]="true"
+    [hideInvalidState]="true"
+    [selectionListItems]="_bundles.value"
+    [hideInvalidState]="!submitted"
+  >
+  </ngds-typeahead-input>
+</div>
+<!-- Gap -->
+<div class="d-flex row mb-1">
+  <ngds-text-input
+    [control]="form?.controls?.['subAreaName']"
+    [label]="'Subarea name'"
+    [resetButton]="true"
+    [hideInvalidState]="!submitted"
+  >
+  </ngds-text-input>
+</div>
+<div class="d-flex row mb-5">
+  <ngds-typeahead-input
+    [control]="form?.controls?.['activities']"
+    [multiselect]="true"
+    [label]="'Activities'"
+    [selectionListItems]="activities"
+    [resetButton]="true"
+    [placeholder]="'Please select'"
+    [hideInvalidState]="!submitted"
+  >
+  </ngds-typeahead-input>
+</div>
+<div class="d-flex justify-content-between mb-5">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="onCancel()"
+    [disabled]="!form?.dirty"
+  >
+    Cancel
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="onSubmit()"
+    [disabled]="!form?.dirty"
+  >
+    Submit
+  </button>
+</div>
+<div *ngIf="showReviewModal">
+  <app-review-modal
+    [title]="'Add new subarea?'"
+    [newData]="newData"
+    [oldData]="oldData"
+    (accept)="onModalSubmit()"
+    (decline)="hideModal()"
+  ></app-review-modal>
+</div>

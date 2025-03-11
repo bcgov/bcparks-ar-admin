@@ -1,0 +1,59 @@
+<ng-template #reviewModal>
+  <div class="modal-border">
+    <div class="d-flex justify-content-between p-3 mb-3">
+      <h2>{{title}}</h2>
+      <button
+        type="button"
+        class="btn-close close pull-right"
+        aria-label="Close"
+        (click)="declineClicked()"
+      ><span
+          aria-hidden="true"
+          class="visually-hidden"
+        >&times;</span>
+      </button>
+    </div>
+    <div
+      *ngIf="!editMode"
+      class="mb-3 mx-3"
+    >
+      <div *ngFor="let item of newData">
+        <div class="d-flex row text-align-left mb-2">
+          <div class="col-4"><strong>{{item.label}}</strong></div>
+          <div class="col-8">{{item.value}}</div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="editMode"
+      class="mb-3 mx-3"
+    >
+      <div class="mb-3">
+        <div>Previous:</div>
+        <div *ngFor="let item of oldData">
+          <div class="d-flex row text-align-left mb-2">
+            <div class="col-4"><strong>{{item.label}}</strong></div>
+            <div class="col-8">{{item.value}}</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>Updated:</div>
+        <div *ngFor="let item of newData">
+          <div class="d-flex row text-align-left mb-2">
+            <div class="col-4"><strong>{{item.label}}</strong></div>
+            <div class="col-8">{{item.value}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between p-3">
+      <button
+        class="btn btn-outline-primary"
+        (click)="declineClicked()"
+      >Cancel</button>
+      <button
+        class="btn btn-primary"
+        (click)="confirmClicked()"
+      >Submit</button>
+    </div>

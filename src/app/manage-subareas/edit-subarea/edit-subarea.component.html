@@ -1,0 +1,36 @@
+<div class="m-5">
+  <h4>Edit subarea</h4>
+  <div>
+    Coming soon
+  </div>
+  <div [hidden]="true">
+    <div class="d-flex row mb-5">
+      <div class="col-12 col-sm-6">
+        <ngds-typeahead-input
+          [control]="form?.controls?.['parkName']"
+          [label]="'Park'"
+          [selectionListItems]="_parks?.value"
+          [resetButton]="true"
+        >
+        </ngds-typeahead-input>
+      </div>
+      <div class="col-12 col-sm-6">
+        <ngds-typeahead-input
+          [control]="form?.controls?.['subAreaName']"
+          [label]="'Subarea'"
+          [selectionListItems]="_subareas?.value"
+          [resetButton]="true"
+          [disabled]="!form?.controls?.['parkName']?.value"
+        >
+        </ngds-typeahead-input>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div [hidden]="!form?.controls?.['subAreaName']?.value">
+    <app-subarea-form
+      [editMode]="true"
+      [subareaData]="_selectedSubarea.value"
+    ></app-subarea-form>
+  </div>
+</div>

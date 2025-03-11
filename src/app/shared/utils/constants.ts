@@ -22,6 +22,9 @@ export class Constants {
     VARIANCE_LIST: 'variance-list',
     VARIANCE_LAST_EVALUATED_KEY: 'variance-last-evaluated-key',
     VARIANCE_WARNING_TRIGGERED_FIELDS: 'variance-warning-triggered-fields',
+    REGION_LIST: 'region-list',
+    CURRENT_REGION: 'current-region',
+    BUNDLE_LIST: 'bundle-list',
   };
 
   public static readonly ApplicationRoles: any = {

@@ -31,6 +31,7 @@ import { LoadingService } from './services/loading.service';
 import { LockRecordsModule } from './lock-records/lock-records.module';
 import { VarianceSearchModule } from './variance-search/variance-search.module';
 import { HistoricalPillModule } from './shared/components/historical-pill/historical-pill.module';
+import { ManageSubareasModule } from './manage-subareas/manage-subareas.module';
 
 export function initConfig(
   configService: ConfigService,
@@ -68,7 +69,8 @@ export function initConfig(
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     VarianceSearchModule,
-    HistoricalPillModule
+    HistoricalPillModule,
+    ManageSubareasModule
   ],
   providers: [
     {

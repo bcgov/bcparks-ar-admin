@@ -1,0 +1,23 @@
+<div class="m-5">
+  <h1>Add or edit subareas</h1>
+  <ul class="nav nav-tabs my-4" id="subareas" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="add-tab" data-bs-toggle="tab" data-bs-target="#add" type="button"
+        role="tab" aria-controls="add" aria-selected="true"
+        (click)="changeActiveTab('add')">Add</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button"
+        role="tab" aria-controls="edit" aria-selected="true"
+        (click)="changeActiveTab('edit')">Edit</button>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="_activeTab?.value === 'add'">
+  <app-add-subarea></app-add-subarea>
+</div>
+
+<div *ngIf="_activeTab?.value === 'edit'">
+  <app-edit-subarea></app-edit-subarea>
+</div>

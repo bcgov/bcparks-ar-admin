@@ -19,6 +19,7 @@ import { SubAreaResolver } from './resolvers/sub-area.resolver';
 import { LockRecordsComponent } from './lock-records/lock-records.component';
 import { LockRecordsResolver } from './resolvers/lock-records.resolver';
 import { VarianceSearchComponent } from './variance-search/variance-search.component';
+import { ManageSubareasComponent } from './manage-subareas/manage-subareas.component';
 
 const routes: Routes = [
   {
@@ -146,6 +147,16 @@ const routes: Routes = [
     data: {
       label: 'Review Data',
       breadcrumb: 'Review Data',
+    },
+    resolve: [SubAreaResolver],
+  },
+  {
+    path: 'manage-subareas',
+    component: ManageSubareasComponent,
+    canActivate: [AuthGuard],
+    data: {
+      label: 'Manage Subareas',
+      breadcrumb: 'Manage Subareas',
     },
     resolve: [SubAreaResolver],
   },
