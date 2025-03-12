@@ -28,12 +28,12 @@ describe('HomeComponent', () => {
     expect(component.cardConfig.length).toBe(1);
   });
 
-    it('should create and have four cards', () => {
+    it('should create and have five cards', () => {
     mockKeycloakService.isAllowed.and.returnValue(true);
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     expect(component).toBeTruthy();
-    expect(component.cardConfig.length).toBe(4);
+    expect(component.cardConfig.length).toBe(5);
   });
 });

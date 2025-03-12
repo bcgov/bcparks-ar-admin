@@ -43,5 +43,13 @@ export class HomeComponent {
         navigation: 'review-data',
       });
     }
+    if (keyCloakService.isAllowed('manage-subareas')) {
+      this.cardConfig.push({
+        cardHeader: 'Manage Subareas',
+        cardTitle: 'Add or edit subareas',
+        cardText: 'Use this section to add new subareas or make updates to existing ones.',
+        navigation: 'manage-subareas',
+      });
+    }
   }
 }
