@@ -294,8 +294,13 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  onModalSubmit() {
-    this.subareaService.createSubarea(this.submissionData);
+  async onModalSubmit() {
+    let res = await this.subareaService.createSubarea(this.submissionData);
+    if (res) {
+      this.form.reset();
+      this.submitted = false;
+      this.hideModal();
+    }
   }
 
   buildModalBody(data) {

@@ -135,12 +135,12 @@ export class SubAreaService {
     let res;
     let errorSubject = 'sub-area';
     try {
-      this.loggerService.debug(`Sub-area POST: ${data}`);
+      this.loggerService.debug(`Sub-area POST`);
       this.loadingService.addToFetchList('creating-subarea');
       res = await firstValueFrom(this.apiService.post('subArea', data));
       this.toastService.addMessage(
         `Sub-area created successfully.`,
-        `Success creating ${res}`,
+        `Success creating ${data?.subAreaName}`,
         ToastTypes.SUCCESS
       );
     } catch (error) {
