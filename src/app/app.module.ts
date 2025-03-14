@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { ConfigService } from './services/config.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { LoggerService } from './services/logger.service';
 import { DataService } from './services/data.service';
 import { EventService } from './services/event.service';
@@ -49,52 +49,46 @@ export function initConfig(
   };
 }
 
-@NgModule({
-  declarations: [AppComponent, NotAuthorizedComponent, LoginComponent],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    AppRoutingModule,
-    HttpClientModule,
-    SidebarModule,
-    ToggleButtonModule,
-    BreadcrumbModule,
-    ExportReportsModule,
-    EnterDataModule,
-    LockRecordsModule,
-    HeaderModule,
-    FooterModule,
-    HomeModule,
-    InfiniteLoadingBarModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    VarianceSearchModule,
-    HistoricalPillModule,
-    ManageSubareasModule
-  ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initConfig,
-      deps: [ConfigService, ApiService, AutoFetchService, KeycloakService],
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
-    ConfigService,
-    KeycloakService,
-    LoggerService,
-    DataService,
-    EventService,
-    ToastService,
-    AutoFetchService,
-    LoadingService,
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [AppComponent, NotAuthorizedComponent, LoginComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        CommonModule,
+        AppRoutingModule,
+        SidebarModule,
+        ToggleButtonModule,
+        BreadcrumbModule,
+        ExportReportsModule,
+        EnterDataModule,
+        LockRecordsModule,
+        HeaderModule,
+        FooterModule,
+        HomeModule,
+        InfiniteLoadingBarModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
+        VarianceSearchModule,
+        HistoricalPillModule,
+        ManageSubareasModule], providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initConfig,
+            deps: [ConfigService, ApiService, AutoFetchService, KeycloakService],
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true,
+        },
+        ConfigService,
+        KeycloakService,
+        LoggerService,
+        DataService,
+        EventService,
+        ToastService,
+        AutoFetchService,
+        LoadingService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
   constructor(applicationRef: ApplicationRef) {
     Object.defineProperty(applicationRef, '_rootComponents', {
