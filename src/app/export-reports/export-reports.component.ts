@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { Subscription, BehaviorSubject, debounceTime } from 'rxjs';
@@ -24,7 +25,7 @@ import { end } from '@popperjs/core';
 })
 
 // TODO: Make a component for exporter cards
-export class ExportReportsComponent implements OnDestroy {
+export class ExportReportsComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   public stateDictionary = {
@@ -160,9 +161,9 @@ export class ExportReportsComponent implements OnDestroy {
         if (value) {
           this.form.get('dateRange').disable();
           this.form.controls['dateRange'].setValue(null);
-       } else {
+        } else {
           this.form.get('dateRange').enable();
-       }
+        }
       })
     );
     this.subscriptions.add(
@@ -170,9 +171,9 @@ export class ExportReportsComponent implements OnDestroy {
         if (value) {
           this.form.get('park').disable();
           this.form.controls['park'].setValue('');
-       } else {
+        } else {
           this.form.get('park').enable();
-       }
+        }
       })
     );
   }
@@ -274,8 +275,8 @@ export class ExportReportsComponent implements OnDestroy {
         },
       );
     } else {
-      const dateRangeStart = this.form.controls['dateRange'].value?.[0] || null ;
-      const dateRangeEnd = this.form.controls['dateRange'].value?.[1] || null ;
+      const dateRangeStart = this.form.controls['dateRange'].value?.[0] || null;
+      const dateRangeEnd = this.form.controls['dateRange'].value?.[1] || null;
       this.exportService.generateReport(
         Constants.dataIds.EXPORT_ALL_POLLING_DATA,
         'standard',
