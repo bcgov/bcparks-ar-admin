@@ -2,9 +2,10 @@ import { AfterViewInit, Component, EventEmitter, Output, TemplateRef, ViewChild 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-variance-warning-modal',
-  templateUrl: './variance-warning-modal.component.html',
-  styleUrls: ['./variance-warning-modal.component.scss']
+    selector: 'app-variance-warning-modal',
+    templateUrl: './variance-warning-modal.component.html',
+    styleUrls: ['./variance-warning-modal.component.scss'],
+    standalone: false
 })
 export class VarianceWarningModalComponent implements AfterViewInit {
   @ViewChild('varianceModal') varianceModal: TemplateRef<any>;

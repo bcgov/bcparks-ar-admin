@@ -4,9 +4,10 @@ import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
-  selector: 'app-accordion-manager',
-  templateUrl: './accordion-manager.component.html',
-  styleUrls: ['./accordion-manager.component.scss'],
+    selector: 'app-accordion-manager',
+    templateUrl: './accordion-manager.component.html',
+    styleUrls: ['./accordion-manager.component.scss'],
+    standalone: false
 })
 export class AccordionManagerComponent implements OnDestroy {
   public icons = Constants.iconUrls;

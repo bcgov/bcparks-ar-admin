@@ -10,11 +10,12 @@ import { DataService } from 'src/app/services/data.service';
 import { CancelButtonComponent } from './cancel-button.component';
 
 @Component({
-  template: `
+    template: `
     <ng-template #div1>Something here</ng-template>
     <ng-template #div2>Many things here</ng-template>
     <my-component [expanded]="expandedVal" [body]="div1" [handler]="div2"> </my-component>
   `,
+    standalone: false
 })
 class WrapperComponent {
   @ViewChild(CancelButtonComponent, { static: true }) appComponentRef: CancelButtonComponent;

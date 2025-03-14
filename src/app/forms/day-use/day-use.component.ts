@@ -11,9 +11,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
-  selector: 'app-day-use',
-  templateUrl: './day-use.component.html',
-  styleUrls: ['./day-use.component.scss'],
+    selector: 'app-day-use',
+    templateUrl: './day-use.component.html',
+    styleUrls: ['./day-use.component.scss'],
+    standalone: false
 })
 export class DayUseComponent extends RootFormComponent {
 

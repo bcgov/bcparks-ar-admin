@@ -8,9 +8,10 @@ import { DataService } from 'src/app/services/data.service';
 import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
-  selector: 'app-variance-list',
-  templateUrl: './variance-list.component.html',
-  styleUrls: ['./variance-list.component.scss']
+    selector: 'app-variance-list',
+    templateUrl: './variance-list.component.html',
+    styleUrls: ['./variance-list.component.scss'],
+    standalone: false
 })
 export class VarianceListComponent implements AfterViewInit, AfterViewChecked, OnDestroy {
   public rowSchema: any[];

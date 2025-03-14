@@ -9,9 +9,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
-  selector: 'app-frontcountry-cabins-accordion',
-  templateUrl: './frontcountry-cabins-accordion.component.html',
-  styleUrls: ['./frontcountry-cabins-accordion.component.scss'],
+    selector: 'app-frontcountry-cabins-accordion',
+    templateUrl: './frontcountry-cabins-accordion.component.html',
+    styleUrls: ['./frontcountry-cabins-accordion.component.scss'],
+    standalone: false
 })
 export class FrontcountryCabinsAccordionComponent implements OnDestroy {
   private subscriptions = new Subscription();

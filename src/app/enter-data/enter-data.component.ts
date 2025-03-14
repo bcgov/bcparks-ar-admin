@@ -8,9 +8,10 @@ import { UrlService } from '../services/url.service';
 import { DateTime } from 'luxon';
 
 @Component({
-  selector: 'app-enter-data',
-  templateUrl: './enter-data.component.html',
-  styleUrls: ['./enter-data.component.scss'],
+    selector: 'app-enter-data',
+    templateUrl: './enter-data.component.html',
+    styleUrls: ['./enter-data.component.scss'],
+    standalone: false
 })
 export class EnterDataComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();

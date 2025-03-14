@@ -5,9 +5,10 @@ import { VarianceService } from 'src/app/services/variance.service';
 
 
 @Component({
-  selector: 'app-variance-accordion',
-  templateUrl: './variance-accordion.component.html',
-  styleUrls: ['./variance-accordion.component.scss']
+    selector: 'app-variance-accordion',
+    templateUrl: './variance-accordion.component.html',
+    styleUrls: ['./variance-accordion.component.scss'],
+    standalone: false
 })
 export class VarianceAccordionComponent {
   @Input() rowSchema: any[] = [];

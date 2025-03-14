@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { FormulaService } from 'src/app/services/formula.service';
 
 @Component({
-  selector: 'app-calculation-display',
-  templateUrl: './calculation-display.component.html',
-  styleUrls: ['./calculation-display.component.scss'],
+    selector: 'app-calculation-display',
+    templateUrl: './calculation-display.component.html',
+    styleUrls: ['./calculation-display.component.scss'],
+    standalone: false
 })
 export class CalculationDisplayComponent {
   @Input() label;

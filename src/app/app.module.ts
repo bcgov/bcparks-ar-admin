@@ -1,4 +1,4 @@
-import { ApplicationRef, APP_INITIALIZER, NgModule } from '@angular/core';
+import { ApplicationRef, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -68,12 +68,10 @@ export function initConfig(
         VarianceSearchModule,
         HistoricalPillModule,
         ManageSubareasModule], providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initConfig,
-            deps: [ConfigService, ApiService, AutoFetchService, KeycloakService],
-            multi: true,
-        },
+        provideAppInitializer(() => {
+        const initializerFn = (initConfig)(inject(ConfigService), inject(ApiService), inject(AutoFetchService), inject(KeycloakService));
+        return initializerFn();
+      }),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

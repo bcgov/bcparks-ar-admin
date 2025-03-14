@@ -18,10 +18,11 @@ import {
 import { end } from '@popperjs/core';
 
 @Component({
-  selector: 'app-export-reports',
-  templateUrl: './export-reports.component.html',
-  styleUrls: ['./export-reports.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-export-reports',
+    templateUrl: './export-reports.component.html',
+    styleUrls: ['./export-reports.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 
 // TODO: Make a component for exporter cards

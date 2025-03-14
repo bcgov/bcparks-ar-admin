@@ -6,9 +6,10 @@ import { ToastService } from './services/toast.service';
 import { Constants } from './shared/utils/constants';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'attendance-and-revanue-admin';

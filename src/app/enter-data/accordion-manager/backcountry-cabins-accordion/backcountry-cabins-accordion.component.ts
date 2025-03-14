@@ -9,9 +9,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
-  selector: 'app-backcountry-cabins-accordion',
-  templateUrl: './backcountry-cabins-accordion.component.html',
-  styleUrls: ['./backcountry-cabins-accordion.component.scss'],
+    selector: 'app-backcountry-cabins-accordion',
+    templateUrl: './backcountry-cabins-accordion.component.html',
+    styleUrls: ['./backcountry-cabins-accordion.component.scss'],
+    standalone: false
 })
 export class BackcountryCabinsAccordionComponent implements OnDestroy {
   private subscriptions = new Subscription();

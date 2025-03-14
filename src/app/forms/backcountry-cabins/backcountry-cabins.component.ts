@@ -11,9 +11,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
-  selector: 'app-backcountry-cabins',
-  templateUrl: './backcountry-cabins.component.html',
-  styleUrls: ['./backcountry-cabins.component.scss'],
+    selector: 'app-backcountry-cabins',
+    templateUrl: './backcountry-cabins.component.html',
+    styleUrls: ['./backcountry-cabins.component.scss'],
+    standalone: false
 })
 export class BackcountryCabinsComponent extends RootFormComponent {
 
