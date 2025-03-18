@@ -14,7 +14,7 @@ export class AuthGuard {
   constructor(
     private readonly keycloakService: KeycloakService,
     private readonly router: Router,
-  ) {}
+  ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -81,6 +81,12 @@ export class AuthGuard {
     if (
       !this.keycloakService.isAllowed('review-data') &&
       state.url === '/review-data'
+    ) {
+      return this.router.parseUrl('/');
+    }
+
+    if (!this.keycloakService.isAllowed('manage-subareas') &&
+      state.url === '/manage-subareas'
     ) {
       return this.router.parseUrl('/');
     }
