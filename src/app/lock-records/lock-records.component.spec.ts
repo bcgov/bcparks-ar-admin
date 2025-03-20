@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ConfigService } from '../services/config.service';
@@ -11,13 +11,10 @@ describe('LockRecordsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        BsDatepickerModule.forRoot(),
-      ],
-      declarations: [LockRecordsComponent],
-      providers: [ConfigService],
-    }).compileComponents();
+    declarations: [LockRecordsComponent],
+    imports: [BsDatepickerModule.forRoot()],
+    providers: [ConfigService, provideHttpClient(withInterceptorsFromDi())]
+}).compileComponents();
   });
 
   beforeEach(() => {

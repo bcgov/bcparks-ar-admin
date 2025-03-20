@@ -9,14 +9,15 @@ import {
 import { columnSchema } from '../table.component';
 
 @Component({
-  // Throws the following linting error: https://angular.io/guide/styleguide#style-05-03
-  // This component is given an [attribute] selector because it augments
-  // the HTML element <tr>. We do this so that the child <tr> elements of a <table>
-  // can be custom components while remaining aligned with the parent <table> component.
-  // eslint-disable-next-line
-  selector: '[app-table-row]',
-  templateUrl: './table-row.component.html',
-  styleUrls: ['./table-row.component.scss'],
+    // Throws the following linting error: https://angular.io/guide/styleguide#style-05-03
+    // This component is given an [attribute] selector because it augments
+    // the HTML element <tr>. We do this so that the child <tr> elements of a <table>
+    // can be custom components while remaining aligned with the parent <table> component.
+    // eslint-disable-next-line
+    selector: '[app-table-row]',
+    templateUrl: './table-row.component.html',
+    styleUrls: ['./table-row.component.scss'],
+    standalone: false
 })
 export class TableRowComponent implements AfterViewChecked {
   @Input() columnSchema: columnSchema[];

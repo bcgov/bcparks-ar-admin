@@ -11,9 +11,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
-  selector: 'app-group-camping',
-  templateUrl: './group-camping.component.html',
-  styleUrls: ['./group-camping.component.scss'],
+    selector: 'app-group-camping',
+    templateUrl: './group-camping.component.html',
+    styleUrls: ['./group-camping.component.scss'],
+    standalone: false
 })
 export class GroupCampingComponent extends RootFormComponent {
 

@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
 
@@ -9,9 +9,9 @@ describe('FiscalYearLockService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-      providers: [ConfigService],
-    });
+    imports: [],
+    providers: [ConfigService, provideHttpClient(withInterceptorsFromDi())]
+});
     service = TestBed.inject(FiscalYearLockService);
   });
 

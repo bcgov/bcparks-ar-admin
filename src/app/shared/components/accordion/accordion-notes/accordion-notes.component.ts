@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-accordion-notes',
-  templateUrl: './accordion-notes.component.html',
-  styleUrls: ['./accordion-notes.component.scss']
+    selector: 'app-accordion-notes',
+    templateUrl: './accordion-notes.component.html',
+    styleUrls: ['./accordion-notes.component.scss'],
+    standalone: false
 })
 export class AccordionNotesComponent {
   @Input() notes: string = '';

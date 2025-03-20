@@ -5,9 +5,10 @@ import { Subscription } from 'rxjs';
 import { Utils } from '../../shared/utils/utils';
 
 @Component({
-  selector: 'app-park-header',
-  templateUrl: './park-header.component.html',
-  styleUrls: ['./park-header.component.scss'],
+    selector: 'app-park-header',
+    templateUrl: './park-header.component.html',
+    styleUrls: ['./park-header.component.scss'],
+    standalone: false
 })
 export class ParkHeaderComponent implements OnDestroy {
   public parkName;

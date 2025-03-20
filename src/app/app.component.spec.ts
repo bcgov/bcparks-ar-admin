@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ToastrModule } from 'ngx-toastr';
@@ -20,9 +20,8 @@ import { ToggleButtonModule } from './shared/components/toggle-button/toggle-but
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientModule,
+    declarations: [AppComponent],
+    imports: [RouterTestingModule,
         SidebarModule,
         ToggleButtonModule,
         BreadcrumbModule,
@@ -31,17 +30,16 @@ describe('AppComponent', () => {
         HeaderModule,
         FooterModule,
         HomeModule,
-        ToastrModule.forRoot(),
-      ],
-      declarations: [AppComponent],
-      providers: [
+        ToastrModule.forRoot()],
+    providers: [
         ConfigService,
         LoggerService,
         DataService,
         EventService,
         ToastService,
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+    ]
+}).compileComponents();
   });
 
   it('should create the app', () => {

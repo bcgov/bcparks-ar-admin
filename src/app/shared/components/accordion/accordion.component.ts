@@ -14,9 +14,10 @@ import { Constants } from '../../utils/constants';
 import { summarySection } from './summary-section/summary-section.component';
 
 @Component({
-  selector: 'app-accordion',
-  templateUrl: './accordion.component.html',
-  styleUrls: ['./accordion.component.scss'],
+    selector: 'app-accordion',
+    templateUrl: './accordion.component.html',
+    styleUrls: ['./accordion.component.scss'],
+    standalone: false
 })
 export class AccordionComponent implements OnInit, OnDestroy {
   @Input() title: string = '';

@@ -11,9 +11,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
-  selector: 'app-boating',
-  templateUrl: './boating.component.html',
-  styleUrls: ['./boating.component.scss'],
+    selector: 'app-boating',
+    templateUrl: './boating.component.html',
+    styleUrls: ['./boating.component.scss'],
+    standalone: false
 })
 export class BoatingComponent extends RootFormComponent {
 

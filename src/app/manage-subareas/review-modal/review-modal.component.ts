@@ -2,9 +2,10 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, Vie
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-review-modal',
-  templateUrl: './review-modal.component.html',
-  styleUrls: ['./review-modal.component.scss']
+    selector: 'app-review-modal',
+    templateUrl: './review-modal.component.html',
+    styleUrls: ['./review-modal.component.scss'],
+    standalone: false
 })
 export class ReviewModalComponent implements AfterViewInit {
   @ViewChild('reviewModal') reviewModal: TemplateRef<any>;

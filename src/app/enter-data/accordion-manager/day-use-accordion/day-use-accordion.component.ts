@@ -9,9 +9,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
-  selector: 'app-day-use-accordion',
-  templateUrl: './day-use-accordion.component.html',
-  styleUrls: ['./day-use-accordion.component.scss'],
+    selector: 'app-day-use-accordion',
+    templateUrl: './day-use-accordion.component.html',
+    styleUrls: ['./day-use-accordion.component.scss'],
+    standalone: false
 })
 export class DayUseAccordionComponent implements OnDestroy {
   private subscriptions = new Subscription();

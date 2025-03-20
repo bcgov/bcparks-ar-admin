@@ -7,9 +7,10 @@ import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
-  selector: 'app-edit-subarea',
-  templateUrl: './edit-subarea.component.html',
-  styleUrls: ['./edit-subarea.component.scss'],
+    selector: 'app-edit-subarea',
+    templateUrl: './edit-subarea.component.html',
+    styleUrls: ['./edit-subarea.component.scss'],
+    standalone: false
 })
 export class EditSubareaComponent implements OnInit, OnDestroy {
 

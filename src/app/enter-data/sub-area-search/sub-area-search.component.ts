@@ -9,9 +9,10 @@ import { UrlService } from 'src/app/services/url.service';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
-  selector: 'app-sub-area-search',
-  templateUrl: './sub-area-search.component.html',
-  styleUrls: ['./sub-area-search.component.scss'],
+    selector: 'app-sub-area-search',
+    templateUrl: './sub-area-search.component.html',
+    styleUrls: ['./sub-area-search.component.scss'],
+    standalone: false
 })
 export class SubAreaSearchComponent implements OnDestroy {
   @ViewChild('historicalPill') legacyTypeAheadTemplate: TemplateRef<any>;
