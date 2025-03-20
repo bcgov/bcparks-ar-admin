@@ -3,9 +3,10 @@ import { UntypedFormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-manage-subareas',
-  templateUrl: './manage-subareas.component.html',
-  styleUrls: ['./manage-subareas.component.scss'],
+    selector: 'app-manage-subareas',
+    templateUrl: './manage-subareas.component.html',
+    styleUrls: ['./manage-subareas.component.scss'],
+    standalone: false
 })
 
 export class ManageSubareasComponent {

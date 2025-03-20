@@ -11,9 +11,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 import { WinterToggleService } from 'src/app/services/winter-toggle.service';
 @Component({
-  selector: 'app-frontcountry-camping',
-  templateUrl: './frontcountry-camping.component.html',
-  styleUrls: ['./frontcountry-camping.component.scss'],
+    selector: 'app-frontcountry-camping',
+    templateUrl: './frontcountry-camping.component.html',
+    styleUrls: ['./frontcountry-camping.component.scss'],
+    standalone: false
 })
 export class FrontcountryCampingComponent extends RootFormComponent {
 

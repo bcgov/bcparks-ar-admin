@@ -6,9 +6,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-cancel-button',
-  templateUrl: './cancel-button.component.html',
-  styleUrls: ['./cancel-button.component.scss'],
+    selector: 'app-cancel-button',
+    templateUrl: './cancel-button.component.html',
+    styleUrls: ['./cancel-button.component.scss'],
+    standalone: false
 })
 export class CancelButtonComponent implements OnDestroy {
   @Input() disabled = false;

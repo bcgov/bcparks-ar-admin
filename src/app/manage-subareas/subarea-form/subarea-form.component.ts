@@ -7,9 +7,10 @@ import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
-  selector: 'app-subarea-form',
-  templateUrl: './subarea-form.component.html',
-  styleUrls: ['./subarea-form.component.scss']
+    selector: 'app-subarea-form',
+    templateUrl: './subarea-form.component.html',
+    styleUrls: ['./subarea-form.component.scss'],
+    standalone: false
 })
 export class SubareaFormComponent implements OnInit, OnDestroy {
 

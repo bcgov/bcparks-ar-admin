@@ -6,9 +6,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { FiscalYearUnlockerComponent } from './fiscal-year-unlocker/fiscal-year-unlocker.component';
 
 @Component({
-  selector: 'app-fiscal-year-lock-table',
-  templateUrl: './fiscal-year-lock-table.component.html',
-  styleUrls: ['./fiscal-year-lock-table.component.scss'],
+    selector: 'app-fiscal-year-lock-table',
+    templateUrl: './fiscal-year-lock-table.component.html',
+    styleUrls: ['./fiscal-year-lock-table.component.scss'],
+    standalone: false
 })
 export class FiscalYearLockTableComponent implements OnInit {
   @Input() data: any[];

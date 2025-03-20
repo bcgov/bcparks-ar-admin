@@ -10,9 +10,10 @@ import { UrlService } from 'src/app/services/url.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 @Component({
-  selector: 'app-frontcountry-cabins',
-  templateUrl: './frontcountry-cabins.component.html',
-  styleUrls: ['./frontcountry-cabins.component.scss'],
+    selector: 'app-frontcountry-cabins',
+    templateUrl: './frontcountry-cabins.component.html',
+    styleUrls: ['./frontcountry-cabins.component.scss'],
+    standalone: false
 })
 export class FrontcountryCabinsComponent extends RootFormComponent {
 

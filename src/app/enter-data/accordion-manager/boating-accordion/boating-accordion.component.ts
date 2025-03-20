@@ -9,9 +9,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
-  selector: 'app-boating-accordion',
-  templateUrl: './boating-accordion.component.html',
-  styleUrls: ['./boating-accordion.component.scss'],
+    selector: 'app-boating-accordion',
+    templateUrl: './boating-accordion.component.html',
+    styleUrls: ['./boating-accordion.component.scss'],
+    standalone: false
 })
 export class BoatingAccordionComponent implements OnDestroy {
   private subscriptions = new Subscription();
