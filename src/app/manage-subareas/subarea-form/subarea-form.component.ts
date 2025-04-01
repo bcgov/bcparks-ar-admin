@@ -7,10 +7,10 @@ import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
-    selector: 'app-subarea-form',
-    templateUrl: './subarea-form.component.html',
-    styleUrls: ['./subarea-form.component.scss'],
-    standalone: false
+  selector: 'app-subarea-form',
+  templateUrl: './subarea-form.component.html',
+  styleUrls: ['./subarea-form.component.scss'],
+  standalone: false
 })
 export class SubareaFormComponent implements OnInit, OnDestroy {
 
@@ -26,13 +26,34 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
   public showReviewModal: boolean = false;
 
   public activities = [
-    "Backcountry Cabins",
-    "Backcountry Camping",
-    "Boating",
-    "Day Use",
-    "Frontcountry Cabins",
-    "Frontcountry Camping",
-    "Group Camping"
+    {
+      display: 'Backcountry cabins',
+      value: 'Backcountry Cabins'
+    },
+    {
+      display: 'Backcountry camping',
+      value: 'Backcountry Camping'
+    },
+    {
+      display: 'Boating',
+      value: 'Boating'
+    },
+    {
+      display: 'Day use',
+      value: 'Day Use'
+    },
+    {
+      display: 'Frontcountry cabins',
+      value: 'Frontcountry Cabins'
+    },
+    {
+      display: 'Frontcountry camping',
+      value: 'Frontcountry Camping'
+    },
+    {
+      display: 'Group camping',
+      value: 'Group Camping'
+    }
   ];
 
   public form = new UntypedFormGroup({
@@ -263,12 +284,8 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
           value: dirtyFields?.orcs?.orcs
         },
         {
-          label: 'Park Name',
+          label: 'Park name',
           value: dirtyFields?.orcs?.parkName
-        },
-        {
-          label: 'Subarea Name',
-          value: dirtyFields?.subAreaName
         },
         {
           label: 'Region',
@@ -279,12 +296,16 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
           value: dirtyFields?.section?.displayName
         },
         {
-          label: 'Management Area',
+          label: 'Management area',
           value: dirtyFields?.managementArea?.displayName
         },
         {
           label: 'Bundle',
           value: dirtyFields?.bundle?.displayName
+        },
+        {
+          label: 'Subarea name',
+          value: dirtyFields?.subAreaName
         },
         {
           label: 'Activities',
