@@ -46,22 +46,24 @@ export class ReviewModalComponent implements AfterViewInit {
   convertToSentenceCase() {
     let activities = this.newData.find(item => item.label === 'Activities');
     let convertedActivities = [];
-    let separatedActivities = activities.value.split(', ');
-    for (const activity of separatedActivities) {
-      let words = activity.split(' ') || activity;
-      if (words && words.length > 1) {
-        for (let i = 1; i <= words.length - 1; i++) {
-          words[i] = words[i]?.toLowerCase();
+    let separatedActivities = activities?.value.split(', ');
+    if (separatedActivities && separatedActivities.length > 1) {
+      for (const activity of separatedActivities) {
+        let words = activity.split(' ') || activity;
+        if (words && words.length > 1) {
+          for (let i = 1; i <= words.length - 1; i++) {
+            words[i] = words[i]?.toLowerCase();
+          }
         }
+        const convertedActivity = words.join(' ');
+        convertedActivities.push(convertedActivity);
       }
-      const convertedActivity = words.join(' ');
-      convertedActivities.push(convertedActivity);
+      this.newData.splice(this.newData.indexOf(activities), 1);
+      this.newData.push({
+        label: 'Activities',
+        value: convertedActivities.join(', ')
+      })
     }
-    this.newData.splice(this.newData.indexOf(activities), 1);
-    this.newData.push({
-      label: 'Activities',
-      value: convertedActivities.join(', ')
-    })
   }
 
   confirmClicked() {

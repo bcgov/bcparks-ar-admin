@@ -16,6 +16,10 @@ describe('ReviewModalComponent', () => {
 
     fixture = TestBed.createComponent(ReviewModalComponent);
     component = fixture.componentInstance;
+    component['newData'] = [{
+      label: 'test',
+      value: 'test',
+    }],
     fixture.detectChanges();
   });
 
