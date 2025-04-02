@@ -64,7 +64,7 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
     section: new UntypedFormControl(null, [Validators.required]),
     managementArea: new UntypedFormControl(null, [Validators.required]),
     bundle: new UntypedFormControl(null, [Validators.required]),
-    activities: new UntypedFormControl(null, [this.selectAtLeastOneValidator()]),
+    activities: new UntypedFormControl(null, [Validators.required, this.selectAtLeastOneValidator()]),
   });
 
   public _parks = new BehaviorSubject(null);

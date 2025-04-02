@@ -5,7 +5,7 @@
       [label]="'ORCS'"
       [selectionListItems]="_parks?.value"
       [resetButton]="true"
-      [hideInvalidState]="!submitted"
+      [hideInvalidState]="true"
       [disabled]="editMode"
     >
     </ngds-typeahead-input>
@@ -17,7 +17,7 @@
       [selectionListItems]="_parkNames?.value"
       [disabled]="editMode"
       [resetButton]="true"
-      [hideInvalidState]="!submitted"
+      [hideInvalidState]="true"
     >
     </ngds-typeahead-input>
   </div>
@@ -30,7 +30,7 @@
     [resetButton]="true"
     [hideInvalidState]="true"
     [selectionListItems]="_regions.value"
-    [hideInvalidState]="!submitted"
+    [hideInvalidState]="true"
   >
   </ngds-typeahead-input>
 </div>
@@ -42,7 +42,7 @@
     [hideInvalidState]="true"
     [selectionListItems]="_sections.value"
     [disabled]="!form?.controls?.['region']?.value"
-    [hideInvalidState]="!submitted"
+    [hideInvalidState]="true"
   >
   </ngds-typeahead-input>
 </div>
@@ -54,7 +54,7 @@
     [hideInvalidState]="true"
     [selectionListItems]="_managementAreas.value"
     [disabled]="!form?.controls?.['section']?.value"
-    [hideInvalidState]="!submitted"
+    [hideInvalidState]="true"
   >
   </ngds-typeahead-input>
 </div>
@@ -65,7 +65,7 @@
     [resetButton]="true"
     [hideInvalidState]="true"
     [selectionListItems]="_bundles.value"
-    [hideInvalidState]="!submitted"
+    [hideInvalidState]="true"
   >
   </ngds-typeahead-input>
 </div>
@@ -75,7 +75,7 @@
     [control]="form?.controls?.['subAreaName']"
     [label]="'Subarea name'"
     [resetButton]="true"
-    [hideInvalidState]="!submitted"
+    [hideInvalidState]="true"
   >
   </ngds-text-input>
 </div>
@@ -87,7 +87,7 @@
     [selectionListItems]="activities"
     [resetButton]="true"
     [placeholder]="'Please select'"
-    [hideInvalidState]="!submitted"
+    [hideInvalidState]="true"
   >
   </ngds-typeahead-input>
 </div>
@@ -104,7 +104,7 @@
     type="button"
     class="btn btn-primary"
     (click)="onSubmit()"
-    [disabled]="!form?.dirty"
+    [disabled]="!form?.valid"
   >
     Submit
   </button>
