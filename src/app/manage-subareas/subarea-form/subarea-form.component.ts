@@ -116,6 +116,8 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
         if (!this.parkUpdatingFlag) {
           this.parkUpdatingFlag = true;
           this.form.controls['parkName'].setValue(value);
+          this.form.controls['orcs'].markAsDirty();
+          this.form.controls['parkName'].markAsDirty();
         }
         this.parkUpdatingFlag = false;
       })
@@ -127,6 +129,8 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
         if (!this.parkUpdatingFlag) {
           this.parkUpdatingFlag = true;
           this.form.controls['orcs'].setValue(value);
+          this.form.controls['orcs'].markAsDirty();
+          this.form.controls['parkName'].markAsDirty();
         }
         this.parkUpdatingFlag = false;
       }
