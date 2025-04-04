@@ -263,7 +263,6 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.form.markAllAsTouched();
     this.submitted = true;
-    console.log('this.form.value:', this.form.value);
     if (this.form.valid) {
       // parse subarea values
       this.submissionData = {
@@ -317,7 +316,6 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
           value: dirtyFields?.activities?.join(', ')
         }
       ];
-      console.log('newData:', this.newData);
       this.showModal();
     }
   }
