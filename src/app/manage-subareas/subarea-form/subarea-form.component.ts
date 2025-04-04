@@ -116,6 +116,8 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
         if (!this.parkUpdatingFlag) {
           this.parkUpdatingFlag = true;
           this.form.controls['parkName'].setValue(value);
+          this.form.controls['orcs'].markAsDirty();
+          this.form.controls['parkName'].markAsDirty();
         }
         this.parkUpdatingFlag = false;
       })
@@ -127,6 +129,8 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
         if (!this.parkUpdatingFlag) {
           this.parkUpdatingFlag = true;
           this.form.controls['orcs'].setValue(value);
+          this.form.controls['orcs'].markAsDirty();
+          this.form.controls['parkName'].markAsDirty();
         }
         this.parkUpdatingFlag = false;
       }
@@ -259,6 +263,7 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.form.markAllAsTouched();
     this.submitted = true;
+    console.log('this.form.value:', this.form.value);
     if (this.form.valid) {
       // parse subarea values
       this.submissionData = {
@@ -312,6 +317,7 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
           value: dirtyFields?.activities?.join(', ')
         }
       ];
+      console.log('newData:', this.newData);
       this.showModal();
     }
   }
