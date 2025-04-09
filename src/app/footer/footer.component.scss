@@ -1,9 +1,25 @@
 @import "/src/assets/themes/variables";
 
+.land-acknowledgement {
+  background: #2464A4; 
+  color: white; 
+  text-align: center; 
+  width: 100vw; 
+  margin: 0; 
+  padding: 1.2rem 0; 
+  position: relative; 
+  border-top: $bcgold 0.1rem solid; 
+}
+.land-acknowledgement p {
+  margin: 0; 
+  padding: .5rem 0; 
+  font-size: 1.2rem; 
+}
+
 @media only screen and (min-width: 769px) {
   #footer {
     background-color: $primary-nav;
-    height: 4.1rem;
+    height: 4.9rem;
     position: relative;
   }
 
@@ -43,4 +59,9 @@ a {
 
 a:hover {
   color: $bcgold;
+}
+
+#footer nav {
+  /* Remove the gold border from above nav to put it above the land acknowledgement */
+  border: none; 
 }
