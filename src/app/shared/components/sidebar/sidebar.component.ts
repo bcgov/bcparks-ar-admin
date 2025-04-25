@@ -7,9 +7,10 @@ import { Subscription } from 'rxjs';
 import { KeycloakService } from 'src/app/services/keycloak.service';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss'],
+    standalone: false
 })
 export class SidebarComponent implements OnDestroy {
   @HostBinding('class.is-toggled')
@@ -33,6 +34,8 @@ export class SidebarComponent implements OnDestroy {
         return keyCloakService.isAllowed('lock-records');
       } else if (obj.path === 'review-data') {
         return keyCloakService.isAllowed('review-data');
+      } else if (obj.path === 'manage-subareas') {
+        return keyCloakService.isAllowed('manage-subareas');
       } else if (obj.path === 'login') {
         return keyCloakService.isAuthenticated() ? false : true;
       } else {

@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { KeycloakService } from 'src/app/services/keycloak.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent {
   // This can be pulled in via the config.
@@ -41,6 +42,14 @@ export class HomeComponent {
         cardTitle: 'Review variances in data',
         cardText: 'Use this section to review variance records.',
         navigation: 'review-data',
+      });
+    }
+    if (keyCloakService.isAllowed('manage-subareas')) {
+      this.cardConfig.push({
+        cardHeader: 'Manage Subareas',
+        cardTitle: 'Add or edit subareas',
+        cardText: 'Use this section to add new subareas or make updates to existing ones.',
+        navigation: 'manage-subareas',
       });
     }
   }

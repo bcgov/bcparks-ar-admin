@@ -11,9 +11,10 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
-  selector: 'app-text-to-loading-spinner',
-  templateUrl: './text-to-loading-spinner.component.html',
-  styleUrls: ['./text-to-loading-spinner.component.scss'],
+    selector: 'app-text-to-loading-spinner',
+    templateUrl: './text-to-loading-spinner.component.html',
+    styleUrls: ['./text-to-loading-spinner.component.scss'],
+    standalone: false
 })
 export class TextToLoadingSpinnerComponent implements OnInit, OnDestroy {
   @Input() text;

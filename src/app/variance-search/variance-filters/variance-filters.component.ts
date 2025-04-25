@@ -10,9 +10,10 @@ import { UrlService } from 'src/app/services/url.service';
 import { DateTime } from 'luxon';
 
 @Component({
-  selector: 'app-variance-filters',
-  templateUrl: './variance-filters.component.html',
-  styleUrls: ['./variance-filters.component.scss']
+    selector: 'app-variance-filters',
+    templateUrl: './variance-filters.component.html',
+    styleUrls: ['./variance-filters.component.scss'],
+    standalone: false
 })
 export class VarianceFiltersComponent implements OnDestroy {
 

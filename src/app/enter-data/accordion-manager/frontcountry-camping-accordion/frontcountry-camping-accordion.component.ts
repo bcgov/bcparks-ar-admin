@@ -9,9 +9,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
-  selector: 'app-frontcountry-camping-accordion',
-  templateUrl: './frontcountry-camping-accordion.component.html',
-  styleUrls: ['./frontcountry-camping-accordion.component.scss'],
+    selector: 'app-frontcountry-camping-accordion',
+    templateUrl: './frontcountry-camping-accordion.component.html',
+    styleUrls: ['./frontcountry-camping-accordion.component.scss'],
+    standalone: false
 })
 export class FrontcountryCampingAccordionComponent implements OnDestroy {
   private subscriptions = new Subscription();
@@ -61,6 +62,25 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
       {
         isLegacy: this.data?.isLegacy || false,
         title: 'Camping party nights',
+        subtitle: 'Winter Rate',
+        attendanceLabel: 'Total attendance (people)',
+        attendanceItems: [
+
+          {
+            itemName: 'Winter rate standard',
+            value: this.data?.winterCampingPartyNightsAttendanceStandard,
+            variance: this.variance?.value?.hasOwnProperty('winterCampingPartyNightsAttendanceStandard')
+          },
+          {
+            itemName: 'Winter rate social services fee exemption',
+            value: this.data?.winterCampingPartyNightsAttendanceSocial,
+            variance: this.variance?.value?.hasOwnProperty('winterCampingPartyNightsAttendanceSocial')
+          },
+        ]
+      },
+      {
+        isLegacy: this.data?.isLegacy || false,
+        subtitle: 'Standard',
         attendanceLabel: 'Total attendance (people)',
         attendanceItems: [
           {
@@ -92,6 +112,8 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
               this.formulaService.formatLegacyAttendance(this.data?.legacyData?.legacy_frontcountryCampingTotalCampingParties).result :
               this.formulaService.frontcountryCampingPartyNightsAttendance(
                 [
+                  this.data?.winterCampingPartyNightsAttendanceStandard,
+                  this.data?.winterCampingPartyNightsAttendanceSocial,
                   this.data?.campingPartyNightsAttendanceStandard,
                   this.data?.campingPartyNightsAttendanceSenior,
                   this.data?.campingPartyNightsAttendanceSocial,
@@ -108,6 +130,8 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
           this.formulaService.formatLegacyFrontcountryCampingTotalAttendance(this.data?.legacyData?.legacy_frontcountryCampingTotalCampingParties) :
           this.formulaService.frontcountryCampingPartyAttendance(
             [
+              this.data?.winterCampingPartyNightsAttendanceStandard,
+              this.data?.winterCampingPartyNightsAttendanceSocial,
               this.data?.campingPartyNightsAttendanceStandard,
               this.data?.campingPartyNightsAttendanceSenior,
               this.data?.campingPartyNightsAttendanceSocial,

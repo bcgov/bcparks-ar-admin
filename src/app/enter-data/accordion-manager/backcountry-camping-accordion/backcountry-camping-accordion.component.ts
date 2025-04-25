@@ -9,9 +9,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
-  selector: 'app-backcountry-camping-accordion',
-  templateUrl: './backcountry-camping-accordion.component.html',
-  styleUrls: ['./backcountry-camping-accordion.component.scss'],
+    selector: 'app-backcountry-camping-accordion',
+    templateUrl: './backcountry-camping-accordion.component.html',
+    styleUrls: ['./backcountry-camping-accordion.component.scss'],
+    standalone: false
 })
 export class BackcountryCampingAccordionComponent implements OnDestroy {
   private subscriptions = new Subscription();
@@ -57,17 +58,32 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
   }
 
   buildAccordion() {
-    // legacy data is vastly different
+    // BRS-368: business logic to show grossCampingRevenue after migration.
+    // Some records will be legacy and be vastly different, but some will have
+    // both attribute data - keep `if` logic to differentiate in the future.
     if (this.data?.isLegacy) {
-      this.summaries = [{
-        attendanceItems: [
-          {
-            itemName: 'People',
-            value: this.data?.people,
-            variance: this.variance?.value?.hasOwnProperty('people')
-          }
-        ]
-      }]
+      this.summaries = [
+        {
+          attendanceItems: [
+            {
+              itemName: 'People',
+              value: this.data?.people,
+              variance: this.variance?.value?.hasOwnProperty('people')
+            }
+          ],
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross camping revenue',
+              value: this.data?.grossCampingRevenue,
+              variance: this.variance?.value?.hasOwnProperty('grossCampingRevenue')
+            },
+          ],
+          revenueTotal: this.formulaService.basicNetRevenue([
+            this.data?.grossCampingRevenue,
+          ]),
+        },
+      ];
     } else {
       this.summaries = [
         {

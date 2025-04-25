@@ -22,6 +22,9 @@ export class Constants {
     VARIANCE_LIST: 'variance-list',
     VARIANCE_LAST_EVALUATED_KEY: 'variance-last-evaluated-key',
     VARIANCE_WARNING_TRIGGERED_FIELDS: 'variance-warning-triggered-fields',
+    REGION_LIST: 'region-list',
+    CURRENT_REGION: 'current-region',
+    BUNDLE_LIST: 'bundle-list',
   };
 
   public static readonly ApplicationRoles: any = {
@@ -93,6 +96,8 @@ export class Constants {
       revenueGrossCamping: 0.2,
     },
     frontCountryCamping: {
+      winterCampingPartyNightsAttendanceStandard: 0.2,
+      winterCampingPartyNightsAttendanceSocial: 0.2,
       campingPartyNightsAttendanceStandard: 0.2,
       campingPartyNightsAttendanceSenior: 0.2,
       campingPartyNightsAttendanceSocial: 0.2,

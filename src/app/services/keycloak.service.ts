@@ -156,6 +156,7 @@ export class KeycloakService {
     // admin only routes
     let adminOnlyRoutes = [
       'lock-records',
+      'manage-subareas'
     ]
     if (!adminOnlyRoutes.find(route => route === service)) {
       return true;

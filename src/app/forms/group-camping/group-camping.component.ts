@@ -11,9 +11,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
-  selector: 'app-group-camping',
-  templateUrl: './group-camping.component.html',
-  styleUrls: ['./group-camping.component.scss'],
+    selector: 'app-group-camping',
+    templateUrl: './group-camping.component.html',
+    styleUrls: ['./group-camping.component.scss'],
+    standalone: false
 })
 export class GroupCampingComponent extends RootFormComponent {
 
@@ -42,7 +43,7 @@ export class GroupCampingComponent extends RootFormComponent {
       youthRateGroupsAttendancePeople: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsAttendancePeople')] }),
       standardRateGroupsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('standardRateGroupsRevenueGross')] }),
       youthRateGroupsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsRevenueGross')] }),
-      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(100)] }),
+      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {

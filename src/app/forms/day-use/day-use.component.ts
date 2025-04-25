@@ -11,9 +11,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
-  selector: 'app-day-use',
-  templateUrl: './day-use.component.html',
-  styleUrls: ['./day-use.component.scss'],
+    selector: 'app-day-use',
+    templateUrl: './day-use.component.html',
+    styleUrls: ['./day-use.component.scss'],
+    standalone: false
 })
 export class DayUseComponent extends RootFormComponent {
 
@@ -42,7 +43,7 @@ export class DayUseComponent extends RootFormComponent {
       otherDayUseRevenueHotSprings: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherDayUseRevenueHotSprings')] }),
       picnicRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('picnicRevenueGross')] }),
       picnicRevenueShelter: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('picnicRevenueShelter')] }),
-      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(100)] }),
+      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {

@@ -10,9 +10,10 @@ import { UrlService } from 'src/app/services/url.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 @Component({
-  selector: 'app-frontcountry-cabins',
-  templateUrl: './frontcountry-cabins.component.html',
-  styleUrls: ['./frontcountry-cabins.component.scss'],
+    selector: 'app-frontcountry-cabins',
+    templateUrl: './frontcountry-cabins.component.html',
+    styleUrls: ['./frontcountry-cabins.component.scss'],
+    standalone: false
 })
 export class FrontcountryCabinsComponent extends RootFormComponent {
 
@@ -32,7 +33,7 @@ export class FrontcountryCabinsComponent extends RootFormComponent {
     this.form = new UntypedFormGroup({
       totalAttendanceParties: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('totalAttendanceParties')] }),
       revenueGrossCamping: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('revenueGrossCamping')] }),
-      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(100)] }),
+      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {

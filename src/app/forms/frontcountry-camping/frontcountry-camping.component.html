@@ -13,7 +13,57 @@
     <!-- Camping party nights -->
     <h2>Camping party nights</h2>
     <div class="row">
+      <!-- Winter -->
+      <div class="col-12 d-flex flex-column">
+        <div class="row">
+          <!-- Winter Toggle-->
+          <div class="row">
+            <div class="col-12 col-lg-6 m-3 form-check form-switch align-items-end">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [checked]="winter"
+                (change)="onWinterToggle()"
+                name="winterCheckbox"
+              />
+              <div *ngIf="winter">Winter</div>
+              <div *ngIf="!winter" class="text-muted">Winter</div>
+            </div>
+          </div>
+          <!-- Winter Standard -->
+          <div *ngIf="winter" class="row">
+            <h3 class="pt-3">Winter rate</h3>
+            <div class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('winterCampingPartyNightsAttendanceStandard') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('winterCampingPartyNightsAttendanceStandard')}" placement="bottom"
+              triggers="mouseenter:mouseleave">
+              <ngds-number-input [control]="form?.controls?.['winterCampingPartyNightsAttendanceStandard']" [decimalPlaces]="0"
+                [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Winter rate standard'"
+                [placeholder]="'No data'" [loadWhile]="loading">
+                <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+              </ngds-number-input>
+            </div>
+            <!-- Winter Social -->
+            <div class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('winterCampingPartyNightsAttendanceSocial') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('winterCampingPartyNightsAttendanceSocial')}" placement="bottom"
+              triggers="mouseenter:mouseleave">
+              <ngds-number-input [control]="form?.controls?.['winterCampingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
+                [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+                [label]="'Winter rate social services fee exemption'" [placeholder]="'No data'" [loadWhile]="loading">
+                <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+              </ngds-number-input>
+            </div>
+            <div class="row">
+              <!-- Attendance info -->
+              <app-info-text class="text-block"
+                [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Attendance -->
+      <h3 class="pt-3">Standard</h3>
       <div class="col-12 col-lg-6 d-flex flex-column">
         <div class="row">
           <!-- Standard -->
@@ -53,7 +103,7 @@
         <div class="row">
           <!-- Attendance info -->
           <app-info-text class="text-block"
-            [text]="'Winter, Walk-in, and Unable to Collect should be added to Standard.'"></app-info-text>
+            [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
         </div>
         <div class="row">
           <!-- Long stay -->

@@ -75,6 +75,89 @@ export class SubAreaService {
     this.loadingService.removeToFetchList(id);
   }
 
+  async fetchRegions(regionId = null) {
+    // Fetch regions. If regionId is provided, fetch the region with that id.
+    let res;
+    let errorSubject = 'regions';
+    try {
+      if (regionId) {
+        this.loggerService.debug(`Region GET: ${regionId}`);
+        this.loadingService.addToFetchList(Constants.dataIds.CURRENT_REGION);
+        res = await firstValueFrom(this.apiService.get('regions', { regionId: regionId }));
+        this.dataService.setItemValue(Constants.dataIds.CURRENT_REGION, res);
+      } else {
+        this.loggerService.debug(`Region GET: all`);
+        this.loadingService.addToFetchList(Constants.dataIds.REGION_LIST);
+        res = await firstValueFrom(this.apiService.get('regions'));
+        this.dataService.setItemValue(Constants.dataIds.REGION_LIST, res);
+      }
+    } catch (error) {
+      this.loggerService.error(`${error}`);
+      this.toastService.addMessage(
+        `Please refresh the page.`,
+        `Error getting ${errorSubject}`,
+        ToastTypes.ERROR
+      );
+      this.eventService.setError(
+        new EventObject(EventKeywords.ERROR, String(error), 'Sub-area Service - Regions')
+      );
+    }
+    this.loadingService.removeToFetchList(Constants.dataIds.REGION_LIST);
+    this.loadingService.removeToFetchList(Constants.dataIds.CURRENT_REGION);
+    return res;
+  };
+
+  async fetchBundles() {
+    // Fetch bundle list
+    let res;
+    let errorSubject = 'bundles';
+    try {
+      this.loggerService.debug(`Bundle GET: all`);
+      this.loadingService.addToFetchList(Constants.dataIds.BUNDLE_LIST);
+      res = await firstValueFrom(this.apiService.get('bundles'));
+      this.dataService.setItemValue(Constants.dataIds.BUNDLE_LIST, res);
+    } catch (error) {
+      this.loggerService.error(`${error}`);
+      this.toastService.addMessage(
+        `Please refresh the page.`,
+        `Error getting ${errorSubject}`,
+        ToastTypes.ERROR
+      );
+      this.eventService.setError(
+        new EventObject(EventKeywords.ERROR, String(error), 'Sub-area Service - Bundles')
+      );
+    }
+    this.loadingService.removeToFetchList(Constants.dataIds.BUNDLE_LIST);
+    return res;
+  }
+
+  async createSubarea(data) {
+    let res;
+    let errorSubject = 'sub-area';
+    try {
+      this.loggerService.debug(`Sub-area POST`);
+      this.loadingService.addToFetchList('creating-subarea');
+      res = await firstValueFrom(this.apiService.post('subArea', data));
+      this.toastService.addMessage(
+        `Sub-area created successfully.`,
+        `Success creating ${data?.subAreaName}`,
+        ToastTypes.SUCCESS
+      );
+    } catch (error) {
+      this.loggerService.error(`${error}`);
+      this.toastService.addMessage(
+        `Please refresh the page.`,
+        `Error creating ${errorSubject}`,
+        ToastTypes.ERROR
+      );
+      this.eventService.setError(
+        new EventObject(EventKeywords.ERROR, String(error), 'Sub-area Service')
+      );
+    }
+    this.loadingService.removeToFetchList('creating-subarea');
+    return res;
+  }
+
   async fetchSubareasByOrcs(orcs) {
     // return all subareas belonging to the given orcs.
     let res;

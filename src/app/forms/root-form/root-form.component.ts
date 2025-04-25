@@ -11,8 +11,9 @@ import { VarianceService } from 'src/app/services/variance.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
-  selector: 'app-root-form',
-  templateUrl: './root-form.component.html'
+    selector: 'app-root-form',
+    templateUrl: './root-form.component.html',
+    standalone: false
 })
 export class RootFormComponent implements OnInit, OnDestroy {
 
@@ -24,6 +25,7 @@ export class RootFormComponent implements OnInit, OnDestroy {
   public showVarianceModal: boolean = false;
   public activityType;
   public accordionType;
+  public maxVarianceNotesCharacters = 200;
   public invalidConfig = {
     showMessage: false
   };

@@ -7,9 +7,10 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { DateTime, Duration } from 'luxon';
 
 @Component({
-  selector: 'app-lock-records',
-  templateUrl: './lock-records.component.html',
-  styleUrls: ['./lock-records.component.scss'],
+    selector: 'app-lock-records',
+    templateUrl: './lock-records.component.html',
+    styleUrls: ['./lock-records.component.scss'],
+    standalone: false
 })
 export class LockRecordsComponent {
 

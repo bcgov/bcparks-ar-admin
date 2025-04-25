@@ -12,7 +12,7 @@ export class ApiService {
   apiPath: string;
   env: 'local' | 'dev' | 'test' | 'prod';
 
-  constructor(private http: HttpClient, private configService: ConfigService) {}
+  constructor(private http: HttpClient, private configService: ConfigService) { }
 
   init() {
     this.apiPath =
@@ -26,8 +26,11 @@ export class ApiService {
   }
 
   post(pk, obj, queryParamsObject = null as any) {
-    let queryString = this.generateQueryString(queryParamsObject);
-    return this.http.post<any>(`${this.apiPath}/${pk}?${queryString}`, obj);
+    if (queryParamsObject) {
+      let queryString = this.generateQueryString(queryParamsObject);
+      return this.http.post<any>(`${this.apiPath}/${pk}?${queryString}`, obj);
+    }
+    return this.http.post<any>(`${this.apiPath}/${pk}`, obj);
   }
 
   get(pk, queryParamsObject = null as any) {

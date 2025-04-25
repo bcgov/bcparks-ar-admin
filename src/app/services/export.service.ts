@@ -79,7 +79,12 @@ export class ExportService {
           throw 'Missing fiscal year end property';
         }
       } else {
-        res = await firstValueFrom(this.apiService.get('export'));
+        res = await firstValueFrom(
+          this.apiService.get('export', {
+            dateRangeStart: params?.dateRangeStart,
+            dateRangeEnd: params?.dateRangeEnd
+          })
+        );
       }
       if (res.error) {
         throw res.error;
@@ -143,7 +148,11 @@ export class ExportService {
         );
       } else {
         res = await firstValueFrom(
-          this.apiService.get('export', { getJob: true }),
+          this.apiService.get('export', {
+            getJob: true,
+            dateRangeStart: params?.dateRangeStart,
+            dateRangeEnd: params?.dateRangeEnd,
+          }),
         );
       }
       if (res.error || res.jobObj?.progressState === 'error') {
@@ -196,10 +205,18 @@ export class ExportService {
     }
     // Every time we poll, we update the data service.
     this.dataService.setItemValue(pollObj.dataId, res);
+
+    // If no data, retun and stop polling
+    if (res.jobObj && res.jobObj?.progressState == 'no_data') {
+      tickObj.state = 'finished';
+      return tickObj;
+    }
+
     if (res.jobObj && res.jobObj?.progressState !== 'complete') {
       await this.delay(this.pollingRate);
       return tickObj;
     }
+
     tickObj.state = 'finished';
     return tickObj;
   }

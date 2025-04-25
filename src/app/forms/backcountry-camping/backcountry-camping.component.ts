@@ -11,9 +11,10 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 
 @Component({
-  selector: 'app-backcountry-camping',
-  templateUrl: './backcountry-camping.component.html',
-  styleUrls: ['./backcountry-camping.component.scss'],
+    selector: 'app-backcountry-camping',
+    templateUrl: './backcountry-camping.component.html',
+    styleUrls: ['./backcountry-camping.component.scss'],
+    standalone: false
 })
 export class BackcountryCampingComponent extends RootFormComponent {
 
@@ -33,7 +34,7 @@ export class BackcountryCampingComponent extends RootFormComponent {
     this.form = new UntypedFormGroup({
       people: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('people')] }),
       grossCampingRevenue: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('grossCampingRevenue')] }),
-      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(100)] }),
+      notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {

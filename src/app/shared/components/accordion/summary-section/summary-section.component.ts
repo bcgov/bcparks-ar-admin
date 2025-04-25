@@ -12,6 +12,7 @@ export interface summaryLineItem {
 
 export interface summarySection {
   title?: string;
+  subtitle?: string;
   isLegacy?: boolean;
   attendanceLabel?: string;
   attendanceTotal?: formulaResult;
@@ -22,9 +23,10 @@ export interface summarySection {
 }
 
 @Component({
-  selector: 'app-summary-section',
-  templateUrl: './summary-section.component.html',
-  styleUrls: ['./summary-section.component.scss'],
+    selector: 'app-summary-section',
+    templateUrl: './summary-section.component.html',
+    styleUrls: ['./summary-section.component.scss'],
+    standalone: false
 })
 export class SummarySectionComponent implements OnInit {
   @Input() section: summarySection = {};

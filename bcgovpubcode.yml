@@ -1,7 +1,7 @@
 ---
 data_management_roles:
-  data_custodian: Jessica Wade
-  product_owner: Jessica Wade
+  data_custodian: Rumon Carter
+  product_owner: Lindsay Macfarlane
 product_external_dependencies:
   identity_authorization:
     - IDIR
@@ -15,7 +15,7 @@ product_information:
   business_capabilities_standard:
     - Financial Management
   ministry:
-    - Environment and Climate Change Strategy
+    - Ministry of Environment and Parks ENV
   product_acronym: A&R
   product_description: >-
     A&R helps Park Operators, BC Parks, and the BC Government track important
@@ -24,7 +24,7 @@ product_information:
   product_name: Attendance and Revenue
   product_urls:
     - https://attendance-revenue.bcparks.ca/
-  program_area: Conservation and Recreation Division
+  program_area: Parks and Recreation Program
 product_technology_information:
   backend_frameworks:
     - name: Node.js
