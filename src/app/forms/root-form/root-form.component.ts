@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ActivityService } from 'src/app/services/activity.service';
@@ -11,9 +11,9 @@ import { VarianceService } from 'src/app/services/variance.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
 @Component({
-    selector: 'app-root-form',
-    templateUrl: './root-form.component.html',
-    standalone: false
+  selector: 'app-root-form',
+  templateUrl: './root-form.component.html',
+  standalone: false
 })
 export class RootFormComponent implements OnInit, OnDestroy {
 
@@ -22,6 +22,8 @@ export class RootFormComponent implements OnInit, OnDestroy {
   public attendanceTotal: formulaResult = { result: null, formula: '' };
   public revenueTotal: formulaResult = { result: null, formula: '' };
 
+  public varianceReasons = Constants.varianceReasons;
+  public varianceReasonsForm: any = {};
   public showVarianceModal: boolean = false;
   public activityType;
   public accordionType;
@@ -62,6 +64,10 @@ export class RootFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.varianceReasonsForm = new UntypedFormGroup({
+      reason: new UntypedFormControl(this.varianceReasons[0].value),
+      subReason: new UntypedFormControl(null),
+    });
     // get values from URL:
     this.loadFromUrl();
     this.afterOnInit();
@@ -73,6 +79,20 @@ export class RootFormComponent implements OnInit, OnDestroy {
         }
       })
     );
+    // On variance reason change, update notes field
+    this.subscriptions.add(
+      this.varianceReasonsForm.controls['reason'].valueChanges.subscribe((res) => {
+        if (res && res !== this.varianceReasons[0].value) {
+          this.form?.controls?.['notes']?.setValue(res);
+        }
+      }));
+    // On variance sub-reason change, update notes field
+    this.subscriptions.add(
+      this.varianceReasonsForm.controls['subReason'].valueChanges.subscribe((res) => {
+        if (res) {
+          this.form?.controls?.['notes']?.setValue(res);
+        }
+      }));
   }
 
   getExistingVariance(activity) {
@@ -135,6 +155,15 @@ export class RootFormComponent implements OnInit, OnDestroy {
 
   getUrlParams() {
     this.urlParams = this.urlService.getQueryParams();
+  }
+
+  getVarianceSubReasons() {
+    const reason = this.varianceReasonsForm.controls['reason'].value;
+    const found = this.varianceReasons.find((e) => e.value === reason);
+    if (found?.subCategories) {
+      return found.subCategories;
+    }
+    return [];
   }
 
   async fetchActivityRecord() {
