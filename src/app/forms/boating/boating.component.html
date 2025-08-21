@@ -141,14 +141,38 @@
   <!-- Variance notes -->
   <div class="form-section">
     <h2>Variance notes</h2>
-    <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
+    <div class="row">
+      <ngds-picklist-input
+        class="col-lg-4"
+        [control]="varianceReasonsForm?.controls?.['reason']"
+        [loadWhile]="loading"
+        [label]="'Variance category'"
+        [selectionListItems]="varianceReasons"
+        [placeholder]="'Please select'"
+      >
+      </ngds-picklist-input>
+    </div>
+    <div class="row">
+      <ngds-picklist-input
+        class="col-lg-4"
+        *ngIf="getVarianceSubReasons()?.length > 0"
+        [control]="varianceReasonsForm?.controls?.['subReason']"
+        [loadWhile]="loading"
+        [label]="'Subcategory'"
+        [selectionListItems]="getVarianceSubReasons()"
+        [placeholder]="'Please select'"
+      >
+      </ngds-picklist-input>
+    </div>
     <ngds-text-input
       [control]="form?.controls?.['notes']"
       [showCharacterCount]="true"
       [multiline]="true"
       [loadWhile]="loading"
+      [label]="'Notes'"
     >
     </ngds-text-input>
+    <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
   </div>
 </form>
 

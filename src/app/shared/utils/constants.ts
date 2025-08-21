@@ -122,4 +122,120 @@ export class Constants {
       youthRateGroupsRevenueGross: 0.2,
     },
   };
+
+  public static readonly varianceReasons = [
+    {
+      value: 'Other',
+    },
+    {
+      value: 'Change in campground capacity',
+      subCategories: [
+        {
+          value: 'Sites added',
+        },
+        {
+          value: 'Sites closed',
+        },
+      ]
+    },
+    {
+      value: 'Change of operating dates',
+    },
+    {
+      value: 'Construction',
+      subCategories: [
+        {
+          value: 'Full closure due to construction',
+        },
+        {
+          value: 'Partial closure due to construction',
+        },
+        {
+          value: 'Attendance/revenue impacted due to construction',
+        },
+      ]
+    },
+    {
+      value: 'Counter unavailable/broken',
+      subCategories: [
+        {
+          value: '3 year estimate used',
+        },
+        {
+          value: 'No data',
+        }
+      ]
+    },
+    {
+      value: 'Event',
+    },
+    {
+      value: 'Flood',
+      subCategories: [
+        {
+          value: 'Flood event',
+        },
+        {
+          value: 'Existing water event',
+        }
+      ]
+    },
+    {
+      value: 'Land instability',
+    },
+    {
+      value: 'New to reservation system',
+    },
+    {
+      value: 'No senior camping parties',
+    },
+    {
+      value: 'No SSCFE or other parties',
+    },
+    {
+      value: 'Trail closure',
+    },
+    {
+      value: 'Unknown',
+    },
+    {
+      value: 'Visual count',
+    },
+    {
+      value: 'Weather',
+      subCategories: [
+        {
+          value: 'Good/Sunny weather',
+        },
+        {
+          value: 'Cold/Rainy weather',
+        },
+        {
+          value: 'Snow closure',
+        }
+      ]
+    },
+    {
+      value: 'Wildfire',
+      subCategories: [
+        {
+          value: 'Full closure',
+        },
+        {
+          value: 'Smokey conditions/poor air quality',
+        }
+      ]
+    },
+    {
+      value: 'Wildlife closure',
+      subCategories: [
+        {
+          value: 'Bear in area',
+        },
+        {
+          value: 'Human wildlife conflict',
+        }
+      ]
+    },
+  ];
 }
