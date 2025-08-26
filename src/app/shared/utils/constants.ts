@@ -219,6 +219,9 @@ export class Constants {
       value: 'Wildfire',
       subCategories: [
         {
+          value: 'Partial closure',
+        },
+        {
           value: 'Full closure',
         },
         {
