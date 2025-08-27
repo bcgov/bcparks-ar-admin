@@ -85,6 +85,9 @@ export class RootFormComponent implements OnInit, OnDestroy {
         if (res && res !== this.varianceReasons[0].value) {
           this.form?.controls?.['notes']?.setValue(res);
         }
+        if (res && res === 'Other') {
+          this.form?.controls?.['notes']?.reset();
+        }
       }));
     // On variance sub-reason change, update notes field
     this.subscriptions.add(
