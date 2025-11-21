@@ -69,11 +69,36 @@ jobs:
         working-directory: ./
         env:
           NODE_ENV: production
-          REACT_APP_API_URL: ${{ vars.API_GATEWAY_URL }}
-          REACT_APP_KEYCLOAK_URL: ${{ secrets.KEYCLOAK_URL }}
-          REACT_APP_KEYCLOAK_REALM: ${{ vars.KEYCLOAK_REALM }}
-          REACT_APP_KEYCLOAK_CLIENT_ID: ${{ secrets.KEYCLOAK_CLIENT_ID }}
         run: yarn build
+      
+      - name: Generate environment configuration
+        run: |
+          cat > ./dist/env.js << 'EOF'
+          (function (window) {
+              window.__env = window.__env || {};
+
+              window.__env.logLevel = 0;
+
+              // Get config from remote host?
+              window.__env.configEndpoint = false;
+
+              // Environment name
+              window.__env.ENVIRONMENT = 'lza-dev';
+
+              // API
+              window.__env.API_LOCATION = '${{ vars.API_GATEWAY_URL }}';
+              window.__env.API_PATH = '/api';
+              window.__env.API_PUBLIC_PATH = '/api';
+
+              // Keycloak
+              window.__env.KEYCLOAK_CLIENT_ID = '${{ secrets.KEYCLOAK_CLIENT_ID }}';
+              window.__env.KEYCLOAK_URL = '${{ secrets.KEYCLOAK_URL }}';
+              window.__env.KEYCLOAK_REALM = '${{ vars.KEYCLOAK_REALM }}';
+              window.__env.KEYCLOAK_ENABLED = true;
+          }(this));
+          EOF
+          echo "✓ Generated env.js with LZA dev configuration"
+          cat ./dist/env.js
 
       - name: SAM Build
         run: sam build --use-container --config-env lza-dev
