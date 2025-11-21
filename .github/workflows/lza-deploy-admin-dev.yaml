@@ -80,7 +80,7 @@ jobs:
               window.__env.logLevel = 0;
 
               // Get config from remote host?
-              window.__env.configEndpoint = false;
+              window.__env.configEndpoint = true;
 
               // Environment name
               window.__env.ENVIRONMENT = 'lza-dev';
