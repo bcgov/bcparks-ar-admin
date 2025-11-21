@@ -91,6 +91,12 @@ jobs:
               EnvDomainName="dev-ar.bcparks.ca" \
               DomainCertificateArn="arn:aws:acm:us-east-1:059942063916:certificate/3828a51b-0e13-4872-a2c8-3e9c71dae926"
 
+      - name: Upload build files to S3
+        run: |
+          echo "Uploading build files to S3 bucket..."
+          aws s3 sync ./build s3://bc-parks-ar-admin-lza-dev-dev/ --delete
+          echo "✓ Build files uploaded successfully"
+
       - name: Get CloudFront distribution ID
         id: get-distribution
         run: |
