@@ -20,6 +20,9 @@ jobs:
     runs-on: ubuntu-22.04
     environment: lza-dev
     timeout-minutes: 20
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout repository
