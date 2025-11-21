@@ -87,7 +87,9 @@ jobs:
               BudgetNumber=${{ vars.BUDGET_NUMBER }} \
               AwsAccountList="${{ vars.AWS_ACCOUNT_LIST }}" \
               ApiGatewayId=${{ vars.AR_API_ID }} \
-              Stage=api
+              Stage=api \
+              EnvDomainName="dev-ar.bcparks.ca" \
+              DomainCertificateArn="arn:aws:acm:us-east-1:059942063916:certificate/3828a51b-0e13-4872-a2c8-3e9c71dae926"
 
       - name: Get CloudFront distribution ID
         id: get-distribution
