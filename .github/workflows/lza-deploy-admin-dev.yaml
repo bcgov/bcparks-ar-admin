@@ -87,8 +87,8 @@ jobs:
 
               // API
               window.__env.API_LOCATION = '${{ vars.API_GATEWAY_URL }}';
-              window.__env.API_PATH = '/api';
-              window.__env.API_PUBLIC_PATH = '/api';
+              window.__env.API_PATH = '';
+              window.__env.API_PUBLIC_PATH = '';
 
               // Keycloak
               window.__env.KEYCLOAK_CLIENT_ID = '${{ secrets.KEYCLOAK_CLIENT_ID }}';
