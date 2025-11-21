@@ -63,7 +63,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Build application
         working-directory: ./
@@ -73,7 +73,7 @@ jobs:
           REACT_APP_KEYCLOAK_URL: ${{ secrets.KEYCLOAK_URL }}
           REACT_APP_KEYCLOAK_REALM: ${{ vars.KEYCLOAK_REALM }}
           REACT_APP_KEYCLOAK_CLIENT_ID: ${{ secrets.KEYCLOAK_CLIENT_ID }}
-        run: npm run build
+        run: yarn build
 
       - name: SAM Build
         run: sam build --use-container --config-env lza-dev
