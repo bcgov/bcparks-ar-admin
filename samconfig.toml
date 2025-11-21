@@ -1,0 +1,46 @@
+version = 0.1
+
+[default.global.parameters]
+stack_name = "bc-parks-ar-admin"
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.validate.parameters]
+lint = true
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+resolve_s3 = true
+region = "ca-central-1"
+
+[default.package.parameters]
+resolve_s3 = true
+region = "ca-central-1"
+
+[default.sync.parameters]
+watch = true
+
+[default.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[default.local_start_lambda.parameters]
+warm_containers = "EAGER"
+
+# LZA Dev Environment Configuration
+[lza-dev.global.parameters]
+stack_name = "bc-parks-ar-admin-lza-dev"
+
+[lza-dev.build.parameters]
+cached = true
+parallel = true
+
+[lza-dev.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+resolve_s3 = true
+region = "ca-central-1"
+s3_prefix = "bc-parks-ar-admin-lza-dev"
+tags = "Environment=\"lza-dev\" Project=\"bcparks\" ManagedBy=\"sam\" Application=\"ar-admin\""
