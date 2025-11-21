@@ -1,0 +1,119 @@
+name: Deploy Admin to LZA Dev
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**"
+      - "!.github/**"
+      - ".github/workflows/lza-deploy-admin-dev.yaml"
+  workflow_dispatch:
+
+env:
+  TF_VERSION: 0.14.4
+  NODE_VERSION: 20
+
+jobs:
+  deploy:
+    name: Deploy to LZA Dev
+    runs-on: ubuntu-22.04
+    environment: lza-dev
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Setup AWS SAM
+        uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.TERRAFORM_DEPLOY_ROLE_ARN }}
+          role-session-name: GHAAdminLzaDev
+          aws-region: ca-central-1
+
+      - name: Display environment info
+        run: |
+          echo "Deploying BC Parks AR Admin to LZA Dev"
+          echo "AWS Account: ${{ vars.AWS_ACCOUNT_ID }}"
+          echo "Environment: lza-dev"
+          echo "Domain: ${{ vars.PUBLIC_FRONTEND }}"
+          echo "API URL: ${{ vars.API_GATEWAY_URL }}"
+          echo "Node version: $(node --version)"
+          echo "SAM version: $(sam --version)"
+          echo "AWS CLI version: $(aws --version)"
+
+      - name: Install dependencies
+        working-directory: ./
+        run: npm ci
+
+      - name: Build application
+        working-directory: ./
+        env:
+          NODE_ENV: production
+          REACT_APP_API_URL: ${{ vars.API_GATEWAY_URL }}
+          REACT_APP_KEYCLOAK_URL: ${{ secrets.KEYCLOAK_URL }}
+          REACT_APP_KEYCLOAK_REALM: ${{ vars.KEYCLOAK_REALM }}
+          REACT_APP_KEYCLOAK_CLIENT_ID: ${{ secrets.KEYCLOAK_CLIENT_ID }}
+        run: npm run build
+
+      - name: SAM Build
+        run: sam build --use-container --config-env lza-dev
+
+      - name: SAM Deploy
+        run: |
+          sam deploy \
+            --config-env lza-dev \
+            --no-fail-on-empty-changeset \
+            --parameter-overrides \
+              BudgetNumber=${{ vars.BUDGET_NUMBER }} \
+              AwsAccountList=${{ vars.AWS_ACCOUNT_LIST }} \
+              ApiGatewayId=${{ vars.AR_API_ID }} \
+              Stage=api
+
+      - name: Get CloudFront distribution ID
+        id: get-distribution
+        run: |
+          DISTRIBUTION_ID=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?Comment=='bc-parks-ar-admin-lza-dev'].Id" \
+            --output text)
+          echo "distribution_id=${DISTRIBUTION_ID}" >> $GITHUB_OUTPUT
+          echo "CloudFront Distribution ID: ${DISTRIBUTION_ID}"
+
+      - name: Create CloudFront invalidation
+        if: steps.get-distribution.outputs.distribution_id != ''
+        run: |
+          echo "Creating CloudFront invalidation for distribution ${{ steps.get-distribution.outputs.distribution_id }}"
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.get-distribution.outputs.distribution_id }} \
+            --paths "/*" \
+            --no-cli-pager
+
+      - name: Deployment summary
+        run: |
+          echo "=========================================="
+          echo "✓ Admin deployment completed successfully"
+          echo "=========================================="
+          echo ""
+          echo "Admin URL: https://${{ vars.PUBLIC_FRONTEND }}"
+          echo "API URL: ${{ vars.API_GATEWAY_URL }}"
+          echo ""
+          echo "Next steps:"
+          echo "1. Verify admin loads at https://${{ vars.PUBLIC_FRONTEND }}"
+          echo "2. Test authentication flow"
+          echo "3. Verify API connectivity"
