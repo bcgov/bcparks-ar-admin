@@ -24,14 +24,17 @@ export class ConfigService {
     if (this.configuration?.configEndpoint !== undefined
         && this.configuration['configEndpoint'] === true) {
       try {
-        // Attempt to get application via this.httpClient. This uses the url of the application that you are running it from
-        // This will not work for local because it will try and get localhost:4200/api instead of 3000/api...
+        // Construct the full config endpoint URL using API_LOCATION and API_PATH
+        const apiLocation = this.configuration['API_LOCATION'] || '';
+        const apiPath = this.configuration['API_PATH'] || '/api';
+        const configUrl = `${apiLocation}${apiPath}/config`;
+        
         this.configuration = await firstValueFrom(
-          this.httpClient.get(`api/config`)
+          this.httpClient.get(configUrl)
         );
       } catch (e) {
         // If all else fails, we'll just use the variables found in env.js
-        console.error('Error getting local configuration:', e);
+        console.error('Error getting remote configuration:', e);
       }
     }
 
