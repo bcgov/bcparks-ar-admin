@@ -105,6 +105,7 @@ jobs:
             --config-env lza-test \
             --no-fail-on-empty-changeset \
             --parameter-overrides \
+              Env=test \
               BudgetNumber=${{ vars.BUDGET_NUMBER }} \
               AwsAccountList="${{ vars.AWS_ACCOUNT_LIST }}" \
               ApiGatewayId=${{ vars.AR_API_ID }} \
