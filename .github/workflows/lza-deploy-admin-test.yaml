@@ -1,0 +1,152 @@
+name: Deploy Admin to LZA Test
+
+on:
+  push:
+    tags:
+      - 'v*.*.*-rc*'  # Trigger on pre-release tags like v1.0.0-rc1
+  workflow_dispatch:
+
+env:
+  TF_VERSION: 0.14.4
+  NODE_VERSION: 20
+
+jobs:
+  deploy:
+    name: Deploy to LZA Test
+    runs-on: ubuntu-22.04
+    environment: lza-test
+    timeout-minutes: 20
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Setup AWS SAM
+        uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.TERRAFORM_DEPLOY_ROLE_ARN }}
+          role-session-name: GHAAdminLzaTest
+          aws-region: ca-central-1
+
+      - name: Display environment info
+        run: |
+          echo "Deploying BC Parks AR Admin to LZA Test"
+          echo "AWS Account: ${{ vars.AWS_ACCOUNT_ID }}"
+          echo "Environment: lza-test"
+          echo "Domain: test-ar.bcparks.ca"
+          echo "API URL: ${{ vars.API_GATEWAY_URL }}"
+          echo "Node version: $(node --version)"
+          echo "SAM version: $(sam --version)"
+          echo "AWS CLI version: $(aws --version)"
+
+      - name: Install dependencies
+        working-directory: ./
+        run: yarn install --frozen-lockfile
+
+      - name: Build application
+        working-directory: ./
+        env:
+          NODE_ENV: production
+        run: yarn build
+      
+      - name: Generate environment configuration
+        run: |
+          cat > ./dist/env.js << 'EOF'
+          (function (window) {
+              window.__env = window.__env || {};
+
+              window.__env.logLevel = 0;
+
+              // Get config from remote host?
+              window.__env.configEndpoint = true;
+
+              // Environment name
+              window.__env.ENVIRONMENT = 'lza-test';
+
+              // API
+              window.__env.API_LOCATION = '${{ vars.API_GATEWAY_URL }}';
+              window.__env.API_PATH = '/lza-test';
+              window.__env.API_PUBLIC_PATH = '/lza-test';
+
+              // Keycloak
+              window.__env.KEYCLOAK_CLIENT_ID = '${{ secrets.KEYCLOAK_CLIENT_ID }}';
+              window.__env.KEYCLOAK_URL = '${{ secrets.KEYCLOAK_URL }}';
+              window.__env.KEYCLOAK_REALM = '${{ vars.KEYCLOAK_REALM }}';
+              window.__env.KEYCLOAK_ENABLED = true;
+          }(this));
+          EOF
+          echo "✓ Generated env.js with LZA test configuration"
+          cat ./dist/env.js
+
+      - name: SAM Build
+        run: sam build --use-container --config-env lza-test
+
+      - name: SAM Deploy
+        run: |
+          sam deploy \
+            --config-env lza-test \
+            --no-fail-on-empty-changeset \
+            --parameter-overrides \
+              Env=test \
+              BudgetNumber=${{ vars.BUDGET_NUMBER }} \
+              AwsAccountList="${{ vars.AWS_ACCOUNT_LIST }}" \
+              ApiGatewayId=${{ vars.AR_API_ID }} \
+              Stage=api \
+              EnvDomainName="test-ar.bcparks.ca" \
+              DomainCertificateArn="arn:aws:acm:us-east-1:059942063916:certificate/92f37837-cf71-4196-bdc7-8fe7aca3c316"
+
+      - name: Upload build files to S3
+        run: |
+          echo "Uploading build files to S3 bucket..."
+          aws s3 sync ./dist s3://bc-parks-ar-admin-lza-test-test/latest/ --delete
+          echo "✓ Build files uploaded successfully"
+
+      - name: Get CloudFront distribution ID
+        id: get-distribution
+        run: |
+          DISTRIBUTION_ID=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?Comment=='CloudFront distribution for bc-parks-ar-admin-lza-test'].Id" \
+            --output text)
+          echo "distribution_id=${DISTRIBUTION_ID}" >> $GITHUB_OUTPUT
+          echo "CloudFront Distribution ID: ${DISTRIBUTION_ID}"
+
+      - name: Create CloudFront invalidation
+        if: steps.get-distribution.outputs.distribution_id != ''
+        run: |
+          echo "Creating CloudFront invalidation for distribution ${{ steps.get-distribution.outputs.distribution_id }}"
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.get-distribution.outputs.distribution_id }} \
+            --paths "/*" \
+            --no-cli-pager
+
+      - name: Deployment summary
+        run: |
+          echo "=========================================="
+          echo "✓ Admin deployment completed successfully"
+          echo "=========================================="
+          echo ""
+          echo "Admin URL: https://test-ar.bcparks.ca"
+          echo "API URL: ${{ vars.API_GATEWAY_URL }}"
+          echo ""
+          echo "Next steps:"
+          echo "1. Verify admin loads at https://test-ar.bcparks.ca"
+          echo "2. Test authentication flow"
+          echo "3. Verify API connectivity"
