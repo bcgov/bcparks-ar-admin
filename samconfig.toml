@@ -60,3 +60,19 @@ resolve_s3 = true
 region = "ca-central-1"
 s3_prefix = "bc-parks-ar-admin-lza-test"
 tags = "Environment=\"lza-test\" Project=\"bcparks\" ManagedBy=\"sam\" Application=\"ar-admin\""
+
+# LZA Prod Environment Configuration
+[lza-prod.global.parameters]
+stack_name = "bc-parks-ar-admin-lza-prod"
+
+[lza-prod.build.parameters]
+cached = true
+parallel = true
+
+[lza-prod.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+resolve_s3 = true
+region = "ca-central-1"
+s3_prefix = "bc-parks-ar-admin-lza-prod"
+tags = "Environment=\"lza-prod\" Project=\"bcparks\" ManagedBy=\"sam\" Application=\"ar-admin\""
