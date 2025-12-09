@@ -51,7 +51,7 @@ export class HeaderComponent implements OnDestroy {
     this.welcomeMsg = this.keycloakService.getWelcomeMessage();
 
     this.envName = this.configService.config['ENVIRONMENT'];
-    if (this.envName === 'prod') {
+    if (this.envName === 'prod' || this.envName === 'lza-prod') {
       this.showBanner = false;
     }
   }
