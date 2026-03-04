@@ -186,7 +186,7 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
     if (currentDT.month > 3) {
       year += 1;
     }
-    this.maxDate = DateTime.local(year);
+    this.maxDate = DateTime.local(year, 3);
   }
 
   // Get park object by orcs
