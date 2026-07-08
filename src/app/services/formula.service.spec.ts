@@ -70,6 +70,16 @@ describe('FormulaService', () => {
     expect(service.basicNetRevenue([NaN]).result).toBeNull();
   });
 
+  it('should calculate non-resident net revenue using gross x 1.05', () => {
+    expect(service.nonResidentNetRevenue([100]).result).toBe('$105.00');
+    expect(service.nonResidentNetRevenue([50, 25]).result).toBe('$78.75');
+    expect(service.nonResidentNetRevenue([0]).result).toBe('$0.00');
+    expect(service.nonResidentNetRevenue([NaN]).result).toBeNull();
+    expect(service.nonResidentNetRevenue([100]).formula).toBe(
+      'Non-resident net revenue = Gross non-resident revenue x 1.05'
+    );
+  });
+
   it('should summarize an array and multiply by a modifier properly', () => {
     expect(service.totalWithModifier([1, 2, 3], 5)).toBe(30);
     expect(service.totalWithModifier([1, 2, NaN], 5)).toBe(15);

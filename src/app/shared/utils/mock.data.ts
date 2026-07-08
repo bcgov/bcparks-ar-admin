@@ -142,6 +142,7 @@ export class MockData {
     isLocked: false,
     people: 1,
     grossCampingRevenue: 1.11,
+    otherRevenueGrossNonResident: 1.11,
     notes: 'Mock notes',
     // TODO: update config
     config: {}
@@ -158,6 +159,7 @@ export class MockData {
     isLocked: true,
     isLegacy: true,
     grossCampingRevenue: 9.99,
+    otherRevenueGrossNonResident: 9.99,
     notes: 'Mock legacy notes',
   }
 
@@ -172,6 +174,7 @@ export class MockData {
     isLocked: false,
     boatAttendaceNightsOnBouys: 1,
     boatRevenueGross: 1.11,
+    otherRevenueGrossNonResident: 1.11,
     boatAttendanceMiscellaneous: 1,
     boatAttendanceNightsOnDock: 1,
     notes: 'Mock notes',
@@ -193,6 +196,7 @@ export class MockData {
     boatAttendanceMiscellaneous: 9,
     boatAttendanceNightsOnDock: 9,
     boatRevenueGross: 9.99,
+    otherRevenueGrossNonResident: 9.99,
     notes: 'Mock legacy notes',
     legacyData: {
       legacy_boatingTotalAttendancePeople: 9,
@@ -256,6 +260,7 @@ export class MockData {
     isLocked: false,
     totalAttendanceParties: 1,
     revenueGrossCamping: 1.11,
+    otherRevenueGrossNonResident: 1.11,
     notes: 'Mock notes',
     // TODO: update config
     config: {}
@@ -273,6 +278,7 @@ export class MockData {
     isLegacy: true,
     totalAttendanceParties: 9,
     revenueGrossCamping: 9.99,
+    otherRevenueGrossNonResident: 9.99,
     notes: 'Mock legacy notes',
     legacyData: {}
   }
@@ -298,6 +304,7 @@ export class MockData {
     secondCarsRevenueGross: 1.11,
     notes: 'Mock notes',
     otherRevenueGrossSani: 1.11,
+    otherRevenueGrossNonResident: 1.11,
     otherRevenueShower: 1.11,
     otherRevenueElectrical: 1.11,
     // TODO: update config
@@ -324,6 +331,7 @@ export class MockData {
     secondCarsRevenueGross: 9.99,
     notes: 'Mock legacy notes',
     otherRevenueGrossSani: 9.99,
+    otherRevenueGrossNonResident: 9.99,
     otherRevenueShower: 9.99,
     otherRevenueElectrical: 9.99,
     legacyData: {
@@ -354,6 +362,7 @@ export class MockData {
     standardRateGroupsTotalPeopleKids: 1,
     standardRateGroupsTotalPeopleStandard: 1,
     standardRateGroupsRevenueGross: 1.11,
+    otherRevenueGrossNonResident: 1.11,
     notes: 'Mock notes',
     // TODO: update config
     config: {}
@@ -377,6 +386,7 @@ export class MockData {
     standardRateGroupsTotalPeopleKids: 9,
     standardRateGroupsTotalPeopleStandard: 9,
     standardRateGroupsRevenueGross: 9.99,
+    otherRevenueGrossNonResident: 9.99,
     notes: 'Mock legacy notes',
     legacyData: {
       legacy_groupCampingStandardTotalAttendancePeople: 9,

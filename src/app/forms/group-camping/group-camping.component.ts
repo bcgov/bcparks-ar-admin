@@ -20,6 +20,7 @@ export class GroupCampingComponent extends RootFormComponent {
 
   public standardRevenueTotal: formulaResult = { result: null, formula: '' };
   public youthRevenueTotal: formulaResult = { result: null, formula: '' };
+  public nonResidentRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor() {
     super(
@@ -43,6 +44,7 @@ export class GroupCampingComponent extends RootFormComponent {
       youthRateGroupsAttendancePeople: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsAttendancePeople')] }),
       standardRateGroupsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('standardRateGroupsRevenueGross')] }),
       youthRateGroupsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('youthRateGroupsRevenueGross')] }),
+      otherRevenueGrossNonResident: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueGrossNonResident')] }),
       notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.calculateTotals();
@@ -62,6 +64,9 @@ export class GroupCampingComponent extends RootFormComponent {
     ]);
     this.youthRevenueTotal = this.formulaService.basicNetRevenue([
       this.form.controls['youthRateGroupsRevenueGross'].value
+    ]);
+    this.nonResidentRevenueTotal = this.formulaService.nonResidentNetRevenue([
+      this.form.controls['otherRevenueGrossNonResident'].value,
     ]);
   }
 

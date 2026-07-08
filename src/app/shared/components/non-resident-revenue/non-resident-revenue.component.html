@@ -1,0 +1,49 @@
+<div class="form-section">
+  <h2>Non-resident revenue</h2>
+  <div class="row">
+    <div class="col-12 col-lg-6 d-flex flex-column">
+      <div class="row">
+        <app-info-text
+          class="text-block"
+          [text]="'This gross non-resident revenue is tracked separately and is not included in the total net revenue below.'"
+        ></app-info-text>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 d-flex flex-column">
+      <div class="row">
+        <div
+          class="input-box mb-2"
+          [popover]="popoverData ? popoverTemplate : null"
+          [popoverContext]="{variance: popoverData}"
+          placement="bottom"
+          triggers="mouseenter:mouseleave"
+        >
+          <ngds-number-input
+            [control]="control"
+            [decimalPlaces]="2"
+            [justify]="'end'"
+            [invalidConfig]="invalidConfig"
+            [padDecimals]="true"
+            [label]="'Gross non-resident revenue (in-park collection only)'"
+            [placeholder]="'No data'"
+            [loadWhile]="loading"
+          >
+            <i
+              ngdsInputPrepend
+              class="bi bi-currency-dollar px-2"
+            ></i>
+          </ngds-number-input>
+        </div>
+      </div>
+      <div class="mb-2">
+        <app-calculation-display
+          [colorClass]="'green'"
+          [label]="'NON-RESIDENT NET REVENUE'"
+          [subtext]="total?.formula"
+          [value]="total?.result"
+        ></app-calculation-display>
+      </div>
+    </div>
+  </div>
+</div>
+

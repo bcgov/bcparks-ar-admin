@@ -17,6 +17,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { VarianceWarningModalComponent } from './variance-warning-modal/variance-warning-modal.component';
 import { InfoTextModule } from '../shared/components/info-text/info-text.module';
+import { NonResidentRevenueModule } from '../shared/components/non-resident-revenue/non-resident-revenue.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { InfoTextModule } from '../shared/components/info-text/info-text.module'
     CalculationDisplayModule,
     TextToLoadingSpinnerModule,
     InfoTextModule,
+    NonResidentRevenueModule,
     PopoverModule.forRoot(),
     ModalModule.forRoot(),
   ],

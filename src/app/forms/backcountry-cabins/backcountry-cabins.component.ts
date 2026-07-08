@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
-import { FormulaService } from 'src/app/services/formula.service';
+import { FormulaService, formulaResult } from 'src/app/services/formula.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ActivityService } from 'src/app/services/activity.service';
 import { RootFormComponent } from '../root-form/root-form.component';
@@ -17,6 +17,8 @@ import { VarianceService } from 'src/app/services/variance.service';
     standalone: false
 })
 export class BackcountryCabinsComponent extends RootFormComponent {
+
+  public nonResidentRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor() {
     super(
@@ -36,6 +38,7 @@ export class BackcountryCabinsComponent extends RootFormComponent {
       peopleChild: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('peopleChild')] }),
       peopleFamily: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('peopleFamily')] }),
       revenueFamily: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('revenueFamily')] }),
+      otherRevenueGrossNonResident: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueGrossNonResident')] }),
       notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.calculateTotals();
@@ -52,6 +55,9 @@ export class BackcountryCabinsComponent extends RootFormComponent {
     );
     this.revenueTotal = this.formulaService.basicNetRevenue([
       this.form.controls['revenueFamily'].value
+    ]);
+    this.nonResidentRevenueTotal = this.formulaService.nonResidentNetRevenue([
+      this.form.controls['otherRevenueGrossNonResident'].value,
     ]);
   }
 

@@ -206,6 +206,21 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
     if (this.data?.isLegacy) {
       return [{
         isLegacy: true,
+        title: 'Non-resident revenue',
+        revenueLabel: 'Non-resident net revenue',
+        revenueItems: [
+          {
+            itemName: 'Gross non-resident revenue (in-park collection only)',
+            value: this.data?.otherRevenueGrossNonResident,
+            variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
+          },
+        ],
+        revenueTotal: this.formulaService.nonResidentNetRevenue([
+          this.data?.otherRevenueGrossNonResident,
+        ]),
+      },
+      {
+        isLegacy: true,
         title: 'Other frontcountry camping revenue',
         revenueLabel: 'Net revenue',
         revenueItems: [
@@ -243,6 +258,21 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
     } else {
       return [{
         isLegacy: false,
+        title: 'Non-resident revenue',
+        revenueLabel: 'Non-resident net revenue',
+        revenueItems: [
+          {
+            itemName: 'Gross non-resident revenue (in-park collection only)',
+            value: this.data?.otherRevenueGrossNonResident,
+            variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
+          },
+        ],
+        revenueTotal: this.formulaService.nonResidentNetRevenue([
+          this.data?.otherRevenueGrossNonResident,
+        ]),
+      },
+      {
+        isLegacy: false,
         title: 'Other frontcountry camping revenue',
         revenueLabel: 'Net revenue',
         revenueItems: [
@@ -262,6 +292,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             variance: this.variance?.value?.hasOwnProperty('otherRevenueShower')
           },
         ],
+        // Note: otherRevenueGrossNonResident is intentionally excluded from this total
         revenueTotal: this.formulaService.basicNetRevenue([
           this.data?.otherRevenueGrossSani,
           this.data?.otherRevenueElectrical,

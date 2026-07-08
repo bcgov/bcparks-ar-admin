@@ -22,7 +22,10 @@ export class FrontcountryCampingComponent extends RootFormComponent {
   public vehicleAttendanceTotal: formulaResult = { result: null, formula: '' };
   public partyRevenueTotal: formulaResult = { result: null, formula: '' };
   public vehicleRevenueTotal: formulaResult = { result: null, formula: '' };
+  /** Net revenue for sani + electrical + shower (non-resident excluded per business rule) */
   public otherRevenueTotal: formulaResult = { result: null, formula: '' };
+  /** Net revenue for non-resident only — tracked and displayed separately */
+  public nonResidentRevenueTotal: formulaResult = { result: null, formula: '' };
   public winter: boolean = false;
 
   constructor(
@@ -53,6 +56,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       campingPartyNightsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('campingPartyNightsRevenueGross')] }),
       otherRevenueElectrical: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueElectrical')] }),
       otherRevenueGrossSani: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueGrossSani')] }),
+      otherRevenueGrossNonResident: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueGrossNonResident')] }),
       otherRevenueShower: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueShower')] }),
       secondCarsRevenueGross: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('secondCarsRevenueGross')] }),
       notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
@@ -111,7 +115,12 @@ export class FrontcountryCampingComponent extends RootFormComponent {
     this.otherRevenueTotal = this.formulaService.basicNetRevenue([
       this.form.controls['otherRevenueGrossSani'].value,
       this.form.controls['otherRevenueElectrical'].value,
+      // Note: otherRevenueGrossNonResident is intentionally excluded — tracked separately below
       this.form.controls['otherRevenueShower'].value
+    ]);
+    // Non-resident net revenue is calculated and displayed independently
+    this.nonResidentRevenueTotal = this.formulaService.nonResidentNetRevenue([
+      this.form.controls['otherRevenueGrossNonResident'].value
     ]);
   }
 
