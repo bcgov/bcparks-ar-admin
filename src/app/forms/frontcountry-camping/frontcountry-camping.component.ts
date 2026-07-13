@@ -10,6 +10,7 @@ import { UrlService } from 'src/app/services/url.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 import { WinterToggleService } from 'src/app/services/winter-toggle.service';
+import { OffSeasonToggleService } from 'src/app/services/offseason-toggle.service';
 @Component({
     selector: 'app-frontcountry-camping',
     templateUrl: './frontcountry-camping.component.html',
@@ -27,9 +28,12 @@ export class FrontcountryCampingComponent extends RootFormComponent {
   /** Net revenue for non-resident only — tracked and displayed separately */
   public nonResidentRevenueTotal: formulaResult = { result: null, formula: '' };
   public winter: boolean = false;
+  public offSeason: boolean = false;
+  private isToggling = false;
 
   constructor(
-    public winterToggle: WinterToggleService
+    public winterToggle: WinterToggleService,
+    public offSeasonToggle: OffSeasonToggleService
   ) {
     super(
       inject(DataService),
@@ -46,8 +50,10 @@ export class FrontcountryCampingComponent extends RootFormComponent {
     this.form = new UntypedFormGroup({
       winterCampingPartyNightsAttendanceStandard: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('winterCampingPartyNightsAttendanceStandard')] }),
       winterCampingPartyNightsAttendanceSocial: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('winterCampingPartyNightsAttendanceSocial')] }),
+      offSeasonCampingPartyNightsAttendanceStandard: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('offSeasonCampingPartyNightsAttendanceStandard')] }),
+      offSeasonCampingPartyNightsAttendanceSocial: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('offSeasonCampingPartyNightsAttendanceSocial')] }),
+      offSeasonCampingPartyNightsAttendanceSenior: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('offSeasonCampingPartyNightsAttendanceSenior')] }),
       campingPartyNightsAttendanceLongStay: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('campingPartyNightsAttendanceLongStay')] }),
-      campingPartyNightsAttendanceSenior: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('campingPartyNightsAttendanceSenior')] }),
       campingPartyNightsAttendanceSocial: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('campingPartyNightsAttendanceSocial')] }),
       campingPartyNightsAttendanceStandard: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('campingPartyNightsAttendanceStandard')] }),
       secondCarsAttendanceSenior: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('secondCarsAttendanceSenior')] }),
@@ -62,14 +68,19 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),
     });
     this.checkWinterData();
+    this.checkOffSeasonData();
     this.calculateTotals();
     this.form?.valueChanges.subscribe(() => {
       this.checkWinterData();
+      this.checkOffSeasonData();
       this.calculateTotals();
     });
   }
 
   private checkWinterData(): void {
+    if (this.isToggling) {
+      return;
+    }
     const winterStandard = this.form.controls['winterCampingPartyNightsAttendanceStandard'].value;
     const winterSocial = this.form.controls['winterCampingPartyNightsAttendanceSocial'].value;
 
@@ -85,6 +96,29 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       this.winter = true;
       this.winterToggle.setWinterToggle(this.winter)
     }
+    this.isToggling = false;
+  }
+
+  private checkOffSeasonData(): void {
+    if (this.isToggling) {
+      return;
+    }
+    const offSeasonStandard = this.form.controls['offSeasonCampingPartyNightsAttendanceStandard'].value;
+    const offSeasonSocial = this.form.controls['offSeasonCampingPartyNightsAttendanceSocial'].value;
+
+    // Check if off-season is toggled for frontcountry camping, persist over user sessions
+    this.subscriptions.add(
+      this.offSeasonToggle.getOffSeasonToggle.subscribe((value) => {
+        this.offSeason = value;
+      })
+    );
+
+    // Only set off-season to true if there's data, then set true for the session
+    if (offSeasonStandard || offSeasonSocial) {
+      this.offSeason = true;
+      this.offSeasonToggle.setOffSeasonToggle(this.offSeason)
+    }
+    this.isToggling = false;
   }
 
   calculateTotals() {
@@ -93,8 +127,10 @@ export class FrontcountryCampingComponent extends RootFormComponent {
         [
           this.form.controls['winterCampingPartyNightsAttendanceStandard'].value,
           this.form.controls['winterCampingPartyNightsAttendanceSocial'].value,
+          this.form.controls['offSeasonCampingPartyNightsAttendanceStandard'].value,
+          this.form.controls['offSeasonCampingPartyNightsAttendanceSocial'].value,
+          this.form.controls['offSeasonCampingPartyNightsAttendanceSenior'].value,
           this.form.controls['campingPartyNightsAttendanceStandard'].value,
-          this.form.controls['campingPartyNightsAttendanceSenior'].value,
           this.form.controls['campingPartyNightsAttendanceSocial'].value,
           this.form.controls['campingPartyNightsAttendanceLongStay'].value
         ],
@@ -125,8 +161,15 @@ export class FrontcountryCampingComponent extends RootFormComponent {
   }
 
   onWinterToggle() {
-    this.winter = !this.winter
+    this.isToggling = true;
+    this.winter = !this.winter;
     this.winterToggle.setWinterToggle(this.winter);
+  }
+
+  onOffSeasonToggle() {
+    this.isToggling = true;
+    this.offSeason = !this.offSeason;
+    this.offSeasonToggle.setOffSeasonToggle(this.offSeason);
   }
 
   async onSubmit() {

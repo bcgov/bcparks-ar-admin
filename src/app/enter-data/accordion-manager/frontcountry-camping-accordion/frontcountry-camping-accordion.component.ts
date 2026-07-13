@@ -62,17 +62,17 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
       {
         isLegacy: this.data?.isLegacy || false,
         title: 'Camping party nights',
-        subtitle: 'Winter Rate',
+        subtitle: 'Winter rate parties',
         attendanceLabel: 'Total attendance (people)',
         attendanceItems: [
 
           {
-            itemName: 'Winter rate standard',
+            itemName: 'Standard parties',
             value: this.data?.winterCampingPartyNightsAttendanceStandard,
             variance: this.variance?.value?.hasOwnProperty('winterCampingPartyNightsAttendanceStandard')
           },
           {
-            itemName: 'Winter rate social services fee exemption',
+            itemName: 'Social services fee exemption parties',
             value: this.data?.winterCampingPartyNightsAttendanceSocial,
             variance: this.variance?.value?.hasOwnProperty('winterCampingPartyNightsAttendanceSocial')
           },
@@ -80,26 +80,44 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
       },
       {
         isLegacy: this.data?.isLegacy || false,
-        subtitle: 'Standard',
+        subtitle: 'Off-season rate parties',
+        attendanceLabel: 'Total attendance (people)',
+        attendanceItems: [
+
+          {
+            itemName: 'Standard parties',
+            value: this.data?.offSeasonCampingPartyNightsAttendanceStandard,
+            variance: this.variance?.value?.hasOwnProperty('offSeasonCampingPartyNightsAttendanceStandard')
+          },
+          {
+            itemName: 'Social services fee exemption parties',
+            value: this.data?.offSeasonCampingPartyNightsAttendanceSocial,
+            variance: this.variance?.value?.hasOwnProperty('offSeasonCampingPartyNightsAttendanceSocial')
+          },
+          {
+            itemName: 'Senior parties',
+            value: this.data?.offSeasonCampingPartyNightsAttendanceSenior,
+            variance: this.variance?.value?.hasOwnProperty('offSeasonCampingPartyNightsAttendanceSenior')
+          },
+        ]
+      },
+      {
+        isLegacy: this.data?.isLegacy || false,
+        subtitle: 'Summer rate parties',
         attendanceLabel: 'Total attendance (people)',
         attendanceItems: [
           {
-            itemName: 'Standard',
+            itemName: 'Standard parties',
             value: this.data?.campingPartyNightsAttendanceStandard,
             variance: this.variance?.value?.hasOwnProperty('campingPartyNightsAttendanceStandard')
           },
           {
-            itemName: 'Senior',
-            value: this.data?.campingPartyNightsAttendanceSenior,
-            variance: this.variance?.value?.hasOwnProperty('campingPartyNightsAttendanceSenior')
-          },
-          {
-            itemName: 'Social services fee exemption',
+            itemName: 'Social services fee exemption parties',
             value: this.data?.campingPartyNightsAttendanceSocial,
             variance: this.variance?.value?.hasOwnProperty('campingPartyNightsAttendanceSocial')
           },
           {
-            itemName: 'Long stay',
+            itemName: 'Long stay parties',
             value: this.data?.campingPartyNightsAttendanceLongStay,
             variance: this.variance?.value?.hasOwnProperty('campingPartyNightsAttendanceLongStay')
           },
@@ -114,8 +132,10 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
                 [
                   this.data?.winterCampingPartyNightsAttendanceStandard,
                   this.data?.winterCampingPartyNightsAttendanceSocial,
+                  this.data?.offSeasonCampingPartyNightsAttendanceStandard,
+                  this.data?.offSeasonCampingPartyNightsAttendanceSocial,
+                  this.data?.offSeasonCampingPartyNightsAttendanceSenior,
                   this.data?.campingPartyNightsAttendanceStandard,
-                  this.data?.campingPartyNightsAttendanceSenior,
                   this.data?.campingPartyNightsAttendanceSocial,
                   this.data?.campingPartyNightsAttendanceLongStay,
                 ]
@@ -132,8 +152,10 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             [
               this.data?.winterCampingPartyNightsAttendanceStandard,
               this.data?.winterCampingPartyNightsAttendanceSocial,
+              this.data?.offSeasonCampingPartyNightsAttendanceStandard,
+              this.data?.offSeasonCampingPartyNightsAttendanceSocial,
+              this.data?.offSeasonCampingPartyNightsAttendanceSenior,
               this.data?.campingPartyNightsAttendanceStandard,
-              this.data?.campingPartyNightsAttendanceSenior,
               this.data?.campingPartyNightsAttendanceSocial,
               this.data?.campingPartyNightsAttendanceLongStay,
             ],

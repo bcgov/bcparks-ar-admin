@@ -11,8 +11,8 @@
 
     // API
     window.__env.API_LOCATION = 'http://localhost:3000';
-    window.__env.API_PATH = '/api';
-    window.__env.API_PUBLIC_PATH = '/api';
+    window.__env.API_PATH = '';
+    window.__env.API_PUBLIC_PATH = '';
 
     // Keycloak
     window.__env.KEYCLOAK_CLIENT_ID = 'attendance-and-revenue';

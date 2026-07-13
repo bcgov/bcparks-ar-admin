@@ -12,133 +12,177 @@
   <div class="form-section">
     <!-- Camping party nights -->
     <h2>Camping party nights</h2>
-    <div class="row">
-      <!-- Winter -->
-      <div class="col-12 d-flex flex-column">
-        <div class="row">
-          <!-- Winter Toggle-->
-          <div class="row">
-            <div class="col-12 col-lg-6 m-3 form-check form-switch align-items-end">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                [checked]="winter"
-                (change)="onWinterToggle()"
-                name="winterCheckbox"
-              />
-              <div *ngIf="winter">Winter</div>
-              <div *ngIf="!winter" class="text-muted">Winter</div>
-            </div>
-          </div>
-          <!-- Winter Standard -->
-          <div *ngIf="winter" class="row">
-            <h3 class="pt-3">Winter rate</h3>
-            <div class="input-box mb-2 d-flex align-items-end"
-              [popover]="getPopoverData('winterCampingPartyNightsAttendanceStandard') ? popover : null"
-              [popoverContext]="{variance: getPopoverData('winterCampingPartyNightsAttendanceStandard')}" placement="bottom"
-              triggers="mouseenter:mouseleave">
-              <ngds-number-input [control]="form?.controls?.['winterCampingPartyNightsAttendanceStandard']" [decimalPlaces]="0"
-                [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Winter rate standard'"
-                [placeholder]="'No data'" [loadWhile]="loading">
-                <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
-              </ngds-number-input>
-            </div>
-            <!-- Winter Social -->
-            <div class="input-box mb-2 d-flex align-items-end"
-              [popover]="getPopoverData('winterCampingPartyNightsAttendanceSocial') ? popover : null"
-              [popoverContext]="{variance: getPopoverData('winterCampingPartyNightsAttendanceSocial')}" placement="bottom"
-              triggers="mouseenter:mouseleave">
-              <ngds-number-input [control]="form?.controls?.['winterCampingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
-                [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false"
-                [label]="'Winter rate social services fee exemption'" [placeholder]="'No data'" [loadWhile]="loading">
-                <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
-              </ngds-number-input>
-            </div>
-            <div class="row">
-              <!-- Attendance info -->
-              <app-info-text class="text-block"
-                [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
-            </div>
-          </div>
+    <!-- Winter -->
+    <!-- Winter Toggle-->
+    <div class="d-flex align-items-center form-check form-switch">
+      <h3 class="pt-3">Winter rate parties</h3>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="winter"
+        (change)="onWinterToggle()"
+        name="winterCheckbox"
+      />
+    </div>
+    <div class="mb-2 mt-auto">
+      Winter rates available October-May
+    </div>
+    <!-- Winter Standard -->
+    <div *ngIf="winter" class="container-fluid p-0">
+      <div class="row gx-3 m-0">
+        <div class="input-box col"
+          [popover]="getPopoverData('winterCampingPartyNightsAttendanceStandard') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('winterCampingPartyNightsAttendanceStandard')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['winterCampingPartyNightsAttendanceStandard']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard parties'"
+            [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
         </div>
+        <!-- Winter Social -->
+        <div class="input-box col"
+          [popover]="getPopoverData('winterCampingPartyNightsAttendanceSocial') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('winterCampingPartyNightsAttendanceSocial')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['winterCampingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+            [label]="'Social services fee exemption parties'" [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
+        </div>
+        <div class="col"></div>
       </div>
-      <!-- Attendance -->
-      <h3 class="pt-3">Standard</h3>
-      <div class="col-12 col-lg-6 d-flex flex-column">
-        <div class="row">
-          <!-- Standard -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('campingPartyNightsAttendanceStandard') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceStandard')}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceStandard']" [decimalPlaces]="0"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
-            </ngds-number-input>
-          </div>
-          <!-- Senior -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('campingPartyNightsAttendanceSenior') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceSenior')}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceSenior']" [decimalPlaces]="0"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Senior'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
-            </ngds-number-input>
-          </div>
-          <!-- Social -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('campingPartyNightsAttendanceSocial') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceSocial')}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false"
-              [label]="'Social services fee exemption'" [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
-            </ngds-number-input>
-          </div>
+      <div class="row gx-3 m-0">
+        <!-- Attendance info -->
+        <app-info-text class="text-block col-4"
+          [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
+      </div>
+    </div>
+    <!-- OffSeason -->
+    <!-- Off-season Toggle-->
+    <div class="d-flex align-items-center form-check form-switch">
+      <h3 class="pt-3">Off-season rate parties</h3>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="offSeason"
+        (change)="onOffSeasonToggle()"
+        name="offSeasonCheckbox"
+      />
+    </div>
+    <div class="mb-2 mt-auto">
+      Off-season rates available September-June
+    </div>
+    <!-- OffSeason Standard -->
+    <div *ngIf="offSeason" class="container-fluid p-0">
+      <div class="row gx-3 m-0">
+        <div class="input-box col"
+          [popover]="getPopoverData('offSeasonCampingPartyNightsAttendanceStandard') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('offSeasonCampingPartyNightsAttendanceStandard')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['offSeasonCampingPartyNightsAttendanceStandard']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard parties'"
+            [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
+        </div>
+        <!-- OffSeason Social -->
+        <div class="input-box col"
+          [popover]="getPopoverData('offSeasonCampingPartyNightsAttendanceSocial') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('offSeasonCampingPartyNightsAttendanceSocial')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['offSeasonCampingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+            [label]="'Social services fee exemption parties'" [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
+        </div>
+        <!-- Senior -->
+        <div class="input-box col"
+          [popover]="getPopoverData('offSeasonCampingPartyNightsAttendanceSenior') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('offSeasonCampingPartyNightsAttendanceSenior')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['offSeasonCampingPartyNightsAttendanceSenior']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Senior parties'"
+            [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
         </div>
         <div class="row">
           <!-- Attendance info -->
-          <app-info-text class="text-block"
+          <app-info-text class="text-block col-4"
             [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
         </div>
-        <div class="row">
-          <!-- Long stay -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('campingPartyNightsAttendanceLongStay') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceLongStay')}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceLongStay']" [decimalPlaces]="0"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Long stay'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
-            </ngds-number-input>
-          </div>
+      </div>
+    </div>
+    <!-- Attendance -->
+    <h3 class="pt-3">Summer rate parties</h3>
+    <div class="mb-2 mt-auto">
+      Summer rates available June-September
+    </div>
+    <div class="container-fluid p-0">
+      <div class="row gx-3 m-0">
+        <!-- Standard -->
+        <div class="input-box col"
+          [popover]="getPopoverData('campingPartyNightsAttendanceStandard') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceStandard')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceStandard']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard parties'"
+            [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
         </div>
-        <div class="row">
-          <!-- Attendance info -->
-          <app-info-text class="text-block"
-            [text]="'Record all nights of a long stay on the arrival date.'"></app-info-text>
+        <!-- Social -->
+        <div class="input-box col"
+          [popover]="getPopoverData('campingPartyNightsAttendanceSocial') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceSocial')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+            [label]="'Social services fee exemption parties'" [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
         </div>
-        <!-- Attendance Summary -->
-        <div class="mb-2">
-          <app-calculation-display [label]="'TOTAL ATTENDANCE'" [subtext]="partyAttendanceTotal?.formula"
-            [value]="partyAttendanceTotal?.result"></app-calculation-display>
+        <!-- Long stay -->
+        <div class="input-box col"
+          [popover]="getPopoverData('campingPartyNightsAttendanceLongStay') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceLongStay')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceLongStay']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Long stay parties'"
+            [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
         </div>
       </div>
+      <div class="row gx-3 m-0">
+        <!-- Attendance info -->
+        <app-info-text class="col text-block"
+            [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
+        <div class="col"></div>
+        <!-- Attendance info -->
+          <app-info-text class="col text-block"
+            [text]="'Record all nights of a long stay on the arrival date.'"></app-info-text>
+      </div>
+      <!-- Attendance Summary -->
+      <div class="mb-4 pb-4 mt-auto">
+        <app-calculation-display [label]="'TOTAL ATTENDANCE'" [subtext]="partyAttendanceTotal?.formula"
+          [value]="partyAttendanceTotal?.result"></app-calculation-display>
+      </div>
+    </div>
+    <div class="row pb-4">
       <!-- Revenue -->
       <div class="col-12 col-lg-6 d-flex flex-column flex-grow-1">
         <div class="row">
           <!-- Gross revenue -->
-          <div class="input-box mb-2 d-flex align-items-end"
+          <div class="input-box mb-2 full-input"
             [popover]="getPopoverData('campingPartyNightsRevenueGross') ? popover : null"
             [popoverContext]="{variance: getPopoverData('campingPartyNightsRevenueGross', true)}" placement="bottom"
             triggers="mouseenter:mouseleave">
             <ngds-number-input [control]="form?.controls?.['campingPartyNightsRevenueGross']" [decimalPlaces]="2"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross camping revenue'"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross camping revenue'"
               [placeholder]="'No data'" [loadWhile]="loading">
               <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
             </ngds-number-input>
@@ -147,7 +191,7 @@
             [text]="'Camping fee revenue only. Do not include sani, shower, electrical, or second car revenue. Subtract onsite refunds before entering.'"></app-info-text>
         </div>
         <!-- Revenue summary -->
-        <div class="mb-2 mt-auto">
+        <div class="mb-2 pb-4 mt-auto">
           <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'" [subtext]="partyRevenueTotal?.formula"
             [value]="partyRevenueTotal?.result"></app-calculation-display>
         </div>
@@ -160,70 +204,64 @@
     <h2>Second cars/additional vehicles</h2>
     <div class="row">
       <!-- Attendance -->
-      <div class="col-12 col-lg-6 d-flex flex-column">
-        <div class="row">
-          <!-- Standard -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('secondCarsAttendanceStandard') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('secondCarsAttendanceStandard')}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceStandard']" [decimalPlaces]="0"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="car-icon"></i>
-            </ngds-number-input>
-          </div>
-          <!-- Senior -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('secondCarsAttendanceSenior') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('secondCarsAttendanceSenior')}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceSenior']" [decimalPlaces]="0"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Senior'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="car-icon"></i>
-            </ngds-number-input>
-          </div>
-          <!-- Social -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('secondCarsAttendanceSocial') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('secondCarsAttendanceSocial')}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceSocial']" [decimalPlaces]="0"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [allowNegative]="false"
-              [label]="'Social services fee exemption'" [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="car-icon"></i>
-            </ngds-number-input>
-          </div>
-        </div>
-        <!-- Attendance Summary -->
-        <div class="mb-2 mt-auto">
-          <app-calculation-display [label]="'TOTAL SECOND CARS'" [subtext]="vehicleAttendanceTotal?.formula"
-            [value]="vehicleAttendanceTotal?.result"></app-calculation-display>
-        </div>
+      <!-- Standard -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('secondCarsAttendanceStandard') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('secondCarsAttendanceStandard')}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceStandard']" [decimalPlaces]="0"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="car-icon"></i>
+        </ngds-number-input>
       </div>
+      <!-- Senior -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('secondCarsAttendanceSenior') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('secondCarsAttendanceSenior')}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceSenior']" [decimalPlaces]="0"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Senior'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="car-icon"></i>
+        </ngds-number-input>
+      </div>
+      <!-- Social -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('secondCarsAttendanceSocial') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('secondCarsAttendanceSocial')}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceSocial']" [decimalPlaces]="0"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+          [label]="'Social services fee exemption'" [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="car-icon"></i>
+        </ngds-number-input>
+      </div>
+      <!-- Attendance Summary -->
+      <div class="mb-2 mt-auto">
+        <app-calculation-display [label]="'TOTAL SECOND CARS'" [subtext]="vehicleAttendanceTotal?.formula"
+          [value]="vehicleAttendanceTotal?.result"></app-calculation-display>
+      </div>
+    </div>
+    <div class="row">
       <!-- Revenue -->
-      <div class="col-12 col-lg-6 d-flex flex-column">
-        <div class="row">
-          <!-- Gross 2nd car revenue -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('secondCarsRevenueGross') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('secondCarsRevenueGross', true)}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['secondCarsRevenueGross']" [decimalPlaces]="2"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross 2nd car revenue'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
-            </ngds-number-input>
-          </div>
-          <app-info-text class="text-block"
-            [text]="'Subtract onsite refunds before entering.'"></app-info-text>
-        </div>
-        <!-- Revenue summary -->
-        <div class="mb-2 mt-auto">
-          <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'"
-            [subtext]="vehicleRevenueTotal?.formula" [value]="vehicleRevenueTotal?.result"></app-calculation-display>
-        </div>
+      <!-- Gross 2nd car revenue -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('secondCarsRevenueGross') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('secondCarsRevenueGross', true)}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['secondCarsRevenueGross']" [decimalPlaces]="2"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross 2nd car revenue'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
+        </ngds-number-input>
+      </div>
+      <app-info-text class="text-block"
+        [text]="'Subtract onsite refunds before entering.'"></app-info-text>
+      <!-- Revenue summary -->
+      <div class="mb-2 pb-4 mt-auto">
+        <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'"
+          [subtext]="vehicleRevenueTotal?.formula" [value]="vehicleRevenueTotal?.result"></app-calculation-display>
       </div>
     </div>
   </div>
@@ -241,57 +279,51 @@
     <!-- Other frontcountry camping -->
     <h2>Other frontcountry camping</h2>
     <div class="row">
-      <div class="col-12 col-lg-6 d-flex flex-column">
-        <!-- Attendance -->
-        <div class="row">
-          <!-- Attendance info -->
-          <app-info-text class="text-block"
-            [text]="'There are no attendance items to record in Other Frontcountry Camping.'"></app-info-text>
-        </div>
+      <!-- Attendance -->
+      <div class="row">
+        <!-- Attendance info -->
+        <app-info-text class="text-block"
+          [text]="'There are no attendance items to record in Other Frontcountry Camping.'"></app-info-text>
       </div>
       <!-- Revenue -->
-      <div class="col-12 col-lg-6 d-flex flex-column">
-        <div class="row">
-          <!-- Gross sani revenue -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('otherRevenueGrossSani') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('otherRevenueGrossSani', true)}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['otherRevenueGrossSani']" [decimalPlaces]="2"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross sani revenue'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
-            </ngds-number-input>
-          </div>
-          <!-- Gross electrical revenue -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('otherRevenueElectrical') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('otherRevenueElectrical', true)}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['otherRevenueElectrical']" [decimalPlaces]="2"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [padDecimals]="true"
-              [label]="'Gross electrical fee revenue'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
-            </ngds-number-input>
-          </div>
-          <!-- Gross shower revenue -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('otherRevenueShower') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('otherRevenueShower', true)}" placement="bottom"
-            triggers="mouseenter:mouseleave">
-            <ngds-number-input [control]="form?.controls?.['otherRevenueShower']" [decimalPlaces]="2"
-              [justify]="'end'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross shower revenue'"
-              [placeholder]="'No data'" [loadWhile]="loading">
-              <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
-            </ngds-number-input>
-          </div>
-        </div>
-        <!-- Sani / electrical / shower net revenue -->
-        <div class="mb-2 mt-auto">
-          <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'"
-            [subtext]="otherRevenueTotal?.formula" [value]="otherRevenueTotal?.result"></app-calculation-display>
-        </div>
+      <!-- Gross sani revenue -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('otherRevenueGrossSani') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('otherRevenueGrossSani', true)}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['otherRevenueGrossSani']" [decimalPlaces]="2"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross sani revenue'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
+        </ngds-number-input>
+      </div>
+      <!-- Gross electrical revenue -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('otherRevenueElectrical') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('otherRevenueElectrical', true)}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['otherRevenueElectrical']" [decimalPlaces]="2"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [padDecimals]="true"
+          [label]="'Gross electrical fee revenue'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
+        </ngds-number-input>
+      </div>
+      <!-- Gross shower revenue -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('otherRevenueShower') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('otherRevenueShower', true)}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['otherRevenueShower']" [decimalPlaces]="2"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Gross shower revenue'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
+        </ngds-number-input>
+      </div>
+      <!-- Revenue summary -->
+      <div class="mb-2 pb-4 mt-auto">
+        <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'"
+          [subtext]="otherRevenueTotal?.formula" [value]="otherRevenueTotal?.result"></app-calculation-display>
       </div>
     </div>
   </div>
