@@ -266,6 +266,16 @@
     </div>
   </div>
   <div class="form-section">
+    <app-non-resident-revenue
+      [control]="form?.controls?.['otherRevenueGrossNonResident']"
+      [total]="nonResidentRevenueTotal"
+      [invalidConfig]="invalidConfig"
+      [loading]="loading"
+      [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
+      [popoverTemplate]="popover"
+    ></app-non-resident-revenue>
+  </div>
+  <div class="form-section">
     <!-- Other frontcountry camping -->
     <h2>Other frontcountry camping</h2>
     <div class="row">
@@ -315,16 +325,6 @@
         <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'"
           [subtext]="otherRevenueTotal?.formula" [value]="otherRevenueTotal?.result"></app-calculation-display>
       </div>
-    </div>
-    <div class="form-section">
-      <app-non-resident-revenue
-        [control]="form?.controls?.['otherRevenueGrossNonResident']"
-        [total]="nonResidentRevenueTotal"
-        [invalidConfig]="invalidConfig"
-        [loading]="loading"
-        [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
-        [popoverTemplate]="popover"
-      ></app-non-resident-revenue>
     </div>
   </div>
   <!-- Variance notes -->
