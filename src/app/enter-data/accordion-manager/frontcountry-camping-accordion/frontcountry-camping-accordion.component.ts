@@ -108,18 +108,18 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
         attendanceItems: [
           {
             itemName: 'Standard parties',
-            value: this.data?.campingPartyNightsAttendanceStandard,
-            variance: this.variance?.value?.hasOwnProperty('campingPartyNightsAttendanceStandard')
+            value: this.data?.summerCampingPartyNightsAttendanceStandard,
+            variance: this.variance?.value?.hasOwnProperty('summerCampingPartyNightsAttendanceStandard')
           },
           {
             itemName: 'Social services fee exemption parties',
-            value: this.data?.campingPartyNightsAttendanceSocial,
-            variance: this.variance?.value?.hasOwnProperty('campingPartyNightsAttendanceSocial')
+            value: this.data?.summerCampingPartyNightsAttendanceSocial,
+            variance: this.variance?.value?.hasOwnProperty('summerCampingPartyNightsAttendanceSocial')
           },
           {
             itemName: 'Long stay parties',
-            value: this.data?.campingPartyNightsAttendanceLongStay,
-            variance: this.variance?.value?.hasOwnProperty('campingPartyNightsAttendanceLongStay')
+            value: this.data?.summerCampingPartyNightsAttendanceLongStay,
+            variance: this.variance?.value?.hasOwnProperty('summerCampingPartyNightsAttendanceLongStay')
           },
           {
             // For legacy data, this value is provided in legacy_frontcountryCampingTotalCampingParties.

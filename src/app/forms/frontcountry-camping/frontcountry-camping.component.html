@@ -125,10 +125,10 @@
       <div class="row gx-3 m-0">
         <!-- Standard -->
         <div class="input-box col"
-          [popover]="getPopoverData('campingPartyNightsAttendanceStandard') ? popover : null"
-          [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceStandard')}" placement="bottom"
+          [popover]="getPopoverData('summerCampingPartyNightsAttendanceStandard') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('summerCampingPartyNightsAttendanceStandard')}" placement="bottom"
           triggers="mouseenter:mouseleave">
-          <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceStandard']" [decimalPlaces]="0"
+          <ngds-number-input [control]="form?.controls?.['summerCampingPartyNightsAttendanceStandard']" [decimalPlaces]="0"
             [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard parties'"
             [placeholder]="'No data'" [loadWhile]="loading">
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
@@ -136,10 +136,10 @@
         </div>
         <!-- Social -->
         <div class="input-box col"
-          [popover]="getPopoverData('campingPartyNightsAttendanceSocial') ? popover : null"
-          [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceSocial')}" placement="bottom"
+          [popover]="getPopoverData('summerCampingPartyNightsAttendanceSocial') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('summerCampingPartyNightsAttendanceSocial')}" placement="bottom"
           triggers="mouseenter:mouseleave">
-          <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
+          <ngds-number-input [control]="form?.controls?.['summerCampingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
             [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
             [label]="'Social services fee exemption parties'" [placeholder]="'No data'" [loadWhile]="loading">
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
@@ -147,10 +147,10 @@
         </div>
         <!-- Long stay -->
         <div class="input-box col"
-          [popover]="getPopoverData('campingPartyNightsAttendanceLongStay') ? popover : null"
-          [popoverContext]="{variance: getPopoverData('campingPartyNightsAttendanceLongStay')}" placement="bottom"
+          [popover]="getPopoverData('summerCampingPartyNightsAttendanceLongStay') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('summerCampingPartyNightsAttendanceLongStay')}" placement="bottom"
           triggers="mouseenter:mouseleave">
-          <ngds-number-input [control]="form?.controls?.['campingPartyNightsAttendanceLongStay']" [decimalPlaces]="0"
+          <ngds-number-input [control]="form?.controls?.['summerCampingPartyNightsAttendanceLongStay']" [decimalPlaces]="0"
             [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Long stay parties'"
             [placeholder]="'No data'" [loadWhile]="loading">
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
