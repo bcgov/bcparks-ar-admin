@@ -93,21 +93,52 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
 
   formatBackcountryCabinRevenue() {
     if (this.data?.isLegacy) {
-      return [{
-        isLegacy: true,
-        revenueLabel: 'Net revenue',
-        revenueItems: [
-          {
-            itemName: 'Gross cabin revenue',
-            value: this.data?.revenueFamily,
-            variance: this.variance?.value?.hasOwnProperty('revenueFamily')
-          },
-        ],
-        revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_backcountryCabinsNetRevenue
-        )
-      }];
+      return [
+        {
+          isLegacy: true,
+          title: 'Non-resident revenue',
+          revenueLabel: 'Non-resident net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross non-resident revenue (in-park collection only)',
+              value: this.data?.otherRevenueGrossNonResident,
+              variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
+            },
+          ],
+          revenueTotal: this.formulaService.nonResidentNetRevenue([
+            this.data?.otherRevenueGrossNonResident,
+          ]),
+        },
+        {
+          isLegacy: true,
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross cabin revenue',
+              value: this.data?.revenueFamily,
+              variance: this.variance?.value?.hasOwnProperty('revenueFamily')
+            },
+          ],
+          revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_backcountryCabinsNetRevenue
+          )
+        },
+      ];
     } else {
       return [
+        {
+          title: 'Non-resident revenue',
+          revenueLabel: 'Non-resident net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross non-resident revenue (in-park collection only)',
+              value: this.data?.otherRevenueGrossNonResident,
+              variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
+            },
+          ],
+          revenueTotal: this.formulaService.nonResidentNetRevenue([
+            this.data?.otherRevenueGrossNonResident,
+          ]),
+        },
         {
           revenueLabel: 'Net revenue',
           revenueItems: [

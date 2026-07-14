@@ -1,3 +1,4 @@
+import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DayUseAccordionComponent } from './day-use-accordion.component';
@@ -6,6 +7,38 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ConfigService } from 'src/app/services/config.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 
+@Component({
+  selector: 'app-accordion',
+  template: '',
+  standalone: true
+})
+class StubAccordionComponent {
+  @Input() icon: any;
+  @Input() secondaryText: any;
+  @Input() editLink: any;
+  @Input() recordLock: any;
+  @Input() isLegacy: any;
+  @Input() variance: any;
+}
+
+@Component({
+  selector: 'app-accordion-summaries',
+  template: '',
+  standalone: true
+})
+class StubAccordionSummariesComponent {
+  @Input() summaries: any;
+}
+
+@Component({
+  selector: 'app-accordion-notes',
+  template: '',
+  standalone: true
+})
+class StubAccordionNotesComponent {
+  @Input() notes: any;
+}
+
 describe('DayUseAccordionComponent', () => {
   let component: DayUseAccordionComponent;
   let fixture: ComponentFixture<DayUseAccordionComponent>;
@@ -13,7 +46,12 @@ describe('DayUseAccordionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DayUseAccordionComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        StubAccordionComponent,
+        StubAccordionSummariesComponent,
+        StubAccordionNotesComponent
+      ],
       providers: [
         ConfigService,
         HttpClient,
@@ -32,7 +70,6 @@ describe('DayUseAccordionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: build this out to check more than just the length of the summaries array
   it('builds accordion', async () => {
     component.data = MockData.mockDayUseRecord_1;
     component.buildAccordion();

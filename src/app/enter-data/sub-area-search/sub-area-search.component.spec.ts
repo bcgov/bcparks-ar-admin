@@ -100,7 +100,6 @@ describe('SubAreaSearchComponent', () => {
         {
           provide: FormService, useValue: mockFormService
         },
-        UrlService,
         {
           provide: UrlService, useValue: mockUrlService
         }

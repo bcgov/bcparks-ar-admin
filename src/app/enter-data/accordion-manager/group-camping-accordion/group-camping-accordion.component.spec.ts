@@ -36,13 +36,13 @@ describe('GroupCampingAccordionComponent', () => {
   it('builds accordion', async () => {
     component.data = MockData.mockGroupCampingRecord_1;
     component.buildAccordion();
-    expect(component.summaries.length).toEqual(2);
+    expect(component.summaries.length).toEqual(3);
   });
 
   it('builds legacy accordion', async () => {
     component.data = MockData.mockGroupCampingRecord_Legacy;
     component.buildAccordion();
-    expect(component.summaries.length).toEqual(2);
+    expect(component.summaries.length).toEqual(3);
   });
 
   it('unsubscribes on destroy', async () => {

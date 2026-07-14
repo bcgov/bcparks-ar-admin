@@ -70,16 +70,19 @@ export class Constants {
       peopleChild: 0.2,
       peopleFamily: 0.2,
       revenueFamily: 0.2,
+      otherRevenueGrossNonResident: 0.2,
     },
     backcountryCamping: {
       people: 0.2,
       grossCampingRevenue: 0.2,
+      otherRevenueGrossNonResident: 0.2,
     },
     boating: {
       boatAttendanceNightsOnDock: 0.2,
       boatAttendanceNightsOnBouys: 0.2,
       boatAttendanceMiscellaneous: 0.2,
       boatRevenueGross: 0.2,
+      otherRevenueGrossNonResident: 0.2,
     },
     dayUse: {
       peopleAndVehiclesTrail: 0.2,
@@ -94,6 +97,7 @@ export class Constants {
     frontCountryCabins: {
       totalAttendanceParties: 0.2,
       revenueGrossCamping: 0.2,
+      otherRevenueGrossNonResident: 0.2,
     },
     frontCountryCamping: {
       winterCampingPartyNightsAttendanceStandard: 0.2,
@@ -109,6 +113,7 @@ export class Constants {
       secondCarsRevenueGross: 0.2,
       otherRevenueGrossSani: 0.2,
       otherRevenueElectrical: 0.2,
+      otherRevenueGrossNonResident: 0.2,
       otherRevenueShower: 0.2,
     },
     groupCamping: {
@@ -120,6 +125,7 @@ export class Constants {
       youthRateGroupsAttendanceGroupNights: 0.2,
       youthRateGroupsAttendancePeople: 0.2,
       youthRateGroupsRevenueGross: 0.2,
+      otherRevenueGrossNonResident: 0.2,
     },
   };
 

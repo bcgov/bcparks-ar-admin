@@ -112,6 +112,21 @@ export class GroupCampingAccordionComponent implements OnDestroy {
             },
           ],
           revenueTotal: this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_groupCampingTotalNetRevenue),
+        },
+        {
+          isLegacy: true,
+          title: 'Non-resident revenue',
+          revenueLabel: 'Non-resident net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross non-resident revenue (in-park collection only)',
+              value: this.data?.otherRevenueGrossNonResident,
+              variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
+            },
+          ],
+          revenueTotal: this.formulaService.nonResidentNetRevenue([
+            this.data?.otherRevenueGrossNonResident,
+          ]),
         }
       ];
     } else {
@@ -185,6 +200,20 @@ export class GroupCampingAccordionComponent implements OnDestroy {
           ],
           revenueTotal: this.formulaService.basicNetRevenue([
             this.data?.youthRateGroupsRevenueGross,
+          ]),
+        },
+        {
+          title: 'Non-resident revenue',
+          revenueLabel: 'Non-resident net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross non-resident revenue (in-park collection only)',
+              value: this.data?.otherRevenueGrossNonResident,
+              variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
+            },
+          ],
+          revenueTotal: this.formulaService.nonResidentNetRevenue([
+            this.data?.otherRevenueGrossNonResident,
           ]),
         }
       ];

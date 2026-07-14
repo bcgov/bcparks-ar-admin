@@ -36,13 +36,13 @@ describe('FrontcountryCabinsAccordionComponent', () => {
   it('builds accordion', async () => {
     component.data = MockData.mockFrontcountryCabinsRecord_1;
     component.buildAccordion();
-    expect(component.summaries.length).toEqual(1);
+    expect(component.summaries.length).toEqual(2);
   });
 
   it('builds legacy accordion', async () => {
     component.data = MockData.mockFrontcountryCabinsRecord_Legacy;
     component.buildAccordion();
-    expect(component.summaries.length).toEqual(1);
+    expect(component.summaries.length).toEqual(2);
   });
 
   it('unsubscribes on destroy', async () => {
