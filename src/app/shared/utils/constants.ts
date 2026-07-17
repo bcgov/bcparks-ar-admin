@@ -73,7 +73,8 @@ export class Constants {
       otherRevenueGrossNonResident: 0.2,
     },
     backcountryCamping: {
-      people: 0.2,
+      peopleAdult: 0.2,
+      peopleYouth: 0.2,
       grossCampingRevenue: 0.2,
       otherRevenueGrossNonResident: 0.2,
     },

@@ -12,87 +12,63 @@
   <div class="form-section">
     <div class="row">
       <!-- Attendance -->
-      <div class="col-12 col-md-6 d-flex flex-column">
-        <div class="row d-flex">
-          <div class="col-12 col-lg-auto">
-            <!-- People -->
-            <div
-              class="input-box mb-2 d-flex align-items-end"
-              [popover]="getPopoverData('people') ? popover : null"
-              [popoverContext]="{variance: getPopoverData('people')}"
-              placement="bottom"
-              triggers="mouseenter:mouseleave"
-            >
-              <ngds-number-input
-                [control]="form?.controls?.['people']"
-                [decimalPlaces]="0"
-                [justify]="'end'"
-                [invalidConfig]="invalidConfig"
-                [allowNegative]="false"
-                [label]="'People'"
-                [placeholder]="'No data'"
-                [loadWhile]="loading"
-              >
-                <i
-                  ngdsInputPrepend
-                  class="bi bi-person-fill px-2"
-                ></i>
-              </ngds-number-input>
-            </div>
-          </div>
-          <app-info-text
-            class="text-block"
-            [text]="'Enter the number of people counted or observed.'"
-          ></app-info-text>
-        </div>
+      <!-- Adults -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('peopleAdult') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('peopleAdult')}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['peopleAdult']" [decimalPlaces]="0"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Adults (15+)'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+        </ngds-number-input>
       </div>
-      <!-- Revenue -->
-      <div class="col-12 col-md-6 d-flex flex-column">
-        <div class="mb-auto">
-          <!-- Gross revenue -->
-          <div class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('grossCampingRevenue') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('grossCampingRevenue', true)}"
-            placement="bottom"
-            triggers="mouseenter:mouseleave"
-          >
-            <ngds-number-input
-              [control]="form?.controls?.['grossCampingRevenue']"
-              [decimalPlaces]="2"
-              [justify]="'end'"
-              [invalidConfig]="invalidConfig"
-              [padDecimals]="true"
-              [label]="'Gross camping revenue'"
-              [placeholder]="'No data'"
-              [loadWhile]="loading"
-            >
-              <i
-                ngdsInputPrepend
-                class="bi bi-currency-dollar px-2"
-              ></i>
-            </ngds-number-input>
-          </div>
-        </div>
-        <!-- Revenue Summary -->
-        <div class="mb-2">
-          <app-calculation-display
-            [colorClass]="'green'"
-            [label]="'NET REVENUE'"
-            [subtext]="revenueTotal?.formula"
-            [value]="revenueTotal?.result"
-          ></app-calculation-display>
-        </div>
+      <!-- Youth -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('peopleYouth') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('peopleYouth')}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['peopleYouth']" [decimalPlaces]="0"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [padDecimals]="true" [label]="'Youth (6-15)'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+        </ngds-number-input>
+      </div>
+      <!-- Blank row -->
+      <div class="blank-row">
+      </div>
+      <!-- Gross revenue -->
+      <div class="input-box mb-2 full-input"
+        [popover]="getPopoverData('grossCampingRevenue') ? popover : null"
+        [popoverContext]="{variance: getPopoverData('grossCampingRevenue')}" placement="bottom"
+        triggers="mouseenter:mouseleave">
+        <ngds-number-input [control]="form?.controls?.['grossCampingRevenue']" [decimalPlaces]="2"
+          [justify]="'start'" [invalidConfig]="invalidConfig" [padDecimals]="true"
+          [label]="'Gross camping revenue'"
+          [placeholder]="'No data'" [loadWhile]="loading">
+          <i ngdsInputPrepend class="bi bi-currency-dollar px-2"></i>
+        </ngds-number-input>
+      </div>
+      <!-- Revenue summary -->
+      <div class="mb-2 pb-4 mt-auto">
+        <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'"
+          [subtext]="revenueTotal?.formula" [value]="revenueTotal?.result"></app-calculation-display>
       </div>
     </div>
   </div>
-  <app-non-resident-revenue
-    [control]="form?.controls?.['otherRevenueGrossNonResident']"
-    [total]="nonResidentRevenueTotal"
-    [invalidConfig]="invalidConfig"
-    [loading]="loading"
-    [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
-    [popoverTemplate]="popover"
-  ></app-non-resident-revenue>
+  <div class="form-section">
+    <h2>Other backcountry camping revenue</h2>
+    <div class="row">
+      <app-non-resident-revenue
+        [control]="form?.controls?.['otherRevenueGrossNonResident']"
+        [total]="nonResidentRevenueTotal"
+        [invalidConfig]="invalidConfig"
+        [loading]="loading"
+        [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
+        [popoverTemplate]="popover"
+      ></app-non-resident-revenue>
+    </div>
+  </div>
   <!-- Variance Notes -->
   <div class="form-section">
     <h2>Variance notes</h2>
