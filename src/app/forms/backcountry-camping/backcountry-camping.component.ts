@@ -34,7 +34,8 @@ export class BackcountryCampingComponent extends RootFormComponent {
     this.activityType = 'Backcountry Camping';
     this.accordionType = Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING;
     this.form = new UntypedFormGroup({
-      people: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('people')] }),
+      peopleAdult: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('peopleAdult')] }),
+      peopleYouth: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('peopleYouth')] }),
       grossCampingRevenue: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('grossCampingRevenue')] }),
       otherRevenueGrossNonResident: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('otherRevenueGrossNonResident')] }),
       notes: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.maxLength(this.maxVarianceNotesCharacters)] }),

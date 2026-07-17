@@ -101,26 +101,17 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
     } else {
       this.summaries = [
         {
-          title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
-          revenueItems: [
-            {
-              itemName: 'Gross non-resident revenue (in-park collection only)',
-              value: this.data?.otherRevenueGrossNonResident,
-              variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
-            },
-          ],
-          revenueTotal: this.formulaService.nonResidentNetRevenue([
-            this.data?.otherRevenueGrossNonResident,
-          ]),
-        },
-        {
           attendanceItems: [
             {
-              itemName: 'People',
-              value: this.data?.people,
-              variance: this.variance?.value?.hasOwnProperty('people')
+              itemName: 'Adults (16+)',
+              value: this.data?.peopleAdult,
+              variance: this.variance?.value?.hasOwnProperty('peopleAdult')
             },
+            {
+              itemName: 'Youths (6-15)',
+              value: this.data?.peopleYouth,
+              variance: this.variance?.value?.hasOwnProperty('peopleYouth')
+            }
           ],
           revenueLabel: 'Net revenue',
           revenueItems: [
@@ -132,6 +123,20 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
           ],
           revenueTotal: this.formulaService.basicNetRevenue([
             this.data?.grossCampingRevenue,
+          ]),
+        },
+        {
+          title: 'Other backcountry camping revenue',
+          revenueLabel: 'Net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross non-resident revenue (in-park collection only)',
+              value: this.data?.otherRevenueGrossNonResident,
+              variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
+            },
+          ],
+          revenueTotal: this.formulaService.nonResidentNetRevenue([
+            this.data?.otherRevenueGrossNonResident,
           ]),
         },
       ];
