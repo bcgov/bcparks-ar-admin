@@ -127,20 +127,20 @@ export class FormulaService {
    * Calculates non-resident net revenue from gross using the business rule multiplier.
    * @function
    * @param {any[]} revenues Array of gross non-resident revenue numbers
-   * @param {number} modifier multiplier to apply (default 1.05)
+   * @param {number} modifier divisor to apply (default 1.05)
    * @memberof FormulaService
    * @returns `formulaResult` object
    */
   nonResidentNetRevenue(revenues: any[], modifier: number = 1.05): formulaResult {
     let result: any = null;
     const gross = this.arraySum(revenues);
-    const net = this.totalWithModifier([gross], modifier);
+    const net = gross / modifier;
     if (this.isValidNumber(gross)) {
       result = this.formatMoney(net);
     }
     return {
       result,
-      formula: `Non-resident net revenue = Gross non-resident revenue x ${modifier}`,
+      formula: `Non-resident net revenue = Gross non-resident revenue / ${modifier}`,
     };
   }
 
