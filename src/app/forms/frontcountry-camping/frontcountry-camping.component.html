@@ -25,7 +25,7 @@
       />
     </div>
     <div class="mb-2 mt-auto">
-      Winter rates available October-May
+      Nights with reduced service in winter (dates vary - use only when approved winter fee is in effect)
     </div>
     <!-- Winter Standard -->
     <div *ngIf="winter" class="container-fluid p-0">
@@ -47,7 +47,7 @@
           triggers="mouseenter:mouseleave">
           <ngds-number-input [control]="form?.controls?.['winterCampingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
             [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
-            [label]="'Social services fee exemption parties'" [placeholder]="'No data'" [loadWhile]="loading">
+            [label]="'Social Services Camping Fee Exemption (SSCFE) parties'" [placeholder]="'No data'" [loadWhile]="loading">
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
           </ngds-number-input>
         </div>
@@ -72,7 +72,7 @@
       />
     </div>
     <div class="mb-2 mt-auto">
-      Off-season rates available September-June
+      Nights between Labour Day and before June 14 (no winter fee in effect) 
     </div>
     <!-- OffSeason Standard -->
     <div *ngIf="offSeason" class="container-fluid p-0">
@@ -88,13 +88,24 @@
           </ngds-number-input>
         </div>
         <!-- OffSeason Social -->
-        <div class="input-box col"
+        <div class="input-box col-auto flex-shrink-0 text-nowrap"
           [popover]="getPopoverData('offSeasonCampingPartyNightsAttendanceSocial') ? popover : null"
           [popoverContext]="{variance: getPopoverData('offSeasonCampingPartyNightsAttendanceSocial')}" placement="bottom"
           triggers="mouseenter:mouseleave">
           <ngds-number-input [control]="form?.controls?.['offSeasonCampingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
             [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
-            [label]="'Social services fee exemption parties'" [placeholder]="'No data'" [loadWhile]="loading">
+            [label]="'Social Services Camping Fee Exemption (SSCFE) parties'" [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
+        </div>
+        <!-- Long stay -->
+        <div class="input-box col"
+          [popover]="getPopoverData('offSeasonCampingPartyNightsAttendanceLongStay') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('offSeasonCampingPartyNightsAttendanceLongStay')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['offSeasonCampingPartyNightsAttendanceLongStay']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Long stay parties'"
+            [placeholder]="'No data'" [loadWhile]="loading">
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
           </ngds-number-input>
         </div>
@@ -109,17 +120,17 @@
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
           </ngds-number-input>
         </div>
-        <div class="row">
+      </div>
+      <div class="row">
           <!-- Attendance info -->
-          <app-info-text class="text-block col-4"
+          <app-info-text class="text-block col-3"
             [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
         </div>
-      </div>
     </div>
     <!-- Attendance -->
     <h3 class="pt-3">Summer rate parties</h3>
     <div class="mb-2 mt-auto">
-      Summer rates available June-September
+      Nights between June 15 to Labour Day
     </div>
     <div class="container-fluid p-0">
       <div class="row gx-3 m-0">
@@ -141,7 +152,7 @@
           triggers="mouseenter:mouseleave">
           <ngds-number-input [control]="form?.controls?.['summerCampingPartyNightsAttendanceSocial']" [decimalPlaces]="0"
             [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
-            [label]="'Social services fee exemption parties'" [placeholder]="'No data'" [loadWhile]="loading">
+            [label]="'Social Services Camping Fee Exemption (SSCFE) parties'" [placeholder]="'No data'" [loadWhile]="loading">
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
           </ngds-number-input>
         </div>
@@ -233,7 +244,7 @@
         triggers="mouseenter:mouseleave">
         <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceSocial']" [decimalPlaces]="0"
           [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
-          [label]="'Social services fee exemption'" [placeholder]="'No data'" [loadWhile]="loading">
+          [label]="'Social Services Camping Fee Exemption (SSCFE)'" [placeholder]="'No data'" [loadWhile]="loading">
           <i ngdsInputPrepend class="car-icon"></i>
         </ngds-number-input>
       </div>

@@ -53,6 +53,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       offSeasonCampingPartyNightsAttendanceStandard: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('offSeasonCampingPartyNightsAttendanceStandard')] }),
       offSeasonCampingPartyNightsAttendanceSocial: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('offSeasonCampingPartyNightsAttendanceSocial')] }),
       offSeasonCampingPartyNightsAttendanceSenior: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('offSeasonCampingPartyNightsAttendanceSenior')] }),
+      offSeasonCampingPartyNightsAttendanceLongStay: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('offSeasonCampingPartyNightsAttendanceLongStay')] }),
       summerCampingPartyNightsAttendanceLongStay: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('summerCampingPartyNightsAttendanceLongStay')] }),
       summerCampingPartyNightsAttendanceSocial: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('summerCampingPartyNightsAttendanceSocial')] }),
       summerCampingPartyNightsAttendanceStandard: new UntypedFormControl(null, { nonNullable: true, validators: [Validators.min(0), this.varianceFieldInvalidator('summerCampingPartyNightsAttendanceStandard')] }),
@@ -130,6 +131,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
           this.form.controls['offSeasonCampingPartyNightsAttendanceStandard'].value,
           this.form.controls['offSeasonCampingPartyNightsAttendanceSocial'].value,
           this.form.controls['offSeasonCampingPartyNightsAttendanceSenior'].value,
+          this.form.controls['offSeasonCampingPartyNightsAttendanceLongStay'].value,
           this.form.controls['summerCampingPartyNightsAttendanceStandard'].value,
           this.form.controls['summerCampingPartyNightsAttendanceSocial'].value,
           this.form.controls['summerCampingPartyNightsAttendanceLongStay'].value
