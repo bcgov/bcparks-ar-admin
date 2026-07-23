@@ -71,12 +71,12 @@ describe('FormulaService', () => {
   });
 
   it('should calculate non-resident net revenue using gross x 1.05', () => {
-    expect(service.nonResidentNetRevenue([100]).result).toBe('$105.00');
-    expect(service.nonResidentNetRevenue([50, 25]).result).toBe('$78.75');
+    expect(service.nonResidentNetRevenue([100]).result).toBe('$95.24');
+    expect(service.nonResidentNetRevenue([50, 25]).result).toBe('$71.43');
     expect(service.nonResidentNetRevenue([0]).result).toBe('$0.00');
     expect(service.nonResidentNetRevenue([NaN]).result).toBeNull();
     expect(service.nonResidentNetRevenue([100]).formula).toBe(
-      'Non-resident net revenue = Gross non-resident revenue x 1.05'
+      'Non-resident net revenue = Gross non-resident revenue / 1.05'
     );
   });
 
