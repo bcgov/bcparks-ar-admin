@@ -87,6 +87,17 @@
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
           </ngds-number-input>
         </div>
+        <!-- Senior -->
+        <div class="input-box col"
+          [popover]="getPopoverData('offSeasonCampingPartyNightsAttendanceSenior') ? popover : null"
+          [popoverContext]="{variance: getPopoverData('offSeasonCampingPartyNightsAttendanceSenior')}" placement="bottom"
+          triggers="mouseenter:mouseleave">
+          <ngds-number-input [control]="form?.controls?.['offSeasonCampingPartyNightsAttendanceSenior']" [decimalPlaces]="0"
+            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Senior parties'"
+            [placeholder]="'No data'" [loadWhile]="loading">
+            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
+          </ngds-number-input>
+        </div>
         <!-- OffSeason Social -->
         <div class="input-box col-auto flex-shrink-0 text-nowrap"
           [popover]="getPopoverData('offSeasonCampingPartyNightsAttendanceSocial') ? popover : null"
@@ -105,17 +116,6 @@
           triggers="mouseenter:mouseleave">
           <ngds-number-input [control]="form?.controls?.['offSeasonCampingPartyNightsAttendanceLongStay']" [decimalPlaces]="0"
             [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Long stay parties'"
-            [placeholder]="'No data'" [loadWhile]="loading">
-            <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
-          </ngds-number-input>
-        </div>
-        <!-- Senior -->
-        <div class="input-box col"
-          [popover]="getPopoverData('offSeasonCampingPartyNightsAttendanceSenior') ? popover : null"
-          [popoverContext]="{variance: getPopoverData('offSeasonCampingPartyNightsAttendanceSenior')}" placement="bottom"
-          triggers="mouseenter:mouseleave">
-          <ngds-number-input [control]="form?.controls?.['offSeasonCampingPartyNightsAttendanceSenior']" [decimalPlaces]="0"
-            [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Senior parties'"
             [placeholder]="'No data'" [loadWhile]="loading">
             <i ngdsInputPrepend class="bi bi-person-fill px-2"></i>
           </ngds-number-input>
