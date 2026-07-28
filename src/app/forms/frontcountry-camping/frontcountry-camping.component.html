@@ -72,7 +72,7 @@
       />
     </div>
     <div class="mb-2 mt-auto">
-      Nights between Labour Day and before June 14 (no winter fee in effect) 
+      Nights between Labour Day and before June 14 (no winter fee in effect)
     </div>
     <!-- OffSeason Standard -->
     <div *ngIf="offSeason" class="container-fluid p-0">
@@ -276,16 +276,15 @@
       </div>
     </div>
   </div>
-  <div class="form-section">
-    <app-non-resident-revenue
-      [control]="form?.controls?.['otherRevenueGrossNonResident']"
-      [total]="nonResidentRevenueTotal"
-      [invalidConfig]="invalidConfig"
-      [loading]="loading"
-      [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
-      [popoverTemplate]="popover"
-    ></app-non-resident-revenue>
-  </div>
+
+  <app-non-resident-revenue
+    [control]="form?.controls?.['otherRevenueGrossNonResident']"
+    [total]="nonResidentRevenueTotal"
+    [invalidConfig]="invalidConfig"
+    [loading]="loading"
+    [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
+    [popoverTemplate]="popover"
+  ></app-non-resident-revenue>
   <div class="form-section">
     <!-- Other frontcountry camping -->
     <h2>Other frontcountry camping</h2>
