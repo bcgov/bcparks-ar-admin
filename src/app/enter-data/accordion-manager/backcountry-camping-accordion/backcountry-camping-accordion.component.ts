@@ -126,8 +126,8 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
           ]),
         },
         {
-          title: 'Other backcountry camping revenue',
-          revenueLabel: 'Net revenue',
+          title: 'Non-resident revenue',
+          revenueLabel: 'Non-resident net revenue',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',
