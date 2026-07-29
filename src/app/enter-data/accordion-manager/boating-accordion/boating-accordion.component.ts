@@ -60,20 +60,6 @@ export class BoatingAccordionComponent implements OnDestroy {
   buildAccordion() {
     this.summaries = [
       {
-        title: 'Non-resident revenue',
-        revenueLabel: 'Non-resident net revenue',
-        revenueItems: [
-          {
-            itemName: 'Gross non-resident revenue (in-park collection only)',
-            value: this.data?.otherRevenueGrossNonResident,
-            variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
-          },
-        ],
-        revenueTotal: this.formulaService.nonResidentNetRevenue([
-          this.data?.otherRevenueGrossNonResident,
-        ]),
-      },
-      {
         attendanceLabel: 'Boat Attendance',
         attendanceItems: [
           {
