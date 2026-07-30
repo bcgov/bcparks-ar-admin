@@ -97,20 +97,6 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
     } else {
       this.summaries = [
         {
-          title: 'Non-resident revenue',
-          revenueLabel: 'NET REVENUE',
-          revenueItems: [
-            {
-              itemName: 'Gross non-resident revenue (in-park collection only)',
-              value: this.data?.otherRevenueGrossNonResident,
-              variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
-            },
-          ],
-          revenueTotal: this.formulaService.nonResidentNetRevenue([
-            this.data?.otherRevenueGrossNonResident,
-          ]),
-        },
-        {
           attendanceLabel: 'Total attendance',
           attendanceItems: [
             {
@@ -133,6 +119,20 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
           ],
           revenueTotal: this.formulaService.basicNetRevenue([
             this.data?.revenueGrossCamping,
+          ]),
+        },
+        {
+          title: 'Non-resident revenue',
+          revenueLabel: 'Non-resident net revenue',
+          revenueItems: [
+            {
+              itemName: 'Gross non-resident revenue (in-park collection only)',
+              value: this.data?.otherRevenueGrossNonResident,
+              variance: this.variance?.value?.hasOwnProperty('otherRevenueGrossNonResident')
+            },
+          ],
+          revenueTotal: this.formulaService.nonResidentNetRevenue([
+            this.data?.otherRevenueGrossNonResident,
           ]),
         },
       ];
