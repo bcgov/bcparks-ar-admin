@@ -90,6 +90,11 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             variance: this.variance?.value?.hasOwnProperty('offSeasonCampingPartyNightsAttendanceStandard')
           },
           {
+            itemName: 'Senior parties',
+            value: this.data?.offSeasonCampingPartyNightsAttendanceSenior,
+            variance: this.variance?.value?.hasOwnProperty('offSeasonCampingPartyNightsAttendanceSenior')
+          },
+          {
             itemName: 'Social Services Camping Fee Exemption (SSCFE) parties',
             value: this.data?.offSeasonCampingPartyNightsAttendanceSocial,
             variance: this.variance?.value?.hasOwnProperty('offSeasonCampingPartyNightsAttendanceSocial')
@@ -98,11 +103,6 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             itemName: 'Long stay parties',
             value: this.data?.offSeasonCampingPartyNightsAttendanceLongStay,
             variance: this.variance?.value?.hasOwnProperty('offSeasonCampingPartyNightsAttendanceLongStay')
-          },
-          {
-            itemName: 'Senior parties',
-            value: this.data?.offSeasonCampingPartyNightsAttendanceSenior,
-            variance: this.variance?.value?.hasOwnProperty('offSeasonCampingPartyNightsAttendanceSenior')
           },
         ]
       },
