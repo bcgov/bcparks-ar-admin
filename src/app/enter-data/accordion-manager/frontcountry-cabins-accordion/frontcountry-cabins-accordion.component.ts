@@ -63,7 +63,7 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
         {
           isLegacy: true,
           title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
+          revenueLabel: 'NET REVENUE',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',
@@ -98,7 +98,7 @@ export class FrontcountryCabinsAccordionComponent implements OnDestroy {
       this.summaries = [
         {
           title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
+          revenueLabel: 'NET REVENUE',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',

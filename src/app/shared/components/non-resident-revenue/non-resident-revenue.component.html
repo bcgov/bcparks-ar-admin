@@ -28,13 +28,13 @@
         </div>
         <app-info-text
           class="text-block"
-          [text]="'This gross non-resident revenue is tracked separately and is not included in the total net revenue below.'"
+          [text]="'Non-resident net revenue is not included in the Total net revenue on reports'"
         ></app-info-text>
       </div>
       <div class="mb-2 pb-4 mt-auto">
         <app-calculation-display
           [colorClass]="'green'"
-          [label]="'NON-RESIDENT NET REVENUE'"
+          [label]="'NET REVENUE'"
           [subtext]="total?.formula"
           [value]="total?.result"
         ></app-calculation-display>

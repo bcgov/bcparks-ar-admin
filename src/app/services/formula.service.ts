@@ -124,23 +124,23 @@ export class FormulaService {
   }
 
   /**
-   * Calculates non-resident net revenue from gross using the business rule multiplier.
+   * Calculates NET REVENUE from gross by subtracting GST percentage.
    * @function
    * @param {any[]} revenues Array of gross non-resident revenue numbers
-   * @param {number} modifier divisor to apply (default 1.05)
+   * @param {number} percent GST percentage to subtract (default 5)
    * @memberof FormulaService
    * @returns `formulaResult` object
    */
-  nonResidentNetRevenue(revenues: any[], modifier: number = 1.05): formulaResult {
+  nonResidentNetRevenue(revenues: any[], percent: number = 5): formulaResult {
     let result: any = null;
     const gross = this.arraySum(revenues);
-    const net = gross / modifier;
+    const net = gross - gross * (percent / 100);
     if (this.isValidNumber(gross)) {
       result = this.formatMoney(net);
     }
     return {
       result,
-      formula: `Non-resident net revenue = Gross non-resident revenue / ${modifier}`,
+      formula: `Net revenue = Gross revenue - ${percent}% GST`,
     };
   }
 

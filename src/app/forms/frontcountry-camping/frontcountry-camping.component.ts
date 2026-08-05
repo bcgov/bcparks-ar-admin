@@ -156,7 +156,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
       // Note: otherRevenueGrossNonResident is intentionally excluded — tracked separately below
       this.form.controls['otherRevenueShower'].value
     ]);
-    // Non-resident net revenue is calculated and displayed independently
+    // NET REVENUE is calculated and displayed independently
     this.nonResidentRevenueTotal = this.formulaService.nonResidentNetRevenue([
       this.form.controls['otherRevenueGrossNonResident'].value
     ]);

@@ -97,7 +97,7 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
         {
           isLegacy: true,
           title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
+          revenueLabel: 'NET REVENUE',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',
@@ -127,7 +127,7 @@ export class BackcountryCabinsAccordionComponent implements OnDestroy {
       return [
         {
           title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
+          revenueLabel: 'NET REVENUE',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',

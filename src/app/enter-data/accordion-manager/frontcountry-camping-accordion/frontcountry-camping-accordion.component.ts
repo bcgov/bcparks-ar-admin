@@ -242,7 +242,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
       return [{
         isLegacy: true,
         title: 'Non-resident revenue',
-        revenueLabel: 'Non-resident net revenue',
+        revenueLabel: 'NET REVENUE',
         revenueItems: [
           {
             itemName: 'Gross non-resident revenue (in-park collection only)',
@@ -294,7 +294,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
       return [{
         isLegacy: false,
         title: 'Non-resident revenue',
-        revenueLabel: 'Non-resident net revenue',
+        revenueLabel: 'NET REVENUE',
         revenueItems: [
           {
             itemName: 'Gross non-resident revenue (in-park collection only)',

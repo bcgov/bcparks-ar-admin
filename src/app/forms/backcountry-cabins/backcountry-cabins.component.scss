@@ -1,0 +1,12 @@
+/* Tells the browser layout engine to measure text width exactly */
+::ng-deep .input-box label {
+  white-space: nowrap !important;
+  display: inline-block !important;
+  width: max-content !important;
+}
+
+/* Force the wrapper container to fit around the wide label text */
+.input-box.flex-shrink-0 {
+  min-width: max-content !important;
+}
+

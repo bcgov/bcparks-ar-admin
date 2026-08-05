@@ -65,7 +65,7 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
       this.summaries = [
         {
           title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
+          revenueLabel: 'NET REVENUE',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',
@@ -127,7 +127,7 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
         },
         {
           title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
+          revenueLabel: 'NET REVENUE',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',

@@ -116,7 +116,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
         {
           isLegacy: true,
           title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
+          revenueLabel: 'NET REVENUE',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',
@@ -204,7 +204,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
         },
         {
           title: 'Non-resident revenue',
-          revenueLabel: 'Non-resident net revenue',
+          revenueLabel: 'NET REVENUE',
           revenueItems: [
             {
               itemName: 'Gross non-resident revenue (in-park collection only)',

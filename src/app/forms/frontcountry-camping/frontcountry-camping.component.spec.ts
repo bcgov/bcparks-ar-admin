@@ -50,9 +50,9 @@ describe('FrontcountryCampingComponent', () => {
     });
     component.calculateTotals();
 
-    // nonResidentRevenueTotal should only reflect the non-resident value and use gross x 1.05
-    expect(component.nonResidentRevenueTotal.result).toBe('$714.29');
-    expect(component.nonResidentRevenueTotal.formula).toContain('/ 1.05');
+    // nonResidentRevenueTotal should only reflect the non-resident value and subtract 5% GST
+    expect(component.nonResidentRevenueTotal.result).toBe('$712.50');
+    expect(component.nonResidentRevenueTotal.formula).toContain('5% GST');
 
     // otherRevenueTotal must NOT include non-resident (result should be based on sani+electrical+shower=350 gross, not 1100)
     expect(component.otherRevenueTotal.result).toBeDefined();
