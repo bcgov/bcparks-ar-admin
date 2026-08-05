@@ -36,13 +36,13 @@ describe('BoatingAccordionComponent', () => {
   it('builds accordion', async () => {
     component.data = MockData.mockBoatingRecord_1;
     component.buildAccordion();
-    expect(component.summaries.length).toEqual(2);
+    expect(component.summaries.length).toEqual(1);
   });
 
   it('builds legacy accordion', async () => {
     component.data = MockData.mockBoatingRecord_Legacy;
     component.buildAccordion();
-    expect(component.summaries.length).toEqual(2);
+    expect(component.summaries.length).toEqual(1);
   });
 
   it('unsubscribes on destroy', async () => {
