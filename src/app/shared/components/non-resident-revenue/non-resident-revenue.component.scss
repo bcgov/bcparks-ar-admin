@@ -1,0 +1,16 @@
+.full-input {
+  width: 100%;
+}
+
+/* Keep the long label on one line like other forms using the same pattern */
+::ng-deep .input-box label {
+  white-space: nowrap !important;
+  display: inline-block !important;
+  width: max-content !important;
+}
+
+/* Allow the input wrapper to expand to the label width */
+.input-box.flex-shrink-0 {
+  min-width: max-content !important;
+}
+

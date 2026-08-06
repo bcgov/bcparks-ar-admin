@@ -138,6 +138,14 @@
       </div>
     </div>
   </div>
+  <app-non-resident-revenue
+    [control]="form?.controls?.['otherRevenueGrossNonResident']"
+    [total]="nonResidentRevenueTotal"
+    [invalidConfig]="invalidConfig"
+    [loading]="loading"
+    [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
+    [popoverTemplate]="popover"
+  ></app-non-resident-revenue>
   <!-- Variance notes -->
   <div class="form-section">
     <h2>Variance notes</h2>
@@ -193,9 +201,9 @@
 
 <!-- Variance warning popover template -->
 <ng-template
-  #popover
-  let-variance="variance"
+  #popovervariance"
 >
+  let-variance="
   <div
     class="text-secondary"
     *ngIf="variance"
