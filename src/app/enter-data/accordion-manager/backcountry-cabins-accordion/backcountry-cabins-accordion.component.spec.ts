@@ -37,12 +37,16 @@ describe('BackcountryCabinsAccordionComponent', () => {
     component.data = MockData.mockBackcountryCabinRecord_1;
     component.buildAccordion();
     expect(component.summaries.length).toEqual(3);
+    expect(component.summaries[1].revenueItems[0].itemName).toEqual('Gross Backcountry Cabin Revenue');
+    expect(component.summaries[2].title).toEqual('Non-resident revenue');
   });
 
   it('builds legacy accordion', async () => {
     component.data = MockData.mockBackcountryCabinRecord_Legacy;
     component.buildAccordion();
     expect(component.summaries.length).toEqual(3);
+    expect(component.summaries[1].revenueItems[0].itemName).toEqual('Gross cabin revenue');
+    expect(component.summaries[2].title).toEqual('Non-resident revenue');
   });
 
   it('unsubscribes on destroy', async () => {
