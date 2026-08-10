@@ -13,9 +13,16 @@ Associated Repositories:
 
 To contribute to this code, follow the steps through this link: https://bcgov.github.io/bcparks/collaborate 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+This project is maintained on Angular 21 and requires Node.js 22.22.0 or newer for local development.
 
 # Local Development
+
+## Prerequisites
+
+- Node.js `22.22.0` or newer
+- Yarn `1.22.x`
+
+If you use `nvm`, run `nvm use` in the repository root to pick up the version from `.nvmrc`.
 
 ## Development Server
 
@@ -40,6 +47,10 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Upgrade notes
+
+The Angular 19 -> 21 migration is applied one major version at a time. The project currently relies on `@digitalspace/ngds-forms` and `@digitalspace/ngds-toolkit`, whose published peer dependency ranges still target Angular 16, so the Angular CLI migration must be run with `--force` while those vendor packages are validated.
 
 ## Running end-to-end tests
 

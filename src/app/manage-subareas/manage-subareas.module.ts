@@ -21,7 +21,7 @@ import { SubareaFormComponent } from './subarea-form/subarea-form.component';
     CommonModule,
     FormsModule,
     NgdsFormsModule,
-    ModalModule.forRoot()
+    ModalModule
   ],
   exports: [
     ReviewModalComponent,

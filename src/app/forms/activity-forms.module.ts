@@ -39,8 +39,8 @@ import { NonResidentRevenueModule } from '../shared/components/non-resident-reve
     TextToLoadingSpinnerModule,
     InfoTextModule,
     NonResidentRevenueModule,
-    PopoverModule.forRoot(),
-    ModalModule.forRoot(),
+    PopoverModule,
+    ModalModule,
   ],
   exports: [
     BackcountryCabinsComponent,

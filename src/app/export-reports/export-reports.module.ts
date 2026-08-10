@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
     NgbModule,
     NgdsTabsModule,
     NgdsFormsModule,
-    BsDatepickerModule.forRoot(),
+    BsDatepickerModule,
     FormsModule,
   ],
   exports: [ExportReportsComponent],

@@ -17,7 +17,7 @@ import { NgdsFormsModule } from '@digitalspace/ngds-forms';
   ],
   imports: [
     CommonModule,
-    BsDatepickerModule.forRoot(),
+    BsDatepickerModule,
     RouterModule,
     TextToLoadingSpinnerModule,
     TableModule,

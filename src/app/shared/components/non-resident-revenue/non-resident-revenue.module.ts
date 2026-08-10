@@ -11,7 +11,7 @@ import { CalculationDisplayModule } from '../forms/calculation-display/calculati
   imports: [
     CommonModule,
     NgdsFormsModule,
-    PopoverModule.forRoot(),
+    PopoverModule,
     InfoTextModule,
     CalculationDisplayModule,
   ],
