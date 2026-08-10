@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Constants } from '../shared/utils/constants';
 import { ApiService } from './api.service';
@@ -16,15 +16,14 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class ActivityService {
-  constructor(
-    private dataService: DataService,
-    private eventService: EventService,
-    private toastService: ToastService,
-    private apiService: ApiService,
-    private loggerService: LoggerService,
-    private loadingService: LoadingService,
-    private router: Router
-  ) { }
+  private dataService = inject(DataService);
+  private eventService = inject(EventService);
+  private toastService = inject(ToastService);
+  private apiService = inject(ApiService);
+  private loggerService = inject(LoggerService);
+  private loadingService = inject(LoadingService);
+  private router = inject(Router);
+
 
   private utils = new Utils();
 

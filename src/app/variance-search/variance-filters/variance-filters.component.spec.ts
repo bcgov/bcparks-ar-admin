@@ -88,24 +88,23 @@ describe('VarianceFiltersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [VarianceFiltersComponent],
-      imports: [RouterTestingModule],
-      providers: [
+    imports: [RouterTestingModule, VarianceFiltersComponent],
+    providers: [
         ChangeDetectorRef,
         HttpClient,
         HttpHandler,
         ConfigService,
         {
-          provide: DataService, useValue: mockDataService,
+            provide: DataService, useValue: mockDataService,
         },
         {
-          provide: UrlService, useValue: mockUrlService,
+            provide: UrlService, useValue: mockUrlService,
         },
         {
-          provide: SubAreaService, useValue: mockSubAreaService,
+            provide: SubAreaService, useValue: mockSubAreaService,
         },
-      ]
-    })
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(VarianceFiltersComponent);

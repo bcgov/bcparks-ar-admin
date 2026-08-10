@@ -1,14 +1,19 @@
-<td
-  *ngFor="let column of columnSchema"
-  class="{{ column.columnClasses }} table-cell"
-  (click)="loadComponents()"
->
-  <div class="d-flex align-items-center">
-    <span *ngIf="rowData[column.id].cellTemplate">
-      <ng-template #cellTemplateComponent></ng-template>
-    </span>
-    <span *ngIf="!rowData[column.id].cellTemplate">
-      {{ rowData[column.id].display ? rowData[column.id].display : rowData[column.id].value }}
-    </span>
-  </div>
-</td>
+@for (column of columnSchema; track column) {
+  <td
+    class="{{ column.columnClasses }} table-cell"
+    (click)="loadComponents()"
+    >
+    <div class="d-flex align-items-center">
+      @if (rowData[column.id].cellTemplate) {
+        <span>
+          <ng-template #cellTemplateComponent></ng-template>
+        </span>
+      }
+      @if (!rowData[column.id].cellTemplate) {
+        <span>
+          {{ rowData[column.id].display ? rowData[column.id].display : rowData[column.id].value }}
+        </span>
+      }
+    </div>
+  </td>
+}

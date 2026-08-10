@@ -8,8 +8,8 @@ describe('SubmitButtonComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SubmitButtonComponent]
-    });
+    imports: [SubmitButtonComponent]
+});
     fixture = TestBed.createComponent(SubmitButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

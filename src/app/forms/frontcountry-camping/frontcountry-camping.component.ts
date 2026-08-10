@@ -11,13 +11,25 @@ import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
 import { WinterToggleService } from 'src/app/services/winter-toggle.service';
 import { OffSeasonToggleService } from 'src/app/services/offseason-toggle.service';
+import { ParkHeaderComponent } from '../park-header/park-header.component';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { InfoTextComponent } from '../../shared/components/info-text/info-text.component';
+import { CalculationDisplayComponent } from '../../shared/components/forms/calculation-display/calculation-display.component';
+import { NonResidentRevenueComponent } from '../../shared/components/non-resident-revenue/non-resident-revenue.component';
+import { CancelButtonComponent } from '../cancel-button/cancel-button.component';
+import { SubmitButtonComponent } from '../submit-button/submit-button.component';
+import { VarianceWarningModalComponent } from '../variance-warning-modal/variance-warning-modal.component';
 @Component({
     selector: 'app-frontcountry-camping',
     templateUrl: './frontcountry-camping.component.html',
     styleUrls: ['./frontcountry-camping.component.scss'],
-    standalone: false
+    imports: [ParkHeaderComponent, PopoverDirective, NgdsForms, InfoTextComponent, CalculationDisplayComponent, NonResidentRevenueComponent, CancelButtonComponent, SubmitButtonComponent, VarianceWarningModalComponent]
 })
 export class FrontcountryCampingComponent extends RootFormComponent {
+  winterToggle = inject(WinterToggleService);
+  offSeasonToggle = inject(OffSeasonToggleService);
+
 
   public partyAttendanceTotal: formulaResult = { result: null, formula: '' };
   public vehicleAttendanceTotal: formulaResult = { result: null, formula: '' };
@@ -31,19 +43,8 @@ export class FrontcountryCampingComponent extends RootFormComponent {
   public offSeason: boolean = false;
   private isToggling = false;
 
-  constructor(
-    public winterToggle: WinterToggleService,
-    public offSeasonToggle: OffSeasonToggleService
-  ) {
-    super(
-      inject(DataService),
-      inject(UrlService),
-      inject(ActivityService),
-      inject(LoadingService),
-      inject(FormulaService),
-      inject(VarianceService),
-      inject(Router),
-    );
+  constructor() {
+    super();
     // declare activity type
     this.activityType = 'Frontcountry Camping';
     this.accordionType = Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING;

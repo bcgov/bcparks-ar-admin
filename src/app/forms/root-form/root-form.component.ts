@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,12 +10,21 @@ import { UrlService } from 'src/app/services/url.service';
 import { VarianceService } from 'src/app/services/variance.service';
 import { Constants } from 'src/app/shared/utils/constants';
 
+// eslint-disable-next-line @angular-eslint/prefer-standalone
 @Component({
   selector: 'app-root-form',
   templateUrl: './root-form.component.html',
   standalone: false
 })
 export class RootFormComponent implements OnInit, OnDestroy {
+  dataService = inject(DataService);
+  urlService = inject(UrlService);
+  activityService = inject(ActivityService);
+  loadingService = inject(LoadingService);
+  formulaService = inject(FormulaService);
+  varianceService = inject(VarianceService);
+  router = inject(Router);
+
 
   public subscriptions = new Subscription;
 
@@ -39,15 +48,7 @@ export class RootFormComponent implements OnInit, OnDestroy {
 
   public form: any;
 
-  constructor(
-    public dataService: DataService,
-    public urlService: UrlService,
-    public activityService: ActivityService,
-    public loadingService: LoadingService,
-    public formulaService: FormulaService,
-    public varianceService: VarianceService,
-    public router: Router,
-  ) {
+  constructor() {
     this.subscriptions.add(
       this.loadingService.getLoadingStatus().subscribe((res) => {
         this.loading = res;

@@ -12,10 +12,9 @@ describe('DayUseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DayUseComponent],
-      imports: [RouterTestingModule, ParkHeaderModule],
-      providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
-    }).compileComponents();
+    imports: [RouterTestingModule, ParkHeaderModule, DayUseComponent],
+    providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
+}).compileComponents();
   });
 
   beforeEach(() => {

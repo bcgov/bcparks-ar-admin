@@ -8,15 +8,15 @@ import { NgdsFormsModule } from '@digitalspace/ngds-forms';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ExportReportsComponent],
-  imports: [
-    CommonModule,
-    NgbModule,
-    NgdsTabsModule,
-    NgdsFormsModule,
-    BsDatepickerModule.forRoot(),
-    FormsModule,
-  ],
-  exports: [ExportReportsComponent],
+    imports: [
+        CommonModule,
+        NgbModule,
+        NgdsTabsModule,
+        NgdsFormsModule,
+        BsDatepickerModule,
+        FormsModule,
+        ExportReportsComponent,
+    ],
+    exports: [ExportReportsComponent],
 })
 export class ExportReportsModule {}

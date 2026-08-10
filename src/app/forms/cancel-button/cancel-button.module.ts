@@ -4,8 +4,7 @@ import { CancelButtonComponent } from './cancel-button.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
-  declarations: [CancelButtonComponent],
-  imports: [CommonModule, ModalModule.forRoot()],
-  exports: [CancelButtonComponent],
+    imports: [CommonModule, ModalModule, CancelButtonComponent],
+    exports: [CancelButtonComponent],
 })
 export class CancelButtonModule {}

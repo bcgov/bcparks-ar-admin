@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnDestroy, TemplateRef, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -6,14 +6,21 @@ import { DateTime } from 'luxon';
 import { Constants } from 'src/app/shared/utils/constants';
 import { DataService } from 'src/app/services/data.service';
 import { VarianceService } from 'src/app/services/variance.service';
+import { VarianceAccordionComponent } from './variance-accordion/variance-accordion.component';
 
 @Component({
     selector: 'app-variance-list',
     templateUrl: './variance-list.component.html',
     styleUrls: ['./variance-list.component.scss'],
-    standalone: false
+    imports: [VarianceAccordionComponent]
 })
 export class VarianceListComponent implements AfterViewInit, AfterViewChecked, OnDestroy {
+  private cd = inject(ChangeDetectorRef);
+  private loadingService = inject(LoadingService);
+  private dataService = inject(DataService);
+  private router = inject(Router);
+  private varianceService = inject(VarianceService);
+
   public rowSchema: any[];
   public subscriptions = new Subscription();
   public loading = false;
@@ -24,13 +31,7 @@ export class VarianceListComponent implements AfterViewInit, AfterViewChecked, O
   @ViewChild('viewButton') viewButton: TemplateRef<any>;
   @ViewChild('resolvedStatusTemplate') resolvedStatusTemplate: TemplateRef<any>;
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private loadingService: LoadingService,
-    private dataService: DataService,
-    private router: Router,
-    private varianceService: VarianceService
-  ) {
+  constructor() {
 
     this.subscriptions.add(
       this.loadingService.getLoadingStatus().subscribe(status => {

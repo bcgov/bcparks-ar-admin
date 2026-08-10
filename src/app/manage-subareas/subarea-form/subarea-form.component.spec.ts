@@ -10,9 +10,9 @@ describe('SubareaFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubareaFormComponent ],
-      providers: [ HttpClient, HttpHandler, ConfigService ]
-    })
+    imports: [SubareaFormComponent],
+    providers: [HttpClient, HttpHandler, ConfigService]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(SubareaFormComponent);

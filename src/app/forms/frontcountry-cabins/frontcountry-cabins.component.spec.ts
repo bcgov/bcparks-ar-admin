@@ -13,13 +13,13 @@ describe('FrontcountryCabinsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FrontcountryCabinsComponent],
-      imports: [
+    imports: [
         RouterTestingModule,
         ParkHeaderModule,
-      ],
-      providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
-    }).compileComponents();
+        FrontcountryCabinsComponent,
+    ],
+    providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
+}).compileComponents();
   });
 
   beforeEach(() => {

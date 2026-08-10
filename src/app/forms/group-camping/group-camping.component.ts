@@ -9,12 +9,21 @@ import { RootFormComponent } from '../root-form/root-form.component';
 import { UrlService } from 'src/app/services/url.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
+import { ParkHeaderComponent } from '../park-header/park-header.component';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { CalculationDisplayComponent } from '../../shared/components/forms/calculation-display/calculation-display.component';
+import { InfoTextComponent } from '../../shared/components/info-text/info-text.component';
+import { NonResidentRevenueComponent } from '../../shared/components/non-resident-revenue/non-resident-revenue.component';
+import { CancelButtonComponent } from '../cancel-button/cancel-button.component';
+import { SubmitButtonComponent } from '../submit-button/submit-button.component';
+import { VarianceWarningModalComponent } from '../variance-warning-modal/variance-warning-modal.component';
 
 @Component({
     selector: 'app-group-camping',
     templateUrl: './group-camping.component.html',
     styleUrls: ['./group-camping.component.scss'],
-    standalone: false
+    imports: [ParkHeaderComponent, PopoverDirective, NgdsForms, CalculationDisplayComponent, InfoTextComponent, NonResidentRevenueComponent, CancelButtonComponent, SubmitButtonComponent, VarianceWarningModalComponent]
 })
 export class GroupCampingComponent extends RootFormComponent {
 
@@ -23,15 +32,7 @@ export class GroupCampingComponent extends RootFormComponent {
   public nonResidentRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor() {
-    super(
-      inject(DataService),
-      inject(UrlService),
-      inject(ActivityService),
-      inject(LoadingService),
-      inject(FormulaService),
-      inject(VarianceService),
-      inject(Router),
-    );
+    super();
     // declare activity type
     this.activityType = 'Group Camping';
     this.accordionType = Constants.dataIds.ACCORDION_GROUP_CAMPING;

@@ -9,12 +9,20 @@ import { RootFormComponent } from '../root-form/root-form.component';
 import { UrlService } from 'src/app/services/url.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { VarianceService } from 'src/app/services/variance.service';
+import { ParkHeaderComponent } from '../park-header/park-header.component';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { InfoTextComponent } from '../../shared/components/info-text/info-text.component';
+import { CalculationDisplayComponent } from '../../shared/components/forms/calculation-display/calculation-display.component';
+import { CancelButtonComponent } from '../cancel-button/cancel-button.component';
+import { SubmitButtonComponent } from '../submit-button/submit-button.component';
+import { VarianceWarningModalComponent } from '../variance-warning-modal/variance-warning-modal.component';
 
 @Component({
     selector: 'app-day-use',
     templateUrl: './day-use.component.html',
     styleUrls: ['./day-use.component.scss'],
-    standalone: false
+    imports: [ParkHeaderComponent, PopoverDirective, NgdsForms, InfoTextComponent, CalculationDisplayComponent, CancelButtonComponent, SubmitButtonComponent, VarianceWarningModalComponent]
 })
 export class DayUseComponent extends RootFormComponent {
 
@@ -22,15 +30,7 @@ export class DayUseComponent extends RootFormComponent {
   public otherRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor() {
-    super(
-      inject(DataService),
-      inject(UrlService),
-      inject(ActivityService),
-      inject(LoadingService),
-      inject(FormulaService),
-      inject(VarianceService),
-      inject(Router),
-    );
+    super();
     // declare activity type
     this.activityType = 'Day Use';
     this.accordionType = Constants.dataIds.ACCORDION_DAY_USE;

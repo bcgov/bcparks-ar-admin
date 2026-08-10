@@ -1,18 +1,24 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { ReviewModalComponent } from '../review-modal/review-modal.component';
 
 @Component({
-  selector: 'app-subarea-form',
-  templateUrl: './subarea-form.component.html',
-  styleUrls: ['./subarea-form.component.scss'],
-  standalone: false
+    selector: 'app-subarea-form',
+    templateUrl: './subarea-form.component.html',
+    styleUrls: ['./subarea-form.component.scss'],
+    imports: [NgdsForms, ReviewModalComponent]
 })
 export class SubareaFormComponent implements OnInit, OnDestroy {
+  private dataService = inject(DataService);
+  private subareaService = inject(SubAreaService);
+  private loadingService = inject(LoadingService);
+
 
   @Input() editMode: boolean = false;
   @Input() set subareaData(value) {
@@ -82,11 +88,7 @@ export class SubareaFormComponent implements OnInit, OnDestroy {
   public submissionData: any = {};
   public parkUpdatingFlag = false;
 
-  constructor(
-    private dataService: DataService,
-    private subareaService: SubAreaService,
-    private loadingService: LoadingService
-  ) {
+  constructor() {
     // Get the current list of orcs
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.ENTER_DATA_PARK).subscribe((res) => {

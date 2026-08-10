@@ -28,16 +28,15 @@ describe('SidebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SidebarComponent],
-      imports: [RouterTestingModule.withRoutes(mockRoutes)],
-      providers: [
+    imports: [RouterTestingModule.withRoutes(mockRoutes), SidebarComponent],
+    providers: [
         KeycloakService,
         ConfigService,
         HttpClient,
         HttpHandler,
         { provide: SideBarService, useValue: mockSideBarService },
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
 
     fixture = TestBed.createComponent(SidebarComponent);
     component = fixture.componentInstance;

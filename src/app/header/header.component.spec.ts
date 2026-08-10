@@ -14,17 +14,16 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [HeaderComponent],
-      providers: [
+    imports: [RouterTestingModule, HeaderComponent],
+    providers: [
         {
-          provide: ConfigService, useValue: mockConfigService
+            provide: ConfigService, useValue: mockConfigService
         },
         KeycloakService,
         HttpClient,
         HttpHandler
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   it('should create and not show the banner', () => {

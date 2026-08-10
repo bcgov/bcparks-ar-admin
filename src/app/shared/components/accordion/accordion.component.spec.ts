@@ -11,8 +11,7 @@ describe('AccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [AccordionComponent],
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, AccordionComponent],
     providers: [ConfigService, provideHttpClient(withInterceptorsFromDi())]
 }).compileComponents();
   });

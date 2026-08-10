@@ -6,9 +6,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { KeycloakService } from 'keycloak-angular';
 
 @NgModule({
-  declarations: [SidebarComponent],
-  imports: [CommonModule, AppRoutingModule],
-  exports: [SidebarComponent],
-  providers: [SideBarService, KeycloakService],
+    imports: [CommonModule, AppRoutingModule, SidebarComponent],
+    exports: [SidebarComponent],
+    providers: [SideBarService, KeycloakService],
 })
 export class SidebarModule {}

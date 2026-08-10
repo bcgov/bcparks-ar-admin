@@ -4,9 +4,8 @@ import { TextToLoadingSpinnerComponent } from './text-to-loading-spinner.compone
 import { LoadingService } from 'src/app/services/loading.service';
 
 @NgModule({
-  declarations: [TextToLoadingSpinnerComponent],
-  imports: [CommonModule],
-  exports: [TextToLoadingSpinnerComponent],
-  providers: [LoadingService],
+    imports: [CommonModule, TextToLoadingSpinnerComponent],
+    exports: [TextToLoadingSpinnerComponent],
+    providers: [LoadingService],
 })
 export class TextToLoadingSpinnerModule {}

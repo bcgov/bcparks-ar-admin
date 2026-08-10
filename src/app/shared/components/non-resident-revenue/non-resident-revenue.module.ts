@@ -7,15 +7,15 @@ import { InfoTextModule } from '../info-text/info-text.module';
 import { CalculationDisplayModule } from '../forms/calculation-display/calculation-display.module';
 
 @NgModule({
-  declarations: [NonResidentRevenueComponent],
-  imports: [
-    CommonModule,
-    NgdsFormsModule,
-    PopoverModule.forRoot(),
-    InfoTextModule,
-    CalculationDisplayModule,
-  ],
-  exports: [NonResidentRevenueComponent],
+    imports: [
+        CommonModule,
+        NgdsFormsModule,
+        PopoverModule,
+        InfoTextModule,
+        CalculationDisplayModule,
+        NonResidentRevenueComponent,
+    ],
+    exports: [NonResidentRevenueComponent],
 })
 export class NonResidentRevenueModule {}
 

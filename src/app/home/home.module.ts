@@ -4,8 +4,7 @@ import { HomeComponent } from './home.component';
 import { NavCardModule } from '../shared/components/nav-card/nav-card.module';
 
 @NgModule({
-  declarations: [HomeComponent],
-  imports: [CommonModule, NavCardModule],
-  exports: [HomeComponent],
+    imports: [CommonModule, NavCardModule, HomeComponent],
+    exports: [HomeComponent],
 })
 export class HomeModule {}

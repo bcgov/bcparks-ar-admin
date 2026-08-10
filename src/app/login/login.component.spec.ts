@@ -25,14 +25,13 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(mockRoutes)],
-      declarations: [LoginComponent],
-      providers: [
+    imports: [RouterTestingModule.withRoutes(mockRoutes), LoginComponent],
+    providers: [
         ConfigService,
         { provide: KeycloakService, useValue: mockKeycloakService },
         { provide: Router, useValue: mockRouter }
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
   });
 
   it('should handle login', async () => {

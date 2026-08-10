@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CalculationDisplayComponent } from './calculation-display.component';
 
 @NgModule({
-  declarations: [CalculationDisplayComponent],
-  imports: [CommonModule],
-  exports: [CalculationDisplayComponent],
+    imports: [CommonModule, CalculationDisplayComponent],
+    exports: [CalculationDisplayComponent],
 })
 export class CalculationDisplayModule {}

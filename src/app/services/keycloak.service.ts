@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constants } from '../shared/utils/constants';
 import { JwtUtil } from '../shared/utils/jwt-utils';
@@ -10,6 +10,10 @@ declare let Keycloak: any;
 
 @Injectable()
 export class KeycloakService {
+  private configService = inject(ConfigService);
+  private loggerService = inject(LoggerService);
+  private toastService = inject(ToastService);
+
   public LAST_IDP_AUTHENTICATED = 'kc-last-idp-authenticated';
   private keycloakAuth: any;
   private keycloakEnabled: boolean;
@@ -21,12 +25,6 @@ export class KeycloakService {
     BCSC: 'bcsc',
     IDIR: 'idir',
   };
-
-  constructor(
-    private configService: ConfigService,
-    private loggerService: LoggerService,
-    private toastService: ToastService
-  ) {}
 
   async init() {
     // Load up the config service data
@@ -206,7 +204,7 @@ export class KeycloakService {
         .updateToken(30)
         .then((refreshed) => {
           this.loggerService.log(`KC refreshed token?: ${refreshed}`);
-          observer.next();
+          observer.next(undefined);
           observer.complete();
         })
         .catch((err) => {

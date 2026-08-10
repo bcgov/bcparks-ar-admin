@@ -9,14 +9,11 @@ import { DataService } from 'src/app/services/data.service';
 
 import { CancelButtonComponent } from './cancel-button.component';
 
-@Component({
-    template: `
+@Component({ template: `
     <ng-template #div1>Something here</ng-template>
     <ng-template #div2>Many things here</ng-template>
     <my-component [expanded]="expandedVal" [body]="div1" [handler]="div2"> </my-component>
-  `,
-    standalone: false
-})
+  ` })
 class WrapperComponent {
   @ViewChild(CancelButtonComponent, { static: true }) appComponentRef: CancelButtonComponent;
   public expandedVal = true;
@@ -47,21 +44,21 @@ describe('CancelButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         RouterTestingModule.withRoutes(mockRoutes),
-        ModalModule.forRoot()
-      ],
-      declarations: [WrapperComponent, CancelButtonComponent],
-      providers: [
+        ModalModule.forRoot(),
+        WrapperComponent, CancelButtonComponent
+    ],
+    providers: [
         {
-          provide: DataService, useValue: mockDataService
+            provide: DataService, useValue: mockDataService
         },
         {
-          provide: Router,
-          useValue: mockRouter
+            provide: Router,
+            useValue: mockRouter
         }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
     dataService = TestBed.inject(DataService);
     modalService = TestBed.inject(BsModalService);
   });

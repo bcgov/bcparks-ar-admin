@@ -83,28 +83,27 @@ describe('SubAreaSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SubAreaSearchComponent],
-      imports: [RouterTestingModule],
-      providers: [
+    imports: [RouterTestingModule, SubAreaSearchComponent],
+    providers: [
         HttpClient,
         HttpHandler,
         {
-          provide: DataService, useValue: mockDataService
+            provide: DataService, useValue: mockDataService
         },
         ConfigService,
         {
-          provide: ActivatedRoute,
-          useValue: routeValue
+            provide: ActivatedRoute,
+            useValue: routeValue
         },
         SubAreaService,
         {
-          provide: FormService, useValue: mockFormService
+            provide: FormService, useValue: mockFormService
         },
         {
-          provide: UrlService, useValue: mockUrlService
+            provide: UrlService, useValue: mockUrlService
         }
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
 
     router = TestBed.inject(Router);
     subAreaService = TestBed.inject(SubAreaService);

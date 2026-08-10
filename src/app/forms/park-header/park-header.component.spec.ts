@@ -29,13 +29,13 @@ describe('ParkHeaderComponent', () => {
   }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ParkHeaderComponent],
-      providers: [
+    imports: [ParkHeaderComponent],
+    providers: [
         {
-          provide: DataService, useValue: mockDataService
+            provide: DataService, useValue: mockDataService
         }
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
   });
 
   beforeEach(() => {

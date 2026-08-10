@@ -1,15 +1,25 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
+import { FrontcountryCampingAccordionComponent } from './frontcountry-camping-accordion/frontcountry-camping-accordion.component';
+import { FrontcountryCabinsAccordionComponent } from './frontcountry-cabins-accordion/frontcountry-cabins-accordion.component';
+import { GroupCampingAccordionComponent } from './group-camping-accordion/group-camping-accordion.component';
+import { DayUseAccordionComponent } from './day-use-accordion/day-use-accordion.component';
+import { BackcountryCampingAccordionComponent } from './backcountry-camping-accordion/backcountry-camping-accordion.component';
+import { BackcountryCabinsAccordionComponent } from './backcountry-cabins-accordion/backcountry-cabins-accordion.component';
+import { BoatingAccordionComponent } from './boating-accordion/boating-accordion.component';
+import { CenteredTextBlockComponent } from '../../shared/components/centered-text-block/centered-text-block.component';
 
 @Component({
     selector: 'app-accordion-manager',
     templateUrl: './accordion-manager.component.html',
     styleUrls: ['./accordion-manager.component.scss'],
-    standalone: false
+    imports: [FrontcountryCampingAccordionComponent, FrontcountryCabinsAccordionComponent, GroupCampingAccordionComponent, DayUseAccordionComponent, BackcountryCampingAccordionComponent, BackcountryCabinsAccordionComponent, BoatingAccordionComponent, CenteredTextBlockComponent]
 })
 export class AccordionManagerComponent implements OnDestroy {
+  protected dataService = inject(DataService);
+
   public icons = Constants.iconUrls;
 
   private subscriptions = new Subscription();
@@ -36,7 +46,9 @@ export class AccordionManagerComponent implements OnDestroy {
     boating: false,
   };
 
-  constructor(protected dataService: DataService) {
+  constructor() {
+    const dataService = this.dataService;
+
     this.subscriptions.add(
       dataService
         .watchItem(Constants.dataIds.ENTER_DATA_SUB_AREA)

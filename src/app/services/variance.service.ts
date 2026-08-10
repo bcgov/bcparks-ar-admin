@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Constants } from '../shared/utils/constants';
 import { LoadingService } from './loading.service';
 import { LoggerService } from './logger.service';
@@ -12,15 +12,13 @@ import { EventKeywords, EventObject, EventService } from './event.service';
   providedIn: 'root'
 })
 export class VarianceService {
+  private loadingService = inject(LoadingService);
+  private loggerService = inject(LoggerService);
+  private apiService = inject(ApiService);
+  private dataService = inject(DataService);
+  private toastService = inject(ToastService);
+  private eventService = inject(EventService);
 
-  constructor(
-    private loadingService: LoadingService,
-    private loggerService: LoggerService,
-    private apiService: ApiService,
-    private dataService: DataService,
-    private toastService: ToastService,
-    private eventService: EventService
-  ) { }
 
   async fetchVariance(params) {
     this.loadingService.addToFetchList(Constants.dataIds.VARIANCE_LIST);

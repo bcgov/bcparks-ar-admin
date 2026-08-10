@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { FormulaService } from 'src/app/services/formula.service';
@@ -7,14 +7,22 @@ import { VarianceService } from 'src/app/services/variance.service';
 import { summarySection } from 'src/app/shared/components/accordion/summary-section/summary-section.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { Utils } from 'src/app/shared/utils/utils';
+import { AccordionComponent } from '../../../shared/components/accordion/accordion.component';
+import { AccordionSummariesComponent } from '../../../shared/components/accordion/accordion-summaries/accordion-summaries.component';
+import { AccordionNotesComponent } from '../../../shared/components/accordion/accordion-notes/accordion-notes.component';
 
 @Component({
     selector: 'app-backcountry-camping-accordion',
     templateUrl: './backcountry-camping-accordion.component.html',
     styleUrls: ['./backcountry-camping-accordion.component.scss'],
-    standalone: false
+    imports: [AccordionComponent, AccordionSummariesComponent, AccordionNotesComponent]
 })
 export class BackcountryCampingAccordionComponent implements OnDestroy {
+  protected dataService = inject(DataService);
+  protected formulaService = inject(FormulaService);
+  protected urlService = inject(UrlService);
+  protected varianceService = inject(VarianceService);
+
   private subscriptions = new Subscription();
 
   public icons = Constants.iconUrls;
@@ -24,12 +32,9 @@ export class BackcountryCampingAccordionComponent implements OnDestroy {
   public variance = new BehaviorSubject(null);
   public utils = new Utils();
 
-  constructor(
-    protected dataService: DataService,
-    protected formulaService: FormulaService,
-    protected urlService: UrlService,
-    protected varianceService: VarianceService
-  ) {
+  constructor() {
+    const dataService = this.dataService;
+
     this.subscriptions.add(
       dataService
         .watchItem(Constants.dataIds.ACCORDION_BACKCOUNTRY_CAMPING)

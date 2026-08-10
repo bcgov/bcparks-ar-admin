@@ -13,10 +13,9 @@ describe('BackcountryCabinsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BackcountryCabinsComponent],
-      imports: [RouterTestingModule, ParkHeaderModule],
-      providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
-    }).compileComponents();
+    imports: [RouterTestingModule, ParkHeaderModule, BackcountryCabinsComponent],
+    providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
+}).compileComponents();
   });
 
   beforeEach(() => {

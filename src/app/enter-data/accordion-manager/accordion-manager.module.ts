@@ -12,17 +12,14 @@ import { BackcountryCabinsAccordionComponent } from './backcountry-cabins-accord
 import { CenteredTextBlockModule } from 'src/app/shared/components/centered-text-block/centered-text-block.module';
 
 @NgModule({
-  declarations: [
-    AccordionManagerComponent,
-    DayUseAccordionComponent,
-    FrontcountryCampingAccordionComponent,
-    FrontcountryCabinsAccordionComponent,
-    BackcountryCampingAccordionComponent,
-    GroupCampingAccordionComponent,
-    BoatingAccordionComponent,
-    BackcountryCabinsAccordionComponent,
-  ],
-  imports: [CommonModule, AccordionModule, CenteredTextBlockModule],
-  exports: [AccordionManagerComponent],
+    imports: [CommonModule, AccordionModule, CenteredTextBlockModule, AccordionManagerComponent,
+        DayUseAccordionComponent,
+        FrontcountryCampingAccordionComponent,
+        FrontcountryCabinsAccordionComponent,
+        BackcountryCampingAccordionComponent,
+        GroupCampingAccordionComponent,
+        BoatingAccordionComponent,
+        BackcountryCabinsAccordionComponent],
+    exports: [AccordionManagerComponent],
 })
 export class AccordionManagerModule {}

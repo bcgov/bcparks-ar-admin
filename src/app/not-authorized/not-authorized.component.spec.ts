@@ -12,10 +12,9 @@ describe('NotAuthorizedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [NotAuthorizedComponent],
-      providers: [KeycloakService, ConfigService, HttpClient, HttpHandler],
-    }).compileComponents();
+    imports: [RouterTestingModule, NotAuthorizedComponent],
+    providers: [KeycloakService, ConfigService, HttpClient, HttpHandler],
+}).compileComponents();
   });
 
   beforeEach(() => {

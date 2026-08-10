@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Subscription, BehaviorSubject, debounceTime } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { ExportService } from '../services/export.service';
@@ -16,17 +10,23 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { end } from '@popperjs/core';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap/progressbar';
 
 @Component({
     selector: 'app-export-reports',
     templateUrl: './export-reports.component.html',
     styleUrls: ['./export-reports.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    imports: [NgdsForms, NgbProgressbar]
 })
 
 // TODO: Make a component for exporter cards
 export class ExportReportsComponent implements OnInit, OnDestroy {
+  private exportService = inject(ExportService);
+  private dataService = inject(DataService);
+  private cd = inject(ChangeDetectorRef);
+
   private subscriptions = new Subscription();
 
   public stateDictionary = {
@@ -75,11 +75,9 @@ export class ExportReportsComponent implements OnInit, OnDestroy {
 
   public initialLoad = true;
 
-  constructor(
-    private exportService: ExportService,
-    private dataService: DataService,
-    private cd: ChangeDetectorRef,
-  ) {
+  constructor() {
+    const dataService = this.dataService;
+
     this.subscriptions.add(
       this.dataService
         .watchItem(Constants.dataIds.EXPORT_VARIANCE_POLLING_DATA)

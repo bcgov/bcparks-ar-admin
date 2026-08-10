@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { KeycloakService } from 'src/app/services/keycloak.service';
+import { NavCardComponent } from '../shared/components/nav-card/nav-card.component';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
-    standalone: false
+    imports: [NavCardComponent]
 })
 export class HomeComponent {
+  protected keyCloakService = inject(KeycloakService);
+
   // This can be pulled in via the config.
   public cardConfig = [
     {
@@ -18,7 +21,9 @@ export class HomeComponent {
       navigation: 'enter-data',
     },
   ];
-  constructor(protected keyCloakService: KeycloakService) {
+  constructor() {
+    const keyCloakService = this.keyCloakService;
+
     if (keyCloakService.isAllowed('export-reports')) {
       this.cardConfig.push({
         cardHeader: 'Export reports',

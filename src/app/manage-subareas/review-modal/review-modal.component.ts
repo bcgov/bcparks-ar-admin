@@ -1,13 +1,14 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, TemplateRef, ViewChild, inject } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-review-modal',
-  templateUrl: './review-modal.component.html',
-  styleUrls: ['./review-modal.component.scss'],
-  standalone: false
+    selector: 'app-review-modal',
+    templateUrl: './review-modal.component.html',
+    styleUrls: ['./review-modal.component.scss']
 })
 export class ReviewModalComponent implements AfterViewInit {
+  private modalService = inject(BsModalService);
+
   @ViewChild('reviewModal') reviewModal: TemplateRef<any>;
 
   @Input() title: string;
@@ -20,10 +21,6 @@ export class ReviewModalComponent implements AfterViewInit {
 
   public modalRef: BsModalRef;
   public properties = [];
-
-  constructor(
-    private modalService: BsModalService
-  ) { }
 
   ngAfterViewInit() {
     this.modalRef = this.modalService.show(this.reviewModal, {

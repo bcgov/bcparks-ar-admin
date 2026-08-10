@@ -1,28 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ToastService } from './services/toast.service';
 import { Constants } from './shared/utils/constants';
 
+// eslint-disable-next-line @angular-eslint/prefer-standalone
 @Component({
-    selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private toastr = inject(ToastrService);
+  private toastService = inject(ToastService);
+
   title = 'attendance-and-revanue-admin';
   toastSubscription: Subscription;
   showSideBar = false;
   showBreadCrumb = false;
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private toastr: ToastrService,
-    private toastService: ToastService
-  ) {
+  constructor() {
     this.watchForToast();
   }
 

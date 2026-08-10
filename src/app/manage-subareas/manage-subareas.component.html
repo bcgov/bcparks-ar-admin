@@ -4,20 +4,24 @@
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="add-tab" data-bs-toggle="tab" data-bs-target="#add" type="button"
         role="tab" aria-controls="add" aria-selected="true"
-        (click)="changeActiveTab('add')">Add</button>
+      (click)="changeActiveTab('add')">Add</button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button"
         role="tab" aria-controls="edit" aria-selected="true"
-        (click)="changeActiveTab('edit')">Edit</button>
+      (click)="changeActiveTab('edit')">Edit</button>
     </li>
   </ul>
 </div>
 
-<div *ngIf="_activeTab?.value === 'add'">
-  <app-add-subarea></app-add-subarea>
-</div>
+@if (_activeTab?.value === 'add') {
+  <div>
+    <app-add-subarea></app-add-subarea>
+  </div>
+}
 
-<div *ngIf="_activeTab?.value === 'edit'">
-  <app-edit-subarea></app-edit-subarea>
-</div>
+@if (_activeTab?.value === 'edit') {
+  <div>
+    <app-edit-subarea></app-edit-subarea>
+  </div>
+}

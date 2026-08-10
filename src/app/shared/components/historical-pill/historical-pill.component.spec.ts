@@ -7,8 +7,8 @@ describe('HistoricalPillComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HistoricalPillComponent]
-    });
+    imports: [HistoricalPillComponent]
+});
     fixture = TestBed.createComponent(HistoricalPillComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

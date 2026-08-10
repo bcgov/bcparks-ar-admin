@@ -12,14 +12,13 @@ describe('BoatingAccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BoatingAccordionComponent],
-      imports: [RouterTestingModule],
-      providers: [
+    imports: [RouterTestingModule, BoatingAccordionComponent],
+    providers: [
         ConfigService,
         HttpClient,
         HttpHandler
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

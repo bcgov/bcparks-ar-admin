@@ -13,13 +13,13 @@ describe('VarianceListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [VarianceListComponent],
-      providers: [
+    imports: [VarianceListComponent],
+    providers: [
         ConfigService,
         HttpClient,
         HttpHandler
-      ]
-    })
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(VarianceListComponent);

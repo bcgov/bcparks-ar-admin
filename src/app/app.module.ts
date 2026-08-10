@@ -49,8 +49,7 @@ export function initConfig(
   };
 }
 
-@NgModule({ declarations: [AppComponent, NotAuthorizedComponent, LoginComponent],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+@NgModule({ declarations: [AppComponent], bootstrap: [AppComponent], imports: [BrowserModule,
         CommonModule,
         AppRoutingModule,
         SidebarModule,
@@ -67,11 +66,11 @@ export function initConfig(
         ToastrModule.forRoot(),
         VarianceSearchModule,
         HistoricalPillModule,
-        ManageSubareasModule], providers: [
+        ManageSubareasModule, NotAuthorizedComponent, LoginComponent], providers: [
         provideAppInitializer(() => {
-        const initializerFn = (initConfig)(inject(ConfigService), inject(ApiService), inject(AutoFetchService), inject(KeycloakService));
-        return initializerFn();
-      }),
+            const initializerFn = (initConfig)(inject(ConfigService), inject(ApiService), inject(AutoFetchService), inject(KeycloakService));
+            return initializerFn();
+        }),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
@@ -88,7 +87,9 @@ export function initConfig(
         provideHttpClient(withInterceptorsFromDi()),
     ] })
 export class AppModule {
-  constructor(applicationRef: ApplicationRef) {
+  constructor() {
+    const applicationRef = inject(ApplicationRef);
+
     Object.defineProperty(applicationRef, '_rootComponents', {
       get: () => applicationRef['components'],
     });

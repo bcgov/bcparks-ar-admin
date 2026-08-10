@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { SubAreaService } from '../services/sub-area.service';
 import { DataService } from '../services/data.service';
@@ -9,11 +9,10 @@ import { FormService } from '../services/form.service';
   providedIn: 'root',
 })
 export class FormResolver  {
-  constructor(
-    protected subAreaService: SubAreaService,
-    protected dataService: DataService,
-    protected formService: FormService
-  ) {}
+  protected subAreaService = inject(SubAreaService);
+  protected dataService = inject(DataService);
+  protected formService = inject(FormService);
+
   async resolve(route: ActivatedRouteSnapshot) {
     const activity = route.data['activity'];
     this.dataService.setItemValue(Constants.dataIds.ENTER_DATA_URL_PARAMS, route.queryParams);

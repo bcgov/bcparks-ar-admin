@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { ParkService } from '../services/park.service';
 
@@ -6,7 +6,8 @@ import { ParkService } from '../services/park.service';
   providedIn: 'root',
 })
 export class ParkResolver  {
-  constructor(private parkService: ParkService) {}
+  private parkService = inject(ParkService);
+
   resolve() {
     this.parkService.fetchEnterDataPark();
   }

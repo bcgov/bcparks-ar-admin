@@ -13,10 +13,9 @@ describe('GroupCampingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GroupCampingComponent],
-      imports: [RouterTestingModule, ParkHeaderModule],
-      providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
-    }).compileComponents();
+    imports: [RouterTestingModule, ParkHeaderModule, GroupCampingComponent],
+    providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
+}).compileComponents();
   });
 
   beforeEach(() => {

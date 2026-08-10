@@ -6,9 +6,8 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [HeaderComponent],
-  imports: [CommonModule, RouterModule, NgbModule],
-  exports: [HeaderComponent],
-  providers: [KeycloakService],
+    imports: [CommonModule, RouterModule, NgbModule, HeaderComponent],
+    exports: [HeaderComponent],
+    providers: [KeycloakService],
 })
 export class HeaderModule {}

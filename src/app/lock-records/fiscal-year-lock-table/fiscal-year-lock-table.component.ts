@@ -1,24 +1,29 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { columnSchema } from 'src/app/shared/components/table/table.component';
 import { Constants } from 'src/app/shared/utils/constants';
 import { FiscalYearUnlockerComponent } from './fiscal-year-unlocker/fiscal-year-unlocker.component';
+import { TableComponent } from '../../shared/components/table/table.component';
 
 @Component({
     selector: 'app-fiscal-year-lock-table',
     templateUrl: './fiscal-year-lock-table.component.html',
     styleUrls: ['./fiscal-year-lock-table.component.scss'],
-    standalone: false
+    imports: [TableComponent]
 })
 export class FiscalYearLockTableComponent implements OnInit {
+  protected dataService = inject(DataService);
+
   @Input() data: any[];
 
   private subscriptions = new Subscription();
   public columnSchema: columnSchema[] = [];
   public tableRows: any[] = [];
 
-  constructor(protected dataService: DataService) {
+  constructor() {
+    const dataService = this.dataService;
+
     this.subscriptions.add(
       dataService
         .watchItem(Constants.dataIds.LOCK_RECORDS_FISCAL_YEARS_DATA)

@@ -21,7 +21,7 @@
             [popoverContext]="{variance: getPopoverData('peopleAdult')}"
             placement="bottom"
             triggers="mouseenter:mouseleave"
-          >
+            >
             <ngds-number-input
               [control]="form?.controls?.['peopleAdult']"
               [decimalPlaces]="0"
@@ -31,7 +31,7 @@
               [label]="'Adults (16+)'"
               [placeholder]="'No data'"
               [loadWhile]="loading"
-            >
+              >
               <i
                 ngdsInputPrepend
                 class="bi bi-person-fill px-2"
@@ -45,7 +45,7 @@
             [popoverContext]="{variance: getPopoverData('peopleChild')}"
             placement="bottom"
             triggers="mouseenter:mouseleave"
-          >
+            >
             <ngds-number-input
               [control]="form?.controls?.['peopleChild']"
               [decimalPlaces]="0"
@@ -55,7 +55,7 @@
               [label]="'Youths (6-15)'"
               [placeholder]="'No data'"
               [loadWhile]="loading"
-            >
+              >
               <i
                 ngdsInputPrepend
                 class="bi bi-person-fill px-2"
@@ -69,7 +69,7 @@
             [popoverContext]="{variance: getPopoverData('peopleFamily')}"
             placement="bottom"
             triggers="mouseenter:mouseleave"
-          >
+            >
             <ngds-number-input
               [control]="form?.controls?.['peopleFamily']"
               [decimalPlaces]="0"
@@ -79,7 +79,7 @@
               [label]="'Family'"
               [placeholder]="'No data'"
               [loadWhile]="loading"
-            >
+              >
               <i
                 ngdsInputPrepend
                 class="bi bi-person-fill px-2"
@@ -106,7 +106,7 @@
             [popoverContext]="{variance: getPopoverData('revenueFamily', true)}"
             placement="bottom"
             triggers="mouseenter:mouseleave"
-          >
+            >
             <ngds-number-input
               [control]="form?.controls?.['revenueFamily']"
               [decimalPlaces]="2"
@@ -116,7 +116,7 @@
               [label]="'Gross cabin revenue'"
               [placeholder]="'No data'"
               [loadWhile]="loading"
-            >
+              >
               <i
                 ngdsInputPrepend
                 class="bi bi-currency-dollar px-2"
@@ -156,20 +156,21 @@
         [label]="'Variance category'"
         [selectionListItems]="varianceReasons"
         [placeholder]="'Please select'"
-      >
+        >
       </ngds-picklist-input>
     </div>
     <div class="row">
-      <ngds-picklist-input
-        class="col-lg-4"
-        *ngIf="getVarianceSubReasons()?.length > 0"
-        [control]="varianceReasonsForm?.controls?.['subReason']"
-        [loadWhile]="loading"
-        [label]="'Subcategory'"
-        [selectionListItems]="getVarianceSubReasons()"
-        [placeholder]="'Please select'"
-      >
-      </ngds-picklist-input>
+      @if (getVarianceSubReasons()?.length > 0) {
+        <ngds-picklist-input
+          class="col-lg-4"
+          [control]="varianceReasonsForm?.controls?.['subReason']"
+          [loadWhile]="loading"
+          [label]="'Subcategory'"
+          [selectionListItems]="getVarianceSubReasons()"
+          [placeholder]="'Please select'"
+          >
+        </ngds-picklist-input>
+      }
     </div>
     <ngds-text-input
       [control]="form?.controls?.['notes']"
@@ -177,7 +178,7 @@
       [multiline]="true"
       [loadWhile]="loading"
       [label]="'Notes'"
-    >
+      >
     </ngds-text-input>
     <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
   </div>
@@ -191,29 +192,34 @@
     (clicked)="submit(true)"
   ></app-submit-button>
 </div>
-<div *ngIf="showVarianceModal">
-  <app-variance-warning-modal
-    (accept)="submit()"
-    (decline)="hideModal()"
-  ></app-variance-warning-modal>
-</div>
+@if (showVarianceModal) {
+  <div>
+    <app-variance-warning-modal
+      (accept)="submit()"
+      (decline)="hideModal()"
+    ></app-variance-warning-modal>
+  </div>
+}
 
 <!-- Variance warning popover template -->
 <ng-template
   #popover
   let-variance="variance"
->
-  <div
-    class="text-secondary"
-    *ngIf="variance"
   >
-    Average: {{variance?.historicalAverage}}
-    <div class="d-flex">
-      <div *ngFor="let year of getYearlyAverages(variance)">
-        <div>
-          {{ year.year }}: {{ year. value}}{{ year.hasOwnProperty('last') ? '' : ',&nbsp;'}}
-        </div>
+  @if (variance) {
+    <div
+      class="text-secondary"
+      >
+      Average: {{variance?.historicalAverage}}
+      <div class="d-flex">
+        @for (year of getYearlyAverages(variance); track year) {
+          <div>
+            <div>
+              {{ year.year }}: {{ year. value}}{{ year.hasOwnProperty('last') ? '' : ',&nbsp;'}}
+            </div>
+          </div>
+        }
       </div>
     </div>
-  </div>
+  }
 </ng-template>

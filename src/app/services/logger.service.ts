@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ConfigService } from 'src/app/services/config.service';
 
 export enum LogLevel {
@@ -15,12 +15,10 @@ export enum LogLevel {
   providedIn: 'root',
 })
 export class LoggerService {
+  private configService = inject(ConfigService);
+
   level: LogLevel = LogLevel.Off;
   logWithDate = true;
-
-  // For future enhancement, constructor could be updated to take a config struct
-  // and move providedIn to a forRoot call.
-  constructor(private configService: ConfigService) {}
 
   debug(msg: any) {
     this.log(msg, LogLevel.Debug);

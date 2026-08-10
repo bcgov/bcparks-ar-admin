@@ -1,25 +1,41 @@
 <div>
-  <div *ngIf="accordions?.frontcountryCamping">
-    <app-frontcountry-camping-accordion (click)="accordionToggle('collapsefrontcountryCamping')"></app-frontcountry-camping-accordion>
-  </div>
-  <div *ngIf="accordions?.frontcountryCabins">
-    <app-frontcountry-cabins-accordion (click)="accordionToggle('collapsefrontcountryCabins')"></app-frontcountry-cabins-accordion>
-  </div>
-  <div *ngIf="accordions?.groupCamping">
-    <app-group-camping-accordion (click)="accordionToggle('collapsegroupCamping')"></app-group-camping-accordion>
-  </div>
-  <div *ngIf="accordions?.dayUse">
-    <app-day-use-accordion (click)="accordionToggle('collapsedayuse')"></app-day-use-accordion>
-  </div>
-  <div *ngIf="accordions?.backcountryCamping">
-    <app-backcountry-camping-accordion (click)="accordionToggle('collapsebackcountryCamping')"></app-backcountry-camping-accordion>
-  </div>
-  <div *ngIf="accordions?.backcountryCabins">
-    <app-backcountry-cabins-accordion (click)="accordionToggle('collapsebackcountryCabins')"></app-backcountry-cabins-accordion>
-  </div>
-  <div *ngIf="accordions?.boating">
-    <app-boating-accordion (click)="accordionToggle('collapseboating')"></app-boating-accordion>
-  </div>
+  @if (accordions?.frontcountryCamping) {
+    <div>
+      <app-frontcountry-camping-accordion (click)="accordionToggle('collapsefrontcountryCamping')"></app-frontcountry-camping-accordion>
+    </div>
+  }
+  @if (accordions?.frontcountryCabins) {
+    <div>
+      <app-frontcountry-cabins-accordion (click)="accordionToggle('collapsefrontcountryCabins')"></app-frontcountry-cabins-accordion>
+    </div>
+  }
+  @if (accordions?.groupCamping) {
+    <div>
+      <app-group-camping-accordion (click)="accordionToggle('collapsegroupCamping')"></app-group-camping-accordion>
+    </div>
+  }
+  @if (accordions?.dayUse) {
+    <div>
+      <app-day-use-accordion (click)="accordionToggle('collapsedayuse')"></app-day-use-accordion>
+    </div>
+  }
+  @if (accordions?.backcountryCamping) {
+    <div>
+      <app-backcountry-camping-accordion (click)="accordionToggle('collapsebackcountryCamping')"></app-backcountry-camping-accordion>
+    </div>
+  }
+  @if (accordions?.backcountryCabins) {
+    <div>
+      <app-backcountry-cabins-accordion (click)="accordionToggle('collapsebackcountryCabins')"></app-backcountry-cabins-accordion>
+    </div>
+  }
+  @if (accordions?.boating) {
+    <div>
+      <app-boating-accordion (click)="accordionToggle('collapseboating')"></app-boating-accordion>
+    </div>
+  }
 </div>
 
-<app-centered-text-block *ngIf="noAccordions()" [text]="'No data available for this subarea on this month.'"></app-centered-text-block>
+@if (noAccordions()) {
+  <app-centered-text-block [text]="'No data available for this subarea on this month.'"></app-centered-text-block>
+}

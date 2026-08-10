@@ -5,13 +5,15 @@
     </h1>
   </div>
   <div class="row">
-    <div class="col-lg-6 col-md-12 mb-4" *ngFor="let card of cardConfig">
+    @for (card of cardConfig; track card) {
+      <div class="col-lg-6 col-md-12 mb-4">
         <app-nav-card
           [cardHeader]="card.cardHeader"
           [cardTitle]="card.cardTitle"
           [cardText]="card.cardText"
           [navigation]="card.navigation"
         ></app-nav-card>
-    </div>
+      </div>
+    }
   </div>
 </div>

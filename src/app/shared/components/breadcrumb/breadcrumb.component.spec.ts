@@ -23,15 +23,14 @@ describe('BreadcrumbComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(mockRoutes)],
-      declarations: [BreadcrumbComponent],
-      providers: [
+    imports: [RouterTestingModule.withRoutes(mockRoutes), BreadcrumbComponent],
+    providers: [
         { provide: ConfigService, useValue: fakeConfigService },
         KeycloakService,
         HttpClient,
         HttpHandler,
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
   });
 
   beforeEach(() => {

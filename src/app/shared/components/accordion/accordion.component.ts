@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from '../../utils/utils';
 import { Subscription } from 'rxjs';
@@ -16,10 +10,15 @@ import { summarySection } from './summary-section/summary-section.component';
 @Component({
     selector: 'app-accordion',
     templateUrl: './accordion.component.html',
-    styleUrls: ['./accordion.component.scss'],
-    standalone: false
+    styleUrls: ['./accordion.component.scss']
 })
 export class AccordionComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private fiscalYearLockService = inject(FiscalYearLockService);
+  protected dataService = inject(DataService);
+  private cd = inject(ChangeDetectorRef);
+
   @Input() title: string = '';
   @Input() icon: string = '';
   @Input() id: string = '';
@@ -38,13 +37,9 @@ export class AccordionComponent implements OnInit, OnDestroy {
   public isFiscalYearLocked = true;
   public readonly iconSize = 50; // icon size in px
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private fiscalYearLockService: FiscalYearLockService,
-    protected dataService: DataService,
-    private cd: ChangeDetectorRef
-  ) {
+  constructor() {
+    const dataService = this.dataService;
+
     this.subscriptions.add(
       dataService
         .watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)

@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HistoricalPillComponent } from './historical-pill.component';
 
 @NgModule({
-  declarations: [HistoricalPillComponent],
-  imports: [CommonModule],
-  exports: [HistoricalPillComponent],
+    imports: [CommonModule, HistoricalPillComponent],
+    exports: [HistoricalPillComponent],
 })
 export class HistoricalPillModule {}

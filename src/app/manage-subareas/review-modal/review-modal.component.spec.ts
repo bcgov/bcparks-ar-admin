@@ -9,9 +9,9 @@ describe('ReviewModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReviewModalComponent ],
-      providers: [ BsModalService ]
-    })
+    imports: [ReviewModalComponent],
+    providers: [BsModalService]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(ReviewModalComponent);

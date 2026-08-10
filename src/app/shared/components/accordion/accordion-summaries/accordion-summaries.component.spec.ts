@@ -8,8 +8,8 @@ describe('AccordionSummariesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccordionSummariesComponent ]
-    })
+    imports: [AccordionSummariesComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(AccordionSummariesComponent);

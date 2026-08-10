@@ -9,21 +9,19 @@ import { AccordionNotesComponent } from './accordion-notes/accordion-notes.compo
 
 
 @NgModule({
-  declarations: [
-    AccordionComponent,
-    SummarySectionComponent,
-    AccordionSummariesComponent,
-    AccordionNotesComponent
-  ],
-  imports: [
-    CommonModule,
-    CalculationDisplayModule,
-  ],
-  exports: [
-    AccordionComponent,
-    SummarySectionComponent,
-    AccordionNotesComponent,
-    AccordionSummariesComponent
-  ]
+    imports: [
+        CommonModule,
+        CalculationDisplayModule,
+        AccordionComponent,
+        SummarySectionComponent,
+        AccordionSummariesComponent,
+        AccordionNotesComponent,
+    ],
+    exports: [
+        AccordionComponent,
+        SummarySectionComponent,
+        AccordionNotesComponent,
+        AccordionSummariesComponent
+    ]
 })
 export class AccordionModule { }

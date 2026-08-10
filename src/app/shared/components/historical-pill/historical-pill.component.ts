@@ -3,8 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
     selector: 'app-historical-pill',
     templateUrl: './historical-pill.component.html',
-    styleUrls: ['./historical-pill.component.scss'],
-    standalone: false
+    styleUrls: ['./historical-pill.component.scss']
 })
 export class HistoricalPillComponent {
   @Input() matches: any;

@@ -1,60 +1,74 @@
 <div>
-  <h3 *ngIf="section?.title">{{ section?.title }}</h3>
-  <h4 *ngIf="section?.subtitle" class="mt-4">{{ section?.subtitle }}</h4>
-  <div
-    class="mb-3"
-    *ngIf="section.attendanceItems"
-  >
-    <div *ngFor="let attendanceItem of section.attendanceItems">
-      <div class="d-flex justify-content-between p-2 border-bottom">
-        <div class="d-flex">
-          <div>{{ attendanceItem?.itemName }}</div>
-          <div
-            *ngIf="attendanceItem?.variance"
-            class="bi bi-info-circle-fill text-danger ps-3"
-          ></div>
+  @if (section?.title) {
+    <h3>{{ section?.title }}</h3>
+  }
+  @if (section?.subtitle) {
+    <h4 class="mt-4">{{ section?.subtitle }}</h4>
+  }
+  @if (section.attendanceItems) {
+    <div
+      class="mb-3"
+      >
+      @for (attendanceItem of section.attendanceItems; track attendanceItem) {
+        <div>
+          <div class="d-flex justify-content-between p-2 border-bottom">
+            <div class="d-flex">
+              <div>{{ attendanceItem?.itemName }}</div>
+              @if (attendanceItem?.variance) {
+                <div
+                  class="bi bi-info-circle-fill text-danger ps-3"
+                ></div>
+              }
+            </div>
+            <div className="text-align-end">
+              {{ isDefined(attendanceItem?.value) ? attendanceItem.value : "-" }}
+            </div>
+          </div>
         </div>
-        <div className="text-align-end">
-          {{ isDefined(attendanceItem?.value) ? attendanceItem.value : "-" }}
-        </div>
-      </div>
+      }
+      @if (section?.attendanceTotal) {
+        <app-calculation-display
+          [label]="section?.attendanceLabel?.toUpperCase()"
+          [value]="section?.attendanceTotal?.result"
+          [subtext]="section?.isLegacy ? '' : section?.attendanceTotal?.formula"
+          [colorClass]="section?.isLegacy ? 'grey' : 'blue'"
+        ></app-calculation-display>
+      }
     </div>
-    <app-calculation-display
-      *ngIf="section?.attendanceTotal"
-      [label]="section?.attendanceLabel?.toUpperCase()"
-      [value]="section?.attendanceTotal?.result"
-      [subtext]="section?.isLegacy ? '' : section?.attendanceTotal?.formula"
-      [colorClass]="section?.isLegacy ? 'grey' : 'blue'"
-    ></app-calculation-display>
-  </div>
-  <div
-    class="mb-3"
-    *ngIf="section.revenueItems"
-  >
-    <div *ngFor="let revenueItem of section.revenueItems">
-      <div class="d-flex justify-content-between p-2 border-bottom">
-        <div class="d-flex">
-          <div>{{ revenueItem?.itemName }}</div>
-          <div
-            *ngIf="revenueItem?.variance"
-            class="bi bi-info-circle-fill text-danger ps-3"
-          ></div>
+  }
+  @if (section.revenueItems) {
+    <div
+      class="mb-3"
+      >
+      @for (revenueItem of section.revenueItems; track revenueItem) {
+        <div>
+          <div class="d-flex justify-content-between p-2 border-bottom">
+            <div class="d-flex">
+              <div>{{ revenueItem?.itemName }}</div>
+              @if (revenueItem?.variance) {
+                <div
+                  class="bi bi-info-circle-fill text-danger ps-3"
+                ></div>
+              }
+            </div>
+            <div className="text-align-end">
+              {{
+              isDefined(revenueItem?.value)
+              ? (revenueItem.value | currency: "CAD":"symbol-narrow":"1.2-2")
+              : "-"
+              }}
+            </div>
+          </div>
         </div>
-        <div className="text-align-end">
-          {{
-          isDefined(revenueItem?.value)
-          ? (revenueItem.value | currency: "CAD":"symbol-narrow":"1.2-2")
-          : "-"
-          }}
-        </div>
-      </div>
+      }
+      @if (section?.revenueTotal) {
+        <app-calculation-display
+          [label]="section?.revenueLabel?.toUpperCase()"
+          [value]="section?.revenueTotal?.result"
+          [subtext]="section?.isLegacy ? '' : section?.revenueTotal?.formula"
+          [colorClass]="section?.isLegacy ? 'grey' : 'green'"
+        ></app-calculation-display>
+      }
     </div>
-    <app-calculation-display
-      *ngIf="section?.revenueTotal"
-      [label]="section?.revenueLabel?.toUpperCase()"
-      [value]="section?.revenueTotal?.result"
-      [subtext]="section?.isLegacy ? '' : section?.revenueTotal?.formula"
-      [colorClass]="section?.isLegacy ? 'grey' : 'green'"
-    ></app-calculation-display>
-  </div>
+  }
 </div>

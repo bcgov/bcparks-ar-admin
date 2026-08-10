@@ -14,12 +14,12 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HomeComponent],
-      imports: [NavCardModule, RouterTestingModule],
-      providers: [
+    imports: [NavCardModule, RouterTestingModule, HomeComponent],
+    providers: [
         ConfigService,
-        { provide: KeycloakService, useValue: mockKeycloakService }],
-    }).compileComponents();
+        { provide: KeycloakService, useValue: mockKeycloakService }
+    ],
+}).compileComponents();
   });
 
   it('should create and have one card', () => {

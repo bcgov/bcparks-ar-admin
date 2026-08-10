@@ -1,9 +1,13 @@
-<span *ngIf="!loading">{{ text }}</span>
-<span *ngIf="loading">
-  <span
-    class="spinner-border spinner-border-sm"
-    role="status"
-    aria-hidden="true"
-  ></span>
-  <span class="visually-hidden">Loading...</span>
-</span>
+@if (!loading) {
+  <span>{{ text }}</span>
+}
+@if (loading) {
+  <span>
+    <span
+      class="spinner-border spinner-border-sm"
+      role="status"
+      aria-hidden="true"
+    ></span>
+    <span class="visually-hidden">Loading...</span>
+  </span>
+}

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Constants } from '../shared/utils/constants';
 import { DataService } from './data.service';
 
@@ -6,7 +6,8 @@ import { DataService } from './data.service';
   providedIn: 'root',
 })
 export class FormService {
-  constructor(private dataService: DataService) {}
+  private dataService = inject(DataService);
+
 
   setFormParams(params) {
     this.dataService.setItemValue(
