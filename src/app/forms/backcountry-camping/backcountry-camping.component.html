@@ -52,7 +52,7 @@
       <!-- Revenue summary -->
       <div class="mb-2 pb-4 mt-auto">
         <app-calculation-display [colorClass]="'green'" [label]="'NET REVENUE'"
-          [subtext]="revenueTotal?.formula" [value]="revenueTotal?.result"></app-calculation-display>
+        [subtext]="revenueTotal?.formula" [value]="revenueTotal?.result"></app-calculation-display>
       </div>
     </div>
   </div>
@@ -75,20 +75,21 @@
         [label]="'Variance category'"
         [selectionListItems]="varianceReasons"
         [placeholder]="'Please select'"
-      >
+        >
       </ngds-picklist-input>
     </div>
     <div class="row">
-      <ngds-picklist-input
-        class="col-lg-4"
-        *ngIf="getVarianceSubReasons()?.length > 0"
-        [control]="varianceReasonsForm?.controls?.['subReason']"
-        [loadWhile]="loading"
-        [label]="'Subcategory'"
-        [selectionListItems]="getVarianceSubReasons()"
-        [placeholder]="'Please select'"
-      >
-      </ngds-picklist-input>
+      @if (getVarianceSubReasons()?.length > 0) {
+        <ngds-picklist-input
+          class="col-lg-4"
+          [control]="varianceReasonsForm?.controls?.['subReason']"
+          [loadWhile]="loading"
+          [label]="'Subcategory'"
+          [selectionListItems]="getVarianceSubReasons()"
+          [placeholder]="'Please select'"
+          >
+        </ngds-picklist-input>
+      }
     </div>
     <ngds-text-input
       [control]="form?.controls?.['notes']"
@@ -96,7 +97,7 @@
       [multiline]="true"
       [loadWhile]="loading"
       [label]="'Notes'"
-    >
+      >
     </ngds-text-input>
     <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
   </div>
@@ -110,29 +111,34 @@
     (clicked)="submit(true)"
   ></app-submit-button>
 </div>
-<div *ngIf="showVarianceModal">
-  <app-variance-warning-modal
-    (accept)="submit()"
-    (decline)="hideModal()"
-  ></app-variance-warning-modal>
-</div>
+@if (showVarianceModal) {
+  <div>
+    <app-variance-warning-modal
+      (accept)="submit()"
+      (decline)="hideModal()"
+    ></app-variance-warning-modal>
+  </div>
+}
 
 <!-- Variance warning popover template -->
 <ng-template
   #popover
   let-variance="variance"
->
-  <div
-    class="text-secondary"
-    *ngIf="variance"
   >
-    Average: {{variance?.historicalAverage}}
-    <div class="d-flex">
-      <div *ngFor="let year of getYearlyAverages(variance)">
-        <div>
-          {{ year.year }}: {{ year. value}}{{ year.hasOwnProperty('last') ? '' : ',&nbsp;'}}
-        </div>
+  @if (variance) {
+    <div
+      class="text-secondary"
+      >
+      Average: {{variance?.historicalAverage}}
+      <div class="d-flex">
+        @for (year of getYearlyAverages(variance); track year) {
+          <div>
+            <div>
+              {{ year.year }}: {{ year. value}}{{ year.hasOwnProperty('last') ? '' : ',&nbsp;'}}
+            </div>
+          </div>
+        }
       </div>
     </div>
-  </div>
+  }
 </ng-template>

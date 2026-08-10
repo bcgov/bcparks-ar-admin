@@ -11,8 +11,7 @@ describe('LockRecordsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [LockRecordsComponent],
-    imports: [BsDatepickerModule.forRoot()],
+    imports: [BsDatepickerModule.forRoot(), LockRecordsComponent],
     providers: [ConfigService, provideHttpClient(withInterceptorsFromDi())]
 }).compileComponents();
   });

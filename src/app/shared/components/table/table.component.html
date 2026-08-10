@@ -1,29 +1,35 @@
 <table class="table table-hover">
   <thead class="header">
     <tr>
-      <th
-        *ngFor="let column of columnSchema"
-        class="{{ column.columnClasses }}"
-        [ngStyle]="{ width: column.width }"
-      >
-        {{ column.displayHeader }}
-      </th>
+      @for (column of columnSchema; track column) {
+        <th
+          class="{{ column.columnClasses }}"
+          [ngStyle]="{ width: column.width }"
+          >
+          {{ column.displayHeader }}
+        </th>
+      }
     </tr>
   </thead>
-  <tbody *ngIf="rows?.length > 0">
-    <tr
-      *ngFor="let row of rows"
-      app-table-row
-      [columnSchema]="columnSchema"
-      [rowData]="row"
-    ></tr>
-  </tbody>
+  @if (rows?.length > 0) {
+    <tbody>
+      @for (row of rows; track row) {
+        <tr
+          app-table-row
+          [columnSchema]="columnSchema"
+          [rowData]="row"
+        ></tr>
+      }
+    </tbody>
+  }
 </table>
-<div *ngIf="rows?.length === 0">
-  <div class="d-flex justify-content-center">
-    <div class="text-muted">
-      {{ emptyTableMsg }}
+@if (rows?.length === 0) {
+  <div>
+    <div class="d-flex justify-content-center">
+      <div class="text-muted">
+        {{ emptyTableMsg }}
+      </div>
     </div>
+    <hr />
   </div>
-  <hr />
-</div>
+}

@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
@@ -6,12 +6,12 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class UrlService implements OnDestroy {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   public queryParams = new BehaviorSubject<any>({});
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {
+  constructor() {
     this.route.queryParams.subscribe((changes) => {
       this.queryParams.next(changes);
     });

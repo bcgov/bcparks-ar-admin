@@ -9,9 +9,9 @@ describe('VarianceWarningModalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [VarianceWarningModalComponent],
-      providers: [BsModalService]
-    });
+    imports: [VarianceWarningModalComponent],
+    providers: [BsModalService]
+});
     fixture = TestBed.createComponent(VarianceWarningModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

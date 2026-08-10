@@ -1,17 +1,21 @@
-import { Component, Input, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, Input, OnDestroy, TemplateRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'app-cancel-button',
     templateUrl: './cancel-button.component.html',
     styleUrls: ['./cancel-button.component.scss'],
-    standalone: false
+    imports: [ModalDirective]
 })
 export class CancelButtonComponent implements OnDestroy {
+  private router = inject(Router);
+  private dataService = inject(DataService);
+  private modalService = inject(BsModalService);
+
   @Input() disabled = false;
 
   private navParams = {};
@@ -19,11 +23,7 @@ export class CancelButtonComponent implements OnDestroy {
   public alive = true;
   modalRef?: BsModalRef;
   message?: string;
-  constructor(
-    private router: Router,
-    private dataService: DataService,
-    private modalService: BsModalService
-  ) {
+  constructor() {
     this.subscriptions.add(
       this.dataService
         .watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)

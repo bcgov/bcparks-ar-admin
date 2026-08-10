@@ -12,14 +12,13 @@ describe('GroupCampingAccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GroupCampingAccordionComponent],
-      imports: [RouterTestingModule],
-      providers: [
+    imports: [RouterTestingModule, GroupCampingAccordionComponent],
+    providers: [
         ConfigService,
         HttpClient,
         HttpHandler
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

@@ -6,6 +6,8 @@
     <strong>{{ isDefined(value) ? value : "-" }}</strong>
   </div>
 </div>
-<div *ngIf="subtext" class="ps-2">
-  <small class="text-muted">{{ subtext }}</small>
-</div>
+@if (subtext) {
+  <div class="ps-2">
+    <small class="text-muted">{{ subtext }}</small>
+  </div>
+}

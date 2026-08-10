@@ -8,8 +8,8 @@ describe('AddSubareaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddSubareaComponent ]
-    })
+    imports: [AddSubareaComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(AddSubareaComponent);

@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   formulaResult,
   FormulaService,
 } from 'src/app/services/formula.service';
+import { CalculationDisplayComponent } from '../../forms/calculation-display/calculation-display.component';
+import { CurrencyPipe } from '@angular/common';
 
 export interface summaryLineItem {
   itemName: string;
@@ -26,12 +28,12 @@ export interface summarySection {
     selector: 'app-summary-section',
     templateUrl: './summary-section.component.html',
     styleUrls: ['./summary-section.component.scss'],
-    standalone: false
+    imports: [CalculationDisplayComponent, CurrencyPipe]
 })
 export class SummarySectionComponent implements OnInit {
-  @Input() section: summarySection = {};
+  private formulaService = inject(FormulaService);
 
-  constructor(private formulaService: FormulaService) {}
+  @Input() section: summarySection = {};
 
   ngOnInit(): void {
     if (!this.section.attendanceLabel) {

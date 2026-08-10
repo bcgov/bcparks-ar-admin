@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InfiniteLoadingBarComponent } from './infinite-loading-bar.component';
 
 @NgModule({
-  declarations: [InfiniteLoadingBarComponent],
-  imports: [CommonModule],
-  exports: [InfiniteLoadingBarComponent],
+    imports: [CommonModule, InfiniteLoadingBarComponent],
+    exports: [InfiniteLoadingBarComponent],
 })
 export class InfiniteLoadingBarModule {}

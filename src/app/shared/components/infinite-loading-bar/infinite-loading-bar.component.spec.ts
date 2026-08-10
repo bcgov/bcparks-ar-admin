@@ -8,8 +8,8 @@ describe('InfiniteLoadingBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InfiniteLoadingBarComponent ]
-    })
+    imports: [InfiniteLoadingBarComponent]
+})
     .compileComponents();
   });
 

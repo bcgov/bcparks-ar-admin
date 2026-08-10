@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Constants } from '../shared/utils/constants';
 import { ApiService } from './api.service';
@@ -14,15 +14,14 @@ import { ActivityService } from './activity.service';
   providedIn: 'root',
 })
 export class SubAreaService {
-  constructor(
-    private dataService: DataService,
-    private eventService: EventService,
-    private toastService: ToastService,
-    private apiService: ApiService,
-    private loggerService: LoggerService,
-    private loadingService: LoadingService,
-    private activityService: ActivityService
-  ) { }
+  private dataService = inject(DataService);
+  private eventService = inject(EventService);
+  private toastService = inject(ToastService);
+  private apiService = inject(ApiService);
+  private loggerService = inject(LoggerService);
+  private loadingService = inject(LoadingService);
+  private activityService = inject(ActivityService);
+
 
   async fetchSubArea(id, orcs, subAreaId, date) {
     this.loadingService.addToFetchList(id);

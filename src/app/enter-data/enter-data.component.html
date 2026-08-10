@@ -1,37 +1,40 @@
-<div *ngIf="!onChildRoute">
-  <app-sub-area-search></app-sub-area-search>
-  <div class="container-fluid mt-5">
-    <!-- Text block -->
-    <section>
-      <app-centered-text-block
-        *ngIf="!subAreaData"
-        [text]="text"
-      ></app-centered-text-block>
-      <app-centered-text-block
-        *ngIf="subAreaData?.activities && subAreaData?.activities.length === 0"
-        [text]="'This sub-area has no associated forms.'"
-      ></app-centered-text-block>
-    </section>
-
-    <!-- Accordion header -->
-    <section
-      *ngIf="subAreaData?.activities && subAreaData?.activities.length > 0"
-    >
-      <div class="container-fluid">
-        <h1 class="header-text">
-          {{ urlParams?.parkName }} - {{ urlParams?.subAreaName }}
-        </h1>
-        <h2>{{ formatDate(urlParams?.date) }}</h2>
-        <hr />
-      </div>
-    </section>
-
-    <!-- Accordion -->
-    <section>
-      <div class="container-fluid my-4">
-        <app-accordion-manager></app-accordion-manager>
-      </div>
-    </section>
+@if (!onChildRoute) {
+  <div>
+    <app-sub-area-search></app-sub-area-search>
+    <div class="container-fluid mt-5">
+      <!-- Text block -->
+      <section>
+        @if (!subAreaData) {
+          <app-centered-text-block
+            [text]="text"
+          ></app-centered-text-block>
+        }
+        @if (subAreaData?.activities && subAreaData?.activities.length === 0) {
+          <app-centered-text-block
+            [text]="'This sub-area has no associated forms.'"
+          ></app-centered-text-block>
+        }
+      </section>
+      <!-- Accordion header -->
+      @if (subAreaData?.activities && subAreaData?.activities.length > 0) {
+        <section
+          >
+          <div class="container-fluid">
+            <h1 class="header-text">
+              {{ urlParams?.parkName }} - {{ urlParams?.subAreaName }}
+            </h1>
+            <h2>{{ formatDate(urlParams?.date) }}</h2>
+            <hr />
+          </div>
+        </section>
+      }
+      <!-- Accordion -->
+      <section>
+        <div class="container-fluid my-4">
+          <app-accordion-manager></app-accordion-manager>
+        </div>
+      </section>
+    </div>
   </div>
-</div>
+}
 <router-outlet></router-outlet>

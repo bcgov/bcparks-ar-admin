@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { SubAreaService } from '../services/sub-area.service';
 import { Constants } from '../shared/utils/constants';
@@ -7,7 +7,8 @@ import { Constants } from '../shared/utils/constants';
   providedIn: 'root',
 })
 export class SubAreaResolver  {
-  constructor(protected subAreaService: SubAreaService) {}
+  protected subAreaService = inject(SubAreaService);
+
   resolve(route: ActivatedRouteSnapshot) {
     // We need date, orcs and subarea to do a fetch.
     if (

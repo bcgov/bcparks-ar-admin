@@ -9,12 +9,6 @@ import { NgdsFormsModule } from '@digitalspace/ngds-forms'
 import { HistoricalPillModule } from "../shared/components/historical-pill/historical-pill.module";
 
 @NgModule({
-    declarations: [
-        VarianceSearchComponent,
-        VarianceFiltersComponent,
-        VarianceListComponent,
-        VarianceAccordionComponent,
-    ],
     exports: [
         VarianceSearchComponent
     ],
@@ -23,7 +17,11 @@ import { HistoricalPillModule } from "../shared/components/historical-pill/histo
         ReactiveFormsModule,
         CommonModule,
         NgdsFormsModule,
-        HistoricalPillModule
+        HistoricalPillModule,
+        VarianceSearchComponent,
+        VarianceFiltersComponent,
+        VarianceListComponent,
+        VarianceAccordionComponent
     ]
 })
 export class VarianceSearchModule { }

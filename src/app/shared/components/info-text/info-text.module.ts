@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InfoTextComponent } from './info-text.component';
 
 @NgModule({
-  declarations: [InfoTextComponent],
-  imports: [CommonModule],
-  exports: [InfoTextComponent],
+    imports: [CommonModule, InfoTextComponent],
+    exports: [InfoTextComponent],
 })
 export class InfoTextModule {}

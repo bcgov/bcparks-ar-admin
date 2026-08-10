@@ -8,7 +8,6 @@ import { NgdsFormsModule } from '@digitalspace/ngds-forms'
 import { HistoricalPillModule } from "../../shared/components/historical-pill/historical-pill.module";
 
 @NgModule({
-    declarations: [SubAreaSearchComponent],
     exports: [SubAreaSearchComponent],
     imports: [
         CommonModule,
@@ -17,7 +16,8 @@ import { HistoricalPillModule } from "../../shared/components/historical-pill/hi
         NgdsFormsModule,
         FormsModule,
         ReactiveFormsModule,
-        HistoricalPillModule
+        HistoricalPillModule,
+        SubAreaSearchComponent
     ]
 })
 export class SubAreaSearchModule { }

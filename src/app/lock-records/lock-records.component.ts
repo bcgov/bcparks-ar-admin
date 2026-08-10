@@ -1,18 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../services/data.service';
 import { FiscalYearLockService } from '../services/fiscal-year-lock.service';
 import { Constants } from '../shared/utils/constants';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { DateTime, Duration } from 'luxon';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { TextToLoadingSpinnerComponent } from '../shared/components/text-to-loading-spinner/text-to-loading-spinner.component';
+import { FiscalYearLockTableComponent } from './fiscal-year-lock-table/fiscal-year-lock-table.component';
 
 @Component({
     selector: 'app-lock-records',
     templateUrl: './lock-records.component.html',
     styleUrls: ['./lock-records.component.scss'],
-    standalone: false
+    imports: [NgdsForms, TextToLoadingSpinnerComponent, FiscalYearLockTableComponent]
 })
 export class LockRecordsComponent {
+  protected dataService = inject(DataService);
+  protected fiscalYearLockService = inject(FiscalYearLockService);
+
 
   private subscriptions = new Subscription();
   public loading = true;
@@ -28,10 +34,9 @@ export class LockRecordsComponent {
   public duration = Duration.fromObject({years: 1}).negate();
   public dateFormat = 'yyyy-LL';
 
-  constructor(
-    protected dataService: DataService,
-    protected fiscalYearLockService: FiscalYearLockService
-  ) {
+  constructor() {
+    const dataService = this.dataService;
+
     this.subscriptions.add(
       dataService
         .watchItem(Constants.dataIds.LOCK_RECORDS_FISCAL_YEARS_DATA)

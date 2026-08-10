@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Constants } from '../shared/utils/constants';
 import { ApiService } from './api.service';
@@ -12,14 +12,13 @@ import { ToastService, ToastTypes } from './toast.service';
   providedIn: 'root',
 })
 export class FiscalYearLockService {
-  constructor(
-    private dataService: DataService,
-    private apiService: ApiService,
-    private toastService: ToastService,
-    private loggerService: LoggerService,
-    private loadingService: LoadingService,
-    private eventService: EventService
-  ) {}
+  private dataService = inject(DataService);
+  private apiService = inject(ApiService);
+  private toastService = inject(ToastService);
+  private loggerService = inject(LoggerService);
+  private loadingService = inject(LoadingService);
+  private eventService = inject(EventService);
+
 
   // get/check fiscal years
   // passing year = null returns all fiscal year objects

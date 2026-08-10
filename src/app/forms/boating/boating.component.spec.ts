@@ -14,15 +14,15 @@ describe('BoatingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BoatingComponent],
-      imports: [
+    imports: [
         FormsModule,
         ReactiveFormsModule,
         RouterTestingModule,
         ParkHeaderModule,
-      ],
-      providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
-    }).compileComponents();
+        BoatingComponent,
+    ],
+    providers: [HttpClient, HttpHandler, ConfigService, BsModalService],
+}).compileComponents();
   });
 
   beforeEach(() => {

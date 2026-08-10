@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { FiscalYearLockService } from '../services/fiscal-year-lock.service';
 
@@ -6,7 +6,8 @@ import { FiscalYearLockService } from '../services/fiscal-year-lock.service';
   providedIn: 'root'
 })
 export class LockRecordsResolver  {
-  constructor(private fiscalYearLockService: FiscalYearLockService) {}
+  private fiscalYearLockService = inject(FiscalYearLockService);
+
   resolve() {
     this.fiscalYearLockService.fetchFiscalYear();
   }

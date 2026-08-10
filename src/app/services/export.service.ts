@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from './api.service';
 import { DataService } from './data.service';
@@ -8,16 +8,14 @@ import { LoggerService } from './logger.service';
   providedIn: 'root',
 })
 export class ExportService {
+  private apiService = inject(ApiService);
+  private dataService = inject(DataService);
+  private loggerService = inject(LoggerService);
+
   private pollingRate = 1000;
   private retryPollingRate = 10000;
   private retryTimeout = 300000; // 5 minutes
   private numberOfRetrys = 5;
-
-  constructor(
-    private apiService: ApiService,
-    private dataService: DataService,
-    private loggerService: LoggerService,
-  ) {}
 
   async checkForReports(dataId, dataType, params: any = {}, errorObj = {}) {
     let res;

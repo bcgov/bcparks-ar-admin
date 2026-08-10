@@ -22,7 +22,7 @@
             [popoverContext]="{variance: getPopoverData('standardRateGroupsTotalPeopleStandard')}"
             placement="bottom"
             triggers="mouseenter:mouseleave"
-          >
+            >
             <ngds-number-input
               [control]="form?.controls?.['standardRateGroupsTotalPeopleStandard']"
               [decimalPlaces]="0"
@@ -32,7 +32,7 @@
               [label]="'Standard group nights'"
               [placeholder]="'No data'"
               [loadWhile]="loading"
-            >
+              >
               <i
                 ngdsInputPrepend
                 class="bi bi-people-fill px-2"
@@ -41,312 +41,318 @@
           </div>
         </div>
         <hr>
-        <div class="row">
-          <!-- Adults -->
-          <div
-            class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('standardRateGroupsTotalPeopleAdults') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('standardRateGroupsTotalPeopleAdults')}"
-            placement="bottom"
-            triggers="mouseenter:mouseleave"
-          >
-            <ngds-number-input
-              [control]="form?.controls?.['standardRateGroupsTotalPeopleAdults']"
-              [decimalPlaces]="0"
-              [justify]="'end'"
-              [invalidConfig]="invalidConfig"
-              [allowNegative]="false"
-              [label]="'Adults (16+)'"
-              [placeholder]="'No data'"
-              [loadWhile]="loading"
-            >
-              <i
-                ngdsInputPrepend
-                class="bi bi-person-fill px-2"
-              ></i>
-            </ngds-number-input>
+          <div class="row">
+            <!-- Adults -->
+            <div
+              class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('standardRateGroupsTotalPeopleAdults') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('standardRateGroupsTotalPeopleAdults')}"
+              placement="bottom"
+              triggers="mouseenter:mouseleave"
+              >
+              <ngds-number-input
+                [control]="form?.controls?.['standardRateGroupsTotalPeopleAdults']"
+                [decimalPlaces]="0"
+                [justify]="'end'"
+                [invalidConfig]="invalidConfig"
+                [allowNegative]="false"
+                [label]="'Adults (16+)'"
+                [placeholder]="'No data'"
+                [loadWhile]="loading"
+                >
+                <i
+                  ngdsInputPrepend
+                  class="bi bi-person-fill px-2"
+                ></i>
+              </ngds-number-input>
+            </div>
+            <!-- Youth -->
+            <div
+              class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('standardRateGroupsTotalPeopleYouth') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('standardRateGroupsTotalPeopleYouth')}"
+              placement="bottom"
+              triggers="mouseenter:mouseleave"
+              >
+              <ngds-number-input
+                [control]="form?.controls?.['standardRateGroupsTotalPeopleYouth']"
+                [decimalPlaces]="0"
+                [justify]="'end'"
+                [invalidConfig]="invalidConfig"
+                [allowNegative]="false"
+                [label]="'Youth (6-15)'"
+                [placeholder]="'No data'"
+                [loadWhile]="loading"
+                >
+                <i
+                  ngdsInputPrepend
+                  class="bi bi-person-fill px-2"
+                ></i>
+              </ngds-number-input>
+            </div>
+            <!-- Kids -->
+            <div
+              class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('standardRateGroupsTotalPeopleKids') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('standardRateGroupsTotalPeopleKids')}"
+              placement="bottom"
+              triggers="mouseenter:mouseleave"
+              >
+              <ngds-number-input
+                [control]="form?.controls?.['standardRateGroupsTotalPeopleKids']"
+                [decimalPlaces]="0"
+                [justify]="'end'"
+                [invalidConfig]="invalidConfig"
+                [allowNegative]="false"
+                [label]="'Kids (0-5)'"
+                [placeholder]="'No data'"
+                [loadWhile]="loading"
+                >
+                <i
+                  ngdsInputPrepend
+                  class="bi bi-person-fill px-2"
+                ></i>
+              </ngds-number-input>
+            </div>
           </div>
-          <!-- Youth -->
-          <div
-            class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('standardRateGroupsTotalPeopleYouth') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('standardRateGroupsTotalPeopleYouth')}"
-            placement="bottom"
-            triggers="mouseenter:mouseleave"
-          >
-            <ngds-number-input
-              [control]="form?.controls?.['standardRateGroupsTotalPeopleYouth']"
-              [decimalPlaces]="0"
-              [justify]="'end'"
-              [invalidConfig]="invalidConfig"
-              [allowNegative]="false"
-              [label]="'Youth (6-15)'"
-              [placeholder]="'No data'"
-              [loadWhile]="loading"
-            >
-              <i
-                ngdsInputPrepend
-                class="bi bi-person-fill px-2"
-              ></i>
-            </ngds-number-input>
-          </div>
-          <!-- Kids -->
-          <div
-            class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('standardRateGroupsTotalPeopleKids') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('standardRateGroupsTotalPeopleKids')}"
-            placement="bottom"
-            triggers="mouseenter:mouseleave"
-          >
-            <ngds-number-input
-              [control]="form?.controls?.['standardRateGroupsTotalPeopleKids']"
-              [decimalPlaces]="0"
-              [justify]="'end'"
-              [invalidConfig]="invalidConfig"
-              [allowNegative]="false"
-              [label]="'Kids (0-5)'"
-              [placeholder]="'No data'"
-              [loadWhile]="loading"
-            >
-              <i
-                ngdsInputPrepend
-                class="bi bi-person-fill px-2"
-              ></i>
-            </ngds-number-input>
-          </div>
-        </div>
-        <!-- Attendance Summary -->
-        <div class="mb-2">
-          <app-calculation-display
-            [label]="'TOTAL PEOPLE'"
-            [subtext]="attendanceTotal?.formula"
-            [value]="attendanceTotal?.result"
-          ></app-calculation-display>
-        </div>
-      </div>
-      <!-- Revenue -->
-      <div class="col-12 col-lg-6 d-flex flex-column flex-grow-1">
-        <div class="row">
-          <!-- Gross revenue -->
-          <div
-            class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('standardRateGroupsRevenueGross') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('standardRateGroupsRevenueGross', true)}"
-            placement="bottom"
-            triggers="mouseenter:mouseleave"
-          >
-            <ngds-number-input
-              [control]="form?.controls?.['standardRateGroupsRevenueGross']"
-              [decimalPlaces]="2"
-              [justify]="'end'"
-              [invalidConfig]="invalidConfig"
-              [padDecimals]="true"
-              [label]="'Gross standard group revenue'"
-              [placeholder]="'No data'"
-              [loadWhile]="loading"
-            >
-              <i
-                ngdsInputPrepend
-                class="bi bi-currency-dollar px-2"
-              ></i>
-            </ngds-number-input>
+          <!-- Attendance Summary -->
+          <div class="mb-2">
+            <app-calculation-display
+              [label]="'TOTAL PEOPLE'"
+              [subtext]="attendanceTotal?.formula"
+              [value]="attendanceTotal?.result"
+            ></app-calculation-display>
           </div>
         </div>
-        <!-- Revenue summary -->
-        <div class="mb-2 mt-auto">
-          <app-calculation-display
-            [colorClass]="'green'"
-            [label]="'NET REVENUE'"
-            [subtext]="standardRevenueTotal?.formula"
-            [value]="standardRevenueTotal?.result"
-          ></app-calculation-display>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="form-section">
-    <!-- Youth rate groups -->
-    <h2>Youth rate groups</h2>
-    <div class="row">
-      <!-- Attendance -->
-      <div class="col-12 col-lg-6 d-flex flex-column">
-        <div class="row">
-          <!-- Standard -->
-          <div
-            class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('youthRateGroupsAttendanceGroupNights') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('youthRateGroupsAttendanceGroupNights')}"
-            placement="bottom"
-            triggers="mouseenter:mouseleave"
-          >
-            <ngds-number-input
-              [control]="form?.controls?.['youthRateGroupsAttendanceGroupNights']"
-              [decimalPlaces]="0"
-              [justify]="'end'"
-              [invalidConfig]="invalidConfig"
-              [allowNegative]="false"
-              [label]="'Youth group nights'"
-              [placeholder]="'No data'"
-              [loadWhile]="loading"
-            >
-              <i
-                ngdsInputPrepend
-                class="bi bi-person-fill px-2"
-              ></i>
-            </ngds-number-input>
+        <!-- Revenue -->
+        <div class="col-12 col-lg-6 d-flex flex-column flex-grow-1">
+          <div class="row">
+            <!-- Gross revenue -->
+            <div
+              class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('standardRateGroupsRevenueGross') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('standardRateGroupsRevenueGross', true)}"
+              placement="bottom"
+              triggers="mouseenter:mouseleave"
+              >
+              <ngds-number-input
+                [control]="form?.controls?.['standardRateGroupsRevenueGross']"
+                [decimalPlaces]="2"
+                [justify]="'end'"
+                [invalidConfig]="invalidConfig"
+                [padDecimals]="true"
+                [label]="'Gross standard group revenue'"
+                [placeholder]="'No data'"
+                [loadWhile]="loading"
+                >
+                <i
+                  ngdsInputPrepend
+                  class="bi bi-currency-dollar px-2"
+                ></i>
+              </ngds-number-input>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <!-- People -->
-          <div
-            class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('youthRateGroupsAttendancePeople') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('youthRateGroupsAttendancePeople')}"
-            placement="bottom"
-            triggers="mouseenter:mouseleave"
-          >
-            <ngds-number-input
-              [control]="form?.controls?.['youthRateGroupsAttendancePeople']"
-              [decimalPlaces]="0"
-              [justify]="'end'"
-              [invalidConfig]="invalidConfig"
-              [allowNegative]="false"
-              [label]="'People'"
-              [placeholder]="'No data'"
-              [loadWhile]="loading"
-            >
-              <i
-                ngdsInputPrepend
-                class="bi bi-person-fill px-2"
-              ></i>
-            </ngds-number-input>
+          <!-- Revenue summary -->
+          <div class="mb-2 mt-auto">
+            <app-calculation-display
+              [colorClass]="'green'"
+              [label]="'NET REVENUE'"
+              [subtext]="standardRevenueTotal?.formula"
+              [value]="standardRevenueTotal?.result"
+            ></app-calculation-display>
           </div>
-          <!-- Attendance info -->
-          <app-info-text
-            class="text-block"
-            [text]="'Include adults, youths, and kids.'"
-          ></app-info-text>
-        </div>
-      </div>
-      <!-- Revenue -->
-      <div class="col-12 col-lg-6 d-flex flex-column flex-grow-1">
-        <div class="row">
-          <!-- Gross revenue -->
-          <div
-            class="input-box mb-2 d-flex align-items-end"
-            [popover]="getPopoverData('youthRateGroupsRevenueGross') ? popover : null"
-            [popoverContext]="{variance: getPopoverData('youthRateGroupsRevenueGross', true)}"
-            placement="bottom"
-            triggers="mouseenter:mouseleave"
-          >
-            <ngds-number-input
-              [control]="form?.controls?.['youthRateGroupsRevenueGross']"
-              [decimalPlaces]="2"
-              [justify]="'end'"
-              [invalidConfig]="invalidConfig"
-              [padDecimals]="true"
-              [label]="'Gross youth group revenue'"
-              [placeholder]="'No data'"
-              [loadWhile]="loading"
-            >
-              <i
-                ngdsInputPrepend
-                class="bi bi-currency-dollar px-2"
-              ></i>
-            </ngds-number-input>
-          </div>
-        </div>
-        <!-- Revenue summary -->
-        <div class="mb-2 mt-auto">
-          <app-calculation-display
-            [colorClass]="'green'"
-            [label]="'NET REVENUE'"
-            [subtext]="youthRevenueTotal?.formula"
-            [value]="youthRevenueTotal?.result"
-          ></app-calculation-display>
         </div>
       </div>
     </div>
-  </div>
+    <div class="form-section">
+      <!-- Youth rate groups -->
+      <h2>Youth rate groups</h2>
+      <div class="row">
+        <!-- Attendance -->
+        <div class="col-12 col-lg-6 d-flex flex-column">
+          <div class="row">
+            <!-- Standard -->
+            <div
+              class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('youthRateGroupsAttendanceGroupNights') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('youthRateGroupsAttendanceGroupNights')}"
+              placement="bottom"
+              triggers="mouseenter:mouseleave"
+              >
+              <ngds-number-input
+                [control]="form?.controls?.['youthRateGroupsAttendanceGroupNights']"
+                [decimalPlaces]="0"
+                [justify]="'end'"
+                [invalidConfig]="invalidConfig"
+                [allowNegative]="false"
+                [label]="'Youth group nights'"
+                [placeholder]="'No data'"
+                [loadWhile]="loading"
+                >
+                <i
+                  ngdsInputPrepend
+                  class="bi bi-person-fill px-2"
+                ></i>
+              </ngds-number-input>
+            </div>
+          </div>
+          <div class="row">
+            <!-- People -->
+            <div
+              class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('youthRateGroupsAttendancePeople') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('youthRateGroupsAttendancePeople')}"
+              placement="bottom"
+              triggers="mouseenter:mouseleave"
+              >
+              <ngds-number-input
+                [control]="form?.controls?.['youthRateGroupsAttendancePeople']"
+                [decimalPlaces]="0"
+                [justify]="'end'"
+                [invalidConfig]="invalidConfig"
+                [allowNegative]="false"
+                [label]="'People'"
+                [placeholder]="'No data'"
+                [loadWhile]="loading"
+                >
+                <i
+                  ngdsInputPrepend
+                  class="bi bi-person-fill px-2"
+                ></i>
+              </ngds-number-input>
+            </div>
+            <!-- Attendance info -->
+            <app-info-text
+              class="text-block"
+              [text]="'Include adults, youths, and kids.'"
+            ></app-info-text>
+          </div>
+        </div>
+        <!-- Revenue -->
+        <div class="col-12 col-lg-6 d-flex flex-column flex-grow-1">
+          <div class="row">
+            <!-- Gross revenue -->
+            <div
+              class="input-box mb-2 d-flex align-items-end"
+              [popover]="getPopoverData('youthRateGroupsRevenueGross') ? popover : null"
+              [popoverContext]="{variance: getPopoverData('youthRateGroupsRevenueGross', true)}"
+              placement="bottom"
+              triggers="mouseenter:mouseleave"
+              >
+              <ngds-number-input
+                [control]="form?.controls?.['youthRateGroupsRevenueGross']"
+                [decimalPlaces]="2"
+                [justify]="'end'"
+                [invalidConfig]="invalidConfig"
+                [padDecimals]="true"
+                [label]="'Gross youth group revenue'"
+                [placeholder]="'No data'"
+                [loadWhile]="loading"
+                >
+                <i
+                  ngdsInputPrepend
+                  class="bi bi-currency-dollar px-2"
+                ></i>
+              </ngds-number-input>
+            </div>
+          </div>
+          <!-- Revenue summary -->
+          <div class="mb-2 mt-auto">
+            <app-calculation-display
+              [colorClass]="'green'"
+              [label]="'NET REVENUE'"
+              [subtext]="youthRevenueTotal?.formula"
+              [value]="youthRevenueTotal?.result"
+            ></app-calculation-display>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <app-non-resident-revenue
-    [control]="form?.controls?.['otherRevenueGrossNonResident']"
-    [total]="nonResidentRevenueTotal"
-    [invalidConfig]="invalidConfig"
-    [loading]="loading"
-    [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
-    [popoverTemplate]="popover"
-  ></app-non-resident-revenue>
+    <app-non-resident-revenue
+      [control]="form?.controls?.['otherRevenueGrossNonResident']"
+      [total]="nonResidentRevenueTotal"
+      [invalidConfig]="invalidConfig"
+      [loading]="loading"
+      [popoverData]="getPopoverData('otherRevenueGrossNonResident', true)"
+      [popoverTemplate]="popover"
+    ></app-non-resident-revenue>
 
-  <!-- Variance notes -->
-  <div class="form-section">
-    <h2>Variance notes</h2>
-<div class="row">
-      <ngds-picklist-input
-        class="col-lg-4"
-        [control]="varianceReasonsForm?.controls?.['reason']"
+    <!-- Variance notes -->
+    <div class="form-section">
+      <h2>Variance notes</h2>
+      <div class="row">
+        <ngds-picklist-input
+          class="col-lg-4"
+          [control]="varianceReasonsForm?.controls?.['reason']"
+          [loadWhile]="loading"
+          [label]="'Variance category'"
+          [selectionListItems]="varianceReasons"
+          [placeholder]="'Please select'"
+          >
+        </ngds-picklist-input>
+      </div>
+      <div class="row">
+        @if (getVarianceSubReasons()?.length > 0) {
+          <ngds-picklist-input
+            class="col-lg-4"
+            [control]="varianceReasonsForm?.controls?.['subReason']"
+            [loadWhile]="loading"
+            [label]="'Subcategory'"
+            [selectionListItems]="getVarianceSubReasons()"
+            [placeholder]="'Please select'"
+            >
+          </ngds-picklist-input>
+        }
+      </div>
+      <ngds-text-input
+        [control]="form?.controls?.['notes']"
+        [showCharacterCount]="true"
+        [multiline]="true"
         [loadWhile]="loading"
-        [label]="'Variance category'"
-        [selectionListItems]="varianceReasons"
-        [placeholder]="'Please select'"
-      >
-      </ngds-picklist-input>
+        [label]="'Notes'"
+        >
+      </ngds-text-input>
+      <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
     </div>
-    <div class="row">
-      <ngds-picklist-input
-        class="col-lg-4"
-        *ngIf="getVarianceSubReasons()?.length > 0"
-        [control]="varianceReasonsForm?.controls?.['subReason']"
-        [loadWhile]="loading"
-        [label]="'Subcategory'"
-        [selectionListItems]="getVarianceSubReasons()"
-        [placeholder]="'Please select'"
-      >
-      </ngds-picklist-input>
+  </form>
+
+  <!-- Cancel and Submit buttons -->
+  <div class="form-footer d-flex justify-content-between">
+    <app-cancel-button [disabled]="loading"></app-cancel-button>
+    <app-submit-button
+      [disabled]="isSubmitButtonDisabled()"
+      (clicked)="submit(true)"
+    ></app-submit-button>
+  </div>
+  @if (showVarianceModal) {
+    <div>
+      <app-variance-warning-modal
+        (accept)="submit()"
+        (decline)="hideModal()"
+      ></app-variance-warning-modal>
     </div>
-    <ngds-text-input
-      [control]="form?.controls?.['notes']"
-      [showCharacterCount]="true"
-      [multiline]="true"
-      [loadWhile]="loading"
-      [label]="'Notes'"
+  }
+
+  <!-- Variance warning popover template -->
+  <ng-template
+    #popover
+    let-variance="variance"
     >
-    </ngds-text-input>
-    <div>If any data entered above varies widely from the expected counts, briefly explain the variance.</div>
-  </div>
-</form>
-
-<!-- Cancel and Submit buttons -->
-<div class="form-footer d-flex justify-content-between">
-  <app-cancel-button [disabled]="loading"></app-cancel-button>
-  <app-submit-button
-    [disabled]="isSubmitButtonDisabled()"
-    (clicked)="submit(true)"
-  ></app-submit-button>
-</div>
-<div *ngIf="showVarianceModal">
-  <app-variance-warning-modal
-    (accept)="submit()"
-    (decline)="hideModal()"
-  ></app-variance-warning-modal>
-</div>
-
-<!-- Variance warning popover template -->
-<ng-template
-  #popover
-  let-variance="variance"
->
-  <div
-    class="text-secondary"
-    *ngIf="variance"
-  >
-    Average: {{variance?.historicalAverage}}
-    <div class="d-flex">
-      <div *ngFor="let year of getYearlyAverages(variance)">
-        <div>
-          {{ year.year }}: {{ year. value}}{{ year.hasOwnProperty('last') ? '' : ',&nbsp;'}}
+    @if (variance) {
+      <div
+        class="text-secondary"
+        >
+        Average: {{variance?.historicalAverage}}
+        <div class="d-flex">
+          @for (year of getYearlyAverages(variance); track year) {
+            <div>
+              <div>
+                {{ year.year }}: {{ year. value}}{{ year.hasOwnProperty('last') ? '' : ',&nbsp;'}}
+              </div>
+            </div>
+          }
         </div>
       </div>
-    </div>
-  </div>
-</ng-template>
+    }
+  </ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Constants } from 'src/app/shared/utils/constants';
 import { Subscription } from 'rxjs';
@@ -7,10 +7,11 @@ import { Utils } from '../../shared/utils/utils';
 @Component({
     selector: 'app-park-header',
     templateUrl: './park-header.component.html',
-    styleUrls: ['./park-header.component.scss'],
-    standalone: false
+    styleUrls: ['./park-header.component.scss']
 })
 export class ParkHeaderComponent implements OnDestroy {
+  protected dataService = inject(DataService);
+
   public parkName;
   public subAreaName;
   public date;
@@ -18,7 +19,7 @@ export class ParkHeaderComponent implements OnDestroy {
   public subscriptions = new Subscription();
   public alive = true;
 
-  constructor(protected dataService: DataService) {
+  constructor() {
     this.subscriptions.add(
       this.dataService
         .watchItem(Constants.dataIds.ENTER_DATA_URL_PARAMS)

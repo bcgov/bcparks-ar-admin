@@ -11,14 +11,14 @@ describe('VarianceAccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VarianceAccordionComponent ],
-      providers: [
+    imports: [VarianceAccordionComponent],
+    providers: [
         ConfigService,
         HttpClient,
         HttpHandler,
-        KeycloakService 
-      ]
-    })
+        KeycloakService
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(VarianceAccordionComponent);

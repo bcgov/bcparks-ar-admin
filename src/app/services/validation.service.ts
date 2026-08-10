@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { FormulaService } from './formula.service';
 
@@ -6,7 +6,8 @@ import { FormulaService } from './formula.service';
   providedIn: 'root',
 })
 export class ValidationService {
-  constructor(private formulaService: FormulaService) {}
+  private formulaService = inject(FormulaService);
+
 
   public readonly validationRegexes: any = {
     counterValidChars: [/^[0-9]*$/], // zero to infinite positive numbers only.

@@ -10,19 +10,17 @@ import { FiscalYearUnlockerComponent } from './fiscal-year-lock-table/fiscal-yea
 import { NgdsFormsModule } from '@digitalspace/ngds-forms';
 
 @NgModule({
-  declarations: [
-    LockRecordsComponent,
-    FiscalYearLockTableComponent,
-    FiscalYearUnlockerComponent,
-  ],
-  imports: [
-    CommonModule,
-    BsDatepickerModule,
-    RouterModule,
-    TextToLoadingSpinnerModule,
-    TableModule,
-    NgdsFormsModule
-  ],
-  exports: [LockRecordsComponent],
+    imports: [
+        CommonModule,
+        BsDatepickerModule,
+        RouterModule,
+        TextToLoadingSpinnerModule,
+        TableModule,
+        NgdsFormsModule,
+        LockRecordsComponent,
+        FiscalYearLockTableComponent,
+        FiscalYearUnlockerComponent
+    ],
+    exports: [LockRecordsComponent],
 })
 export class LockRecordsModule {}

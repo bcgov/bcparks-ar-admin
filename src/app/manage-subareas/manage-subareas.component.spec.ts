@@ -8,8 +8,8 @@ describe('ManageSubareasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManageSubareasComponent ]
-    })
+    imports: [ManageSubareasComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(ManageSubareasComponent);

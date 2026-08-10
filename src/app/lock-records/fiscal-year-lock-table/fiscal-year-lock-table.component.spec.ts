@@ -19,13 +19,13 @@ describe('FiscalYearLockTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FiscalYearLockTableComponent],
-      providers: [
+    imports: [FiscalYearLockTableComponent],
+    providers: [
         {
-          provide: DataService, useValue: mockDataService
+            provide: DataService, useValue: mockDataService
         }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
     dataService = TestBed.inject(DataService);
   });
 

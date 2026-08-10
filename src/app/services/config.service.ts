@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -9,9 +9,9 @@ import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class ConfigService {
-  private configuration: any = {};
+  private httpClient = inject(HttpClient);
 
-  constructor(private httpClient: HttpClient) {}
+  private configuration: any = {};
   /**
    * Initialize the Config Service.  Get configuration data from front-end build, or back-end if nginx
    * is configured to pass the /config endpoint to a dynamic service that returns JSON.

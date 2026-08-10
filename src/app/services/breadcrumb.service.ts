@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Data,
@@ -13,13 +13,15 @@ import { Breadcrumb } from '../model/breadcrumb.model';
   providedIn: 'root',
 })
 export class BreadcrumbService {
+  private router = inject(Router);
+
   // Subject emitting the breadcrumb hierarchy
   private readonly _breadcrumbs = new BehaviorSubject<Breadcrumb[]>([]);
 
   // Observable exposing the breadcrumb hierarchy
   readonly breadcrumbs = this._breadcrumbs.asObservable();
 
-  constructor(private router: Router) {
+  constructor() {
     // Initial seed
     this.setBreadcrum();
 

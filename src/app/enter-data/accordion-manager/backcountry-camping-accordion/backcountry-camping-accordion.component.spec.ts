@@ -12,14 +12,13 @@ describe('BackcountryCampingAccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BackcountryCampingAccordionComponent],
-      imports: [RouterTestingModule],
-      providers: [
+    imports: [RouterTestingModule, BackcountryCampingAccordionComponent],
+    providers: [
         ConfigService,
         HttpClient,
         HttpHandler
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

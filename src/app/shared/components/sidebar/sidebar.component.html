@@ -2,12 +2,13 @@
   <div class="d-flex flex-column h-100 pb-3">
     <div class="flex-grow-1">
       <ul class="list-unstyled components">
-        <li
-          *ngFor="let route of routes"
-          [ngClass]="this.currentRoute === '/' + route.path ? 'active' : ''"
-        >
-          <a (click)="onNavigate(route.path)">{{ route.data.label }}</a>
-        </li>
+        @for (route of routes; track route) {
+          <li
+            [ngClass]="this.currentRoute === '/' + route.path ? 'active' : ''"
+            >
+            <a (click)="onNavigate(route.path)">{{ route.data.label }}</a>
+          </li>
+        }
       </ul>
     </div>
   </div>

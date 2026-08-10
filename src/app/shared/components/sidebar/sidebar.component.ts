@@ -1,18 +1,25 @@
-import { Component, HostBinding, OnDestroy } from '@angular/core';
+import { Component, HostBinding, OnDestroy, inject } from '@angular/core';
 import { SideBarService } from 'src/app/services/sidebar.service';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Subscription } from 'rxjs';
 import { KeycloakService } from 'src/app/services/keycloak.service';
+import { NgClass } from '@angular/common';
+import { SidebarModule } from './sidebar.module';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
-    standalone: false
+    imports: [NgClass, SidebarModule]
 })
 export class SidebarComponent implements OnDestroy {
+  protected sideBarService = inject(SideBarService);
+  protected router = inject(Router);
+  protected subAreaService = inject(SubAreaService);
+  protected keyCloakService = inject(KeycloakService);
+
   @HostBinding('class.is-toggled')
   public hide = false;
 
@@ -21,12 +28,11 @@ export class SidebarComponent implements OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(
-    protected sideBarService: SideBarService,
-    protected router: Router,
-    protected subAreaService: SubAreaService,
-    protected keyCloakService: KeycloakService
-  ) {
+  constructor() {
+    const sideBarService = this.sideBarService;
+    const router = this.router;
+    const keyCloakService = this.keyCloakService;
+
     this.routes = router.config.filter(function (obj) {
       if (obj.path === 'export-reports') {
         return keyCloakService.isAllowed('export-reports');

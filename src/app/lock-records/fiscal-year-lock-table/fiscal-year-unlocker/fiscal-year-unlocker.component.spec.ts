@@ -10,8 +10,7 @@ describe('FiscalYearUnlockerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [FiscalYearUnlockerComponent],
-    imports: [],
+    imports: [FiscalYearUnlockerComponent],
     providers: [ConfigService, provideHttpClient(withInterceptorsFromDi())]
 }).compileComponents();
   });

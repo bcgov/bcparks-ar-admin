@@ -20,32 +20,31 @@ import { InfoTextModule } from '../shared/components/info-text/info-text.module'
 import { NonResidentRevenueModule } from '../shared/components/non-resident-revenue/non-resident-revenue.module';
 
 @NgModule({
-  declarations: [
-    BackcountryCabinsComponent,
-    BackcountryCampingComponent,
-    BoatingComponent,
-    DayUseComponent,
-    GroupCampingComponent,
-    FrontcountryCabinsComponent,
-    FrontcountryCampingComponent,
-    VarianceWarningModalComponent,
-    SubmitButtonComponent],
-  imports: [
-    CommonModule,
-    ParkHeaderModule,
-    NgdsFormsModule,
-    CancelButtonModule,
-    CalculationDisplayModule,
-    TextToLoadingSpinnerModule,
-    InfoTextModule,
-    NonResidentRevenueModule,
-    PopoverModule,
-    ModalModule,
-  ],
-  exports: [
-    BackcountryCabinsComponent,
-    SubmitButtonComponent,
-    VarianceWarningModalComponent,
-  ]
+    imports: [
+        CommonModule,
+        ParkHeaderModule,
+        NgdsFormsModule,
+        CancelButtonModule,
+        CalculationDisplayModule,
+        TextToLoadingSpinnerModule,
+        InfoTextModule,
+        NonResidentRevenueModule,
+        PopoverModule,
+        ModalModule,
+        BackcountryCabinsComponent,
+        BackcountryCampingComponent,
+        BoatingComponent,
+        DayUseComponent,
+        GroupCampingComponent,
+        FrontcountryCabinsComponent,
+        FrontcountryCampingComponent,
+        VarianceWarningModalComponent,
+        SubmitButtonComponent,
+    ],
+    exports: [
+        BackcountryCabinsComponent,
+        SubmitButtonComponent,
+        VarianceWarningModalComponent,
+    ]
 })
 export class ActivityFormsModule { }

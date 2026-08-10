@@ -4,8 +4,7 @@ import { TableComponent } from './table.component';
 import { TableRowComponent } from './table-row/table-row.component';
 
 @NgModule({
-  declarations: [TableComponent, TableRowComponent],
-  imports: [CommonModule],
-  exports: [TableComponent],
+    imports: [CommonModule, TableComponent, TableRowComponent],
+    exports: [TableComponent],
 })
 export class TableModule {}

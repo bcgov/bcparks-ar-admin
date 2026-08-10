@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  private http = inject(HttpClient);
+  private configService = inject(ConfigService);
+
   public token: string;
   public isMS: boolean; // IE, Edge, etc
 
   apiPath: string;
   env: 'local' | 'dev' | 'test' | 'prod';
-
-  constructor(private http: HttpClient, private configService: ConfigService) { }
 
   init() {
     this.apiPath =

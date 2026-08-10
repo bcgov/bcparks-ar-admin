@@ -28,17 +28,16 @@ describe('ExportReportsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgbModule, BsDatepickerModule.forRoot(),],
-      declarations: [ExportReportsComponent],
-      providers: [
+    imports: [NgbModule, BsDatepickerModule.forRoot(), ExportReportsComponent,],
+    providers: [
         HttpClient,
         HttpHandler,
         ConfigService,
         {
-          provide: DataService, useValue: mockDataService
+            provide: DataService, useValue: mockDataService
         }
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
   });
 
   beforeEach(() => {

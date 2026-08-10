@@ -33,17 +33,17 @@ describe('AccordionManagerComponent', () => {
   }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [
+    imports: [AccordionManagerComponent, SummarySectionComponent, AccordionComponent],
+    providers: [
         {
-          provide: DataService, useValue: mockDataService
+            provide: DataService, useValue: mockDataService
         },
         {
-          provide: Document,
-          useClass: MockDocument
+            provide: Document,
+            useClass: MockDocument
         }
-      ],
-      declarations: [AccordionManagerComponent, SummarySectionComponent, AccordionComponent]
-    })
+    ]
+})
       .compileComponents();
     doc = TestBed.inject(Document);
   });

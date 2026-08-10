@@ -10,9 +10,9 @@ describe('EditSubareaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditSubareaComponent],
-      providers: [HttpClient, HttpHandler, ConfigService]
-    })
+    imports: [EditSubareaComponent],
+    providers: [HttpClient, HttpHandler, ConfigService]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(EditSubareaComponent);

@@ -1,16 +1,22 @@
-import { Component, Input, OnDestroy } from '@angular/core';
-import { NavigationEnd, Router, Event } from '@angular/router';
+import { Component, Input, OnDestroy, inject } from '@angular/core';
+import { NavigationEnd, Router, Event, RouterLink } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { ConfigService } from '../services/config.service';
 import { KeycloakService } from '../services/keycloak.service';
+import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap/collapse';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    standalone: false
+    imports: [RouterLink, NgbCollapse, NgClass]
 })
 export class HeaderComponent implements OnDestroy {
+  protected configService = inject(ConfigService);
+  protected router = inject(Router);
+  protected keycloakService = inject(KeycloakService);
+
   @Input() showSideBar = true;
   
   private subscriptions = new Subscription();
@@ -23,11 +29,10 @@ export class HeaderComponent implements OnDestroy {
   public routes: any[] = [];
   public currentRoute: any;
 
-  constructor(
-    protected configService: ConfigService,
-    protected router: Router,
-    protected keycloakService: KeycloakService
-  ) {
+  constructor() {
+    const router = this.router;
+    const keycloakService = this.keycloakService;
+
     this.routes = router.config.filter(function (obj) {
       if (obj.path === 'export-reports') {
         return keycloakService.isAllowed('export-reports');

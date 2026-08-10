@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { NgStyle } from '@angular/common';
+import { TableRowComponent } from './table-row/table-row.component';
 
 export interface columnSchema {
   id: string; // unique column identifier
@@ -14,7 +16,7 @@ export interface columnSchema {
     selector: 'app-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
-    standalone: false
+    imports: [NgStyle, TableRowComponent]
 })
 export class TableComponent implements OnChanges {
   @Input() columnSchema: columnSchema[];

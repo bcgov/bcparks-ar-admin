@@ -58,18 +58,18 @@ describe('RootFormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RootFormComponent],
-      imports: [RouterTestingModule],
-      providers: [
+    declarations: [RootFormComponent],
+    imports: [RouterTestingModule],
+    providers: [
         HttpClient,
         HttpHandler,
         ConfigService,
         BsModalService,
         {
-          provide: ActivityService, useValue: mockActivityService
+            provide: ActivityService, useValue: mockActivityService
         }
-      ]
-    });
+    ]
+});
     fixture = TestBed.createComponent(RootFormComponent);
     component = fixture.componentInstance;
     component.form = new UntypedFormGroup({

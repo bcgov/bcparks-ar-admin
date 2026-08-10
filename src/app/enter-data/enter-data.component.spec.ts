@@ -11,13 +11,13 @@ describe('EnterDataComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         InfoTextModule,
         RouterTestingModule,
-      ],
-      declarations: [EnterDataComponent],
-      providers: [DataService],
-    }).compileComponents();
+        EnterDataComponent,
+    ],
+    providers: [DataService],
+}).compileComponents();
   });
 
   beforeEach(() => {

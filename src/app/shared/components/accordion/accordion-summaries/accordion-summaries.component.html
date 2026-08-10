@@ -1,5 +1,7 @@
-<div *ngFor="let item of summaries">
-  <div class="mb-5 mt-3">
-    <app-summary-section [section]="item"></app-summary-section>
+@for (item of summaries; track item) {
+  <div>
+    <div class="mb-5 mt-3">
+      <app-summary-section [section]="item"></app-summary-section>
+    </div>
   </div>
-</div>
+}

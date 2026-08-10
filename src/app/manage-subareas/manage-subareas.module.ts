@@ -10,23 +10,21 @@ import { ReviewModalComponent } from './review-modal/review-modal.component';
 import { SubareaFormComponent } from './subarea-form/subarea-form.component';
 
 @NgModule({
-  declarations: [
-    ManageSubareasComponent,
-    AddSubareaComponent,
-    EditSubareaComponent,
-    ReviewModalComponent,
-    SubareaFormComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgdsFormsModule,
-    ModalModule
-  ],
-  exports: [
-    ReviewModalComponent,
-    SubareaFormComponent
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgdsFormsModule,
+        ModalModule,
+        ManageSubareasComponent,
+        AddSubareaComponent,
+        EditSubareaComponent,
+        ReviewModalComponent,
+        SubareaFormComponent
+    ],
+    exports: [
+        ReviewModalComponent,
+        SubareaFormComponent
+    ]
 })
 
 export class ManageSubareasModule { }

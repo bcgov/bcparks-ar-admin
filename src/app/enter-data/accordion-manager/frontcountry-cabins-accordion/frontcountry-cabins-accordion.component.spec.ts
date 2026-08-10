@@ -12,14 +12,13 @@ describe('FrontcountryCabinsAccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FrontcountryCabinsAccordionComponent],
-      imports: [RouterTestingModule],
-      providers: [
+    imports: [RouterTestingModule, FrontcountryCabinsAccordionComponent],
+    providers: [
         ConfigService,
         HttpClient,
         HttpHandler
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

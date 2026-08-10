@@ -9,18 +9,16 @@ import { RouterModule } from '@angular/router';
 import { ActivityFormsModule } from '../forms/activity-forms.module';
 
 @NgModule({
-  declarations: [
-    EnterDataComponent,
-  ],
-  imports: [
-    AccordionManagerModule,
-    SubAreaSearchModule,
-    CenteredTextBlockModule,
-    ActivityFormsModule,
-    RouterModule,
-    CommonModule,
-  ],
-  exports: [EnterDataComponent],
-  providers: [FormService, FormService],
+    imports: [
+        AccordionManagerModule,
+        SubAreaSearchModule,
+        CenteredTextBlockModule,
+        ActivityFormsModule,
+        RouterModule,
+        CommonModule,
+        EnterDataComponent,
+    ],
+    exports: [EnterDataComponent],
+    providers: [FormService, FormService],
 })
 export class EnterDataModule {}

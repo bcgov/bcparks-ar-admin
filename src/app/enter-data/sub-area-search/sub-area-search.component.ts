@@ -1,4 +1,4 @@
-import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, TemplateRef, ViewChild, inject } from '@angular/core';
 import { BehaviorSubject, Subscription, first } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
@@ -7,14 +7,22 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { DateTime } from 'luxon';
 import { UrlService } from 'src/app/services/url.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { TextToLoadingSpinnerComponent } from '../../shared/components/text-to-loading-spinner/text-to-loading-spinner.component';
+import { HistoricalPillComponent } from '../../shared/components/historical-pill/historical-pill.component';
 
 @Component({
     selector: 'app-sub-area-search',
     templateUrl: './sub-area-search.component.html',
     styleUrls: ['./sub-area-search.component.scss'],
-    standalone: false
+    imports: [NgdsForms, TextToLoadingSpinnerComponent, HistoricalPillComponent]
 })
 export class SubAreaSearchComponent implements OnDestroy {
+  protected dataService = inject(DataService);
+  protected subAreaService = inject(SubAreaService);
+  private loadingService = inject(LoadingService);
+  private urlService = inject(UrlService);
+
   @ViewChild('historicalPill') legacyTypeAheadTemplate: TemplateRef<any>;
 
   private subscriptions = new Subscription();
@@ -32,12 +40,9 @@ export class SubAreaSearchComponent implements OnDestroy {
     subArea: new UntypedFormControl(null),
   });
 
-  constructor(
-    protected dataService: DataService,
-    protected subAreaService: SubAreaService,
-    private loadingService: LoadingService,
-    private urlService: UrlService,
-  ) {
+  constructor() {
+    const dataService = this.dataService;
+
     // Watch the list of parks the user has access to
     this.subscriptions.add(
       dataService

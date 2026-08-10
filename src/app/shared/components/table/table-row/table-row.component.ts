@@ -16,8 +16,7 @@ import { columnSchema } from '../table.component';
     // eslint-disable-next-line
     selector: '[app-table-row]',
     templateUrl: './table-row.component.html',
-    styleUrls: ['./table-row.component.scss'],
-    standalone: false
+    styleUrls: ['./table-row.component.scss']
 })
 export class TableRowComponent implements AfterViewChecked {
   @Input() columnSchema: columnSchema[];

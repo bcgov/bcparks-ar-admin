@@ -1,18 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { ParkService } from 'src/app/services/park.service';
 import { SubAreaService } from 'src/app/services/sub-area.service';
 import { Constants } from 'src/app/shared/utils/constants';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { SubareaFormComponent } from '../subarea-form/subarea-form.component';
 
 @Component({
     selector: 'app-edit-subarea',
     templateUrl: './edit-subarea.component.html',
     styleUrls: ['./edit-subarea.component.scss'],
-    standalone: false
+    imports: [NgdsForms, SubareaFormComponent]
 })
 export class EditSubareaComponent implements OnInit, OnDestroy {
+  private dataService = inject(DataService);
+  private parkService = inject(ParkService);
+  private subareaService = inject(SubAreaService);
+
 
   public subscriptions = new Subscription();
 
@@ -25,11 +31,7 @@ export class EditSubareaComponent implements OnInit, OnDestroy {
     subAreaName: new UntypedFormControl(null, [Validators.required]),
   });
 
-  constructor(
-    private dataService: DataService,
-    private parkService: ParkService,
-    private subareaService: SubAreaService,
-  ) {
+  constructor() {
     // watch for changes in park
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.ENTER_DATA_PARK).subscribe((res) => {

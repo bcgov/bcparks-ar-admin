@@ -1,22 +1,16 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
     selector: 'app-text-to-loading-spinner',
     templateUrl: './text-to-loading-spinner.component.html',
-    styleUrls: ['./text-to-loading-spinner.component.scss'],
-    standalone: false
+    styleUrls: ['./text-to-loading-spinner.component.scss']
 })
 export class TextToLoadingSpinnerComponent implements OnInit, OnDestroy {
+  protected loadingService = inject(LoadingService);
+  protected cdr = inject(ChangeDetectorRef);
+
   @Input() text;
   @Output() loadingStatus: EventEmitter<boolean> = new EventEmitter();
 
@@ -29,9 +23,6 @@ export class TextToLoadingSpinnerComponent implements OnInit, OnDestroy {
   }
   set loading(value) {
     this._loading.next(value);
-  }
-
-  constructor(protected loadingService: LoadingService, protected cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {

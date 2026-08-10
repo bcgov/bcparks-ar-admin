@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeycloakService } from '../services/keycloak.service';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: false
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  constructor(public keycloakService: KeycloakService, private router: Router) {}
+  keycloakService = inject(KeycloakService);
+  private router = inject(Router);
+
 
   ngOnInit() {
     if (this.keycloakService.isAuthenticated()) {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription, first } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
@@ -8,14 +8,22 @@ import { VarianceService } from 'src/app/services/variance.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UrlService } from 'src/app/services/url.service';
 import { DateTime } from 'luxon';
+import { NgdsForms } from '@digitalspace/ngds-forms';
+import { HistoricalPillComponent } from '../../shared/components/historical-pill/historical-pill.component';
 
 @Component({
     selector: 'app-variance-filters',
     templateUrl: './variance-filters.component.html',
     styleUrls: ['./variance-filters.component.scss'],
-    standalone: false
+    imports: [NgdsForms, HistoricalPillComponent]
 })
 export class VarianceFiltersComponent implements OnDestroy {
+  private dataService = inject(DataService);
+  private subareaService = inject(SubAreaService);
+  private loadingService = inject(LoadingService);
+  private urlService = inject(UrlService);
+  private varianceService = inject(VarianceService);
+
 
   public _parks = new BehaviorSubject(null);
   public _subAreas = new BehaviorSubject(null);
@@ -36,13 +44,7 @@ export class VarianceFiltersComponent implements OnDestroy {
   public lastEvaluatedKey = null;
   public statusOptions: any[] = ['Any', 'Unresolved', 'Resolved'];
 
-  constructor(
-    private dataService: DataService,
-    private subareaService: SubAreaService,
-    private loadingService: LoadingService,
-    private urlService: UrlService,
-    private varianceService: VarianceService
-  ) {
+  constructor() {
     this.subscriptions.add(
       this.dataService.watchItem(Constants.dataIds.ENTER_DATA_PARK).subscribe((res) => {
         if (res) {

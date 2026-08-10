@@ -45,19 +45,19 @@ describe('DayUseAccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DayUseAccordionComponent],
-      imports: [
+    imports: [
         RouterTestingModule,
         StubAccordionComponent,
         StubAccordionSummariesComponent,
-        StubAccordionNotesComponent
-      ],
-      providers: [
+        StubAccordionNotesComponent,
+        DayUseAccordionComponent
+    ],
+    providers: [
         ConfigService,
         HttpClient,
         HttpHandler
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

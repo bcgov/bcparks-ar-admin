@@ -8,8 +8,8 @@ describe('VarianceSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VarianceSearchComponent ]
-    })
+    imports: [VarianceSearchComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(VarianceSearchComponent);

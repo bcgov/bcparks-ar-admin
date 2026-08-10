@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SideBarService } from 'src/app/services/sidebar.service';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-toggle-button',
     templateUrl: './toggle-button.component.html',
     styleUrls: ['./toggle-button.component.scss'],
-    standalone: false
+    imports: [NgClass]
 })
 export class ToggleButtonComponent {
+  private sidebarService = inject(SideBarService);
+
   public loading = true;
   public closed = false;
-
-  constructor(private sidebarService: SideBarService) {}
 
   toggleSideNav() {
     this.sidebarService.toggle();
