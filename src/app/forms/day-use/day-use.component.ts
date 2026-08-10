@@ -30,15 +30,7 @@ export class DayUseComponent extends RootFormComponent {
   public otherRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor() {
-    super(
-      inject(DataService),
-      inject(UrlService),
-      inject(ActivityService),
-      inject(LoadingService),
-      inject(FormulaService),
-      inject(VarianceService),
-      inject(Router),
-    );
+    super();
     // declare activity type
     this.activityType = 'Day Use';
     this.accordionType = Constants.dataIds.ACCORDION_DAY_USE;

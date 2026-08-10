@@ -30,15 +30,7 @@ export class BoatingComponent extends RootFormComponent {
 
 
   constructor() {
-    super(
-      inject(DataService),
-      inject(UrlService),
-      inject(ActivityService),
-      inject(LoadingService),
-      inject(FormulaService),
-      inject(VarianceService),
-      inject(Router),
-    );
+    super();
     // declare activity type
     this.activityType = 'Boating';
     this.accordionType = Constants.dataIds.ACCORDION_BOATING;

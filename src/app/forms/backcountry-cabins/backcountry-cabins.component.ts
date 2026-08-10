@@ -29,15 +29,7 @@ export class BackcountryCabinsComponent extends RootFormComponent {
   public nonResidentRevenueTotal: formulaResult = { result: null, formula: '' };
 
   constructor() {
-    super(
-      inject(DataService),
-      inject(UrlService),
-      inject(ActivityService),
-      inject(LoadingService),
-      inject(FormulaService),
-      inject(VarianceService),
-      inject(Router),
-    );
+    super();
     // declare activity type
     this.activityType = 'Backcountry Cabins';
     this.accordionType = Constants.dataIds.ACCORDION_BACKCOUNTRY_CABINS;

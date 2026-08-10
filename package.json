@@ -6,8 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "test-ci": "ng test --watch=false --browsers=ChromeHeadlessNoSandbox",
+    "test": "NODE_OPTIONS=--disable-warning=DEP0169 ng test",
+    "test-ci": "NODE_OPTIONS=--disable-warning=DEP0169 ng test --watch=false --browsers=ChromeHeadlessNoSandbox",
     "lint": "ng lint --format=stylish"
   },
   "pre-push": [

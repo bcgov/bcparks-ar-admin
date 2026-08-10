@@ -44,15 +44,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
   private isToggling = false;
 
   constructor() {
-    super(
-      inject(DataService),
-      inject(UrlService),
-      inject(ActivityService),
-      inject(LoadingService),
-      inject(FormulaService),
-      inject(VarianceService),
-      inject(Router),
-    );
+    super();
     // declare activity type
     this.activityType = 'Frontcountry Camping';
     this.accordionType = Constants.dataIds.ACCORDION_FRONTCOUNTRY_CAMPING;
