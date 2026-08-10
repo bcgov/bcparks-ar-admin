@@ -5,6 +5,7 @@ import { formulaResult } from 'src/app/services/formula.service';
 @Component({
   selector: 'app-non-resident-revenue',
   templateUrl: './non-resident-revenue.component.html',
+  styleUrls: ['./non-resident-revenue.component.scss'],
   standalone: false,
 })
 export class NonResidentRevenueComponent {

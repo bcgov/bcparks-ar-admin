@@ -34,4 +34,28 @@ describe('BoatingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have otherRevenueGrossNonResident control in the form', () => {
+    expect(component.form.contains('otherRevenueGrossNonResident')).toBeTrue();
+  });
+
+  it('should calculate nonResidentRevenueTotal from non-resident gross revenue', () => {
+    component.form.patchValue({
+      boatRevenueGross: 100,
+      otherRevenueGrossNonResident: 750,
+    });
+    component.calculateTotals();
+
+    expect(component.nonResidentRevenueTotal.result).toBe('$712.50');
+    expect(component.nonResidentRevenueTotal.formula).toContain('5% GST');
+  });
+
+  it('should handle null otherRevenueGrossNonResident', () => {
+    component.form.patchValue({
+      otherRevenueGrossNonResident: null,
+    });
+    component.calculateTotals();
+
+    expect(component.nonResidentRevenueTotal.result).toBeNull();
+  });
 });
