@@ -34,6 +34,7 @@
     "@popperjs/core": "^2.11.8",
     "@typescript-eslint/types": "^8.0.0",
     "bootstrap-icons": "^1.11.3",
+    "caniuse-lite": "^1.0.30001809",
     "chart.js": "^4.3.0",
     "guid-typescript": "^1.0.9",
     "jquery": "^3.6.0",
