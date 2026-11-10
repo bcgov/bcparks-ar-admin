@@ -58,6 +58,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
   }
 
   buildAccordion() {
+    const hasSecondCarsFormerly = this.data?.secondCarsAttendanceStandard || this.data?.secondCarsAttendanceSocial ||  this.data?.secondCarsAttendanceSenior;
     this.summaries = [
       {
         isLegacy: this.data?.isLegacy || false,
@@ -190,7 +191,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             this.data?.campingPartyNightsRevenueGross,
           ]),
       },
-      {
+      hasSecondCarsFormerly ? {
         isLegacy: this.data?.isLegacy || false,
         title: 'Second cars / additional vehicles',
         attendanceLabel: 'Total second cars',
@@ -228,6 +229,102 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
         ],
         revenueTotal: this.data?.isLegacy ?
           this.formulaService.formatLegacyRevenue(this.data?.legacyData?.legacy_frontcountryCampingSecondCarsNetRevenue) :
+          this.formulaService.basicNetRevenue([
+            this.data?.secondCarsRevenueGross,
+          ]),
+      } : {},
+      {
+        isLegacy: false,
+        title: 'Second cars / additional vehicles',
+        subtitle: 'Winter rate second cars',
+        attendanceLabel: 'Total second cars (vehicles)',
+        attendanceItems: [
+          {
+            itemName: 'Standard parties',
+            value: this.data?.secondCarsWinterAttendanceStandard,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsWinterAttendanceStandard')
+          },
+          {
+            itemName: 'Social Services Camping Fee Exemption (SSCFE) parties',
+            value: this.data?.secondCarsWinterAttendanceSocial,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsWinterAttendanceSocial')
+          },
+        ]
+      },
+      {
+        isLegacy: false,
+        subtitle: 'Off-season rate second cars',
+        attendanceLabel: 'Total second cars (vehicles)',
+        attendanceItems: [
+          {
+            itemName: 'Standard parties',
+            value: this.data?.secondCarsOffSeasonAttendanceStandard,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsOffSeasonAttendanceStandard')
+          },
+          {
+            itemName: 'Senior parties',
+            value: this.data?.secondCarsOffSeasonAttendanceSenior,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsOffSeasonAttendanceSenior')
+          },
+          {
+            itemName: 'Social Services Camping Fee Exemption (SSCFE) parties',
+            value: this.data?.secondCarsOffSeasonAttendanceSocial,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsOffSeasonAttendanceSocial')
+          },
+          {
+            itemName: 'Long stay parties',
+            value: this.data?.secondCarsOffSeasonAttendanceLongStay,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsOffSeasonAttendanceLongStay')
+          },
+        ]
+      },
+      {
+        isLegacy: false,
+        subtitle: 'Summer rate second cars',
+        attendanceLabel: 'Total second cars',
+        attendanceItems: [
+          {
+            itemName: 'Standard parties',
+            value: this.data?.secondCarsSummerAttendanceStandard,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsSummerAttendanceStandard')
+          },
+          {
+            itemName: 'Social Services Camping Fee Exemption (SSCFE) parties',
+            value: this.data?.secondCarsSummerAttendanceSocial,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsSummerAttendanceSocial')
+          },
+          {
+            itemName: 'Long stay parties',
+            value: this.data?.secondCarsSummerAttendanceLongStay,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsSummerAttendanceLongStay')
+          },
+          {
+            itemName: '',
+            value: null,
+            variance: false
+          },
+        ],
+        attendanceTotal:
+          this.formulaService.frontcountryCampingSecondCarAttendance([
+            this.data?.secondCarsWinterAttendanceStandard,
+            this.data?.secondCarsWinterAttendanceSocial,
+            this.data?.secondCarsOffSeasonAttendanceStandard,
+            this.data?.secondCarsOffSeasonAttendanceSenior,
+            this.data?.secondCarsOffSeasonAttendanceSocial,
+            this.data?.secondCarsOffSeasonAttendanceLongStay,
+            this.data?.secondCarsSummerAttendanceStandard,
+            this.data?.secondCarsSummerAttendanceSocial,
+            this.data?.secondCarsSummerAttendanceLongStay,
+          ]),
+        revenueLabel: 'Net revenue',
+        revenueItems: [
+          {
+            itemName: 'Gross 2nd car revenue',
+            value: this.data?.secondCarsRevenueGross,
+            variance: this.variance?.value?.hasOwnProperty('secondCarsRevenueGross')
+          },
+        ],
+        revenueTotal:
           this.formulaService.basicNetRevenue([
             this.data?.secondCarsRevenueGross,
           ]),
