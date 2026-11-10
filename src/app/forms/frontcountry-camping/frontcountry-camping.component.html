@@ -122,10 +122,10 @@
         </div>
       </div>
       <div class="row">
-          <!-- Attendance info -->
-          <app-info-text class="text-block col-3"
-            [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
-        </div>
+        <!-- Attendance info -->
+        <app-info-text class="text-block col-3"
+          [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
+      </div>
     </div>
     <!-- Attendance -->
     <h3 class="pt-3">Summer rate parties</h3>
@@ -179,6 +179,10 @@
       </div>
       <!-- Attendance Summary -->
       <div class="mb-4 pb-4 mt-auto">
+        <app-calculation-display [label]="'Total camping party nights'" [subtext]="partyAttendance?.formula"
+          [value]="partyAttendance?.result"></app-calculation-display>
+      </div>
+      <div class="mb-4 pb-4 mt-auto">
         <app-calculation-display [label]="'TOTAL ATTENDANCE'" [subtext]="partyAttendanceTotal?.formula"
           [value]="partyAttendanceTotal?.result"></app-calculation-display>
       </div>
@@ -213,47 +217,180 @@
   <div class="form-section">
     <!-- Second cars/additional vehicles -->
     <h2>Second cars/additional vehicles</h2>
+    <!-- Winter Toggle-->
+    <div class="d-flex align-items-center form-check form-switch">
+      <h3 class="pt-3">Winter rate second cars</h3>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="winterCar"
+        (change)="onWinterCarToggle()"
+        name="winterCarCheckbox"
+      />
+    </div>
+    <div class="mb-2 mt-auto">
+      Nights with reduced service in winter (dates vary - use only when approved winter fee is in effect)
+    </div>
+    <!-- Winter Standard -->
+     <div *ngIf="winterCar" class="container-fluid p-0">
+        <div class="row gx-3 m-0">
+          <div class="input-box col"
+            [popover]="getPopoverData('secondCarsWinterAttendanceStandard') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsWinterAttendanceStandard')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsWinterAttendanceStandard']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard parties'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Winter Social -->
+          <div class="input-box col"
+            [popover]="getPopoverData('secondCarsWinterAttendanceSocial') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsWinterAttendanceSocial')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsWinterAttendanceSocial']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+              [label]="'Social Services Camping Fee Exemption (SSCFE) parties'" [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="row gx-3 m-0">
+        <!-- Attendance info -->
+        <app-info-text class="text-block col-4"
+          [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
+      </div>
+      </div>
+      <!-- Offseason Toggle-->
+    <div class="d-flex align-items-center form-check form-switch">
+      <h3 class="pt-3">Off-season rate second cars</h3>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="offSeasonCar"
+        (change)="onOffSeasonCarToggle()"
+        name="offSeasonCarCheckbox"
+      />
+    </div>
+    <div class="mb-2 mt-auto">
+      Nights with reduced service in winter (dates vary - use only when approved winter fee is in effect)
+    </div>
+     <div *ngIf="offSeasonCar" class="container-fluid p-0">
+        <div class="row gx-3 m-0">
+          <!-- Off-season Standard -->
+          <div class="input-box col"
+            [popover]="getPopoverData('secondCarsOffSeasonAttendanceStandard') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsOffSeasonAttendanceStandard')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsOffSeasonAttendanceStandard']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard parties'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Off-season Senior -->
+          <div class="input-box col"
+            [popover]="getPopoverData('secondCarsOffSeasonAttendanceSenior') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsOffSeasonAttendanceSenior')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsOffSeasonAttendanceSenior']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Senior parties'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Off-season Social -->
+          <div class="input-box col-auto flex-shrink-0 text-nowrap"
+            [popover]="getPopoverData('secondCarsOffSeasonAttendanceSocial') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsOffSeasonAttendanceSocial')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsOffSeasonAttendanceSocial']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+              [label]="'Social Services Camping Fee Exemption (SSCFE) parties'" [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Off-season Long Stay -->
+          <div class="input-box col"
+            [popover]="getPopoverData('secondCarsOffSeasonAttendanceLongStay') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsOffSeasonAttendanceLongStay')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsOffSeasonAttendanceLongStay']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+              [label]="'Long stay parties'" [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Attendance info -->
+          <app-info-text class="text-block col-3"
+            [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
+        </div>
+      </div>
+      <!-- Summer rate second cars -->
+    <div class="d-flex align-items-center form-check form-switch">
+      <h3 class="pt-3">Summer rate second cars</h3>
+    </div>
+    <div class="mb-2 mt-auto">
+      Nights between June 15 to Labour Day
+    </div>
+     <div class="container-fluid p-0">
+        <div class="row gx-3 m-0">
+          <!-- Summer Standard -->
+          <div class="input-box col"
+            [popover]="getPopoverData('secondCarsSummerAttendanceStandard') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsSummerAttendanceStandard')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsSummerAttendanceStandard']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard parties'"
+              [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Off-season Social -->
+          <div class="input-box col"
+            [popover]="getPopoverData('secondCarsSummerAttendanceSocial') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsSummerAttendanceSocial')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsSummerAttendanceSocial']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+              [label]="'Social Services Camping Fee Exemption (SSCFE) parties'" [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+          <!-- Off-season Long Stay -->
+          <div class="input-box col"
+            [popover]="getPopoverData('secondCarsSummerAttendanceLongStay') ? popover : null"
+            [popoverContext]="{variance: getPopoverData('secondCarsSummerAttendanceLongStay')}" placement="bottom"
+            triggers="mouseenter:mouseleave">
+            <ngds-number-input [control]="form?.controls?.['secondCarsSummerAttendanceLongStay']" [decimalPlaces]="0"
+              [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
+              [label]="'Long stay parties'" [placeholder]="'No data'" [loadWhile]="loading">
+              <i ngdsInputPrepend class="car-icon"></i>
+            </ngds-number-input>
+          </div>
+        </div>
+        <div class="row gx-3 m-0">
+          <!-- Attendance info -->
+          <app-info-text class="col text-block"
+              [text]="'Walk-in and Unable to Collect should be added to Standard.'"></app-info-text>
+          <div class="col"></div>
+          <!-- Attendance info -->
+            <app-info-text class="col text-block"
+              [text]="'Record all nights of a long stay on the arrival date.'"></app-info-text>
+        </div>
+      </div>
     <div class="row">
-      <!-- Attendance -->
-      <!-- Standard -->
-      <div class="input-box mb-2 full-input"
-        [popover]="getPopoverData('secondCarsAttendanceStandard') ? popover : null"
-        [popoverContext]="{variance: getPopoverData('secondCarsAttendanceStandard')}" placement="bottom"
-        triggers="mouseenter:mouseleave">
-        <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceStandard']" [decimalPlaces]="0"
-          [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Standard'"
-          [placeholder]="'No data'" [loadWhile]="loading">
-          <i ngdsInputPrepend class="car-icon"></i>
-        </ngds-number-input>
-      </div>
-      <!-- Senior -->
-      <div class="input-box mb-2 full-input"
-        [popover]="getPopoverData('secondCarsAttendanceSenior') ? popover : null"
-        [popoverContext]="{variance: getPopoverData('secondCarsAttendanceSenior')}" placement="bottom"
-        triggers="mouseenter:mouseleave">
-        <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceSenior']" [decimalPlaces]="0"
-          [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false" [label]="'Senior'"
-          [placeholder]="'No data'" [loadWhile]="loading">
-          <i ngdsInputPrepend class="car-icon"></i>
-        </ngds-number-input>
-      </div>
-      <!-- Social -->
-      <div class="input-box mb-2 full-input"
-        [popover]="getPopoverData('secondCarsAttendanceSocial') ? popover : null"
-        [popoverContext]="{variance: getPopoverData('secondCarsAttendanceSocial')}" placement="bottom"
-        triggers="mouseenter:mouseleave">
-        <ngds-number-input [control]="form?.controls?.['secondCarsAttendanceSocial']" [decimalPlaces]="0"
-          [justify]="'start'" [invalidConfig]="invalidConfig" [allowNegative]="false"
-          [label]="'Social Services Camping Fee Exemption (SSCFE)'" [placeholder]="'No data'" [loadWhile]="loading">
-          <i ngdsInputPrepend class="car-icon"></i>
-        </ngds-number-input>
-      </div>
       <!-- Attendance Summary -->
       <div class="mb-2 mt-auto">
         <app-calculation-display [label]="'TOTAL SECOND CARS'" [subtext]="vehicleAttendanceTotal?.formula"
           [value]="vehicleAttendanceTotal?.result"></app-calculation-display>
       </div>
     </div>
+
     <div class="row">
       <!-- Revenue -->
       <!-- Gross 2nd car revenue -->
