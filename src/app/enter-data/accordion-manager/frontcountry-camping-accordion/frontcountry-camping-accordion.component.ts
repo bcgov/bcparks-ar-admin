@@ -191,7 +191,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             this.data?.campingPartyNightsRevenueGross,
           ]),
       },
-      hasSecondCarsFormerly ? {
+      ...(hasSecondCarsFormerly ? [{
         isLegacy: this.data?.isLegacy || false,
         title: 'Second cars / additional vehicles',
         attendanceLabel: 'Total second cars',
@@ -232,7 +232,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
           this.formulaService.basicNetRevenue([
             this.data?.secondCarsRevenueGross,
           ]),
-      } : {},
+      }] : []),
       {
         isLegacy: false,
         title: 'Second cars / additional vehicles',

@@ -157,7 +157,7 @@ export class FrontcountryCampingComponent extends RootFormComponent {
     // Check if winter is toggled for frontcountry camping, persist over user sessions
     this.subscriptions.add(
       this.winterCarToggle.getWinterCarToggle.subscribe((value) => {
-        this.winter = value;
+        this.winterCar = value;
       })
     );
 
