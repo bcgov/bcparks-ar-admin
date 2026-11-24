@@ -213,7 +213,7 @@ export class FormulaService {
   frontcountryCampingSecondCarAttendance(attendances: any[]): formulaResult {
     return {
       result: this.formatTotalWithModifier(attendances),
-      formula: `Total second cars = (Standard + Senior + SSCFE)`,
+      formula: `Total second cars = (Winter Standard + Winter SSCFE + Standard + Senior + SSCFE + Long stay)`,
     };
   }
 
@@ -241,7 +241,7 @@ export class FormulaService {
   groupCampingStandardAttendance(attendances: any[]): formulaResult {
     return {
       result: this.formatTotalWithModifier(attendances),
-      formula: `Total people = (Adults + Youths + Kids)`,
+      formula: `Total people = (Adults + Youths + Children)`,
     };
   }
 

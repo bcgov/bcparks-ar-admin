@@ -81,7 +81,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
               variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleYouth')
             },
             {
-              itemName: 'Kids (0-5)',
+              itemName: 'Children (0-5)',
               value: this.data?.standardRateGroupsTotalPeopleKids,
               variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleKids')
             },
@@ -151,7 +151,7 @@ export class GroupCampingAccordionComponent implements OnDestroy {
               variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleYouth')
             },
             {
-              itemName: 'Kids (0-5)',
+              itemName: 'Children (0-5)',
               value: this.data?.standardRateGroupsTotalPeopleKids,
               variance: this.variance?.value?.hasOwnProperty('standardRateGroupsTotalPeopleKids')
             },
