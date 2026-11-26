@@ -189,11 +189,7 @@ export class FormulaService {
     attendances: any[],
     modifier?: number
   ): formulaResult {
-    let formula = `Total attendance = (Standard + Senior + SSCFE + Long stay)`;
-    // Flag if attendances has Winter data
-    if (attendances[0] || attendances[1]) {
-      formula = `Total attendance = (Winter Standard + Winter SSCFE + Standard + Senior + SSCFE + Long stay)`;
-    }
+    let formula = `Total attendance = (All seasons)`;
     if (modifier) {
       formula += ` x ${modifier}`;
     }
@@ -213,22 +209,8 @@ export class FormulaService {
   frontcountryCampingSecondCarAttendance(attendances: any[]): formulaResult {
     return {
       result: this.formatTotalWithModifier(attendances),
-      formula: `Total second cars = (Winter Standard + Winter SSCFE + Standard + Senior + SSCFE + Long stay)`,
+      formula: `Total second cars = (All seasons)`,
     };
-  }
-
-  /**
-   * Calculates total camping nights for frontcountry camping - this is the same as the attendance but it is not multiplied by 3.2.
-   * @function
-   * @param {any[]} attendances Array of attendance numbers
-   * @memberof FormulaService
-   * @returns `formulaResult` object
-   */
-  frontcountryCampingPartyNightsAttendance(attendances: any[]): formulaResult {
-    return {
-      result: this.formatTotalWithModifier(attendances),
-      formula: '' // None, this formula isnt shown
-    }
   }
 
   /**
