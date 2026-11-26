@@ -16,6 +16,8 @@ export interface summarySection {
   isLegacy?: boolean;
   attendanceLabel?: string;
   attendanceTotal?: formulaResult;
+  attendanceSumLabel?: string;
+  attendanceSum?: formulaResult;
   attendanceItems?: Array<summaryLineItem>;
   revenueLabel?: string;
   revenueItems?: Array<summaryLineItem>;

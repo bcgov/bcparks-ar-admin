@@ -111,6 +111,7 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
         isLegacy: this.data?.isLegacy || false,
         subtitle: 'Summer rate parties',
         attendanceLabel: 'Total attendance (people)',
+        attendanceSumLabel: 'Total camping party nights',
         attendanceItems: [
           {
             itemName: 'Standard parties',
@@ -127,34 +128,19 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             value: this.data?.summerCampingPartyNightsAttendanceLongStay,
             variance: this.variance?.value?.hasOwnProperty('summerCampingPartyNightsAttendanceLongStay')
           },
-          {
-            itemName: '',
-            value: null,
-            variance: false
-          },
-          {
-            // For legacy data, this value is provided in legacy_frontcountryCampingTotalCampingParties.
-            // For modern data, this value` is calculated as the sum of all the camping party nights.
-            // See PDR-256 https://github.com/bcgov/bcparks-ar-admin/issues/256
-            itemName: 'Total Camping Party Nights',
-            value: this.data?.isLegacy ?
-              this.formulaService.formatLegacyAttendance(this.data?.legacyData?.legacy_frontcountryCampingTotalCampingParties).result :
-              this.formulaService.frontcountryCampingPartyNightsAttendance(
-                [
-                  this.data?.winterCampingPartyNightsAttendanceStandard,
-                  this.data?.winterCampingPartyNightsAttendanceSocial,
-                  this.data?.offSeasonCampingPartyNightsAttendanceStandard,
-                  this.data?.offSeasonCampingPartyNightsAttendanceSocial,
-                  this.data?.offSeasonCampingPartyNightsAttendanceLongStay,
-                  this.data?.offSeasonCampingPartyNightsAttendanceSenior,
-                  this.data?.summerCampingPartyNightsAttendanceStandard,
-                  this.data?.summerCampingPartyNightsAttendanceSocial,
-                  this.data?.summerCampingPartyNightsAttendanceLongStay,
-                ]
-              ).result,
-            variance: false // calculated field
-          },
         ],
+        attendanceSum: this.formulaService.frontcountryCampingPartyAttendance(
+          [
+            this.data?.winterCampingPartyNightsAttendanceStandard,
+            this.data?.winterCampingPartyNightsAttendanceSocial,
+            this.data?.offSeasonCampingPartyNightsAttendanceStandard,
+            this.data?.offSeasonCampingPartyNightsAttendanceSocial,
+            this.data?.offSeasonCampingPartyNightsAttendanceLongStay,
+            this.data?.offSeasonCampingPartyNightsAttendanceSenior,
+            this.data?.summerCampingPartyNightsAttendanceStandard,
+            this.data?.summerCampingPartyNightsAttendanceSocial,
+            this.data?.summerCampingPartyNightsAttendanceLongStay,
+          ]),
         // For legacy data, this value is calculated with legacy_frontcountryCampingTotalCampingParties x 3.2.
         // For modern data, this value is calculated as the sum of all the camping party nights x 3.2.
         // See PDR-256 https://github.com/bcgov/bcparks-ar-admin/issues/256
@@ -297,11 +283,6 @@ export class FrontcountryCampingAccordionComponent implements OnDestroy {
             itemName: 'Long stay parties',
             value: this.data?.secondCarsSummerAttendanceLongStay,
             variance: this.variance?.value?.hasOwnProperty('secondCarsSummerAttendanceLongStay')
-          },
-          {
-            itemName: '',
-            value: null,
-            variance: false
           },
         ],
         attendanceTotal:

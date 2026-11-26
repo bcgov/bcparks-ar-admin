@@ -20,6 +20,13 @@
       </div>
     </div>
     <app-calculation-display
+      *ngIf="section?.attendanceSum"
+      [label]="section?.attendanceSumLabel"
+      [value]="section?.attendanceSum?.result"
+      [subtext]="section?.isLegacy ? '' : section?.attendanceSum?.formula"
+      [colorClass]="section?.isLegacy ? 'grey' : 'blue'"
+    ></app-calculation-display>
+    <app-calculation-display
       *ngIf="section?.attendanceTotal"
       [label]="section?.attendanceLabel?.toUpperCase()"
       [value]="section?.attendanceTotal?.result"
