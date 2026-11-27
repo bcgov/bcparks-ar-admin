@@ -21,13 +21,8 @@ jobs:
     environment: lza-dev
     timeout-minutes: 20
     permissions:
-      actions: read
       id-token: write
-      contents: write
-      packages: write
-      pull-requests: write
-      security-events: write
-      attestations: write
+      contents: read
 
     steps:
       - name: Checkout repository

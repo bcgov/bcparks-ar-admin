@@ -2,6 +2,9 @@ name: PR Checks
 
 on: [pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   install:
     name: Install
