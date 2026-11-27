@@ -20,6 +20,9 @@ jobs:
     if: ${{ ! github.event.pull_request.draft }}
     runs-on: ubuntu-22.04
     timeout-minutes: 1
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - uses: actions/checkout@v4
       - name: Run Trivy vulnerability scanner in repo mode
